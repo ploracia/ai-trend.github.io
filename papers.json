@@ -1,0 +1,77 @@
+[
+  {
+    "date": "2026-10-24",
+    "publishedAt": "2026-10-24T12:11:06+09:00",
+    "title": "추가 학습 없이 최적화 문제 풀기: LLM 추론 하네스의 힘",
+    "paperTitle": "Harnessing Language Models as Optimization Modeling Agents",
+    "summary": "LLM이 최적화 문제를 솔버 코드로 바꾸는 작업을, 추가 학습 없이 실행 피드백 기반 추론 하네스로 개선할 수 있는지 검증한 연구",
+    "tags": [
+      "LLM",
+      "AI 에이전트",
+      "평가"
+    ],
+    "url": "papers/2026-10-24-optimization-modeling-harness.html",
+    "arxivId": "2610.30917",
+    "arxivUrl": "https://arxiv.org/abs/2610.30917"
+  },
+  {
+    "date": "2026-10-23",
+    "publishedAt": "2026-10-23T12:16:43+09:00",
+    "title": "AI의 '창발'을 어떻게 증명할까? 정보 분해로 본 시너지",
+    "paperTitle": "Claims of emergence in AI should be grounded in information decomposition",
+    "summary": "AI의 창발·시너지 주장을 정보 분해로 검증 가능한 기준에 올려놓자는 개념 논문",
+    "tags": [
+      "AI 연구",
+      "평가",
+      "추론"
+    ],
+    "url": "papers/2026-10-23-emergence-information-decomposition.html",
+    "arxivId": "2610.28479",
+    "arxivUrl": "https://arxiv.org/abs/2610.28479"
+  },
+  {
+    "date": "2026-10-22",
+    "publishedAt": "2026-10-22T22:38:08+09:00",
+    "title": "모델의 생각을 믿을 수 있을까? 체인 오브 쏘트 감시 능력을 학습으로 지키기",
+    "paperTitle": "Monitorability Is Trainable: Post-Training for Chain-of-Thought Monitorability",
+    "summary": "AI의 생각 과정(CoT)을 읽는 감시가 학습 중 약해질 수 있고, 후처리 학습으로 감시 능력을 되찾을 수 있다는 연구",
+    "tags": [
+      "AI 안전",
+      "LLM",
+      "추론"
+    ],
+    "url": "papers/2026-10-22-monitorability-trainable.html",
+    "arxivId": "2610.29734",
+    "arxivUrl": "https://arxiv.org/abs/2610.29734"
+  },
+  {
+    "date": "2026-10-21",
+    "publishedAt": "2026-10-21T22:26:19+09:00",
+    "title": "도구 결과를 파일로 저장하면 에이전트 정확도가 떨어질까?",
+    "paperTitle": "Same Simulation, Different Evidence: Where Retrieved Tool Output Costs LLM Agents Accuracy",
+    "summary": "긴 도구 출력을 파일에 저장하고 검색해 읽는 방식이 일부 모델에서 정확도를 떨어뜨리는 원인을 분석",
+    "tags": [
+      "AI 에이전트",
+      "LLM",
+      "평가"
+    ],
+    "url": "papers/2026-10-21-same-simulation-retrieved-evidence.html",
+    "arxivId": "2610.26836",
+    "arxivUrl": "https://arxiv.org/abs/2610.26836"
+  },
+  {
+    "date": "2026-10-20",
+    "publishedAt": "2026-10-20T22:13:37+09:00",
+    "title": "대화가 길어져도 기억을 잃지 않는 AI 에이전트 만들기",
+    "paperTitle": "From Memory Hits to Answerable Evidence: Query-Conditioned Memory Compilation for Long-Term Agent Memory",
+    "summary": "긴 대화의 기억에서 질문에 필요한 근거만 골라 답변용 문맥으로 정리하는 MemCompile 방식",
+    "tags": [
+      "AI 에이전트",
+      "LLM",
+      "장기 기억"
+    ],
+    "url": "papers/2026-10-20-memcompile-evidence.html",
+    "arxivId": "2610.23313",
+    "arxivUrl": "https://arxiv.org/abs/2610.23313"
+  }
+]

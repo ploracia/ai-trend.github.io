@@ -1,0 +1,20 @@
+{
+  "v": 1,
+  "lists": {
+    "posts": {
+      "count": 0,
+      "days": 0,
+      "files": []
+    },
+    "insights": {
+      "count": 0,
+      "days": 0,
+      "files": []
+    },
+    "papers": {
+      "count": 0,
+      "days": 0,
+      "files": []
+    }
+  }
+}

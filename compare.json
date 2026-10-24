@@ -1,0 +1,184 @@
+[
+  {
+    "rank": 1,
+    "date": "2026-10-21",
+    "name": "GPQA Diamond",
+    "en": "대학원 수준 과학 문제",
+    "desc": "생물·화학·물리 대학원 수준 문제의 정답률입니다. Vals AI 기준이며, GPT-6 Astra만 Vals 값이 없어 BenchLM의 GPQA-D 값을 썼습니다.",
+    "scores": {
+      "GPT-6 Astra": {
+        "v": 96.0,
+        "n": "BenchLM"
+      },
+      "Claude Fable 5.1": {
+        "v": 93.4
+      },
+      "Claude Opus 5": {
+        "v": 93.4
+      },
+      "Gemini 3.8 Flash": {
+        "v": 94.4
+      },
+      "DeepSeek V4 Pro (0813)": {
+        "v": 92.4
+      },
+      "Qwen 3.8 Max": {
+        "v": 93.7
+      },
+      "DeepSeek V4 Flash (0731)": {
+        "v": 89.9
+      }
+    }
+  },
+  {
+    "rank": 2,
+    "date": "2026-10-21",
+    "name": "HLE",
+    "en": "인류 최종 시험",
+    "desc": "전문가도 풀기 어려운 폭넓은 분야 문제입니다. 도구 없이 푼 점수를 기준으로 했습니다. GPT-6 Astra는 도구 사용 점수, GPT-6.1 Sol은 AA 집계, Gemini는 검증본(HLE-Verified) 점수입니다.",
+    "scores": {
+      "GPT-6 Astra": {
+        "v": 57.2,
+        "n": "도구 사용"
+      },
+      "Claude Fable 5.1": {
+        "v": 60.9
+      },
+      "Claude Opus 5": {
+        "v": 56.3
+      },
+      "Gemini 3.8 Flash": {
+        "v": 54.9,
+        "n": "검증본"
+      },
+      "DeepSeek V4 Pro (0813)": {
+        "v": 42.7
+      },
+      "Qwen 3.8 Max": {
+        "v": 43.6
+      },
+      "GPT-6.1 Sol": {
+        "v": 52.9,
+        "n": "AA"
+      },
+      "Claude Haiku 5.5": {
+        "v": 45.9
+      },
+      "DeepSeek V4 Flash (0731)": {
+        "v": 34.8
+      }
+    }
+  },
+  {
+    "rank": 3,
+    "date": "2026-10-21",
+    "name": "MMLU-Pro",
+    "en": "종합 지식·추론",
+    "desc": "여러 분야의 지식과 추론을 묻는 객관식 문제입니다. Vals AI 기준입니다.",
+    "scores": {
+      "Claude Fable 5.1": {
+        "v": 92.4
+      },
+      "Claude Opus 5": {
+        "v": 91.6
+      },
+      "Gemini 3.8 Flash": {
+        "v": 90.2
+      },
+      "DeepSeek V4 Pro (0813)": {
+        "v": 87.0
+      },
+      "Qwen 3.8 Max": {
+        "v": 88.6
+      },
+      "DeepSeek V4 Flash (0731)": {
+        "v": 86.2,
+        "n": "BenchLM"
+      }
+    }
+  },
+  {
+    "rank": 4,
+    "date": "2026-10-21",
+    "name": "LiveCodeBench",
+    "en": "최신 코딩 문제",
+    "desc": "새로 나온 경쟁 프로그래밍 문제를 얼마나 맞히는지 보는 코딩 능력 테스트입니다. Vals AI 기준입니다.",
+    "scores": {
+      "Claude Fable 5.1": {
+        "v": 90.5
+      },
+      "Claude Opus 5": {
+        "v": 89.0
+      },
+      "Gemini 3.8 Flash": {
+        "v": 89.5
+      },
+      "DeepSeek V4 Pro (0813)": {
+        "v": 87.5
+      },
+      "Qwen 3.8 Max": {
+        "v": 87.9
+      },
+      "DeepSeek V4 Flash (0731)": {
+        "v": 87.3
+      }
+    }
+  },
+  {
+    "rank": 5,
+    "date": "2026-10-21",
+    "name": "Terminal-Bench 2.1",
+    "en": "터미널 작업 수행",
+    "desc": "터미널 명령으로 실제 작업을 끝까지 해내는 에이전트 능력입니다. Vals AI 기준이며, DeepSeek V4 Pro는 값이 없습니다.",
+    "scores": {
+      "GPT-6 Astra": {
+        "v": 87.3
+      },
+      "Claude Fable 5.1": {
+        "v": 85.0
+      },
+      "Claude Opus 5": {
+        "v": 84.6
+      },
+      "Gemini 3.8 Flash": {
+        "v": 81.3
+      },
+      "Qwen 3.8 Max": {
+        "v": 67.4
+      },
+      "DeepSeek V4 Flash (0731)": {
+        "v": 67.0
+      }
+    }
+  },
+  {
+    "rank": 6,
+    "date": "2026-10-21",
+    "name": "FrontierMath Tier 4",
+    "en": "고난도 수학 문제",
+    "desc": "수학 연구 수준의 가장 어려운 문제 묶음(Tier 4)의 정답률입니다. BenchLM 기준이며, DeepSeek V4 Pro는 값이 없습니다.",
+    "scores": {
+      "GPT-6 Astra": {
+        "v": 97.6
+      },
+      "Claude Fable 5.1": {
+        "v": 87.8
+      },
+      "Claude Opus 5": {
+        "v": 73.2
+      },
+      "Gemini 3.8 Flash": {
+        "v": 22.0
+      },
+      "Qwen 3.8 Max": {
+        "v": 46.3
+      },
+      "GPT-6.1 Sol": {
+        "v": 100.0
+      },
+      "Claude Haiku 5.5": {
+        "v": 46.3
+      }
+    }
+  }
+]

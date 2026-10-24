@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>노트북에서 도는 코딩 모델 Flint | AI 비밀 레시피</title>
+  <meta name="description" content="Recursive가 공개한 40B급 오픈 웨이트 코딩 모델 Flint가 무엇이고, 입문 개발자가 내 노트북에서 어떻게 써 볼 수 있는지 정리했습니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+
+    /* 이슈 전용 */
+    .cats { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; margin: 14px 0 0; font-size: 13px; color: var(--muted); }
+    .cats .lbl { font-weight: 700; margin-right: 2px; }
+    .cats a { font-size: 12.5px; font-weight: 600; text-decoration: none; color: var(--text); border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 2px 8px; }
+    .cats a:hover { border-color: var(--accent); color: var(--accent); }
+    .cats .sep { width: 10px; }
+    figure.fig { margin: 22px 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    figure.fig img, figure.fig svg { display: block; width: 100%; height: auto; }
+    figure.fig figcaption { font-size: 13.5px; color: var(--muted); padding: 10px 16px; border-top: 1px solid var(--line); }
+    figure.fig figcaption .credit { display: block; font-size: 12px; margin-top: 2px; }
+    .srcfig { display: flex; gap: 12px; align-items: center; background: var(--bg); border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px; margin: 14px 0; font-size: 14.5px; }
+    .srcfig::before { content: "🖼"; font-size: 20px; }
+    .buzz { display: grid; gap: 10px; margin: 14px 0; }
+    .buzz div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; font-size: 15px; }
+    .buzz .who { display: block; font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+    pre { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; font-size: 13.5px; line-height: 1.6; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#insights"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#insights">← 인사이트 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>노트북에서 도는 코딩 모델 Flint, 입문자가 알아야 할 것</h1>
+    <div class="byline"><span><time datetime="2026-10-22T16:21:00+09:00">2026.10.22 16:21 KST</time></span><span>읽는 시간 약 7분</span></div>
+    <div class="cats">
+      <span class="lbl">나라</span>
+      <a href="../#insights/country/미국">미국</a>
+      <a href="../#insights/country/중국">중국</a>
+      <span class="sep"></span>
+      <span class="lbl">기업</span>
+      <a href="../#insights/company/Recursive">Recursive</a>
+      <a href="../#insights/company/NVIDIA">NVIDIA</a>
+      <a href="../#insights/company/Apple">Apple</a>
+      <a href="../#insights/company/Alibaba">Alibaba</a>
+      <a href="../#insights/company/Google">Google</a>
+    </div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol>
+        <li>미국 스타트업 Recursive가 2026년 10월 21일 코딩 특화 오픈 모델 Flint를 공개했습니다. 총 398억 개 파라미터이지만 한 번에 쓰는 것은 약 25억 개입니다.</li>
+        <li>Apache 2.0 라이선스로 무료 다운로드가 가능하고, Apple Silicon Mac 같은 노트북에서 빠르게 돌아가도록 설계됐습니다. 성능 수치는 회사 자체 측정치입니다.</li>
+        <li>입문 개발자에게는 클라우드 API 요금 없이 코드를 로컬에서 실험할 수 있는 선택지가 생겼다는 뜻입니다. 다만 대형 유료 모델만큼 세밀한 지시가 필요합니다.</li>
+      </ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 모델</span><span class="what">Flint (Recursive)</span><span>근거 글 6개</span></div>
+
+    <p class="lead">Flint는 2026년 10월 21일(미국 시간) 공개된 로컬 코딩 모델입니다. 한국 시간으로는 10월 22일 새벽에 기사가 쏟아졌고, "노트북에서 돌아가는 에이전트 코딩 모델"이라는 점이 개발자 커뮤니티에서 주목받았습니다. 클라우드에 코드를 보내지 않고 내 컴퓨터에서 모델을 돌릴 수 있다는 점이 핵심입니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">한눈에 보기</a></li>
+        <li><a href="#s2">어떻게 동작하나요</a></li>
+        <li><a href="#s3">왜 지금 화제인가요</a></li>
+        <li><a href="#s4">관련 나라·기업</a></li>
+        <li><a href="#s5">기존 방식과 무엇이 다른가</a></li>
+        <li><a href="#s6">직접 해 보기</a></li>
+        <li><a href="#s7">주의할 점과 한계</a></li>
+        <li><a href="#s8">정리</a></li>
+        <li><a href="#s9">참고한 글</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>한눈에 보기</h2>
+    <p>Flint를 "전문가 256명이 있는 큰 회사"라고 생각해 보세요. 질문이 들어올 때마다 회사는 전문가 256명 중 6명만 회의에 부릅니다. 나머지는 그 순간 쉽니다. 이 방식을 MoE(Mixture of Experts, 전문가 혼합)라고 부르고, 회사 전체의 지식은 남아 있지만 한 번에 일하는 사람 수가 적어서 계산이 가벼워집니다. Flint는 총 398억 개(40B) 파라미터를 갖고 있지만, 토큰 하나를 처리할 때는 약 25억 개(2.5B)만 씁니다.</p>
+    <figure class="fig">
+      <img src="img/2026-10-22-recursive-flint-1.svg" alt="256명의 전문가 중 6명이 선택되어 일하는 MoE 구조 그림" />
+      <figcaption>그림 1. 라우터가 토큰마다 전문가 6명을 고르고, 나머지는 쉬는 구조<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+    <div class="callout"><b>용어 풀이</b>
+      · <strong>파라미터</strong>: 모델이 학습으로 익힌 숫자들. 많을수록 아는 것이 많지만 메모리를 더 차지합니다.<br />
+      · <strong>오픈 웨이트(open weights)</strong>: 학습된 모델 파일을 누구나 내려받아 쓸 수 있게 공개한 것입니다. 학습 데이터나 코드까지 모두 공개한 것과는 다릅니다.<br />
+      · <strong>토큰</strong>: 모델이 읽고 쓰는 최소 단위. 대략 단어나 글자 조각 하나입니다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>어떻게 동작하나요</h2>
+    <p>순서는 간단합니다. 에디터에서 질문이나 코드 조각이 들어오면, 라우터(router)가 토큰마다 어떤 전문가가 적합한지 고릅니다. 선택된 전문가 6명이 계산을 하고, 그 결과를 모아 다음 토큰을 만듭니다. 이 과정을 답변이 끝날 때까지 반복합니다. 입문자라면 "모델 파일을 받아 로컬 실행 도구에 올리면 그 도구가 이 과정을 대신 해 준다"고 기억하면 충분합니다.</p>
+    <p>Recursive는 Flint를 만들 때 자사의 자동 연구 시스템 "Eureka Machine"을 많이 썼다고 밝혔습니다. 이 시스템이 아이디어를 제안하고, 구현하고, 시험한 뒤 다음 실험을 고르는 연구 루프를 돌렸다는 설명입니다. 예를 들어 Flint의 저장 크기를 71% 줄이면서도 품질 손실이 거의 없었다고 주장합니다. 이 부분은 회사 발표이므로 독립 검증이 나오기 전까지는 참고 수준으로 보세요.</p>
+    <figure class="fig">
+      <img src="img/2026-10-22-recursive-flint-2.svg" alt="노트북에서 요청이 로컬 실행 도구와 모델을 거쳐 결과로 돌아오는 흐름도" />
+      <figcaption>그림 2. 요청부터 결과까지 모든 단계가 내 기기 안에서 이어지는 흐름<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+
+    <h2 id="s3"><span class="no">03</span>왜 지금 화제인가요</h2>
+    <p>이번 주 이슈의 핵심은 "성능 숫자"보다 "노트북에서 쓸 만하다"는 점입니다. 회사 발표에 따르면 SWE-bench Verified(실제 GitHub 버그 수정 문제를 푸는 시험)에서 74.2%, SWE-bench Pro v2에서 89.7%, Terminal-Bench 2.1에서 54.9%를 기록했습니다. 같은 회사가 집계한 6개 테스트 평균에서는 Alibaba의 Qwen3.8 27B만 Flint보다 높았다고 합니다. 모두 Recursive의 자체 측정치입니다.</p>
+    <div class="buzz">
+      <div>TechCrunch는 "노트북용 코딩 모델이며 상당 부분을 AI가 만들었다"는 점을 중심으로 보도하고, 같은 기기에서 Gemma 4 등 비슷한 모델이 58~69토큰/초였던 반면 Flint는 약 131토큰/초였다고 전했습니다.<span class="who"><a href="https://techcrunch.com/2026/10/21/recursive-launches-flint-a-laptop-coding-model-it-says-was-largely-built-by-ai/">TechCrunch</a> · 10.22 05:27 KST</span></div>
+      <div>TestingCatalog는 "40B 모델을 로컬 코딩용으로 내놓았다"는 제목으로 소식을 전했고, 로컬 실행에 초점을 맞춘 점을 강조했습니다.<span class="who"><a href="https://www.testingcatalog.com/recursive-releases-flint-40b-model-for-local-coding/">TestingCatalog</a> · 10.22 08:26 KST</span></div>
+      <div>MarkTechPost는 활성 파라미터 2.5B라는 구조와 에이전트용 설계를 소개했습니다.<span class="who"><a href="https://www.marktechpost.com/2026/10/21/recursive-flint-local-coding-model/">MarkTechPost</a> · 10.22 07:39 KST</span></div>
+      <div>AICoder는 Apache 2.0 라이선스와 "125+ tok/s" 속도 주장을 함께 정리했고, 벤치마크는 공급사 측 수치라고 명시했습니다.<span class="who"><a href="https://aicoder.com/news/news-20261022-recursive-flint-40b-a2-5b-open-weights-local-coding-model">AICoder</a> · 10.22 03:08 KST</span></div>
+      <div>TokenPost와 CryptoBriefing도 "로컬에서 돌아가는 오픈 코딩 모델"이라는 같은 틀로 보도했습니다.<span class="who"><a href="https://www.tokenpost.com/news/technology/37525">TokenPost</a> · 10.22 14:35 KST · <a href="https://cryptobriefing.com/recursive-launches-flint-local-coding-model/">CryptoBriefing</a> · 10.22 01:41 KST</span></div>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>관련 나라·기업</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>이름</th><th>어떤 관련이 있나</th></tr></thead>
+      <tbody>
+        <tr><td>나라</td><td>미국</td><td>Recursive가 보도상 미국 AI 스타트업이고, 모델은 미국 회사가 공개했습니다.</td></tr>
+        <tr><td>나라</td><td>중국</td><td>비교 상대인 Alibaba의 Qwen3.8 27B가 6개 테스트 평균에서 Flint보다 높았습니다.</td></tr>
+        <tr><td>기업</td><td>Recursive</td><td>개발사. CEO는 Richard Socher(전 Salesforce 수석 과학자)이며, 2026년 5월 약 6.5억 달러 투자를 받았다고 보도됐습니다.</td></tr>
+        <tr><td>기업</td><td>NVIDIA</td><td>Recursive의 투자사이며, 회사가 RTX Spark에서 150토큰/초 이상을 측정했다고 밝힌 하드웨어입니다.</td></tr>
+        <tr><td>기업</td><td>Apple</td><td>Flint 속도 측정에 쓰인 M4 Pro MacBook Pro의 제조사입니다.</td></tr>
+        <tr><td>기업</td><td>Alibaba</td><td>이번 비교에서 평균 점수가 더 높았던 Qwen 모델의 개발사입니다.</td></tr>
+        <tr><td>기업</td><td>Google</td><td>같은 기기 비교 대상인 Gemma 4의 개발사입니다.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s5"><span class="no">05</span>기존 방식과 무엇이 다른가</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>비교 항목</th><th>클라우드 코딩 AI (유료 API)</th><th>Flint (로컬 실행)</th></tr></thead>
+      <tbody>
+        <tr><td>코드가 어디로 가나</td><td>회사 서버로 전송</td><td>내 기기 안에서 처리</td></tr>
+        <tr><td>비용</td><td>사용량만큼 과금</td><td>모델 무료, 전기·기기 비용만 발생</td></tr>
+        <tr><td>인터넷</td><td>필수</td><td>모델을 받은 뒤에는 불필요</td></tr>
+        <tr><td>필요한 장비</td><td>브라우저나 API 키</td><td>대용량 메모리가 있는 노트북 (예: 48GB 이상)</td></tr>
+        <tr><td>지시 수준</td><td>큰 작업도 한 번에 맡기기 쉬움</td><td>큰 작업은 작은 단계로 나누는 편이 안정적</td></tr>
+      </tbody>
+    </table></div>
+    <p>즉, Flint는 "가장 똑똑한 모델"이 아니라 "내 기기에서 개인정보와 비용 걱정 없이 굴릴 수 있는 모델"로 보는 것이 정확합니다.</p>
+
+    <h2 id="s6"><span class="no">06</span>직접 해 보기</h2>
+    <p>Recursive가 공개한 실행 도구 rec 기준 예시입니다. 조건은 Apple Silicon(M4 Pro·M5 Pro·M5 Max 등), 통합 메모리 48GB 이상, 여유 디스크 약 30GB, Node.js 22 이상(pi 실행용)입니다. 설치 스크립트는 실행 전에 주소를 열어 내용을 한 번 확인하세요.</p>
+    <pre><code># 1) 설치 (공식 GitHub 저장소 안내 명령)
+curl -fsSL https://raw.githubusercontent.com/recursive-oss/rec/main/install.sh | bash
+
+# 2) Flint를 pi 코딩 도구로 실행 (저장소에서 권장하는 방법)
+rec launch pi</code></pre>
+    <p>Apple Silicon이 아니거나 메모리가 부족하다면, 허깅페이스의 Flint 모델 카드(huggingface.co/RecursiveSI/flint)에서 llama.cpp, Ollama, LM Studio용 양자화(용량을 줄인) 버전을 찾아 보세요. 명령어는 각 도구의 공식 문서를 따라 확인해야 합니다.</p>
+
+    <h2 id="s7"><span class="no">07</span>주의할 점과 한계</h2>
+    <ul>
+      <li><strong>성능 수치는 회사 측 자체 측정입니다.</strong> 독립 리더보드에는 아직 결과가 충분히 올라오지 않았다고 기록돼 있습니다 (10월 22일 기준).</li>
+      <li><strong>속도는 짧은 문맥에서 잰 값입니다.</strong> 긴 코드베이스를 넣으면 체감 속도는 떨어질 수 있습니다. 권장 문맥은 256k 토큰이며, 최대 512k까지 지원합니다.</li>
+      <li><strong>큰 작업은 나눠서 맡기세요.</strong> Recursive도 대형 유료 모델보다 더 많은 안내가 필요하다고 밝혔습니다. Wired 리뷰어도 작은 모델이 실수하거나 느린 경우가 있었다고 적었습니다.</li>
+      <li><strong>원본 가중치는 약 80GB입니다.</strong> 노트북에서 쓰려면 양자화 버전을 받아야 하며, 양자화하면 품질이 조금 달라질 수 있습니다.</li>
+      <li><strong>생성된 코드는 반드시 직접 검토하세요.</strong> 로컬에서 돌아가도 결과가 항상 옳지는 않습니다. 테스트와 코드 리뷰는 그대로 필요합니다.</li>
+    </ul>
+
+    <h2 id="s8"><span class="no">08</span>정리</h2>
+    <div class="conclusion">
+      <p>Flint는 "전문가 256명 중 6명만 부르는" 구조로 노트북에서도 빠르게 돌도록 만든 Apache 2.0 오픈 코딩 모델입니다. 성능 수치는 회사 발표이고, 실제로 쓸 만한지는 여러분의 작업으로 직접 확인해야 합니다.</p>
+      <p>입문 개발자에게 좋은 첫 걸음은 거창한 설치가 아니라, 작은 함수 하나를 로컬 모델에게 설명하고 고쳐 보는 것입니다. 클라우드 AI와 로컬 AI를 같은 과제로 비교해 보면, 어떤 일을 어디에 맡길지 감이 빨리 잡힙니다.</p>
+    </div>
+
+    <h2 id="s9"><span class="no">09</span>참고한 글</h2>
+    <ol class="refs">
+      <li><a href="https://techcrunch.com/2026/10/21/recursive-launches-flint-a-laptop-coding-model-it-says-was-largely-built-by-ai/">Recursive launches Flint, a laptop coding model it says was largely built by AI</a> <span class="src">TechCrunch · 2026.10.21</span></li>
+      <li><a href="https://www.marktechpost.com/2026/10/21/recursive-flint-local-coding-model/">Recursive Releases Flint, an Open-Weight 40B MoE Local Coding Model</a> <span class="src">MarkTechPost · 2026.10.21</span></li>
+      <li><a href="https://aicoder.com/news/news-20261022-recursive-flint-40b-a2-5b-open-weights-local-coding-model">Recursive releases its first model, Flint</a> <span class="src">AICoder · 2026.10.21</span></li>
+      <li><a href="https://cryptobriefing.com/recursive-launches-flint-local-coding-model/">Recursive launches Flint, a fast open-weight coding model built to run locally</a> <span class="src">CryptoBriefing · 2026.10.21</span></li>
+      <li><a href="https://www.testingcatalog.com/recursive-releases-flint-40b-model-for-local-coding/">Recursive releases Flint, 40B model for local coding</a> <span class="src">TestingCatalog · 2026.10.21</span></li>
+      <li><a href="https://www.tokenpost.com/news/technology/37525">Recursive Brings Flint Coding Model to Local Machines With 2.5B Active Parameters</a> <span class="src">TokenPost · 2026.10.22</span></li>
+      <li><a href="https://recursive.com/updates/introducing-recursive-flint">Introducing Flint (Recursive 공식 발표)</a> <span class="src">Recursive · 2026.10.21</span></li>
+      <li><a href="https://huggingface.co/RecursiveSI/flint">RecursiveSI/flint (Hugging Face 모델 카드)</a> <span class="src">Hugging Face</span></li>
+      <li><a href="https://github.com/recursive-oss/rec">recursive-oss/rec (실행 도구 저장소)</a> <span class="src">GitHub</span></li>
+      <li><a href="https://cellcog.ai/blog/recursive-flint/">Recursive Flint: 40B Local Coding Model, Specs and Scores</a> <span class="src">CellCog 블로그 · 2026.10.22 (수치 교차 확인용)</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#insights">← 전체 인사이트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

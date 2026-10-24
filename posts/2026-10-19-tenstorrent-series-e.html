@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>짐 켈러의 Tenstorrent, 15억 달러 유치: '열린 AI 칩'에 몰린 돈 | AI 비밀 레시피</title>
+  <meta name="description" content="Tenstorrent의 15억 달러 시리즈 E 유치와 Nvidia 대안 AI 칩 경쟁을 입문 개발자 눈높이로 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>짐 켈러의 Tenstorrent, 15억 달러 유치: '열린 AI 칩'에 몰린 돈</h1>
+    <div class="byline"><span><time datetime="2026-10-19T22:56:49+09:00">2026.10.19 22:56 KST</time></span><span>읽는 시간 약 6분</span><span>#AI칩 #RISC-V #오픈소스</span></div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol><li>RISC-V 기반 AI 칩 회사 Tenstorrent가 10월 19일 기업 가치 62억 달러로 15억 달러 규모의 시리즈 E 투자를 유치했다고 발표했습니다.</li><li>AI·반도체 주가가 1조 달러 넘게 빠진 직후임에도 Nvidia 대안으로 꼽히는 "열린" 칩·소프트웨어 회사에 대규모 자금이 들어갔고, 삼성·LG 등이 이 회사의 설계를 라이선스해 쓰고 있습니다.</li><li>개발자에게는 GPU 하나에 묶이지 않는 AI 하드웨어 선택지가 늘고, 오픈소스 소프트웨어 스택을 직접 다룰 기회가 커진다는 의미입니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">Tenstorrent, 15억 달러 시리즈 E 유치(기업 가치 62억 달러)</span><span>발표 2026.10.19</span><span><a href="https://theaiinsider.tech/2026/10/19/tenstorrent-announces-a-1-5b-series-e-at-a-6-2b-valuation/">The AI Insider</a> · <a href="https://www.citybiz.co/article/920423/tenstorrent-raises-1-5-billion-series-e-at-6-2-billion-valuation/">citybiz</a></span></div>
+
+    <p class="lead">지난주 AI·반도체 주식이 크게 흔들렸지만, 투자자들이 AI 칩에서 완전히 손을 뗀 것은 아니었습니다. 10월 19일, 전설적인 칩 설계자 짐 켈러가 이끄는 Tenstorrent가 대규모 투자를 받았습니다. 돈이 "어디로" 가는지를 보면 AI 하드웨어 시장의 다음 그림이 보입니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">이슈의 이름</a></li>
+        <li><a href="#s2">논의 중인 기업·나라</a></li>
+        <li><a href="#s3">이슈의 내용</a></li>
+        <li><a href="#s4">AI 개발자의 대응 방법</a></li>
+        <li><a href="#s5">긍정적으로 흘러간다면</a></li>
+        <li><a href="#s6">부정적으로 흘러간다면</a></li>
+        <li><a href="#s7">최종 결론</a></li>
+        <li><a href="#s8">참고 자료</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이슈의 이름</h2>
+    <p><strong>Nvidia 대안 AI 칩과 '열린 하드웨어' 경쟁: Tenstorrent 시리즈 E</strong></p>
+    <div class="callout">
+      <b>용어 먼저 짚고 가기</b>
+      <strong>RISC-V(리스크 파이브)</strong>는 누구나 로열티 없이 쓸 수 있는 공개 CPU 명령어 체계입니다. Arm이나 x86처럼 특정 회사가 소유한 설계와 달리 자유롭게 칩을 만들 수 있습니다. <strong>칩 IP 라이선스</strong>는 칩 설계 일부를 다른 회사에 빌려주고 사용료를 받는 사업 방식입니다. <strong>시리즈 E</strong>는 스타트업이 받는 다섯 번째 단계의 대규모 투자 라운드를 뜻합니다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>이슈를 논의하고 있는 기업·나라</h2>
+    <div class="tbl">
+    <table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>AI 칩</td><td><strong>Tenstorrent</strong></td><td>RISC-V 기반 AI 프로세서·서버 제조, 칩 설계 라이선스. CEO 짐 켈러</td></tr>
+        <tr><td>투자자</td><td><strong>Trace Capital, Innovation X</strong></td><td>이번 라운드 공동 주도</td></tr>
+        <tr><td>투자자</td><td><strong>ARK Invest, Fidelity, Morgan Stanley, Sandisk, T. Rowe Price 등</strong></td><td>참여 투자자</td></tr>
+        <tr><td>한국 기업</td><td><strong>삼성, LG, 현대자동차그룹</strong></td><td>기존 투자자. 삼성·LG는 Tenstorrent 설계를 라이선스해 사용</td></tr>
+        <tr><td>경쟁사</td><td><strong>Nvidia</strong></td><td>AI 가속기 시장의 절대 강자. 비교 대상</td></tr>
+        <tr><td>나라</td><td><strong>미국, 캐나다, 한국</strong></td><td>미국·캐나다 기반 회사, 한국 대기업이 핵심 파트너</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s3"><span class="no">03</span>이슈의 내용</h2>
+
+    <h3>발표된 내용</h3>
+    <p>The AI Insider와 citybiz에 따르면 Tenstorrent는 15억 달러 규모의 시리즈 E를 마쳤고, 투자 후 기업 가치는 62억 달러입니다. AI Weekly에 따르면 이는 2024년 12월 평가액(26억 달러)의 두 배가 넘습니다. Trace Capital과 Innovation X가 공동으로 주도했고, ARK Invest, Fidelity, Morgan Stanley, Sandisk 등이 참여했습니다. 기존 투자자로는 Bezos Expeditions, 삼성, LG전자, 현대자동차그룹이 있습니다.</p>
+    <p>회사는 투자금을 세 곳에 쓰겠다고 밝혔습니다. 자사 AI 서버 'Galaxy'를 대규모로 배치하고, 오픈웨이트 언어 모델과 동영상 생성 모델을 돌릴 컴퓨팅 용량을 늘리고, AI 코어와 RISC-V CPU 설계를 계속 개발하는 것입니다. 매출이나 세부 배분, 배치 일정은 공개하지 않았습니다.</p>
+
+    <h3>무엇이 다른가</h3>
+    <ul>
+      <li><strong>한 가지 설계, 모든 크기</strong>: 카드 한 장부터 워크스테이션, 랙, 초대형 클러스터까지 같은 구조의 칩으로 판매합니다.</li>
+      <li><strong>열린 소프트웨어</strong>: 칩을 돌리는 소프트웨어 스택을 오픈소스로 공개합니다. 짐 켈러는 컴퓨팅의 미래는 그 위에서 무언가를 만드는 사람들이 소유해야 한다는 취지로 말했습니다.</li>
+      <li><strong>설계를 빌려준다</strong>: 칩을 파는 것 외에 RISC-V CPU 설계(TT-Ascalon)와 AI 코어(Tensix)를 다른 칩 회사에 라이선스합니다.</li>
+    </ul>
+
+    <h3>왜 지금 주목받나</h3>
+    <p>지난주 세계 AI·반도체 주식 시가총액이 나흘 만에 약 1조 달러 줄어든 직후에 나온 대형 투자라서, "AI 칩 투자가 끝난 것이 아니라 Nvidia 하나에 쏠렸던 돈이 다양한 대안으로 나뉘기 시작한 것"이라는 해석에 힘을 싣습니다. 같은 날 다른 GPU 소프트웨어 스타트업 doubleAI도 2억 2,000만 달러를 유치했다고 AI Weekly는 전했습니다.</p>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      AI 하드웨어가 "<strong>Nvidia GPU + CUDA</strong>" 하나뿐인 시대에서, 여러 칩과 열린 소프트웨어가 경쟁하는 시대로 조금씩 옮겨 가고 있습니다. 하드웨어에 덜 묶인 코드를 쓰는 습관이 점점 중요해집니다.
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>앞으로 AI 개발자들의 대응 방법 제안</h2>
+    <div class="actions">
+      <div class="action"><h4>1. 하드웨어 독립적인 코드 쓰기</h4><p>PyTorch 같은 상위 프레임워크 위에서 작업하고, 특정 GPU 전용 코드는 꼭 필요한 곳에만 쓰세요. 새 칩이 나와도 코드 대부분을 그대로 옮길 수 있습니다.</p></div>
+      <div class="action"><h4>2. 오픈소스 하드웨어 스택 살펴보기</h4><p>Tenstorrent처럼 소프트웨어를 공개한 회사의 저장소를 읽어 보면, AI 칩이 실제로 어떻게 모델을 돌리는지 배울 수 있습니다. 컴파일러·커널 쪽 공부의 좋은 출발점입니다.</p></div>
+      <div class="action"><h4>3. RISC-V 기초 익히기</h4><p>RISC-V는 교육용 자료와 시뮬레이터가 잘 갖춰져 있습니다. 컴퓨터 구조 기초를 RISC-V로 공부해 두면 임베디드부터 AI 칩까지 활용 범위가 넓습니다.</p></div>
+      <div class="action"><h4>4. 성능은 "비용 대비"로 비교하기</h4><p>새 하드웨어를 볼 때 최고 성능보다 같은 작업을 얼마의 비용과 전력으로 처리하는지를 비교하세요. 클라우드에서 여러 가속기를 짧게 빌려 직접 벤치마크해 보는 것도 좋습니다.</p></div>
+      <div class="action"><h4>5. 오픈웨이트 모델 서빙 경험 쌓기</h4><p>이번 투자금의 주요 용도가 오픈웨이트 모델 서빙입니다. 작은 오픈 모델을 직접 서빙해 본 경험은 어떤 하드웨어로 옮겨 가도 쓸모 있습니다.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>이 이슈가 긍정적인 방향으로 흘러가는 경우</h2>
+    <div class="future pos">
+      <ul>
+        <li><strong>AI 칩 시장에 경쟁이 생긴다.</strong> Nvidia 대안이 늘면서 AI 컴퓨팅 가격이 내려가고 공급 부족이 줄어듭니다.</li>
+        <li><strong>열린 생태계가 커진다.</strong> 오픈소스 소프트웨어와 RISC-V가 표준으로 자리 잡아, 누구나 칩과 소프트웨어를 들여다보고 개선할 수 있게 됩니다.</li>
+        <li><strong>한국 기업에 기회가 된다.</strong> 삼성·LG·현대차처럼 설계를 라이선스해 쓰는 회사들이 자체 AI 칩을 더 쉽게 만들 수 있습니다.</li>
+        <li><strong>로컬 AI가 쉬워진다.</strong> 카드·워크스테이션 단위 제품이 늘어나 개인과 작은 팀도 AI를 직접 돌리기 쉬워집니다.</li>
+      </ul>
+    </div>
+
+    <h2 id="s6"><span class="no">06</span>이 이슈가 부정적인 방향으로 흘러가는 경우</h2>
+    <div class="future neg">
+      <ul>
+        <li><strong>생태계 장벽을 넘지 못한다.</strong> 개발자 도구와 라이브러리가 Nvidia만큼 성숙하지 못하면 좋은 칩도 외면받을 수 있습니다.</li>
+        <li><strong>거품 논란에 휩쓸린다.</strong> AI 투자 심리가 더 나빠지면 높은 기업 가치가 부담이 되고 추가 자금 조달이 어려워질 수 있습니다.</li>
+        <li><strong>표준이 쪼개진다.</strong> 칩마다 다른 소프트웨어가 난립하면 개발자가 맞춰야 할 환경이 오히려 늘어납니다.</li>
+        <li><strong>규제와 공급망 리스크.</strong> AI 칩 수출 통제가 강화되면 글로벌 판매와 협력에 제약이 생길 수 있습니다.</li>
+      </ul>
+    </div>
+
+    <h2 id="s7"><span class="no">07</span>최종 결론</h2>
+    <div class="conclusion">
+      <p>Tenstorrent의 15억 달러 유치는 AI 반도체 주가가 크게 흔들린 직후에도, Nvidia 중심 구조를 흔들 수 있는 "열린" 대안에는 여전히 큰돈이 모인다는 것을 보여 줍니다. 한 가지 설계를 모든 크기로 팔고, 소프트웨어를 공개하고, 설계 자체를 빌려주는 방식이 실제 시장에서 통할지는 앞으로 Galaxy 서버 배치와 생태계 성장으로 확인될 것입니다.</p>
+      <p>입문 개발자에게 이 뉴스의 메시지는 <strong>"하드웨어에 덜 묶이는 개발자가 되자"</strong>입니다. 상위 프레임워크로 코드를 쓰고, 오픈소스 스택을 들여다보고, 비용 대비 성능으로 판단하는 습관이 어떤 칩이 이기든 통하는 실력이 됩니다.</p>
+    </div>
+
+    <h2 id="s8"><span class="no">08</span>참고 사이트·문헌</h2>
+    <ol class="refs">
+      <li><a href="https://theaiinsider.tech/2026/10/19/tenstorrent-announces-a-1-5b-series-e-at-a-6-2b-valuation/">Tenstorrent Announces a $1.5B Series E at a $6.2B Valuation</a> <span class="src">— The AI Insider, 2026.10.19</span></li>
+      <li><a href="https://www.citybiz.co/article/920423/tenstorrent-raises-1-5-billion-series-e-at-6-2-billion-valuation/">Tenstorrent Raises $1.5 Billion Series E at $6.2 Billion Valuation</a> <span class="src">— citybiz, 2026.10.19</span></li>
+      <li><a href="https://aiweekly.co/ai-news-today">AI News Today, October 19: Top Stories</a> <span class="src">— AI Weekly, 2026.10.19</span></li>
+      <li><a href="https://en.sedaily.com/international/2026/10/16/ai-chip-stocks-lose-1-trillion-in-market-value-in-four-days">AI, Chip Stocks Lose $1 Trillion in Market Value in Four Days</a> <span class="src">— Seoul Economic Daily, 2026.10.16</span></li>
+    </ol>
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list">
+      <a href="2026-10-19-us-datacenter-setbacks.html"><span class="r">오늘의 뉴스 1위</span><span class="t">미국 AI 데이터센터 47곳에 제동: 10조 달러 투자 계획이 멈칫하다</span></a>
+      <a href="2026-10-19-anthropic-public-benefit-fund.html"><span class="r">오늘의 뉴스 2위</span><span class="t">Anthropic, 지분 5%로 '공익 펀드' 만든다: 상장 앞둔 AI 기업의 실험</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

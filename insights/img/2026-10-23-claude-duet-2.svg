@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 340" role="img" aria-labelledby="t2">
+  <title id="t2">행동을 자동 실행과 승인 필요로 나누면 사람이 개입할 지점이 보인다</title>
+  <style>
+    .bg{fill:#ffffff}.h{fill:#1b1b1f;font:800 19px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .tx{fill:#1b1b1f;font:700 15px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .sm{fill:#62626b;font:500 13px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .box{fill:#e8eefe;stroke:#2f5bea;stroke-width:1.5}
+    .warn{fill:#fbeae6;stroke:#c2412d;stroke-width:1.5}
+    .cell{fill:#f7f6f2;stroke:#c9c6bc;stroke-width:1}
+    @media (prefers-color-scheme: dark){
+      .bg{fill:#1a1b1f}.h,.tx{fill:#ececf0}.sm{fill:#9a9aa5}
+      .box{fill:#1f2640;stroke:#7c9cff}.warn{fill:#2e1b17;stroke:#f0806c}.cell{fill:#23252b;stroke:#3a3c44}
+    }
+  </style>
+  <rect class="bg" x="0" y="0" width="800" height="340" rx="14"/>
+  <text class="h" x="30" y="40">행동을 두 갈래로 나누기</text>
+  <rect class="box" x="30" y="70" width="360" height="230" rx="14"/>
+  <text class="tx" x="210" y="110" text-anchor="middle">먼저 맡겨도 되는 일</text>
+  <text class="sm" x="210" y="145" text-anchor="middle">읽기 · 요약 · 분류 · 할 일 정리</text>
+  <text class="sm" x="210" y="180" text-anchor="middle">초안 작성 (발송은 하지 않음)</text>
+  <text class="sm" x="210" y="215" text-anchor="middle">일정 확인과 알림</text>
+  <rect class="warn" x="410" y="70" width="360" height="230" rx="14"/>
+  <text class="tx" x="590" y="110" text-anchor="middle">사람이 확인해야 하는 일</text>
+  <text class="sm" x="590" y="145" text-anchor="middle">메시지 발송 · 결제 · 서명</text>
+  <text class="sm" x="590" y="180" text-anchor="middle">데이터 삭제</text>
+  <text class="sm" x="590" y="215" text-anchor="middle">외부로 나가는 민감 정보 포함 글</text>
+  <text class="sm" x="30" y="325">출처 글을 바탕으로 다시 그림</text>
+</svg>

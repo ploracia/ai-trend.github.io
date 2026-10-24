@@ -1,0 +1,146 @@
+[
+  {
+    "date": "2026-10-24",
+    "publishedAt": "2026-10-24T23:56:00+09:00",
+    "windowStart": "2026-10-23T16:30:00+09:00",
+    "windowEnd": "2026-10-24T16:00:00+09:00",
+    "rank": 1,
+    "kind": "기술",
+    "subject": "TorchTPU",
+    "title": "PyTorch 코드를 구글 TPU에서 그대로 돌리는 길, TorchTPU",
+    "summary": "구글이 10월 20일 PyTorch 컨퍼런스에서 PyTorch를 TPU 위에서 네이티브로 돌리는 백엔드 TorchTPU를 오픈소스로 공개했습니다. 장치 설정만 바꾸면 기존 코드를 거의 그대로 쓰는 것이 목표이며, 입문 개발자에게는 코드를 고치지 않고 하드웨어를 고르는 발상을 배우기 좋은 사례입니다. 성능 수치는 구글 자체 보고라 직접 실험으로 확인해 보는 것이 좋습니다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "Google",
+      "Meta"
+    ],
+    "tags": [
+      "PyTorch",
+      "TPU",
+      "오픈소스"
+    ],
+    "image": "insights/img/2026-10-24-torchtpu-1.svg",
+    "imageAlt": "PyTorch 코드가 TorchTPU 백엔드를 거쳐 구글 TPU에서 실행되는 흐름도",
+    "url": "insights/2026-10-24-torchtpu.html"
+  },
+  {
+    "date": "2026-10-23",
+    "publishedAt": "2026-10-23T16:25:00+09:00",
+    "windowStart": "2026-10-22T16:30:00+09:00",
+    "windowEnd": "2026-10-23T16:00:00+09:00",
+    "rank": 1,
+    "kind": "기술",
+    "subject": "Claude Duet",
+    "title": "Anthropic의 에이전트 Claude Duet, 입문자가 알아야 할 것",
+    "summary": "Anthropic이 연결된 앱을 주기적으로 살피고, 발송·결제 같은 민감한 행동 앞에서만 사용자에게 묻는 에이전트 Claude Duet을 리서치 프리뷰로 공개했습니다. Opus 5.5 위에서 돌며 현재는 미국 Pro·Max 구독자 대기 신청만 받습니다. 입문 개발자에게는 AI에게 어디까지 맡기고 어디서 사람이 승인할지 설계하는 감각을 배우기 좋은 사례입니다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "Anthropic"
+    ],
+    "tags": [
+      "에이전트",
+      "Claude",
+      "승인 설계",
+      "커넥터"
+    ],
+    "image": "insights/img/2026-10-23-claude-duet-1.svg",
+    "imageAlt": "연결 앱을 주기적으로 살피고 승인 요청 전에 멈추는 Duet의 흐름도",
+    "url": "insights/2026-10-23-claude-duet.html"
+  },
+  {
+    "date": "2026-10-22",
+    "publishedAt": "2026-10-22T16:21:00+09:00",
+    "windowStart": "2026-10-21T16:30:00+09:00",
+    "windowEnd": "2026-10-22T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Flint",
+    "title": "노트북에서 도는 코딩 모델 Flint, 입문자가 알아야 할 것",
+    "summary": "미국 Recursive가 2026년 10월 21일 공개한 코딩 특화 오픈 모델 Flint는 총 398억 파라미터 중 토큰마다 약 25억만 쓰는 MoE 구조입니다. Apache 2.0으로 무료 다운로드가 가능하고 Apple Silicon 노트북에서 빠르게 돌도록 설계됐으며, 성능 수치는 회사 자체 측정치입니다. 입문 개발자에게는 API 요금 없이 코드를 로컬에서 실험할 수 있는 선택지가 생겼다는 뜻입니다.",
+    "countries": [
+      "미국",
+      "중국"
+    ],
+    "companies": [
+      "Recursive",
+      "NVIDIA",
+      "Apple",
+      "Alibaba",
+      "Google"
+    ],
+    "tags": [
+      "로컬 LLM",
+      "MoE",
+      "코딩 모델",
+      "오픈소스"
+    ],
+    "image": "insights/img/2026-10-22-recursive-flint-1.svg",
+    "imageAlt": "256명의 전문가 중 6명이 선택되어 일하는 MoE 구조 그림",
+    "url": "insights/2026-10-22-recursive-flint.html"
+  },
+  {
+    "date": "2026-10-21",
+    "publishedAt": "2026-10-21T16:24:10+09:00",
+    "windowStart": "2026-10-20T16:30:00+09:00",
+    "windowEnd": "2026-10-21T16:00:00+09:00",
+    "rank": 1,
+    "kind": "기술",
+    "subject": "DeepSeek DeepInfer",
+    "title": "DeepSeek DeepInfer: 모델이 아니라 '모델을 돌리는 주방'을 통째로 공개하다",
+    "summary": "중국 DeepSeek이 자사 API를 실제로 돌리는 추론 엔진 DeepInfer를 Apache 2.0으로 공개해 하루 사이 개발자 커뮤니티에서 가장 많이 다뤄졌습니다. 최적화 커널·병렬 처리·추측 디코딩을 묶어 DeepSeek-V4.1-Flash를 NVIDIA SM100과 Huawei Ascend 950에서 돌리는 엔진입니다. 개인이 바로 돌리긴 어렵지만, AI 서비스 비용을 모델만큼 추론 엔진이 좌우한다는 점을 배우기 좋은 실전 교재입니다.",
+    "countries": [
+      "중국",
+      "미국"
+    ],
+    "companies": [
+      "DeepSeek",
+      "NVIDIA",
+      "Huawei"
+    ],
+    "tags": [
+      "추론 엔진",
+      "LLM 서빙",
+      "오픈소스",
+      "추론 속도"
+    ],
+    "image": "insights/img/2026-10-21-deepseek-deepinfer-1.svg",
+    "imageAlt": "모델 가중치와 사용자 요청 사이에서 추론 엔진 DeepInfer가 하는 일과 지원 하드웨어, 빠진 부분을 보여 주는 그림",
+    "url": "insights/2026-10-21-deepseek-deepinfer.html"
+  },
+  {
+    "date": "2026-10-20",
+    "publishedAt": "2026-10-20T16:16:45+09:00",
+    "windowStart": "2026-10-19T16:30:00+09:00",
+    "windowEnd": "2026-10-20T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Inception Mercury 3",
+    "title": "확산 LLM Mercury 3: 한 글자씩 대신 통째로 다듬어 쓰는 AI",
+    "summary": "미국 스타트업 Inception이 확산(diffusion) 방식 언어 모델 Mercury 3를 공개해 하루 사이 개발자 커뮤니티에서 가장 많이 다뤄졌습니다. 앞에서부터 한 토큰씩 쓰는 대신 답 전체 초안을 여러 번 동시에 고쳐 쓰는 방식으로, 회사 발표 기준 초당 1,068토큰을 냅니다. OpenAI 호환 API로 바로 써 볼 수 있지만 수치는 아직 자체 측정뿐이라 내 작업으로 직접 재 보는 것이 중요합니다.",
+    "countries": [
+      "미국",
+      "중국"
+    ],
+    "companies": [
+      "Inception",
+      "NVIDIA",
+      "OpenAI",
+      "Anthropic",
+      "DeepSeek"
+    ],
+    "tags": [
+      "확산 언어 모델",
+      "dLLM",
+      "추론 속도",
+      "LLM API",
+      "Mercury 3"
+    ],
+    "image": "insights/img/2026-10-20-mercury-3-diffusion-llm-1.svg",
+    "imageAlt": "한 토큰씩 생성하는 자기회귀 모델과 초안 전체를 동시에 다듬는 확산 언어 모델의 비교 그림",
+    "url": "insights/2026-10-20-mercury-3-diffusion-llm.html"
+  }
+]
