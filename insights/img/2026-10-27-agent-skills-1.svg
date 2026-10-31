@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" role="img" aria-label="스킬 폴더 구조와 에이전트 연결 개념도">
+  <rect x="0" y="0" width="680" height="300" rx="14" fill="#f4f6fb"/>
+  <text x="340" y="34" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="16" font-weight="700" fill="#1b1b1f">스킬 = 폴더 하나 + 설명서 한 장</text>
+  <rect x="40" y="60" width="260" height="210" rx="12" fill="#e8eefe" stroke="#2f5bea" stroke-width="2"/>
+  <text x="60" y="92" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="15" font-weight="700" fill="#1b1b1f">📁 my-skill/</text>
+  <rect x="70" y="110" width="200" height="50" rx="8" fill="#ffffff" stroke="#2f5bea"/>
+  <text x="84" y="132" font-family="Consolas, monospace" font-size="14" font-weight="700" fill="#1b1b1f">SKILL.md</text>
+  <text x="84" y="150" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="12" fill="#444">필수: name, description + 지침</text>
+  <rect x="70" y="176" width="200" height="34" rx="8" fill="#ffffff" stroke="#9aa3b5"/>
+  <text x="84" y="198" font-family="Consolas, monospace" font-size="13" fill="#1b1b1f">reference.md (선택)</text>
+  <rect x="70" y="220" width="200" height="34" rx="8" fill="#ffffff" stroke="#9aa3b5"/>
+  <text x="84" y="242" font-family="Consolas, monospace" font-size="13" fill="#1b1b1f">scripts/ (선택)</text>
+  <path d="M316 165 L372 165" stroke="#2f5bea" stroke-width="3" fill="none" marker-end="url(#arr)"/>
+  <defs><marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f5bea"/></marker></defs>
+  <rect x="380" y="90" width="260" height="150" rx="12" fill="#e5f4ec" stroke="#1f8a5b" stroke-width="2"/>
+  <text x="510" y="122" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="16" font-weight="700" fill="#1b1b1f">AI 에이전트</text>
+  <text x="510" y="148" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="13" fill="#1b1b1f">작업을 보고 관련 스킬을</text>
+  <text x="510" y="168" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="13" fill="#1b1b1f">골라 설명서를 읽고 따른다</text>
+  <text x="510" y="212" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="12" fill="#444">Claude Code · Codex 등</text>
+</svg>

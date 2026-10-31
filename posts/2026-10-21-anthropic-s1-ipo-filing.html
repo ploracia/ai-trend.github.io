@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anthropic 상장 신청서 초안 공개: 상반기 매출 163억 달러, 손실 807억 달러 | AI 비밀 레시피</title>
+  <meta name="description" content="WSJ가 입수한 Anthropic S-1 초안의 매출·손실·컴퓨팅 비용과 위험 요인을 입문 개발자 눈높이로 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>Anthropic 상장 신청서 초안 공개: 상반기 매출 163억 달러, 손실 807억 달러</h1>
+    <div class="byline"><span><time datetime="2026-10-21T08:15:28+09:00">2026.10.21 08:15 KST</time></span><span>읽는 시간 약 7분</span><span>#Anthropic #IPO #투자</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>월스트리트저널(WSJ)이 10월 20일(현지시간) Anthropic의 상장 신청서(S-1) 초안을 입수해 보도했고, 2026년 상반기 매출이 163억 달러로 1년 전 같은 기간(11억 달러)보다 크게 늘었지만 순손실은 807억 달러였습니다.</li><li>손실 대부분은 현금이 나가지 않는 회계상 비용이지만, 클라우드 계약만 약 4,500억 달러에 이르는 등 AI 회사의 사업이 얼마나 많은 컴퓨팅 비용 위에 서 있는지가 숫자로 처음 드러났습니다.</li><li>개발자에게는 내가 쓰는 AI API의 가격과 공급이 이런 거대한 투자·비용 구조에 묶여 있다는 뜻이므로, 특정 회사 하나에 기대지 않는 설계와 비용 관리가 더 중요해집니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">WSJ, Anthropic S-1 초안 입수 보도: 상반기 매출 163억 달러·순손실 807억 달러</span><span>보도 2026.10.20(현지) · 국내 2026.10.21 새벽(KST)</span><span><a href="https://www.investing.com/news/stock-market-news/anthropic-revenue-hits-163-billion-as-preliminary-s1-outlines-ipo-risks--wsj-4960928">Investing.com(WSJ 인용)</a> · <a href="https://runtimewire.com/article/anthropic-draft-s1-revenue-loss-compute-costs">RuntimeWire</a></span></div>
+
+    <p class="lead">Claude를 만드는 Anthropic이 11월 상장을 앞두고 있습니다. 상장하려면 회사의 돈 사정을 낱낱이 적은 서류를 내야 하는데, 그 초안의 숫자가 보도됐습니다. 매출은 폭발적으로 늘었지만 손실과 컴퓨팅 비용 약속도 상상 이상으로 큽니다. AI 산업의 '가계부'를 처음으로 엿볼 수 있는 뉴스입니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">이 이슈는 무엇인가?</a></li>
+        <li><a href="#s2">누가 움직이나?</a></li>
+        <li><a href="#s3">무슨 일이 있었나?</a></li>
+        <li><a href="#s4">실무자가 해볼 것</a></li>
+        <li><a href="#s5">긍정적인 방향으로 간다면?</a></li>
+        <li><a href="#s6">부정적인 방향으로 간다면?</a></li>
+        <li><a href="#s7">입문 개발자에게 남는 것은?</a></li>
+        <li><a href="#s8">참고 자료</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>Anthropic 상장 신청서(S-1) 초안 공개 보도: AI 회사의 매출·손실·컴퓨팅 비용 구조</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>IPO(기업공개)</strong>는 회사 주식을 증권거래소에 올려 누구나 살 수 있게 하는 일입니다. <strong>S-1</strong>은 미국에서 상장하려는 회사가 증권거래위원회(SEC)에 내는 신고서로, 매출·손실·위험 요인을 자세히 적습니다. <strong>비현금성 손실</strong>은 실제로 돈이 빠져나가지 않았지만 회계 규칙상 비용으로 잡히는 손실입니다(예: 투자 계약의 가치 변동). <strong>해지 불가 계약</strong>은 중간에 취소할 수 없어 반드시 돈을 내야 하는 장기 계약입니다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl">
+    <table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>상장 추진</td><td><strong>Anthropic</strong></td><td>Claude 개발사. SEC에 S-1 초안을 비공개로 제출하고 11월 상장을 준비</td></tr>
+        <tr><td>보도</td><td><strong>월스트리트저널(WSJ)</strong></td><td>S-1 초안을 입수해 상반기 실적과 위험 요인을 처음 보도</td></tr>
+        <tr><td>클라우드 공급</td><td><strong>Google Cloud · AWS · Microsoft</strong></td><td>보도에 따르면 각각 1,110억·1,100억·310억 달러 규모의 해지 불가 계약 상대</td></tr>
+        <tr><td>주관사</td><td><strong>Goldman Sachs · Morgan Stanley</strong></td><td>Crypto Briefing 보도 기준 상장 주관</td></tr>
+        <tr><td>경쟁사</td><td><strong>OpenAI</strong></td><td>Reuters 보도에 따르면 Anthropic 상장 전에 1조 4천억 달러 이상 가치로 투자 유치를 서두르는 중</td></tr>
+        <tr><td>규제 기관</td><td><strong>미국 SEC</strong></td><td>신고서 검토. 정식 공개본이 나오면 숫자가 바뀔 수 있음</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+
+    <h3>오늘 발표된 내용</h3>
+    <p>WSJ가 검토한 초안(Investing.com 정리)에 따르면 Anthropic의 2026년 상반기 매출은 <strong>163억 달러</strong>로, 2025년 상반기 11억 달러에서 크게 뛰었습니다. 같은 기간 순손실은 <strong>807억 달러</strong>였는데, 이 가운데 약 720억 달러는 전환사채 등 투자 계약과 관련한 비현금성 회계 비용이라고 합니다. 실제 돈이 나간 손실은 그보다 훨씬 작다는 뜻입니다.</p>
+    <p>더 눈에 띄는 것은 컴퓨팅 비용입니다. 상반기 컴퓨팅·인프라 지출은 약 90억 달러로 2025년 한 해(73억 달러)를 이미 넘었습니다. 향후 10년간 취소할 수 없는 클라우드 계약은 약 4,500억 달러이며, 협상 중인 계약까지 합하면 최대 7,500억 달러를 쓸 수 있다고 적었습니다. 클라우드 업체가 줄 수 있는 것보다 더 많은 용량을 원해 외부 데이터센터 개발도 추진한다는 내용도 들어 있습니다.</p>
+    <p>위험 요인으로는 고객 집중(두 고객이 매출의 약 20%를 차지한다고 보도됐고, 일부 매체는 25%로 전함), 막대한 장기 설비 약속, 그리고 모델 정렬 실패나 심각한 AI 보안 사고로 인한 피해가 보험 한도를 넘을 수 있다는 점이 꼽혔습니다. 기업 가치는 상장 시 약 2조 달러까지 거론됩니다.</p>
+
+    <h3>배경: 짧은 타임라인</h3>
+    <ul class="timeline">
+      <li><time>2026.05</time>시리즈 H로 650억 달러를 유치하며 기업 가치 9,650억 달러를 인정받습니다(RuntimeWire 인용).</li>
+      <li><time>2026.09.29</time>Fortune 등이 2025년 실적이 담긴 S-1 초기 내용을 보도합니다. 2025년 매출은 약 46억 달러였습니다.</li>
+      <li><time>2026.10.01</time>Bloomberg를 인용한 Yahoo Finance 보도로 11월 중순 상장 가능성이 알려집니다.</li>
+      <li><time>2026.10.19</time>Anthropic이 지분 5%로 공익 펀드를 만들겠다는 계획이 알려집니다.</li>
+      <li><time>2026.10.20</time>WSJ가 상반기 실적과 위험 요인이 담긴 S-1 초안을 보도합니다.</li>
+    </ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      AI 모델 회사는 <strong>"매출은 빠르게 크지만, 그보다 훨씬 큰 컴퓨팅 비용을 미리 약속한 회사"</strong>입니다. 우리가 쓰는 API 가격과 사용량 한도는 이 비용 구조와 직접 연결돼 있습니다.
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>실무자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. 내 서비스의 토큰 비용 계산해 보기</h4><p>요청 1건당 입력·출력 토큰 수와 가격을 곱해 월 비용을 추정하세요. 사용자가 10배 늘면 비용이 어떻게 되는지 미리 알아 두는 습관이 중요합니다.</p></div>
+      <div class="action"><h4>2. 모델 제공사를 하나 더 준비하기</h4><p>호출 코드를 어댑터 한 곳에 모아 두면, 가격이 오르거나 한도가 바뀌었을 때 다른 회사 모델로 옮기기 쉽습니다.</p></div>
+      <div class="action"><h4>3. 작은 모델부터 써 보기</h4><p>모든 요청에 가장 큰 모델을 쓸 필요는 없습니다. 분류·요약 같은 쉬운 작업은 작은 모델로 처리해 비용을 줄이세요.</p></div>
+      <div class="action"><h4>4. 프롬프트 캐싱과 배치 처리 확인하기</h4><p>반복되는 긴 시스템 프롬프트는 캐싱 기능으로, 급하지 않은 작업은 배치 API로 돌리면 비용이 크게 줄어듭니다. 쓰는 API 문서에서 지원 여부를 확인하세요.</p></div>
+      <div class="action"><h4>5. S-1 정식본의 '위험 요인' 읽어 보기</h4><p>정식 공개되면 SEC EDGAR에서 누구나 볼 수 있습니다. AI 회사가 스스로 꼽는 위험(안전 사고, 고객 집중, 공급 부족)은 개발자가 알아야 할 업계 지도입니다.</p></div>
+      <div class="action"><h4>6. 사용량·장애 모니터링 붙이기</h4><p>API 호출 수, 실패율, 응답 시간을 기록해 두면 공급 부족으로 한도가 걸리거나 장애가 날 때 바로 알아차릴 수 있습니다.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos">
+      <ul>
+        <li><strong>AI 회사의 투명성이 높아진다.</strong> 상장사가 되면 분기마다 실적과 위험을 공개해야 해서, 개발자도 공급사의 안정성을 판단하기 쉬워집니다.</li>
+        <li><strong>대규모 자금으로 공급이 늘어난다.</strong> 상장 자금이 컴퓨팅 확보에 쓰이면 사용량 한도나 대기 문제가 줄어들 수 있습니다.</li>
+        <li><strong>규모의 경제로 가격이 내려간다.</strong> 매출이 커지고 인프라가 쌓이면 토큰당 가격이 계속 낮아질 수 있습니다.</li>
+        <li><strong>안전 투자가 공시 대상이 된다.</strong> 안전 사고를 위험 요인으로 적은 만큼, 투자자 압력이 안전 연구를 더 키우는 방향으로 작용할 수 있습니다.</li>
+      </ul>
+    </div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg">
+      <ul>
+        <li><strong>비용 부담이 가격 인상으로 이어진다.</strong> 수천억 달러의 약속을 갚으려면 API 가격이나 요금제 조건이 빡빡해질 수 있습니다.</li>
+        <li><strong>AI 거품 논란이 커진다.</strong> 큰 손실이 부각되면 투자 심리가 식고, 스타트업 자금줄까지 마를 수 있습니다.</li>
+        <li><strong>대형 고객 중심으로 쏠린다.</strong> 소수 고객 의존이 크면 기능 개발도 대기업 요구 위주가 되어 개인·소규모 개발자가 뒷순위가 될 수 있습니다.</li>
+        <li><strong>단기 실적 압박이 생긴다.</strong> 상장 후 분기 실적에 쫓기면 안전·연구보다 매출 기능을 우선할 위험이 있습니다.</li>
+      </ul>
+    </div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion">
+      <p>이번 보도는 AI가 "마법 같은 기술"이면서 동시에 엄청난 돈이 드는 사업이라는 사실을 숫자로 보여 줬습니다. 매출이 1년 만에 열 배 넘게 늘어도, 그보다 큰 컴퓨팅 비용을 미리 약속해야 경쟁에서 버틸 수 있는 구조입니다.</p>
+      <p>입문 개발자에게 이 숫자가 주는 교훈은 단순합니다. <strong>AI API는 공짜도, 영원히 같은 가격도 아니다.</strong> 처음부터 비용을 계산하고, 모델을 바꿔 끼울 수 있게 만들고, 작은 모델로 해결할 수 있는 일은 작은 모델에 맡기는 습관이 내 서비스를 오래 살아남게 합니다.</p>
+    </div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://www.investing.com/news/stock-market-news/anthropic-revenue-hits-163-billion-as-preliminary-s1-outlines-ipo-risks--wsj-4960928">Anthropic revenue hits $16.3 billion as preliminary S-1 outlines IPO risks - WSJ</a> <span class="src">— Investing.com, 2026.10.20</span></li>
+      <li><a href="https://runtimewire.com/article/anthropic-draft-s1-revenue-loss-compute-costs">Anthropic's draft S-1 puts $16.3B in revenue beside an $80.7B loss</a> <span class="src">— RuntimeWire, 2026.10.20</span></li>
+      <li><a href="https://cryptobriefing.com/anthropic-ipo-draft-revenue-net-loss/">Anthropic reports $16.3 billion revenue and $80.7 billion loss in IPO draft</a> <span class="src">— Crypto Briefing, 2026.10.20</span></li>
+      <li><a href="https://finance.yahoo.com/technology/article/anthropic-reportedly-looking-to-ipo-as-early-as-mid-november-180315768.html">Anthropic reportedly looking to IPO as early as mid-November</a> <span class="src">— Yahoo Finance, 2026.10.01</span></li>
+      <li><a href="https://www.theneuron.ai/digest/everything-that-happened-in-ai-today-tuesday-october-20-2026/">Everything That Happened in AI Today, Tuesday, October 20</a> <span class="src">— The Neuron, 2026.10.20</span></li>
+    </ol>
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list">
+      <a href="2026-10-21-china-nvidia-rtx-pro-5500-orders.html"><span class="r">오늘의 뉴스 2위</span><span class="t">中 바이트댄스·알리바바·텐센트, Nvidia GPU 350억 달러어치 주문: 받을 수 있는 건 일부뿐</span></a>
+      <a href="2026-10-21-google-torchtpu-open-source.html"><span class="r">오늘의 뉴스 3위</span><span class="t">Google, PyTorch를 TPU에서 그대로: 'TorchTPU' 오픈소스 공개</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

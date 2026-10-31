@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440" role="img" aria-labelledby="t2">
+  <title id="t2">Flint를 내 노트북에서 돌리는 흐름: 요청, 로컬 실행 도구, 모델 가중치, 결과가 모두 기기 안에서 이어진다</title>
+  <style>
+    .bg{fill:#ffffff}.h{fill:#1b1b1f;font:800 19px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .tx{fill:#1b1b1f;font:700 15px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .sm{fill:#62626b;font:500 13px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .tw{fill:#ffffff;font:700 15px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .box{fill:#e8eefe;stroke:#2f5bea;stroke-width:1.5}
+    .hw{fill:#e5f4ec;stroke:#1f8a5b;stroke-width:1.5}
+    .net{fill:#fbeae6;stroke:#c2412d;stroke-width:1.5;stroke-dasharray:5 4}
+    .ar{stroke:#62626b;stroke-width:2;fill:none}
+    @media (prefers-color-scheme: dark){
+      .bg{fill:#1a1b1f}.h,.tx{fill:#ececf0}.sm{fill:#9a9aa5}
+      .box{fill:#1f2640;stroke:#7c9cff}.hw{fill:#16291f;stroke:#4cc38a}.net{fill:#2e1b17;stroke:#f0806c}
+      .ar{stroke:#9a9aa5}
+    }
+  </style>
+  <rect class="bg" x="0" y="0" width="800" height="440" rx="14"/>
+  <text class="h" x="32" y="44">내 노트북에서 Flint 돌리기 (동작 흐름)</text>
+  <text class="sm" x="32" y="66">요청과 결과가 기기 밖으로 나가지 않습니다 (인터넷 없이도 가능)</text>
+
+  <rect class="box" x="32" y="110" width="170" height="90" rx="12"/>
+  <text class="tx" x="117" y="148" text-anchor="middle">에디터·터미널</text>
+  <text class="sm" x="117" y="172" text-anchor="middle">"이 버그 고쳐 줘"</text>
+
+  <rect class="box" x="290" y="110" width="220" height="90" rx="12"/>
+  <text class="tx" x="400" y="148" text-anchor="middle">로컬 실행 도구</text>
+  <text class="sm" x="400" y="172" text-anchor="middle">llama.cpp · Ollama · LM Studio</text>
+
+  <rect class="hw" x="580" y="110" width="188" height="90" rx="12"/>
+  <text class="tx" x="674" y="148" text-anchor="middle">Flint 가중치</text>
+  <text class="sm" x="674" y="172" text-anchor="middle">Apache 2.0, 약 80GB 원본</text>
+
+  <path class="ar" d="M202 155 L286 155"/>
+  <path class="ar" d="M510 155 L576 155"/>
+
+  <rect class="hw" x="290" y="250" width="220" height="70" rx="12"/>
+  <text class="tx" x="400" y="280" text-anchor="middle">내 기기의 칩</text>
+  <text class="sm" x="400" y="302" text-anchor="middle">Apple Silicon · NVIDIA GPU</text>
+  <path class="ar" d="M674 202 L674 226 L510 226 L510 250" style="fill:none"/>
+  <path class="ar" d="M400 200 L400 246"/>
+
+  <path class="ar" d="M290 285 L202 285 L202 200"/>
+  <rect class="box" x="32" y="250" width="150" height="70" rx="12" style="fill:none;stroke:#62626b;stroke-dasharray:4 4"/>
+  <text class="tx" x="107" y="280" text-anchor="middle">코드 결과</text>
+  <text class="sm" x="107" y="302" text-anchor="middle">수정안 · 설명</text>
+
+  <rect class="net" x="560" y="356" width="208" height="54" rx="10"/>
+  <text class="sm" x="664" y="378" text-anchor="middle">인터넷 연결 없이도 동작</text>
+  <text class="sm" x="664" y="398" text-anchor="middle">모델 받을 때만 필요</text>
+</svg>

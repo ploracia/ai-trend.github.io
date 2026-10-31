@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>미국 국토안보부, 연방 기관에서 DeepSeek 퇴출 명령: 제3자 서비스까지 포함 | AI 비밀 레시피</title>
+  <meta name="description" content="미국 국토안보부(DHS)가 연방 민간 기관에 DeepSeek 제품 제거와 조달 금지를 명령한 뉴스를 입문 개발자 눈높이로 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>미국 국토안보부, 연방 기관에서 DeepSeek 퇴출 명령: 제3자 서비스까지 포함</h1>
+    <div class="byline"><span><time datetime="2026-10-20T08:31:41+09:00">2026.10.20 08:31 KST</time></span><span>읽는 시간 약 7분</span><span>#규제 #DeepSeek #공급망보안</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>미국 국토안보부(DHS)가 10월 19일(현지시간) 연방 민간 기관에 중국 AI 기업 DeepSeek의 제품을 IT 시스템에서 제거하고 앞으로 구매하지 말라고 명령했습니다.</li><li>2018년 제정된 연방 조달 공급망 보안법을 근거로 했고, DeepSeek 모델로 만든 제3자 서비스까지 대상에 넣은 것으로 보도돼 '어떤 모델 위에서 만든 서비스냐'가 규제 대상이 되는 선례가 생겼습니다.</li><li>개발자에게는 내 서비스가 어떤 모델·어느 서버를 쓰는지 기록하고, 고객 요구에 따라 모델을 바꿔 끼울 수 있게 설계하는 일이 곧 영업 경쟁력이 된다는 뜻입니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">DHS, 연방 민간 기관에 DeepSeek 제품 제거·조달 배제 명령</span><span>발표·보도 2026.10.19(현지) · 첫 보도 2026.10.19 22:56 KST</span><span><a href="https://cyberscoop.com/dhs-bans-deepseek-federal-agencies/">CyberScoop</a> · <a href="https://www.engadget.com/2290535/homeland-security-bans-deepseek-use-in-federal-civilian-agencies/">Engadget</a></span></div>
+
+    <p class="lead">중국의 오픈 웨이트 모델 DeepSeek은 싼 가격과 높은 성능으로 전 세계 개발자가 즐겨 쓰는 모델입니다. 그런데 미국 정부가 연방 기관의 IT 시스템에서 DeepSeek을 완전히 걷어 내라는 공식 명령을 내렸습니다. 앱 하나를 막는 수준을 넘어, DeepSeek 기술로 만든 다른 회사의 서비스까지 겨냥했다는 점에서 AI 업계의 관심이 쏠렸습니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">이 이슈는 무엇인가?</a></li>
+        <li><a href="#s2">누가 움직이나?</a></li>
+        <li><a href="#s3">무슨 일이 있었나?</a></li>
+        <li><a href="#s4">실무자가 해볼 것</a></li>
+        <li><a href="#s5">긍정적인 방향으로 간다면?</a></li>
+        <li><a href="#s6">부정적인 방향으로 간다면?</a></li>
+        <li><a href="#s7">입문 개발자에게 남는 것은?</a></li>
+        <li><a href="#s8">참고 자료</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>미국 연방정부의 DeepSeek 제거·조달 배제 명령 (AI 공급망 보안 규제)</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>오픈 웨이트 모델</strong>은 학습된 모델 파일(가중치)을 공개해 누구나 내려받아 자기 서버에서 돌릴 수 있는 모델입니다. DeepSeek이 대표적입니다. <strong>공급망 보안</strong>은 소프트웨어를 만들 때 쓰는 부품(라이브러리, 모델, 클라우드 등)이 믿을 만한 곳에서 왔는지 따지는 일입니다. <strong>조달 배제</strong>는 정부가 특정 회사의 제품을 사지 못하게 막는 조치를 말합니다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl">
+    <table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>정부</td><td><strong>미국 국토안보부(DHS)</strong></td><td>명령 발령. 연방 조달 보안 위원회의 검토를 거쳐 공급망 보안법을 적용</td></tr>
+        <tr><td>대상 기업</td><td><strong>DeepSeek (항저우 DeepSeek 인공지능)</strong></td><td>제품·서비스 구매 금지, 기존 설치분 제거 대상. 즉각적인 공식 반응은 보도되지 않음</td></tr>
+        <tr><td>영향받는 기관</td><td><strong>미국 연방 민간 행정기관</strong></td><td>Engadget은 EPA, FCC 등을 예로 듦. 트래픽 모니터링·로그 강화 권고</td></tr>
+        <tr><td>제3자 서비스</td><td><strong>DeepSeek 모델을 호스팅하는 업체</strong></td><td>Decrypt에 따르면 DeepSeek 기반으로 만든 서비스도 대상. 미국 서버에서 DeepSeek을 돌리는 Perplexity가 예로 언급</td></tr>
+        <tr><td>앞선 조치</td><td><strong>미 상무부·해군, 뉴욕·테네시·버지니아주</strong></td><td>정부 기기에서 DeepSeek 사용을 먼저 금지</td></tr>
+        <tr><td>나라</td><td><strong>미국 vs 중국</strong></td><td>AI 모델을 국가 안보와 공급망 문제로 다루는 흐름이 강해짐</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+
+    <h3>오늘 발표된 내용</h3>
+<p>CyberScoop에 따르면 DHS는 연방 조달 공급망 보안법(2018년 제정)과 연방 조달 보안 위원회의 검토를 근거로, 연방 민간 기관이 DeepSeek과 그 계열사의 IT 제품·서비스를 사지 못하게 하고 이미 쓰고 있는 것은 제거하도록 했습니다. 명령은 마크웨인 멀린 국토안보부 장관 명의의 6월 26일자 서한에서 시작됐고, 10월 19일 공개되면서 연방관보 게재 절차에 들어갔습니다. 예외를 원하는 기관은 60일 전에 "설득력 있는 근거"를 제출해야 합니다.</p>
+<p>DHS가 든 이유는 크게 세 가지입니다. 데이터가 중국 서버에 저장돼 중국 정부가 제출을 강제할 수 있다는 점, 프롬프트와 응답을 주고받는 과정에서 공무원·납품업체의 민감한 정보가 넘어갈 수 있다는 점, 그리고 모델에 악성 코드나 보안 취약점이 숨어 있을 수 있다는 점입니다. 제거 작업이 끝날 때까지 각 기관은 트래픽을 감시하고 로그를 강화하라는 권고도 받았습니다.</p>
+<p>개발자에게 가장 눈에 띄는 대목은 범위입니다. Decrypt와 Techmeme이 정리한 보도에 따르면 명령은 DeepSeek 앱뿐 아니라 <strong>DeepSeek 기술로 만든 제3자 제품·서비스</strong>까지 겨냥합니다. DeepSeek은 오픈 웨이트라 누구나 자기 서버에서 돌릴 수 있는데, 미국 서버에서 돌리는 경우까지 걸리는지가 업계의 질문으로 떠올랐습니다. 이 표현이 지나치게 넓다는 비판도 SNS에서 나왔습니다.</p>
+
+    <h3>배경: 짧은 타임라인</h3>
+    <ul class="timeline">
+      <li><time>2025.01.27</time>DeepSeek 오픈소스 모델 공개 여파로 Nvidia 주가가 하루 16% 하락합니다(Decrypt).</li>
+      <li><time>2025.04</time>미 하원 중국특위가 DeepSeek이 미국 사용자 데이터를 중국 정부로 보낸다고 주장합니다.</li>
+      <li><time>2026.06.26</time>DHS 장관이 DeepSeek 제외 명령 서한에 서명합니다(CyberScoop).</li>
+      <li><time>2026.10.17</time>DeepSeek이 V4.1-Flash-1017 업데이트를 내놓습니다.</li>
+      <li><time>2026.10.19</time>DHS 명령이 공개되고 주요 매체가 일제히 보도합니다.</li>
+    </ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      이제 AI 서비스를 팔 때는 성능과 가격만이 아니라 <strong>"어느 나라의 어떤 모델을, 어디 서버에서 돌리는가"</strong>가 계약 조건이 됩니다. 특히 정부·공공·금융 고객은 이 질문을 먼저 던집니다.
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>실무자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. 내 서비스의 '모델 목록' 만들기</h4><p>어떤 기능이 어떤 모델(버전 포함)을 쓰는지, API로 부르는지 직접 호스팅하는지 표로 정리하세요. 소프트웨어 부품 목록(SBOM)처럼 <code>AI-BOM</code>을 남기는 습관입니다.</p></div>
+      <div class="action"><h4>2. 모델을 바꿔 끼울 수 있게 설계하기</h4><p>모델 호출을 한 곳의 어댑터 계층으로 모으면, 고객이나 규제가 특정 모델을 금지해도 설정만 바꿔 다른 모델로 옮길 수 있습니다.</p></div>
+      <div class="action"><h4>3. 데이터가 어디로 가는지 확인하기</h4><p>API형 서비스는 프롬프트가 어느 나라 서버로 가는지 약관과 문서에서 확인하세요. 민감한 데이터는 국내·자체 서버 모델로 처리하는 선택지도 준비합니다.</p></div>
+      <div class="action"><h4>4. 오픈 웨이트도 검증하기</h4><p>자체 서버에서 돌리는 모델이라도 출처, 해시값, 라이선스를 기록하고 공식 저장소에서 받은 파일인지 확인하세요.</p></div>
+      <div class="action"><h4>5. 공공·기업 고객의 요구사항 미리 읽기</h4><p>정부·금융 프로젝트에 참여할 계획이라면 해당 기관의 AI·클라우드 보안 지침을 먼저 읽어 두세요.</p></div>
+      <div class="action"><h4>6. 평가 기준을 숫자로 남기기</h4><p>모델을 바꿀 때 품질이 얼마나 떨어지는지 알 수 있도록, 내 서비스용 작은 평가 세트를 만들어 두면 교체 결정이 빨라집니다.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos">
+      <ul>
+        <li><strong>AI 공급망 표준이 생긴다.</strong> 모델 출처와 데이터 경로를 밝히는 표준 양식이 자리 잡아, 고객이 안심하고 AI 서비스를 고를 수 있습니다.</li>
+        <li><strong>검증된 호스팅 시장이 커진다.</strong> 오픈 웨이트 모델을 안전하게 검증·호스팅해 주는 서비스가 늘어 개발자 선택지가 넓어집니다.</li>
+        <li><strong>모델 교체가 쉬운 설계가 기본이 된다.</strong> 특정 모델에 덜 묶인 서비스가 늘면서 가격 경쟁과 품질 경쟁이 함께 일어납니다.</li>
+        <li><strong>보안 투자가 늘어난다.</strong> 데이터 유출 우려가 구체적인 기준으로 바뀌면서 로그·감사·암호화 같은 기본기가 강화됩니다.</li>
+      </ul>
+    </div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg">
+      <ul>
+        <li><strong>범위가 계속 넓어진다.</strong> '기술로 만든 제품'이라는 표현이 넓게 해석되면, 오픈 웨이트를 조금이라도 쓴 서비스 전체가 위축될 수 있습니다.</li>
+        <li><strong>AI 생태계가 국가별로 쪼개진다.</strong> 미국·중국 진영에 따라 쓸 수 있는 모델이 갈리면 개발자는 같은 기능을 나라별로 따로 만들어야 할 수 있습니다.</li>
+        <li><strong>값싼 모델의 선택지가 줄어든다.</strong> 저렴한 모델을 못 쓰게 되면 스타트업과 개인 개발자의 비용 부담이 커집니다.</li>
+        <li><strong>보복 조치가 이어진다.</strong> 중국의 맞대응이나 추가 수출 통제가 나오면 칩·모델·서비스 전반의 불확실성이 커집니다.</li>
+      </ul>
+    </div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion">
+      <p>이번 명령은 AI 모델이 이제 "쓰기 편한 도구"를 넘어 국가 안보와 공급망의 한 부품으로 다뤄진다는 신호입니다. 앱 하나를 막는 데서 그치지 않고, 그 모델로 만든 서비스까지 따지는 방향으로 규제의 초점이 옮겨 가고 있습니다.</p>
+      <p>입문 개발자에게 필요한 것은 특정 모델을 피하는 요령이 아니라 <strong>내가 무엇을 어디서 쓰고 있는지 아는 습관</strong>입니다. 모델 목록을 기록하고, 교체 가능한 구조로 만들고, 데이터 경로를 확인하는 일은 어떤 규제가 나와도 서비스를 지켜 주는 기본기입니다.</p>
+    </div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://cyberscoop.com/dhs-bans-deepseek-federal-agencies/">DHS to ban DeepSeek from federal civilian agencies</a> <span class="src">— CyberScoop, 2026.10.19</span></li>
+      <li><a href="https://www.engadget.com/2290535/homeland-security-bans-deepseek-use-in-federal-civilian-agencies/">Homeland Security bans DeepSeek use in federal civilian agencies</a> <span class="src">— Engadget, 2026.10.19</span></li>
+      <li><a href="https://decrypt.co/381347/us-orders-civilian-agencies-rip-deepseek-out-government-systems">US orders civilian agencies to rip DeepSeek out of government systems</a> <span class="src">— Decrypt, 2026.10.19</span></li>
+      <li><a href="https://qz.com/deepseek-ban-civilian-agencies-dhs-order-101926">DHS orders DeepSeek ban at civilian agencies</a> <span class="src">— Quartz, 2026.10.19</span></li>
+      <li><a href="https://www.techmeme.com/261019/p40">Techmeme: DHS orders federal civilian agencies to remove DeepSeek (WSJ 외 보도 모음)</a> <span class="src">— Techmeme, 2026.10.19</span></li>
+    </ol>
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list">
+      <a href="2026-10-20-microsoft-agentic-insider.html"><span class="r">오늘의 뉴스 2위</span><span class="t">Microsoft "AI 에이전트는 내부자 위협": Guardian Agents로 에이전트 감시 나선다</span></a>
+      <a href="2026-10-20-meta-prometheus-supercluster.html"><span class="r">오늘의 뉴스 3위</span><span class="t">Meta, GPU 100만 개 향하는 '프로메테우스' 슈퍼클러스터 내부 공개</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

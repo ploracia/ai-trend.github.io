@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 460" role="img" aria-labelledby="t2">
+  <title id="t2">LLM 추론의 프리필 단계와 디코드 단계, 추측 디코딩의 초안-검증 흐름</title>
+  <style>
+    .bg{fill:#ffffff}.h{fill:#1b1b1f;font:800 19px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .tx{fill:#1b1b1f;font:700 15px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .sm{fill:#62626b;font:500 13px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .tw{fill:#ffffff;font:700 14px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .tk{fill:#1b1b1f;font:700 14px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .in{fill:#e8eefe;stroke:#2f5bea;stroke-width:1.5}.done{fill:#2f5bea}.draft{fill:#fbf3e0;stroke:#b7791f;stroke-width:1.5;stroke-dasharray:4 3}
+    .ok{fill:#1f8a5b}.no{fill:#c2412d}.ln{stroke:#e3e1da;stroke-width:1.5}.ar{stroke:#62626b;stroke-width:2;fill:none}
+    @media (prefers-color-scheme: dark){
+      .bg{fill:#1a1b1f}.h,.tx,.tk{fill:#ececf0}.sm{fill:#9a9aa5}.tw{fill:#111214}
+      .in{fill:#1f2640;stroke:#7c9cff}.done{fill:#7c9cff}.draft{fill:#2b2414;stroke:#e0a84a}
+      .ok{fill:#4cc38a}.no{fill:#f0806c}.ln{stroke:#2c2d33}.ar{stroke:#9a9aa5}
+    }
+  </style>
+  <defs><marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#888"/></marker></defs>
+  <rect class="bg" width="800" height="460"/>
+  <text class="h" x="32" y="40">① 프리필(Prefill): 질문 전체를 한 번에 읽기</text>
+  <text class="sm" x="32" y="62">입력 토큰을 한꺼번에 계산해 '메모(KV 캐시)'로 남긴다 · 계산량이 많은 단계</text>
+  <g transform="translate(32,78)">
+    <rect class="in" x="0" y="0" width="90" height="38" rx="8"/><text class="tk" x="45" y="24" text-anchor="middle">추론</text>
+    <rect class="in" x="100" y="0" width="90" height="38" rx="8"/><text class="tk" x="145" y="24" text-anchor="middle">엔진이</text>
+    <rect class="in" x="200" y="0" width="90" height="38" rx="8"/><text class="tk" x="245" y="24" text-anchor="middle">뭐야</text>
+    <rect class="in" x="300" y="0" width="90" height="38" rx="8"/><text class="tk" x="345" y="24" text-anchor="middle">?</text>
+    <path class="ar" d="M400 19 H452" marker-end="url(#a2)"/>
+    <rect class="done" x="460" y="0" width="200" height="38" rx="8"/><text class="tw" x="560" y="24" text-anchor="middle">KV 캐시(읽은 내용 메모)</text>
+  </g>
+  <line class="ln" x1="32" y1="146" x2="768" y2="146"/>
+  <text class="h" x="32" y="182">② 디코드(Decode): 답을 한 토큰씩 쓰기</text>
+  <text class="sm" x="32" y="204">메모를 참고해 다음 토큰을 하나씩 만든다 · 차례를 기다리는 시간이 길어지기 쉬운 단계</text>
+  <g transform="translate(32,220)">
+    <rect class="done" x="0" y="0" width="110" height="38" rx="8"/><text class="tw" x="55" y="24" text-anchor="middle">모델을</text>
+    <rect class="done" x="120" y="0" width="110" height="38" rx="8"/><text class="tw" x="175" y="24" text-anchor="middle">실제로</text>
+    <rect class="in" x="240" y="0" width="110" height="38" rx="8"/><text class="tk" x="295" y="24" text-anchor="middle">돌리는…</text>
+    <text class="sm" x="370" y="24">한 번에 하나씩 → 느림</text>
+  </g>
+  <line class="ln" x1="32" y1="282" x2="768" y2="282"/>
+  <text class="h" x="32" y="318">③ 추측 디코딩: 초안을 미리 쓰고 한 번에 검증</text>
+  <text class="sm" x="32" y="340">빠른 '초안 작성기'가 몇 토큰을 먼저 제안 → 본 모델이 한 번에 확인 → 맞은 만큼 건너뜀</text>
+  <g transform="translate(32,356)">
+    <rect class="draft" x="0" y="0" width="100" height="38" rx="8"/><text class="tk" x="50" y="24" text-anchor="middle">소프트</text>
+    <rect class="draft" x="110" y="0" width="100" height="38" rx="8"/><text class="tk" x="160" y="24" text-anchor="middle">웨어</text>
+    <rect class="draft" x="220" y="0" width="100" height="38" rx="8"/><text class="tk" x="270" y="24" text-anchor="middle">이다</text>
+    <path class="ar" d="M330 19 H382" marker-end="url(#a2)"/>
+    <text class="tx" x="392" y="24">본 모델 검증:</text>
+    <rect class="ok" x="500" y="0" width="56" height="38" rx="8"/><text class="tw" x="528" y="24" text-anchor="middle">✓</text>
+    <rect class="ok" x="564" y="0" width="56" height="38" rx="8"/><text class="tw" x="592" y="24" text-anchor="middle">✓</text>
+    <rect class="no" x="628" y="0" width="56" height="38" rx="8"/><text class="tw" x="656" y="24" text-anchor="middle">✗</text>
+  </g>
+  <text class="sm" x="32" y="430">맞은 2개는 그대로 쓰고, 틀린 곳부터 다시 생성 · 초안 적중률이 높을수록 빨라진다</text>
+</svg>

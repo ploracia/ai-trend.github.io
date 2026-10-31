@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-labelledby="t1 d1">
+  <title id="t1">MCP 2026-07-28 스펙에서 요청 한 건이 이동하는 방식</title>
+  <desc id="d1">클라이언트가 요청 한 건에 버전·능력 정보를 모두 담아 게이트웨이를 거쳐 서버로 보내고, 서버는 세션 상태 없이 응답한다.</desc>
+  <rect x="0" y="0" width="720" height="360" rx="14" fill="#f4f6fb"/>
+  <text x="360" y="38" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="18" font-weight="700" fill="#1b1b1f">요청 한 장에 필요한 정보를 전부 담는다</text>
+
+  <!-- 클라이언트 -->
+  <rect x="30" y="120" width="170" height="120" rx="12" fill="#ffffff" stroke="#2f5bea" stroke-width="2"/>
+  <text x="115" y="160" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="16" font-weight="700" fill="#1b1b1f">클라이언트</text>
+  <text x="115" y="186" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="13" fill="#4a4a55">AI 앱 · 에디터</text>
+  <text x="115" y="210" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="13" fill="#4a4a55">세션 ID 없음</text>
+
+  <!-- 화살표 1 -->
+  <line x1="200" y1="180" x2="265" y2="180" stroke="#62626b" stroke-width="2"/>
+  <polygon points="265,174 277,180 265,186" fill="#62626b"/>
+  <text x="238" y="166" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="12" fill="#4a4a55">_meta 에 버전·능력</text>
+
+  <!-- 게이트웨이 -->
+  <rect x="280" y="120" width="160" height="120" rx="12" fill="#ffffff" stroke="#1f8a5b" stroke-width="2"/>
+  <text x="360" y="160" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="16" font-weight="700" fill="#1b1b1f">게이트웨이</text>
+  <text x="360" y="186" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="13" fill="#4a4a55">Mcp-Method 헤더로</text>
+  <text x="360" y="210" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="13" fill="#4a4a55">바로 라우팅·차단</text>
+
+  <!-- 화살표 2 -->
+  <line x1="440" y1="180" x2="505" y2="180" stroke="#62626b" stroke-width="2"/>
+  <polygon points="505,174 517,180 505,186" fill="#62626b"/>
+  <text x="472" y="166" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="12" fill="#4a4a55">아무 인스턴스나</text>
+
+  <!-- 서버 -->
+  <rect x="520" y="120" width="170" height="120" rx="12" fill="#ffffff" stroke="#2f5bea" stroke-width="2"/>
+  <text x="605" y="160" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="16" font-weight="700" fill="#1b1b1f">MCP 서버</text>
+  <text x="605" y="186" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="13" fill="#4a4a55">상태를 기억하지 않음</text>
+  <text x="605" y="210" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="13" fill="#4a4a55">필요하면 핸들을 인자로</text>
+
+  <text x="360" y="300" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="13" fill="#62626b">세션이 없으니 서버 여러 대가 같은 요청을 받아도 됩니다. 로드밸런서가 단순해집니다.</text>
+</svg>

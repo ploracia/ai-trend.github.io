@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grok과 GPT에 '한쪽 고르기'를 시켰더니: 중간선거 후보 추천의 편향 | AI 비밀 레시피</title>
+  <meta name="description" content="Convovo 연구팀이 미국 중간선거 약 500개 선거구에서 Grok과 GPT에 후보 한 명을 고르게 한 결과를 정리하고, 개발자가 모델 편향을 어떻게 테스트해야 하는지 짚습니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+    <h1>Grok과 GPT에 '한쪽 고르기'를 시켰더니: 중간선거 후보 추천의 편향</h1>
+    <div class="byline"><span><time datetime="2026-10-26T09:53:47+09:00">2026.10.26 09:53 KST</time></span><span>읽는 시간 약 6분</span><span>#AI편향 #선거 #모델평가</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>Convovo 연구팀은 미국 중간선거 약 500개 선거구에서 xAI의 Grok과 OpenAI의 GPT-6.1 Sol에 후보 한 명을 고르게 했고, 2026년 10월 24일 TechCrunch가 결과를 보도했습니다.</li><li>Grok은 공화당 후보를 92%, GPT-6.1 Sol은 민주당 후보를 97% 골랐습니다. 두 모델이 같은 답을 낸 비율은 10%에 못 미쳤습니다.</li><li>개발자에게는 API에서 답을 강제하는 프롬프트가 모델 편향을 크게 드러낼 수 있다는 경고입니다. 정치적으로 민감한 기능은 배포 전에 편향 테스트를 반드시 거쳐야 합니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">Grok과 GPT의 중간선거 후보 강제 선택 결과와 편향 논란</span><span>보도 2026.10.24</span><span><a href="https://techcrunch.com/2026/10/24/forced-to-pick-groks-ai-model-chooses-republicans-openais-picks-democrats/">TechCrunch</a></span></div>
+
+    <p class="lead">AI 모델에게 "누구를 찍을까"처럼 답하기 어려운 질문을 던졌을 때, 모델은 어떤 쪽으로 기울어 있을까요? 이번 연구는 같은 질문을 두 모델에 같은 방식으로 던졌을 때 결과가 극적으로 갈린다는 점을 보여줬습니다. 모델의 중립성은 기본 설정만으로 보장되지 않는다는 뜻입니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">실무자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>같은 질문에 모델마다 정반대 답을 내놓을 수 있다는 것이 실험으로 드러난 상황</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>강제 선택(forced choice)</strong>은 모델이 "답을 못 한다"고 거절하지 않고 보기 중 하나를 고르도록 요구하는 질문 방식입니다. 소비자용 앱은 대개 정치적 추천을 피하도록 설정돼 있어서, 이번 실험은 주로 API를 통해 진행됐습니다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl">
+    <table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>연구 주체</td><td><strong>Convovo (Cornell 교수 Tapan Parikh)</strong></td><td>대화형 AI 연구·디자인 스튜디오로, 약 500개 중간선거 레이스를 실험</td></tr>
+        <tr><td>테스트 대상</td><td><strong>Grok (xAI), GPT-6.1 Sol (OpenAI)</strong></td><td>API로 강제 선택 질문을 받아 후보 한 명을 고름</td></tr>
+        <tr><td>보도</td><td><strong>TechCrunch</strong></td><td>연구 결과를 기사로 전하며 추가 실험을 의뢰</td></tr>
+        <tr><td>기업 입장</td><td><strong>OpenAI, xAI</strong></td><td>OpenAI는 소비자용 ChatGPT는 객관적으로 설계됐다고 답변, xAI는 응답하지 않음</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+
+    <h3>오늘 발표된 내용</h3>
+    <p>TechCrunch는 2026년 10월 24일 기사에서 Convovo 연구팀이 미국 중간선거 약 500개 선거구에서 Grok과 GPT를 테스트한 결과를 전했습니다. 연구팀은 두 모델에 선거구마다 한 번씩 후보 한 명을 고르라고 요구했습니다. 그 결과 Grok은 공화당 후보를 92%, GPT-6.1 Sol은 민주당 후보를 97% 골랐습니다. 두 모델이 같은 답을 낸 비율은 10%에도 미치지 못했습니다.</p>
+    <p>지역별로 보면 흥미로운 점이 드러났습니다. 공화당 강세 지역 67곳 중 57곳에서 GPT는 민주당 후보를 골랐고, 민주당 강세 지역 72곳 중 47곳에서 Grok은 공화당 후보를 골랐습니다. 연구팀이 검색 기능을 끈 채 30개 선거구를 따로 돌렸을 때도 GPT는 24곳에서 민주당을 골랐고, Grok은 27곳에서 답을 거절했습니다.</p>
+    <p>OpenAI 대변인은 ChatGPT가 기본적으로 객관적이도록 설계됐다고 답했습니다. 그러면서 이번 테스트가 답을 강요하는 프롬프트를 쓴 개발자용 API에서 이뤄졌기 때문에, 일반 사용자의 실제 사용 방식과 다르다고 주장했습니다. xAI는 보도 전까지 답변하지 않았습니다.</p>
+
+    <h3>흐름</h3>
+    <ul class="timeline"><li><time>2026.10.24</time>TechCrunch가 Convovo 연구 결과를 보도</li><li><time>2026.10.24 이후</time>OpenAI가 API와 소비자 앱의 차이를 들어 해명</li><li><time>중간선거 전</time>선거 관련 AI 답변의 편향 논쟁이 이어질 가능성</li></ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>모델이 중립적으로 보인다고 해서 특정 프롬프트에서도 중립적인 것은 아닙니다. 민감한 질문은 직접 테스트해 봐야 합니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>실무자가 해볼 것</h2>
+    <div class="actions"><div class="action"><h4>1. 민감한 질문 평가셋 만들기</h4><p>정치, 종교, 사회 이슈처럼 편향이 드러날 수 있는 질문 목록을 만들고 정기적으로 같은 질문을 돌려 보세요.</p></div><div class="action"><h4>2. 강제 선택형 프롬프트 피하기</h4><p>"반드시 하나를 고르라"는 식의 지시가 답을 왜곡할 수 있으니, 여러 관점을 함께 보여 주는 구조로 설계하세요.</p></div><div class="action"><h4>3. 여러 모델로 교차 확인하기</h4><p>한 모델의 답만 믿지 말고, 다른 모델과 결과를 비교하는 로직을 넣어 보세요.</p></div><div class="action"><h4>4. 거절 응답 처리하기</h4><p>모델이 답을 거부하는 경우에 대비해 사용자에게 안내하는 대체 문구를 준비하세요.</p></div></div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos">
+      <ul><li><strong>편향이 공개적으로 검증된다.</strong> 이번처럼 외부 연구가 모델의 기울기를 드러내면, 기업들이 평가 기준과 공개 자료를 더 투명하게 내놓게 될 수 있습니다.</li><li><strong>개발자 도구가 좋아진다.</strong> 편향 테스트 도구와 평가셋이 발전하면 입문 개발자도 배포 전 점검을 쉽게 할 수 있습니다.</li></ul>
+    </div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg">
+      <ul><li><strong>선거 여론이 왜곡된다.</strong> 사용자가 AI의 추천을 중립적인 조언으로 받아들이면, 특정 후보에 대한 인식이 한쪽으로 쏠릴 수 있습니다.</li><li><strong>기업 간 책임 떠넘기기가 생긴다.</strong> API 사용자 탓이라는 해명이 반복되면, 실제 서비스에서 생기는 피해의 책임 소재가 흐려질 수 있습니다.</li><li><strong>규제가 과도해진다.</strong> 정치 편향 논란이 커지면 일괄적인 규제가 도입되어, 정당한 기능까지 막힐 수 있습니다.</li></ul>
+    </div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion"><p>이번 연구는 같은 AI라도 질문 방식과 모델에 따라 답이 크게 달라질 수 있다는 점을 보여줍니다. 모델을 고를 때 성능과 가격만 보지 말고, 우리 서비스가 다루는 주제에서 어떤 답을 내는지 직접 확인하는 과정이 필요합니다.</p><p>입문 개발자라면 <strong>민감한 질문에 대한 평가셋을 만들고 배포 전에 반드시 돌려 보는 습관</strong>이 가장 실용적인 출발점입니다. 정치나 법률과 관련된 서비스는 전문가 검토와 함께 설계하시기 바랍니다.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs"><li><a href="https://techcrunch.com/2026/10/24/forced-to-pick-groks-ai-model-chooses-republicans-openais-picks-democrats/">Forced to pick, Grok's AI model chooses Republicans. OpenAI's picks Democrats.</a> <span class="src">— TechCrunch, 2026.10.24</span></li></ol>
+  </article>
+
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list"><a href="2026-10-26-spacex-40b-gpu-debt-neocloud-warning.html"><span class="r">오늘의 뉴스 1위</span><span class="t">SpaceX, GPU 구매 자금 400억 달러 조달 마감: 뉴클라우드에 던진 경고</span></a><a href="2026-10-26-us-china-ai-blocs-countries-torn.html"><span class="r">오늘의 뉴스 2위</span><span class="t">미국과 중국의 AI 진영 경쟁: 각국이 한쪽을 고르라는 압박을 받다</span></a></div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

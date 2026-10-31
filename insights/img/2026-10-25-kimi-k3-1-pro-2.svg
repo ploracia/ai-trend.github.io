@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 280" role="img" aria-labelledby="t2 d2">
+  <title id="t2">API 사용과 가중치 자체 실행 경로 비교</title>
+  <desc id="d2">지금 가능한 API 호출 경로와 공개 예정인 가중치 다운로드 경로를 나란히 보여준다</desc>
+  <defs>
+    <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#62626b"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="640" height="280" rx="12" fill="#f4f6fb"/>
+  <text x="320" y="32" text-anchor="middle" font-size="16" font-weight="700" fill="#1b1b1f" font-family="Pretendard, Malgun Gothic, sans-serif">Kimi K3.1 Pro를 쓰는 두 가지 길</text>
+
+  <rect x="30" y="58" width="580" height="90" rx="12" fill="#e5f4ec" stroke="#1f8a5b" stroke-width="1.2"/>
+  <text x="50" y="84" font-size="13" font-weight="700" fill="#1f8a5b" font-family="Pretendard, Malgun Gothic, sans-serif">지금 가능 · 클라우드 API</text>
+  <rect x="50" y="98" width="130" height="36" rx="8" fill="#ffffff" stroke="#8a8a94"/>
+  <text x="115" y="121" text-anchor="middle" font-size="12" fill="#1b1b1f" font-family="Pretendard, Malgun Gothic, sans-serif">내 앱·스크립트</text>
+  <line x1="182" y1="116" x2="222" y2="116" stroke="#62626b" stroke-width="2" marker-end="url(#arr2)"/>
+  <rect x="226" y="98" width="170" height="36" rx="8" fill="#ffffff" stroke="#8a8a94"/>
+  <text x="311" y="121" text-anchor="middle" font-size="12" fill="#1b1b1f" font-family="Pretendard, Malgun Gothic, sans-serif">Moonshot 클라우드 API</text>
+  <line x1="398" y1="116" x2="438" y2="116" stroke="#62626b" stroke-width="2" marker-end="url(#arr2)"/>
+  <rect x="442" y="98" width="150" height="36" rx="8" fill="#ffffff" stroke="#8a8a94"/>
+  <text x="517" y="121" text-anchor="middle" font-size="12" fill="#1b1b1f" font-family="Pretendard, Malgun Gothic, sans-serif">답변 받기</text>
+
+  <rect x="30" y="164" width="580" height="90" rx="12" fill="#fbeae6" stroke="#c2412d" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="50" y="190" font-size="13" font-weight="700" fill="#c2412d" font-family="Pretendard, Malgun Gothic, sans-serif">예정 · 가중치 직접 실행 (11월 4일 목표)</text>
+  <rect x="50" y="204" width="130" height="36" rx="8" fill="#ffffff" stroke="#8a8a94"/>
+  <text x="115" y="227" text-anchor="middle" font-size="12" fill="#1b1b1f" font-family="Pretendard, Malgun Gothic, sans-serif">공개 저장소</text>
+  <line x1="182" y1="222" x2="222" y2="222" stroke="#62626b" stroke-width="2" marker-end="url(#arr2)"/>
+  <rect x="226" y="204" width="170" height="36" rx="8" fill="#ffffff" stroke="#8a8a94"/>
+  <text x="311" y="227" text-anchor="middle" font-size="12" fill="#1b1b1f" font-family="Pretendard, Malgun Gothic, sans-serif">내 서버 또는 노트북</text>
+  <line x1="398" y1="222" x2="438" y2="222" stroke="#62626b" stroke-width="2" marker-end="url(#arr2)"/>
+  <rect x="442" y="204" width="150" height="36" rx="8" fill="#ffffff" stroke="#8a8a94"/>
+  <text x="517" y="227" text-anchor="middle" font-size="12" fill="#1b1b1f" font-family="Pretendard, Malgun Gothic, sans-serif">답변 받기</text>
+</svg>

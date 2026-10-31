@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="t1 d1">
+  <title id="t1">Beam의 MoE 구조: 라우터가 전문가 일부만 고르는 방식</title>
+  <desc id="d1">입력 토큰이 라우터를 거쳐 256개 전문가 중 몇 개만 선택되고, 선택된 전문가의 출력만 합쳐진다</desc>
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#62626b"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="640" height="300" rx="12" fill="#f4f6fb"/>
+  <text x="320" y="30" text-anchor="middle" font-size="15" font-weight="700" fill="#1b1b1f">토큰 하나가 지나가는 길</text>
+
+  <rect x="20" y="120" width="110" height="60" rx="10" fill="#ffffff" stroke="#c9ccd6"/>
+  <text x="75" y="146" text-anchor="middle" font-size="13" fill="#1b1b1f">입력 토큰</text>
+  <text x="75" y="164" text-anchor="middle" font-size="11" fill="#62626b">텍스트</text>
+
+  <line x1="130" y1="150" x2="168" y2="150" stroke="#62626b" stroke-width="1.6" marker-end="url(#a1)"/>
+
+  <rect x="170" y="120" width="110" height="60" rx="10" fill="#e8eefe" stroke="#2f5bea"/>
+  <text x="225" y="146" text-anchor="middle" font-size="13" font-weight="700" fill="#1b1b1f">라우터</text>
+  <text x="225" y="164" text-anchor="middle" font-size="11" fill="#2f5bea">어떤 전문가?</text>
+
+  <line x1="280" y1="150" x2="318" y2="150" stroke="#62626b" stroke-width="1.6" marker-end="url(#a1)"/>
+
+  <rect x="320" y="60" width="200" height="180" rx="12" fill="#ffffff" stroke="#c9ccd6"/>
+  <text x="420" y="82" text-anchor="middle" font-size="12" fill="#62626b">전문가 256개 중 일부</text>
+  <rect x="338" y="96" width="70" height="36" rx="7" fill="#e5f4ec" stroke="#1f8a5b" stroke-width="1.5"/>
+  <text x="373" y="119" text-anchor="middle" font-size="12" font-weight="700" fill="#1b1b1f">선택</text>
+  <rect x="418" y="96" width="70" height="36" rx="7" fill="#f4f6fb" stroke="#c9ccd6"/>
+  <text x="453" y="119" text-anchor="middle" font-size="12" fill="#62626b">쉼</text>
+  <rect x="338" y="142" width="70" height="36" rx="7" fill="#f4f6fb" stroke="#c9ccd6"/>
+  <text x="373" y="165" text-anchor="middle" font-size="12" fill="#62626b">쉼</text>
+  <rect x="418" y="142" width="70" height="36" rx="7" fill="#e5f4ec" stroke="#1f8a5b" stroke-width="1.5"/>
+  <text x="453" y="165" text-anchor="middle" font-size="12" font-weight="700" fill="#1b1b1f">선택</text>
+  <rect x="338" y="188" width="70" height="36" rx="7" fill="#f4f6fb" stroke="#c9ccd6"/>
+  <text x="373" y="211" text-anchor="middle" font-size="12" fill="#62626b">쉼</text>
+  <rect x="418" y="188" width="70" height="36" rx="7" fill="#f4f6fb" stroke="#c9ccd6"/>
+  <text x="453" y="211" text-anchor="middle" font-size="12" fill="#62626b">쉼</text>
+
+  <line x1="520" y1="150" x2="558" y2="150" stroke="#62626b" stroke-width="1.6" marker-end="url(#a1)"/>
+
+  <rect x="560" y="120" width="70" height="60" rx="10" fill="#ffffff" stroke="#c9ccd6"/>
+  <text x="595" y="146" text-anchor="middle" font-size="13" fill="#1b1b1f">다음</text>
+  <text x="595" y="164" text-anchor="middle" font-size="11" fill="#62626b">단어</text>
+
+  <text x="320" y="272" text-anchor="middle" font-size="12" fill="#1b1b1f">전체 501.3B 파라미터 중 토큰마다 쓰는 것은 약 23.4B (선택된 전문가만 계산)</text>
+</svg>

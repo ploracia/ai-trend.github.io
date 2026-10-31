@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="t2 d2">
+  <title id="t2">Beam 가중치를 쓰는 세 가지 길</title>
+  <desc id="d2">Hugging Face의 가중치를 직접 실행하거나, Reflection API를 쓰거나, 파트너 클라우드·로컬 도구를 통해 쓰는 경로를 보여준다</desc>
+  <defs>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#62626b"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="640" height="300" rx="12" fill="#f4f6fb"/>
+  <text x="320" y="30" text-anchor="middle" font-size="15" font-weight="700" fill="#1b1b1f">Beam을 쓰는 세 가지 길</text>
+
+  <rect x="20" y="115" width="150" height="70" rx="10" fill="#e8eefe" stroke="#2f5bea"/>
+  <text x="95" y="142" text-anchor="middle" font-size="13" font-weight="700" fill="#1b1b1f">가중치 공개</text>
+  <text x="95" y="162" text-anchor="middle" font-size="11" fill="#2f5bea">Hugging Face · Apache 2.0</text>
+
+  <line x1="172" y1="150" x2="230" y2="60" stroke="#62626b" stroke-width="1.6" marker-end="url(#a2)"/>
+  <line x1="172" y1="150" x2="230" y2="150" stroke="#62626b" stroke-width="1.6" marker-end="url(#a2)"/>
+  <line x1="172" y1="150" x2="230" y2="240" stroke="#62626b" stroke-width="1.6" marker-end="url(#a2)"/>
+
+  <rect x="232" y="30" width="390" height="60" rx="10" fill="#ffffff" stroke="#c9ccd6"/>
+  <text x="427" y="54" text-anchor="middle" font-size="13" font-weight="700" fill="#1b1b1f">① 직접 실행 (내 서버·GPU)</text>
+  <text x="427" y="76" text-anchor="middle" font-size="11" fill="#62626b">Transformers · vLLM · SGLang 등 지원 (발표 자료 기준)</text>
+
+  <rect x="232" y="120" width="390" height="60" rx="10" fill="#ffffff" stroke="#c9ccd6"/>
+  <text x="427" y="144" text-anchor="middle" font-size="13" font-weight="700" fill="#1b1b1f">② Reflection 자체 API</text>
+  <text x="427" y="166" text-anchor="middle" font-size="11" fill="#62626b">가장 간단한 시작 방법, 직접 GPU 준비 불필요</text>
+
+  <rect x="232" y="210" width="390" height="60" rx="10" fill="#ffffff" stroke="#c9ccd6"/>
+  <text x="427" y="234" text-anchor="middle" font-size="13" font-weight="700" fill="#1b1b1f">③ 파트너 클라우드·로컬 도구</text>
+  <text x="427" y="256" text-anchor="middle" font-size="11" fill="#62626b">AWS · Google Cloud · Azure · Ollama · LM Studio</text>
+</svg>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>캐나다 정부, AI 기업 Cohere에 최대 C$16억 지분 투자… 자국 AI 주권 강화 | AI 비밀 레시피</title>
+  <meta name="description" content="캐나다 정부가 Cohere에 최대 C$16억을 지분 형태로 투자하며 본사 유지와 인프라 투자 등을 조건으로 걸었습니다. AI 주권 정책이 개발자에게 주는 의미를 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>캐나다 정부, AI 기업 Cohere에 최대 C$16억 지분 투자… 자국 AI 주권 강화</h1>
+    <div class="byline"><span><time datetime="2026-10-31T08:30:00+09:00">2026.10.31 08:30 KST</time></span><span>읽는 시간 약 6분</span><span>#투자 #AI주권</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>캐나다 정부는 토론토 기반 AI 기업 Cohere에 최대 C$16억(약 US$11억)을 지분 형태로 투자한다고 10월 29일 발표했습니다. 자금은 목표 달성 단계에 맞춰 나눠 집행됩니다.</li><li>조건은 본사와 법인 소재지를 캐나다에 유지하고, 2030년까지 캐나다 내 컴퓨팅 인프라에 C$17억 이상을 투자하며, 기술 일자리 1,000개 이상을 만드는 것입니다. 보도에 따르면 목표를 지키지 못하면 약속된 자금에 접근할 수 없습니다.</li><li>개발자에게는 국가가 AI 모델과 인프라를 자국 안에 두려는 움직임이 실제 투자로 이어지고 있다는 신호입니다. 어떤 나라의 모델과 클라우드를 쓸지도 정책 위험으로 생각해 볼 시점입니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">캐나다 정부, Cohere에 최대 C$16억 지분 투자 발표 (AI 주권 정책)</span><span>발표 2026.10.29</span><span><a href="https://www.pm.gc.ca/en/news/news-releases/2026/10/29/canada-announces-landmark-investment-cohere-scale-secure-sovereign-ai">캐나다 총리실 보도자료</a> · <a href="https://www.techtimes.com/articles/329764/20261030/c16-billion-cohere-deal-lets-ottawa-veto-any-foreign-acquisition-no-law-required.htm">TechTimes 보도</a></span></div>
+
+    <p class="lead">한 나라가 특정 AI 기업의 주주가 되는 일은 흔하지 않습니다. 이번 투자는 AI 모델과 데이터센터를 자국 안에 두려는 나라들이 어떤 방식으로 움직이는지 보여 주는 사례입니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">개발자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>캐나다 정부가 자국 AI 기업에 공적 자금을 넣어, 모델 개발과 인프라를 국내에 묶어 두려 하고 있습니다.</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>AI 주권(Sovereign AI)</strong>은 자국 안에서 AI 모델을 만들고, 운영하고, 통제할 수 있어야 한다는 정책 방향입니다. <strong>컴퓨팅 인프라</strong>는 AI 모델을 학습하고 실행하는 데이터센터와 GPU 설비를 뜻합니다. <strong>시리즈 E</strong>는 스타트업이 여러 차례 투자를 받을 때 다섯 번째 투자 라운드를 가리키는 이름입니다.
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>항목</th><th>내용 (보도 기준)</th></tr></thead>
+      <tbody>
+        <tr><td>정부 투자 규모</td><td>최대 C$16억 (약 US$11억, 환율에 따라 차이)</td></tr>
+        <tr><td>지급 방식</td><td>Crown 기관 CDEV를 통해 목표 달성 단계별로 집행</td></tr>
+        <tr><td>본사 조건</td><td>캐나다 법인과 본사 유지</td></tr>
+        <tr><td>인프라 조건</td><td>2030년까지 캐나다 내 컴퓨팅 인프라 C$17억 이상</td></tr>
+        <tr><td>고용 조건</td><td>2030년까지 기술 일자리 1,000개 이상</td></tr>
+        <tr><td>전체 라운드 목표</td><td>최대 C$70억 (약 US$50억), 사전 기업가치 C$357억 (보도 기준)</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>투자 주체</td><td><strong>캐나다 정부</strong></td><td>마크 카니 총리와 에반 솔로몬 AI·디지털 혁신 장관이 발표를 주도</td></tr>
+        <tr><td>투자 대상</td><td><strong>Cohere (CEO 에이던 고메즈)</strong></td><td>토론토 기반 기업으로, 본사와 법인을 캐나다에 두는 조건을 수락</td></tr>
+        <tr><td>민간 투자자</td><td><strong>Schwarz Group, NVIDIA, Bell Ventures 등</strong></td><td>Schwarz Group은 주도 투자자, NVIDIA와 Inovia, Prosperity7은 기존 투자자로 참여</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+    <h3>발표된 내용</h3>
+    <p>캐나다 총리실 보도자료는 10월 29일자로, 정부가 Cohere에 최대 C$16억 규모의 지분 투자를 한다고 밝혔습니다. 투자는 단계적으로 이뤄지고, 진행 상황은 정기적으로 보고됩니다. 지분율과 이사회 권한은 보도자료에 공개되지 않았습니다.</p>
+    <p>카니 총리는 진정한 주권이 자국의 기준으로 AI를 만들고, 도입하고, 통제할 수 있는 능력에 달려 있다는 취지로 말했습니다. 솔로몬 장관은 캐나다를 떠나지 않고도 세계적으로 성공하는 기업을 만들 수 있어야 한다고 강조했습니다.</p>
+    <p>TechTimes 보도에 따르면, 이 자금은 목표를 지킬 때만 받을 수 있는 구조입니다. 고용과 인프라 목표를 채우지 못하거나 본사를 해외로 옮기는 인수에 동의하면 자금 접근이 막힌다고 보도했습니다. 매체는 이를 사실상의 거부권으로 해석했지만, 계약 조항 자체는 인용하지 않았습니다.</p>
+    <h3>진행 순서</h3>
+    <ul class="timeline">
+      <li><time>4월</time>Schwarz Group이 5억 유로 규모 구조화 금융을 발표 (보도 기준)</li>
+      <li><time>10월 29일</time>캐나다 정부 최대 C$16억 지분 투자 발표</li>
+      <li><time>10월 30일</time>TechTimes 등 매체가 조건과 구조를 분석 보도</li>
+    </ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>AI 모델을 어디에 두고 누가 통제하는지가 정책 문제가 되면서, 개발자도 쓰는 모델과 클라우드의 나라별 조건을 함께 봐야 합니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>개발자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. 모델 공급처 다양화하기</h4><p>특정 모델 API에 직접 묶이지 않도록, 호출 부분을 얇은 어댑터 계층으로 감싸 두세요.</p></div>
+      <div class="action"><h4>2. 데이터 저장 위치 적어 두기</h4><p>고객 데이터가 어느 나라 서버에 저장되고 어느 모델로 처리되는지 문서에 정리해 두세요.</p></div>
+      <div class="action"><h4>3. 같은 과제로 모델 비교하기</h4><p>Cohere를 포함한 여러 모델에 같은 질문 세트를 던져 답 품질과 비용을 표로 비교해 보세요.</p></div>
+      <div class="action"><h4>4. 정책 발표 주기적으로 보기</h4><p>정부 보도자료와 규제 변화를 월 1회 확인하는 습관을 들이면 기획 단계에서 위험을 줄일 수 있습니다.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos"><ul>
+      <li><strong>모델 선택지가 넓어진다.</strong> 자국 기업에 자금이 들어가면 모델과 인프라가 커져, 미국 기업 중심이던 시장에 대안이 생길 수 있습니다.</li>
+      <li><strong>현지 일자리와 인프라가 늘어난다.</strong> 데이터센터와 기술 인력이 늘면 관련 스타트업과 개발자 생태계도 함께 커질 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg"><ul>
+      <li><strong>보호주의가 강해진다.</strong> 해외 인수와 외국 자본 유입이 어려워지면, 기업이 더 큰 시장으로 확장하기 힘들어질 수 있습니다.</li>
+      <li><strong>정책 목표가 기술보다 앞설 수 있다.</strong> 고용과 인프라 목표를 채우는 것이 목적이 되면 모델 품질 경쟁이 뒤로 밀릴 위험이 있습니다.</li>
+      <li><strong>공정성 논란이 생긴다.</strong> 공적 자금이 특정 기업에 집중되면 경쟁사와 다른 스타트업이 불리해졌다는 비판이 나올 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion"><p>이번 투자는 AI가 기술 경쟁을 넘어 국가 정책의 대상이 되었다는 것을 보여 줍니다. 개발자 입장에서는 좋은 모델을 고르는 일과 함께, 그 모델이 어느 나라 규제와 인프라 아래 놓이는지를 확인하는 일이 필요해졌습니다.</p><p>입문 단계라면 지금 쓰는 AI API가 어느 지역에서 처리되는지 확인하고, 다른 모델로 바꿀 때 코드가 얼마나 많이 바뀌는지 점검해 보세요. 정부 투자의 실제 효과는 목표 달성 보고가 나온 뒤에야 판단할 수 있습니다.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://www.pm.gc.ca/en/news/news-releases/2026/10/29/canada-announces-landmark-investment-cohere-scale-secure-sovereign-ai">Canada announces landmark investment in Cohere to scale secure, sovereign AI</a> <span class="src">— 캐나다 총리실, 2026.10.29 (원문 열람 확인)</span></li>
+      <li><a href="https://www.techtimes.com/articles/329764/20261030/c16-billion-cohere-deal-lets-ottawa-veto-any-foreign-acquisition-no-law-required.htm">C$1.6 Billion Cohere Deal Lets Ottawa Veto Any Foreign Acquisition, No Law Required</a> <span class="src">— TechTimes, 2026.10.30 (원문 열람 확인)</span></li>
+    </ol>
+
+  </article>
+
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list"><a href="2026-10-31-mistral-large-4-open-weights.html"><span class="r">오늘의 뉴스 1위</span><span class="t">Mistral, 1조 파라미터급 모델 Large 4 가중치 공개… 코딩·사이버 보안 겨냥</span></a><a href="2026-10-31-reddit-logged-in-ai-search.html"><span class="r">오늘의 뉴스 2위</span><span class="t">Reddit, 검색 유입 급감에 로그인 중심 서비스로 전환 발표</span></a></div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

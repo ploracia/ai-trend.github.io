@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" role="img" aria-labelledby="t1">
+  <title id="t1">Duet의 기본 흐름: 연결 앱을 주기적으로 살피고, 민감한 행동 앞에서는 사용자에게 묻는다</title>
+  <style>
+    .bg{fill:#ffffff}.h{fill:#1b1b1f;font:800 19px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .tx{fill:#1b1b1f;font:700 15px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .sm{fill:#62626b;font:500 13px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .box{fill:#e8eefe;stroke:#2f5bea;stroke-width:1.5}
+    .warn{fill:#fbeae6;stroke:#c2412d;stroke-width:1.5}
+    .ar{stroke:#62626b;stroke-width:2;fill:none}
+    @media (prefers-color-scheme: dark){
+      .bg{fill:#1a1b1f}.h,.tx{fill:#ececf0}.sm{fill:#9a9aa5}
+      .box{fill:#1f2640;stroke:#7c9cff}.warn{fill:#2e1b17;stroke:#f0806c}.ar{stroke:#9a9aa5}
+    }
+  </style>
+  <rect class="bg" x="0" y="0" width="800" height="380" rx="14"/>
+  <text class="h" x="30" y="40">Duet의 기본 흐름</text>
+  <rect class="box" x="30" y="150" width="200" height="80" rx="12"/>
+  <text class="tx" x="130" y="185" text-anchor="middle">연결된 앱</text>
+  <text class="sm" x="130" y="207" text-anchor="middle">메일·일정·메신저</text>
+  <rect class="box" x="300" y="150" width="200" height="80" rx="12"/>
+  <text class="tx" x="400" y="185" text-anchor="middle">Duet (클라우드 컴퓨터)</text>
+  <text class="sm" x="400" y="207" text-anchor="middle">몇 시간마다 확인·정리</text>
+  <path class="ar" d="M232 190 L296 190" marker-end="url(#a)"/>
+  <rect class="box" x="570" y="70" width="200" height="70" rx="12"/>
+  <text class="tx" x="670" y="103" text-anchor="middle">아침 브리핑</text>
+  <text class="sm" x="670" y="124" text-anchor="middle">할 일 정리</text>
+  <rect class="warn" x="570" y="240" width="200" height="80" rx="12"/>
+  <text class="tx" x="670" y="273" text-anchor="middle">승인 요청</text>
+  <text class="sm" x="670" y="295" text-anchor="middle">발송·결제·삭제 전 확인</text>
+  <path class="ar" d="M502 175 Q540 105 566 105"/>
+  <path class="ar" d="M502 205 Q540 275 566 275"/>
+  <text class="sm" x="30" y="350">출처 글을 바탕으로 다시 그림</text>
+</svg>

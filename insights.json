@@ -1,0 +1,337 @@
+[
+  {
+    "date": "2026-10-31",
+    "publishedAt": "2026-10-31T16:12:49+09:00",
+    "windowStart": "2026-10-30T16:30:00+09:00",
+    "windowEnd": "2026-10-31T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Mistral Large 4",
+    "title": "Mistral Large 4: 1조 파라미터 오픈 웨이트 모델, 입문 개발자가 알아야 할 것",
+    "summary": "프랑스 Mistral AI가 전체 약 1T 파라미터의 MoE 오픈 웨이트 모델 Mistral Large 4를 공개했습니다. 토큰당 약 49B만 쓰는 구조와 API 가격, 라이선스 조건을 입문자 눈높이로 정리했습니다.",
+    "countries": [
+      "프랑스"
+    ],
+    "companies": [
+      "Mistral AI",
+      "NVIDIA",
+      "Hugging Face"
+    ],
+    "tags": [
+      "MoE",
+      "오픈 웨이트",
+      "1M 컨텍스트",
+      "API 가격"
+    ],
+    "image": "insights/img/2026-10-31-mistral-large-4-1.svg",
+    "imageAlt": "Mistral Large 4를 쓰는 두 가지 길: 가중치를 내려받아 직접 실행하는 길과 API를 호출하는 길",
+    "url": "insights/2026-10-31-mistral-large-4.html"
+  },
+  {
+    "date": "2026-10-30",
+    "publishedAt": "2026-10-30T16:21:48+09:00",
+    "windowStart": "2026-10-29T16:30:00+09:00",
+    "windowEnd": "2026-10-30T16:00:00+09:00",
+    "rank": 1,
+    "kind": "기술",
+    "subject": "MCP 2026-07-28 스펙",
+    "title": "MCP 2026-07-28 스펙: 세션 없이 도는 AI 도구 연결 규격, 입문 개발자가 알아야 할 것",
+    "summary": "MCP 2026-07-28 스펙은 연결 시작 절차와 세션을 없애고 요청마다 버전·능력 정보를 담습니다. 서버가 되묻는 방식도 재요청 흐름으로 바뀌어, 서버를 여러 대 운영하기 쉬워졌습니다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "Anthropic",
+      "Cloudflare"
+    ],
+    "tags": [
+      "MCP",
+      "에이전트",
+      "커넥터",
+      "오픈 표준"
+    ],
+    "image": "insights/img/2026-10-30-mcp-stateless-spec-1.svg",
+    "imageAlt": "요청 한 건에 버전과 능력 정보를 담아 게이트웨이를 거쳐 세션 없는 서버로 보내는 구조",
+    "url": "insights/2026-10-30-mcp-stateless-spec.html"
+  },
+  {
+    "date": "2026-10-29",
+    "publishedAt": "2026-10-29T16:15:03+09:00",
+    "windowStart": "2026-10-28T16:30:00+09:00",
+    "windowEnd": "2026-10-29T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Qwen3.8-27B",
+    "title": "Qwen3.8-27B: 그래픽카드 한 장으로 돌리는 오픈 모델, 입문 개발자가 알아야 할 것",
+    "summary": "알리바바의 오픈 웨이트 모델 Qwen3.8-27B는 이미지와 영상을 이해하는 270억 파라미터급 모델이다. 4비트 압축본은 메모리 16~19GB 안팎에서 돌아가며 라이선스는 Apache 2.0이다. 입문 개발자가 API 요금 없이 내 PC에서 직접 실험해 볼 수 있는 모델이다.",
+    "countries": [
+      "중국"
+    ],
+    "companies": [
+      "Alibaba",
+      "AMD"
+    ],
+    "tags": [
+      "Qwen",
+      "로컬 LLM",
+      "오픈 웨이트",
+      "Apache 2.0"
+    ],
+    "image": "insights/img/2026-10-29-qwen3-8-27b-1.svg",
+    "imageAlt": "양자화 수준별 필요 메모리를 비교한 막대 그래프",
+    "url": "insights/2026-10-29-qwen3-8-27b.html"
+  },
+  {
+    "date": "2026-10-28",
+    "publishedAt": "2026-10-28T16:20:21+09:00",
+    "windowStart": "2026-10-27T16:30:00+09:00",
+    "windowEnd": "2026-10-28T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Gemini 4 Argon",
+    "title": "Gemini 4 Argon: 구글의 새 최상위 모델, 입문 개발자가 알아야 할 것",
+    "summary": "구글이 9월 30일 공개한 최상위 모델 Gemini 4 Argon이 10월 13일 API와 Gemini 앱으로 넓게 열렸다. 한 번에 약 104만 토큰을 다루며, 입력 100만 토큰당 2달러로 시작하는 토큰 단위 요금을 쓴다. 입문자는 모델 이름 gemini-4-argon과 요금 구조만 익히면 첫 호출을 해 볼 수 있다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "Google",
+      "OpenAI",
+      "Anthropic"
+    ],
+    "tags": [
+      "Gemini",
+      "1M 컨텍스트",
+      "코딩 모델"
+    ],
+    "image": "insights/img/2026-10-28-gemini-4-argon-1.svg",
+    "imageAlt": "Gemini 4 Argon의 모델 이름, 한 번에 다루는 토큰 양, 입력과 출력 가격을 카드 네 장으로 보여 주는 그림",
+    "url": "insights/2026-10-28-gemini-4-argon.html"
+  },
+  {
+    "date": "2026-10-27",
+    "publishedAt": "2026-10-27T16:30:32+09:00",
+    "windowStart": "2026-10-26T16:30:00+09:00",
+    "windowEnd": "2026-10-27T16:00:00+09:00",
+    "rank": 1,
+    "kind": "기술",
+    "subject": "Agent Skills",
+    "title": "Agent Skills: AI 에이전트에게 업무 매뉴얼 한 장을 쥐여 주는 방식",
+    "summary": "Agent Skills는 이름과 설명, 지침을 담은 SKILL.md 파일을 폴더에 넣어 AI 에이전트에게 업무 매뉴얼을 건네는 방식입니다. 10월 23일 전후로 디자인·코딩 스킬 저장소가 한꺼번에 공개되며 개발자 관심을 모았습니다. 에이전트는 설명만 먼저 읽고 필요할 때 본문을 읽어 문맥을 아낍니다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "Anthropic",
+      "NVIDIA"
+    ],
+    "tags": [
+      "에이전트",
+      "오픈소스",
+      "Claude",
+      "SKILL.md"
+    ],
+    "image": "insights/img/2026-10-27-agent-skills-1.svg",
+    "imageAlt": "스킬 폴더 안의 SKILL.md와 이를 읽어 작업하는 AI 에이전트를 보여 주는 개념도",
+    "url": "insights/2026-10-27-agent-skills.html"
+  },
+  {
+    "date": "2026-10-26",
+    "publishedAt": "2026-10-26T16:27:29+09:00",
+    "windowStart": "2026-10-25T16:30:00+09:00",
+    "windowEnd": "2026-10-26T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Beam",
+    "title": "Beam: 전체의 약 5%만 깨우는 5,010억 파라미터 오픈 웨이트 모델",
+    "summary": "미국 Reflection AI가 첫 오픈 웨이트 모델 Beam을 발표하고 10월 16일 Apache 2.0 라이선스로 가중치를 공개했다. 전체 501.3B 파라미터 중 토큰마다 23.4B만 쓰는 MoE 구조이며, 회사 발표 기준 코딩 벤치마크 점수가 높지만 독립 검증은 더 필요하다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "Reflection AI",
+      "NVIDIA"
+    ],
+    "tags": [
+      "MoE",
+      "오픈 웨이트",
+      "Apache 2.0",
+      "코딩 모델"
+    ],
+    "image": "insights/img/2026-10-26-reflection-beam-1.svg",
+    "imageAlt": "입력 토큰이 라우터를 거쳐 전문가 256개 중 일부만 선택되는 MoE 흐름도",
+    "url": "insights/2026-10-26-reflection-beam.html"
+  },
+  {
+    "date": "2026-10-25",
+    "publishedAt": "2026-10-25T16:11:14+09:00",
+    "windowStart": "2026-10-24T16:30:00+09:00",
+    "windowEnd": "2026-10-25T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Kimi K3.1 Pro",
+    "title": "Kimi K3.1 Pro: 2.8조 파라미터 중 일부만 깨우는 오픈 웨이트 모델",
+    "summary": "중국 Moonshot AI가 Kimi K3.1 Pro와 더 빠른 Highspeed 변형을 공개했다. 전체 2.8조 파라미터 중 질문마다 약 1040억 개만 쓰는 MoE 구조와 100만 토큰 컨텍스트가 핵심이며, 가중치는 11월 4일까지 공개될 예정이다.",
+    "countries": [
+      "중국"
+    ],
+    "companies": [
+      "Moonshot AI",
+      "Anthropic",
+      "OpenAI"
+    ],
+    "tags": [
+      "MoE",
+      "오픈 웨이트",
+      "1M 컨텍스트",
+      "Kimi"
+    ],
+    "image": "insights/img/2026-10-25-kimi-k3-1-pro-1.svg",
+    "imageAlt": "질문이 라우터를 거쳐 전문가 묶음 중 일부 칸만 활성화되고 답변으로 나가는 MoE 구조 개념도",
+    "url": "insights/2026-10-25-kimi-k3-1-pro.html"
+  },
+  {
+    "date": "2026-10-24",
+    "publishedAt": "2026-10-24T23:56:00+09:00",
+    "windowStart": "2026-10-23T16:30:00+09:00",
+    "windowEnd": "2026-10-24T16:00:00+09:00",
+    "rank": 1,
+    "kind": "기술",
+    "subject": "TorchTPU",
+    "title": "PyTorch 코드를 구글 TPU에서 그대로 돌리는 길, TorchTPU",
+    "summary": "구글이 10월 20일 PyTorch 컨퍼런스에서 PyTorch를 TPU 위에서 네이티브로 돌리는 백엔드 TorchTPU를 오픈소스로 공개했습니다. 장치 설정만 바꾸면 기존 코드를 거의 그대로 쓰는 것이 목표이며, 입문 개발자에게는 코드를 고치지 않고 하드웨어를 고르는 발상을 배우기 좋은 사례입니다. 성능 수치는 구글 자체 보고라 직접 실험으로 확인해 보는 것이 좋습니다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "Google",
+      "Meta"
+    ],
+    "tags": [
+      "PyTorch",
+      "TPU",
+      "오픈소스"
+    ],
+    "image": "insights/img/2026-10-24-torchtpu-1.svg",
+    "imageAlt": "PyTorch 코드가 TorchTPU 백엔드를 거쳐 구글 TPU에서 실행되는 흐름도",
+    "url": "insights/2026-10-24-torchtpu.html"
+  },
+  {
+    "date": "2026-10-23",
+    "publishedAt": "2026-10-23T16:25:00+09:00",
+    "windowStart": "2026-10-22T16:30:00+09:00",
+    "windowEnd": "2026-10-23T16:00:00+09:00",
+    "rank": 1,
+    "kind": "기술",
+    "subject": "Claude Duet",
+    "title": "Anthropic의 에이전트 Claude Duet, 입문자가 알아야 할 것",
+    "summary": "Anthropic이 연결된 앱을 주기적으로 살피고, 발송·결제 같은 민감한 행동 앞에서만 사용자에게 묻는 에이전트 Claude Duet을 리서치 프리뷰로 공개했습니다. Opus 5.5 위에서 돌며 현재는 미국 Pro·Max 구독자 대기 신청만 받습니다. 입문 개발자에게는 AI에게 어디까지 맡기고 어디서 사람이 승인할지 설계하는 감각을 배우기 좋은 사례입니다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "Anthropic"
+    ],
+    "tags": [
+      "에이전트",
+      "Claude",
+      "승인 설계",
+      "커넥터"
+    ],
+    "image": "insights/img/2026-10-23-claude-duet-1.svg",
+    "imageAlt": "연결 앱을 주기적으로 살피고 승인 요청 전에 멈추는 Duet의 흐름도",
+    "url": "insights/2026-10-23-claude-duet.html"
+  },
+  {
+    "date": "2026-10-22",
+    "publishedAt": "2026-10-22T16:21:00+09:00",
+    "windowStart": "2026-10-21T16:30:00+09:00",
+    "windowEnd": "2026-10-22T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Flint",
+    "title": "노트북에서 도는 코딩 모델 Flint, 입문자가 알아야 할 것",
+    "summary": "미국 Recursive가 2026년 10월 21일 공개한 코딩 특화 오픈 모델 Flint는 총 398억 파라미터 중 토큰마다 약 25억만 쓰는 MoE 구조입니다. Apache 2.0으로 무료 다운로드가 가능하고 Apple Silicon 노트북에서 빠르게 돌도록 설계됐으며, 성능 수치는 회사 자체 측정치입니다. 입문 개발자에게는 API 요금 없이 코드를 로컬에서 실험할 수 있는 선택지가 생겼다는 뜻입니다.",
+    "countries": [
+      "미국",
+      "중국"
+    ],
+    "companies": [
+      "Recursive",
+      "NVIDIA",
+      "Apple",
+      "Alibaba",
+      "Google"
+    ],
+    "tags": [
+      "로컬 LLM",
+      "MoE",
+      "코딩 모델",
+      "오픈소스"
+    ],
+    "image": "insights/img/2026-10-22-recursive-flint-1.svg",
+    "imageAlt": "256명의 전문가 중 6명이 선택되어 일하는 MoE 구조 그림",
+    "url": "insights/2026-10-22-recursive-flint.html"
+  },
+  {
+    "date": "2026-10-21",
+    "publishedAt": "2026-10-21T16:24:10+09:00",
+    "windowStart": "2026-10-20T16:30:00+09:00",
+    "windowEnd": "2026-10-21T16:00:00+09:00",
+    "rank": 1,
+    "kind": "기술",
+    "subject": "DeepSeek DeepInfer",
+    "title": "DeepSeek DeepInfer: 모델이 아니라 '모델을 돌리는 주방'을 통째로 공개하다",
+    "summary": "중국 DeepSeek이 자사 API를 실제로 돌리는 추론 엔진 DeepInfer를 Apache 2.0으로 공개해 하루 사이 개발자 커뮤니티에서 가장 많이 다뤄졌습니다. 최적화 커널·병렬 처리·추측 디코딩을 묶어 DeepSeek-V4.1-Flash를 NVIDIA SM100과 Huawei Ascend 950에서 돌리는 엔진입니다. 개인이 바로 돌리긴 어렵지만, AI 서비스 비용을 모델만큼 추론 엔진이 좌우한다는 점을 배우기 좋은 실전 교재입니다.",
+    "countries": [
+      "중국",
+      "미국"
+    ],
+    "companies": [
+      "DeepSeek",
+      "NVIDIA",
+      "Huawei"
+    ],
+    "tags": [
+      "추론 엔진",
+      "LLM 서빙",
+      "오픈소스",
+      "추론 속도"
+    ],
+    "image": "insights/img/2026-10-21-deepseek-deepinfer-1.svg",
+    "imageAlt": "모델 가중치와 사용자 요청 사이에서 추론 엔진 DeepInfer가 하는 일과 지원 하드웨어, 빠진 부분을 보여 주는 그림",
+    "url": "insights/2026-10-21-deepseek-deepinfer.html"
+  },
+  {
+    "date": "2026-10-20",
+    "publishedAt": "2026-10-20T16:16:45+09:00",
+    "windowStart": "2026-10-19T16:30:00+09:00",
+    "windowEnd": "2026-10-20T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Inception Mercury 3",
+    "title": "확산 LLM Mercury 3: 한 글자씩 대신 통째로 다듬어 쓰는 AI",
+    "summary": "미국 스타트업 Inception이 확산(diffusion) 방식 언어 모델 Mercury 3를 공개해 하루 사이 개발자 커뮤니티에서 가장 많이 다뤄졌습니다. 앞에서부터 한 토큰씩 쓰는 대신 답 전체 초안을 여러 번 동시에 고쳐 쓰는 방식으로, 회사 발표 기준 초당 1,068토큰을 냅니다. OpenAI 호환 API로 바로 써 볼 수 있지만 수치는 아직 자체 측정뿐이라 내 작업으로 직접 재 보는 것이 중요합니다.",
+    "countries": [
+      "미국",
+      "중국"
+    ],
+    "companies": [
+      "Inception",
+      "NVIDIA",
+      "OpenAI",
+      "Anthropic",
+      "DeepSeek"
+    ],
+    "tags": [
+      "확산 언어 모델",
+      "dLLM",
+      "추론 속도",
+      "LLM API",
+      "Mercury 3"
+    ],
+    "image": "insights/img/2026-10-20-mercury-3-diffusion-llm-1.svg",
+    "imageAlt": "한 토큰씩 생성하는 자기회귀 모델과 초안 전체를 동시에 다듬는 확산 언어 모델의 비교 그림",
+    "url": "insights/2026-10-20-mercury-3-diffusion-llm.html"
+  }
+]

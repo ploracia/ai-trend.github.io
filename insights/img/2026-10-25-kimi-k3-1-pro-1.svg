@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="t1 d1">
+  <title id="t1">MoE 구조 개념도</title>
+  <desc id="d1">질문이 라우터를 거쳐 전체 전문가 중 일부만 활성화되고 답변이 나오는 흐름</desc>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#62626b"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="640" height="300" rx="12" fill="#f4f6fb"/>
+  <text x="320" y="34" text-anchor="middle" font-size="16" font-weight="700" fill="#1b1b1f" font-family="Pretendard, Malgun Gothic, sans-serif">전체 2.8조 파라미터 중 일부만 가동하는 구조</text>
+
+  <rect x="30" y="120" width="120" height="56" rx="10" fill="#ffffff" stroke="#8a8a94" stroke-width="1.5"/>
+  <text x="90" y="144" text-anchor="middle" font-size="14" font-weight="700" fill="#1b1b1f" font-family="Pretendard, Malgun Gothic, sans-serif">질문 입력</text>
+  <text x="90" y="163" text-anchor="middle" font-size="12" fill="#4a4a52" font-family="Pretendard, Malgun Gothic, sans-serif">텍스트·코드</text>
+
+  <rect x="190" y="120" width="120" height="56" rx="10" fill="#ffffff" stroke="#8a8a94" stroke-width="1.5"/>
+  <text x="250" y="144" text-anchor="middle" font-size="14" font-weight="700" fill="#1b1b1f" font-family="Pretendard, Malgun Gothic, sans-serif">라우터</text>
+  <text x="250" y="163" text-anchor="middle" font-size="12" fill="#4a4a52" font-family="Pretendard, Malgun Gothic, sans-serif">누가 답할지 고름</text>
+
+  <rect x="350" y="62" width="160" height="176" rx="12" fill="#e8eefe" stroke="#2f5bea" stroke-width="1" stroke-dasharray="4 4"/>
+  <text x="430" y="84" text-anchor="middle" font-size="13" font-weight="700" fill="#2f5bea" font-family="Pretendard, Malgun Gothic, sans-serif">전문가 묶음</text>
+
+  <rect x="368" y="98" width="56" height="36" rx="7" fill="#2f5bea"/>
+  <text x="396" y="120" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff" font-family="Pretendard, Malgun Gothic, sans-serif">활성</text>
+  <rect x="436" y="98" width="56" height="36" rx="7" fill="#2f5bea"/>
+  <text x="464" y="120" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff" font-family="Pretendard, Malgun Gothic, sans-serif">활성</text>
+
+  <rect x="368" y="144" width="56" height="36" rx="7" fill="#d9dce3"/>
+  <text x="396" y="166" text-anchor="middle" font-size="12" fill="#4a4a52" font-family="Pretendard, Malgun Gothic, sans-serif">대기</text>
+  <rect x="436" y="144" width="56" height="36" rx="7" fill="#d9dce3"/>
+  <text x="464" y="166" text-anchor="middle" font-size="12" fill="#4a4a52" font-family="Pretendard, Malgun Gothic, sans-serif">대기</text>
+
+  <rect x="368" y="190" width="56" height="36" rx="7" fill="#d9dce3"/>
+  <text x="396" y="212" text-anchor="middle" font-size="12" fill="#4a4a52" font-family="Pretendard, Malgun Gothic, sans-serif">대기</text>
+  <rect x="436" y="190" width="56" height="36" rx="7" fill="#2f5bea"/>
+  <text x="464" y="212" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff" font-family="Pretendard, Malgun Gothic, sans-serif">활성</text>
+
+  <rect x="530" y="120" width="90" height="56" rx="10" fill="#ffffff" stroke="#8a8a94" stroke-width="1.5"/>
+  <text x="575" y="144" text-anchor="middle" font-size="14" font-weight="700" fill="#1b1b1f" font-family="Pretendard, Malgun Gothic, sans-serif">답변</text>
+  <text x="575" y="163" text-anchor="middle" font-size="12" fill="#4a4a52" font-family="Pretendard, Malgun Gothic, sans-serif">출력</text>
+
+  <line x1="150" y1="148" x2="186" y2="148" stroke="#62626b" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="310" y1="148" x2="346" y2="148" stroke="#62626b" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="510" y1="148" x2="526" y2="148" stroke="#62626b" stroke-width="2" marker-end="url(#arr)"/>
+
+  <text x="320" y="272" text-anchor="middle" font-size="12" fill="#4a4a52" font-family="Pretendard, Malgun Gothic, sans-serif">파란 칸만 계산에 참여한다. 나머지는 쉬고 있어 전체 크기에 비해 한 번에 드는 계산량이 줄어든다.</text>
+</svg>

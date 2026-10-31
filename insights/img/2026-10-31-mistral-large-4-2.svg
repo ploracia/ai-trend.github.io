@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" role="img" aria-label="전체 1T 파라미터 중 토큰당 49B만 활성화되는 MoE 구조">
+  <rect x="0" y="0" width="760" height="330" fill="#e8eefe"/>
+  <text x="380" y="40" text-anchor="middle" font-size="20" font-weight="700" fill="#1b1b1f">전체 1조 파라미터 중, 한 번에 쓰는 것은 약 490억</text>
+
+  <text x="40" y="92" font-size="15" fill="#1b1b1f">전체 (약 1T)</text>
+  <rect x="40" y="104" width="680" height="44" rx="10" fill="#ffffff" stroke="#62626b" stroke-width="1.5"/>
+  <text x="380" y="132" text-anchor="middle" font-size="14" fill="#62626b">전문가(expert) 블록들 — 대부분은 이번 토큰에서 쉰다</text>
+
+  <text x="40" y="186" font-size="15" fill="#1b1b1f">토큰 하나를 처리할 때 (약 49B)</text>
+  <rect x="40" y="198" width="60" height="44" rx="10" fill="#2f5bea"/>
+  <rect x="112" y="198" width="60" height="44" rx="10" fill="#2f5bea"/>
+  <rect x="184" y="198" width="60" height="44" rx="10" fill="#2f5bea"/>
+  <rect x="256" y="198" width="60" height="44" rx="10" fill="#2f5bea"/>
+  <text x="420" y="226" font-size="14" fill="#1b1b1f">← 라우터가 고른 소수의 전문가만 계산</text>
+
+  <text x="40" y="282" font-size="14" fill="#1b1b1f">비유: 대형 병원에 진료과가 많아도, 환자 한 명에게는 필요한 과 의사 몇 명만 호출되는 구조</text>
+  <text x="40" y="306" font-size="13" fill="#62626b">수치 출처: Mistral 공개 프리뷰 기사 (1T 전체, 49B 활성). 그림은 개념 도식입니다.</text>
+</svg>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Axiom, 군론 분류 정리를 AI 에이전트로 형식 검증: Lean 증명 4,310만 줄 공개 | AI 비밀 레시피</title>
+  <meta name="description" content="Axiom이 유한 단순군 분류 정리(CFSG)의 Lean 형식 증명 약 4,310만 줄을 공개했다는 발표를 정리합니다. 발견된 출판 기록 차이와 검증 범위를 함께 살펴봅니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>Axiom, 군론 분류 정리를 AI 에이전트로 형식 검증: Lean 증명 4,310만 줄 공개</h1>
+    <div class="byline"><span><time datetime="2026-10-29T08:23:00+09:00">2026.10.29 08:23 KST</time></span><span>읽는 시간 약 8분</span><span>#모델평가 #오픈소스</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>Axiom이 유한 단순군 분류 정리(CFSG)의 Lean 형식 증명을 공개했다고 밝혔습니다. 약 15,000쪽 분량의 원문 증명을 Lean 코드 약 4,310만 줄로 옮긴 작업이며, 발표는 미국 동부 기준 10월 27일입니다.</li><li>AI 에이전트 수십 개가 24일간 작업했고 사람 연구자가 방향과 검토를 맡았습니다. 형식화 과정에서 출판 기록과의 차이 34건이 발견됐고, 가장 큰 문제는 비균형 군 정리(UGT)였습니다.</li><li>개발자에게는 AI의 결과를 사람이 읽는 말이 아니라 기계가 검사하는 증명으로 바꾸면 신뢰의 근거가 어떻게 달라지는지 보여 주는 사례입니다. 다만 회사 발표이므로 공개 저장소와 원문을 함께 확인해야 합니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">Axiom, 군론 분류 정리(CFSG)의 Lean 형식 증명 공개 (AI 에이전트 24일 작업)</span><span>발표 2026.10.27 (미국 동부), 국내 기준 10.28</span><span><a href="https://www.unite.ai/axiom-math-releases-43-1m-line-lean-proof-of-group-classification/">Unite.AI 보도</a> · <a href="https://www.theneuron.ai/digest/everything-that-happened-in-ai-today-wednesday-october-28-2026/">The Neuron 일일 요약</a></span></div>
+
+    <p class="lead">15,000쪽짜리 수학 증명을 기계가 논리 단계마다 검사할 수 있는 형태로 옮긴 사례입니다. 수학자뿐 아니라 AI 결과를 믿어야 하는 개발자에게도 ‘검증 가능한 AI’가 무엇인지 보여 줍니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">실무자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>군론의 가장 큰 정리 중 하나를 기계가 한 단계씩 검사할 수 있는 형태로 옮긴 작업이 발표됐습니다.</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>유한 단순군 분류 정리(CFSG)</strong>는 유한 단순군이 몇 가지 종류뿐이라는 것을 밝힌 정리입니다. 여러 수학자가 수십 년에 걸쳐 쓴 방대한 증명이라 완전히 검토된 사람이 드뭅니다. <strong>Lean</strong>은 수학 증명을 기계가 검사할 수 있게 적는 증명 보조 언어입니다.
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>내용</th><th>수치와 조건</th></tr></thead>
+      <tbody>
+        <tr><td>원래 증명</td><td><strong>약 15,000쪽</strong></td><td>500편 이상의 논문, 약 100명의 수학자</td></tr>
+        <tr><td>Lean 형식 증명</td><td><strong>약 4,310만 줄</strong></td><td>선언 약 205만 개, 참고 논문·도서 715편</td></tr>
+        <tr><td>작업 기간</td><td><strong>24일</strong></td><td>10월 1일 조율 시작, 10월 2일 첫 에이전트 작업</td></tr>
+        <tr><td>발견된 차이</td><td><strong>34건</strong></td><td>출판된 기록과 형식 증명 사이의 차이, 가장 중요한 것은 UGT</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>형식화 수행·발표</td><td><strong>Axiom Math</strong></td><td>AI 에이전트 작업을 설계하고 결과를 공개</td></tr>
+        <tr><td>책임 연구자</td><td><strong>Letong Hong</strong></td><td>프로젝트 총괄</td></tr>
+        <tr><td>핵심 기여자</td><td><strong>Dean Cureton, Vasily Ilin, Bhavik Mehta, Niels Voss</strong></td><td>증명 구조 검토와 Lean 작업</td></tr>
+        <tr><td>자문</td><td><strong>Lyons, Solomon</strong></td><td>UGT 수리 과정에서 자문</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+    <h3>오늘 발표된 내용</h3>
+    <p>Unite.AI 보도에 따르면 Axiom은 이번 결과를 “CFSG의 첫 완전한 컴퓨터 검증 증명”이라고 소개했습니다. 다만 공개된 것은 1세대 증명의 형식화이고, 2세대 증명은 아직 완료되지 않았다고 밝혔습니다.</p>
+    <p>작업 방식은 여러 AI 에이전트가 주제를 나눠 맡는 구조였습니다. 상위 에이전트가 논증을 쪼개고 진술을 검토했고, 다른 에이전트는 문헌을 찾거나 Lean 증명을 작성했습니다. Lean 커널이 각 논리 단계를 검사하며, 회사는 미완성 표시(sorry)와 특수 계산 명령을 쓰지 않았다고 설명합니다.</p>
+    <p>가장 민감한 부분은 비균형 군 정리(UGT)입니다. 형식화 과정에서 출판 기록과 다른 지점이 34건 나왔고, Axiom은 그중 UGT를 고치는 새 논증을 만들었다고 밝혔습니다. 그러나 UGT 논문은 아직 사전 공개본이며 동료 심사를 거치지 않았습니다.</p>
+    <h3>흐름</h3>
+    <ul class="timeline"><li><time>2026.10.01</time>Axiom, 프로젝트 조율 채널 개설</li><li><time>2026.10.02</time>첫 에이전트 작업 시작</li><li><time>2026.10.27 (미국 동부)</time>Axiom 발표, Unite.AI 등 보도</li><li><time>2026.10.28 (국내)</time>국내 독자에게 소개되는 시점</li></ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>기계가 한 줄씩 검사한 결과라도 ‘검증됐다’는 말이 무엇을 검증했는지 범위를 따져 읽어야 합니다. 이번 사례에서도 출판 기록과의 차이 34건이 나왔습니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>실무자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. 에이전트 결과에 기계 검사기 붙이기</h4><p>생성한 코드나 주장은 테스트, 타입 검사, 정적 분석 같은 도구를 먼저 통과시키세요.</p></div>
+      <div class="action"><h4>2. ‘검증 범위’를 문서에 적기</h4><p>무엇을 어떤 가정과 도구로 확인했는지 README에 명시해 두면 나중에 오해가 줄어듭니다.</p></div>
+      <div class="action"><h4>3. 원문과 대조하는 단계 넣기</h4><p>AI가 요약하거나 옮긴 결과는 원문과 비교하는 체크리스트를 두세요. 이번 사례의 차이 34건이 좋은 예입니다.</p></div>
+      <div class="action"><h4>4. 발표보다 저장소 먼저 보기</h4><p>회사 발표와 함께 공개 저장소, 빌드 로그, 이슈 목록을 확인하는 습관을 들이세요.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos"><ul>
+      <li><strong>검증 가능한 AI 연구가 늘어난다.</strong> 긴 증명도 기계가 확인하면 오류를 줄이고 후속 연구를 빠르게 할 수 있습니다.</li>
+      <li><strong>출판 기록이 정비된다.</strong> 발견된 차이를 정오표로 공개하겠다는 계획이 실행되면 분야 전체의 신뢰도가 올라갑니다.</li>
+    </ul></div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg"><ul>
+      <li><strong>검증 범위가 과장된다.</strong> ‘완전한 검증’이라는 표현이 실제 범위보다 넓게 소비될 수 있습니다. 2세대 증명은 아직 남아 있습니다.</li>
+      <li><strong>사람 검토가 밀린다.</strong> 에이전트가 쏟아내는 증명을 사람이 따라가기 어려워지면 검토가 형식적으로 흐를 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion"><p>이번 발표는 AI가 그럴듯한 답을 내는 단계를 넘어, 답을 기계가 검사할 수 있는 형태로 만드는 방향을 보여 줍니다. 그래도 발표 내용은 회사가 밝힌 것이므로, 검증 범위와 미완성 부분을 함께 읽는 것이 좋습니다.</p><p>입문 개발자라면 AI가 만든 결과를 믿기 전에 검사 도구를 붙이는 습관부터 들이세요. 테스트 코드 작성이나 정적 분석 도구 사용으로 시작해도 충분합니다.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://www.unite.ai/axiom-math-releases-43-1m-line-lean-proof-of-group-classification/">Axiom Math Releases 43.1M-Line Lean Proof of Group Classification</a> <span class="src">— Unite.AI, 2026.10.27 (원문 보도 확인)</span></li>
+      <li><a href="https://www.theneuron.ai/digest/everything-that-happened-in-ai-today-wednesday-october-28-2026/">Everything That Happened in AI Today, Wednesday, October 28</a> <span class="src">— The Neuron, 2026.10.28</span></li>
+    </ol>
+
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list"><a href="2026-10-29-openai-google-tpu-purchase-report.html"><span class="r">오늘의 뉴스 2위</span><span class="t">OpenAI, 구글 AI 칩 구매 검토 보도: 칩 공급선 다변화 신호</span></a><a href="2026-10-29-google-genie-4-world-model.html"><span class="r">오늘의 뉴스 3위</span><span class="t">구글 딥마인드, 실시간 상호작용 월드 모델 Genie 4 발표: 신뢰 테스터부터 공개</span></a></div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

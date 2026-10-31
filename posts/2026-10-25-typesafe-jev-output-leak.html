@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TypeSafe AI 의사결정 모델 'Jev', 고객 출력 전량 유출 사고 공개 | AI 비밀 레시피</title>
+  <meta name="description" content="TypeSafe AI가 공개한 Jev 출력 유출 사고의 내용과 원인으로 보도된 IDOR 취약점, 개발자가 API에서 바로 점검할 권한 설계 체크포인트를 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+    <article>
+    <h1>TypeSafe AI 의사결정 모델 'Jev', 고객 출력 전량 유출 사고 공개</h1>
+    <div class="byline"><span><time datetime="2026-10-25T08:20:00+09:00">2026.10.25 08:20 KST</time></span><span>읽는 시간 약 6분</span><span>#보안 #에이전트 #투자</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>TypeSafe AI의 CEO 디오고 알메이다가 2026년 10월 24일 자사 의사결정 모델 Jev의 고객 출력이 전량 노출됐다고 공개했습니다.</li><li>보도는 원인으로 안전하지 않은 직접 객체 참조(IDOR) 버그를 지목했습니다. 기술 사후 분석은 아직 나오지 않았고, 피해 범위의 세부 내용도 확인되지 않았습니다.</li><li>개발자에게는 AI 결과물을 조회하는 API마다 '이 데이터가 이 사용자의 것인지'를 서버에서 확인해야 한다는 교훈입니다. 모델이 똑똑해도 권한 검사가 빠지면 유출은 막을 수 없습니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">TypeSafe AI, 의사결정 모델 Jev의 고객 출력 전량 유출 사고 공개</span><span>공개 2026.10.24</span><span><a href="https://startupfortune.com/typesafe-ai-admits-a-leak-exposed-every-customers-jev-model-output/">Startup Fortune</a> · <a href="https://www.infoworld.com/article/4236103/typesafes-jev-even-more-susceptible-to-attack-than-llms-says-security-vendor.html">InfoWorld</a></span></div>
+
+    <p class="lead">AI 스타트업의 모델이 어떻게 돌아가는지보다 더 중요한 질문이 있습니다. 내 서비스가 만든 결과물을 누가 볼 수 있는가입니다. TypeSafe AI의 Jev 사고는 권한 검사 하나가 빠졌을 때 고객 데이터 전체가 새어 나갈 수 있다는 것을 보여줍니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">실무자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>다른 고객의 결과물을 ID만 바꿔 조회할 수 있었던 권한 설계 오류</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>IDOR(Insecure Direct Object Reference, 안전하지 않은 직접 객체 참조)</strong>는 요청에 담긴 번호(ID)만 바꿔서 남의 데이터에 접근하는 취약점입니다. 로그인은 되어 있어도 "이 데이터의 주인이 나인지" 확인하지 않으면 생깁니다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl">
+    <table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>개발사</td><td><strong>TypeSafe AI</strong></td><td>의사결정 모델 Jev를 만든 회사</td></tr><tr><td>사고 공개</td><td><strong>디오고 알메이다 CEO</strong></td><td>모든 고객의 Jev 출력이 노출됐다고 밝힌 인물</td></tr><tr><td>투자 흐름</td><td><strong>투자자 보도</strong></td><td>블룸버그 보도를 인용한 매체들에 따르면 8억 7천만 달러 투자 유치, 기업가치 75억 달러</td></tr><tr><td>보안 업체</td><td><strong>보안 분석 업체</strong></td><td>InfoWorld 보도에서 Jev가 LLM보다 공격에 더 취약하다고 지적</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+
+    <h3>오늘 발표된 내용</h3>
+    <p>보도에 따르면 TypeSafe AI의 CEO는 2026년 10월 24일 자사 Jev의 고객 출력이 모두 노출됐다고 공개했습니다. 매체들은 원인으로 안전하지 않은 직접 객체 참조(IDOR) 버그를 전했고, 공개 시점 기준으로 기술 사후 분석은 나오지 않았습니다.</p>
+    <p>Jev는 언어 모델(LLM)이 아니라 의사결정 모델로 소개돼 왔습니다. 최근 투자 유치로 주목받던 시점에 사고가 공개되면서, 빠른 성장과 보안 관리 사이의 균형 문제도 함께 거론되고 있습니다.</p>
+
+    <h3>흐름</h3>
+    <ul class="timeline"><li><time>최근</time>블룸버그 보도를 인용한 매체들이 TypeSafe AI의 대규모 투자 유치를 전함</li><li><time>2026.10.24</time>CEO가 고객 출력 전량 유출 사실을 공개</li><li><time>이후</time>기술 사후 분석과 피해 범위 공개 여부가 관건</li></ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>사후 분석이 나오기 전까지는 원인과 범위가 보도 내용 기준입니다. 세부 기술 내용은 공식 발표가 나온 뒤 다시 확인하는 것이 안전합니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>실무자가 해볼 것</h2>
+    <div class="actions"><div class="action"><h4>1. 모든 조회 API에 소유권 검사 넣기</h4><p>요청에 담긴 ID만 믿지 말고, 로그인한 사용자가 그 데이터의 주인인지 서버에서 매번 확인하세요.</p></div><div class="action"><h4>2. 다른 계정으로 침투 테스트하기</h4><p>내 계정 데이터의 ID를 다른 계정 요청에 넣어 보는 테스트를 자동화해 CI에 넣어 두세요.</p></div><div class="action"><h4>3. AI 결과물 저장 구조 점검하기</h4><p>모델 출력은 민감 정보로 취급하고, 보관 기간과 접근 범위를 최소로 정해 두세요.</p></div><div class="action"><h4>4. 벤더 데이터 격리 문서 요청하기</h4><p>외부 AI 도구를 쓸 때 고객 데이터가 어떻게 분리되는지 문서로 받아 두세요.</p></div></div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos">
+      <ul><li><strong>권한 설계 점검이 확산된다.</strong> 이번 사고가 알려지면서 AI 서비스 전반의 권한 검사 관행을 다시 보게 될 수 있습니다.</li><li><strong>투명한 사후 분석이 신뢰를 회복한다.</strong> 원인과 범위를 구체적으로 공개하면 고객과 개발자의 신뢰를 되찾는 계기가 될 수 있습니다.</li></ul>
+    </div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg">
+      <ul><li><strong>고객 이탈이 생길 수 있다.</strong> 자기 결과물이 노출된 고객은 다른 AI 도구로 옮기기 쉽습니다.</li><li><strong>AI가 안전하다는 착각이 커진다.</strong> 모델 성능이 좋아도 권한 설계가 나쁘면 사고가 난다는 점이 가려질 수 있습니다.</li><li><strong>법적 책임 문제가 따라온다.</strong> 개인정보나 영업비밀이 포함된 출력이 새어 나갔다면 후속 분쟁이 생길 수 있습니다.</li></ul>
+    </div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion"><p>이번 사고는 AI 모델이 아무리 정교해도 결과물을 지키는 것은 결국 평범한 웹 보안이라는 사실을 보여줍니다. 조회 API에서 소유권을 확인하지 않으면 어떤 모델을 써도 고객 데이터가 새어 나갈 수 있습니다.</p><p>입문 개발자라면 AI 기능을 붙이기 전에 <strong>모든 조회 API의 소유권 검사</strong>부터 점검하세요. 정답은 간단하지만, 빠뜨리면 가장 큰 사고로 이어지는 항목입니다.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs"><li><a href="https://startupfortune.com/typesafe-ai-admits-a-leak-exposed-every-customers-jev-model-output/">TypeSafe AI admits a leak exposed every customer's Jev model output</a> <span class="src">— Startup Fortune, 2026.10.24</span></li><li><a href="https://www.infoworld.com/article/4236103/typesafes-jev-even-more-susceptible-to-attack-than-llms-says-security-vendor.html">TypeSafe's Jev even more susceptible to attack than LLMs, says security vendor</a> <span class="src">— InfoWorld</span></li><li><a href="https://www.implicator.ai/typesafe-ai-raises-870-million-for-jev-as-openai-amazon-and-cloudflare-ship-rivals/">TypeSafe AI raises $870 million for Jev</a> <span class="src">— implicator.ai</span></li></ol>
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list">
+      <a href="2026-10-25-texas-ag-sues-openai-altman-minors.html"><span class="r">오늘의 뉴스 1위</span><span class="t">텍사스 법무장관, OpenAI와 샘 올트먼 제소: ChatGPT 안전 고지와 미성년자 피해 쟁점</span></a>
+      <a href="2026-10-25-nvidia-neocloud-investment-stress-test.html"><span class="r">오늘의 뉴스 3위</span><span class="t">엔비디아 AI 클라우드 투자 1,715억 달러 시험대: 뉴클라우드 주가 급락</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>
