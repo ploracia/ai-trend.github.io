@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 비밀 레시피</title>
+  <meta name="description" content="매일 AI 뉴스·블로그·논문을 살펴보고 가장 중요한 이슈를 골라, AI를 막 시작하는 개발자 눈높이로 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="stylesheet" href="assets/site.css?v=20261023g" />
+  <link rel="stylesheet" href="assets/article.css?v=20261021a" id="articleCss" />
+  <script>
+    try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+  </script>
+  <style>
+    /* 메인 목록 화면 전용 스타일. 공통(헤더·탭·사이드바·푸터)은 assets/site.css */
+    body { line-height: 1.6; }
+    /* 휴대폰에서 칩을 연달아 누를 때 '두 번 눌러 확대'로 처리돼 눌림이 빠지지 않게 (손가락 확대는 그대로) */
+    html { touch-action: manipulation; }
+    .chip, .fpanel, button { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; text-decoration: none; }
+
+    .layout { max-width: 1120px; margin: 0 auto; padding: 34px 20px 72px; display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 56px; align-items: start; }
+    .layout > * { min-width: 0; }
+    main { max-width: 760px; }
+    @media (max-width: 960px) { .layout { grid-template-columns: minmax(0, 1fr); gap: 44px; padding-top: 26px; } main { max-width: none; } }
+
+    /* 머리 */
+    .eyebrow { font-size: 13.5px; color: var(--muted); }
+    h1 { font-size: clamp(26px, 4vw, 34px); line-height: 1.3; letter-spacing: -0.025em; font-weight: 800; margin: 4px 0 6px; }
+    .updated { font-size: 13px; color: var(--accent); font-weight: 600; font-variant-numeric: tabular-nums; }
+    .search { margin-top: 18px; }
+
+    .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; border-bottom: 2px solid var(--text); padding-bottom: 10px; margin: 26px 0 16px; }
+    .sec-head h2 { font-size: 18px; margin: 0; letter-spacing: -0.015em; }
+    .cnt { font-size: 12.5px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 0 8px; font-variant-numeric: tabular-nums; }
+
+    /* 변경 이력 */
+    .cl-row { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+    .cl-meta { display: flex; flex-direction: column; gap: 2px; font-variant-numeric: tabular-nums; }
+    .cl-meta b { font-size: 16px; letter-spacing: -0.01em; }
+    .cl-meta span { font-size: 13px; color: var(--muted); }
+    .cl-meta em { align-self: flex-start; margin-top: 4px; font-style: normal; font-size: 11.5px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 1px 9px; }
+    .cl-row ul { margin: 0; padding-left: 18px; font-size: 15px; }
+    .cl-row li { margin: 3px 0; }
+    @media (max-width: 600px) { .cl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; } .cl-meta { flex-direction: row; align-items: baseline; gap: 10px; } .cl-meta em { margin-top: 0; } }
+
+    /* 검색·칩 */
+    .search { width: 100%; height: 44px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--text); padding: 0 16px; font: inherit; font-size: 15px; outline: none; }
+    .search:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
+    .chips { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 6px; }
+    .chip { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 14px; font-size: 13.5px; color: var(--text); }
+    .chip .n { font-size: 11.5px; color: var(--muted); background: var(--soft); border-radius: 999px; padding: 0 7px; font-variant-numeric: tabular-nums; }
+    .chip:hover { border-color: var(--accent); }
+    .chip.on { background: var(--text); border-color: var(--text); color: var(--bg); font-weight: 700; }
+    .chip.on .n { background: color-mix(in srgb, var(--bg) 22%, transparent); color: var(--bg); }
+    .chip .x { font-size: 15px; line-height: 1; margin-left: -1px; opacity: .8; }
+    .chip.fbtn { cursor: pointer; font: inherit; font-size: 13.5px; line-height: 1.6; color: var(--muted); padding: 6px 12px; gap: 6px; }
+    .chip.fbtn svg { display: block; }
+    .chip.fbtn, .chip.more { min-height: 36px; }
+    /* iOS 사파리 기본 버튼 모양·여백 제거 (칩 높이·위치가 어긋나지 않게) */
+    button.chip { margin: 0; -webkit-appearance: none; appearance: none; box-sizing: border-box; vertical-align: middle; }
+    /* 위 줄은 한 줄로: 넘치면 선택된 태그 이름을 말줄임 */
+    #fheadRow { flex-wrap: nowrap; }
+    #fheadRow > * { flex: 0 0 auto; }
+    #fheadRow .chip.sel { flex: 0 1 auto; min-width: 72px; }
+    #fheadRow .chip.sel .t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    @media (max-width: 360px) { #fheadRow .chip .n { display: none; } }
+    .chip.fbtn:hover, .chip.fbtn[aria-expanded="true"] { color: var(--accent); border-color: var(--accent); }
+    .chip.fbtn[aria-expanded="true"] { background: var(--accent-soft); }
+    .chip[hidden] { display: none; }
+    .fpanel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 12px; margin: 4px 0 10px; }
+    .fpanel .chips { margin: 0; max-height: 260px; overflow-y: auto; }
+    .fpanel .chip.on { font-weight: 400; }   /* 선택해도 글자 폭이 그대로라 줄바꿈 위치가 안 바뀜 */
+    .fclear[hidden] { display: none; }
+    .fsearch { width: 100%; height: 38px; border: 1px solid var(--line); border-radius: 8px; background: var(--soft); color: var(--text); padding: 0 12px; font: inherit; font-size: 16px; outline: none; margin-bottom: 10px; }
+    .fsearch:focus { border-color: var(--accent); background: var(--surface); }
+    .fnone { margin: 4px 2px; font-size: 13.5px; color: var(--muted); }
+    .fhead { display: flex; align-items: center; justify-content: space-between; gap: 10px; height: 22px; line-height: 22px; margin: 0 2px 10px; font-size: 13px; color: var(--muted); }
+    .fhead b { color: var(--accent); }
+    .fclear { border: 0; background: none; padding: 0; line-height: 22px; font: inherit; font-size: 13px; font-weight: 600; color: var(--accent); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+    .chip.more { cursor: pointer; font: inherit; font-size: 13.5px; line-height: 1.6; }
+
+    /* 카드 */
+    .cards { display: flex; flex-direction: column; gap: 12px; }
+    /* 카드 테두리: 평소에는 검은색(다크 모드는 밝은색)으로 또렷하게, 마우스를 올리거나 키보드로 고르면 파란색 */
+    .card { position: relative; display: block; background: var(--surface); border: 1px solid var(--text); border-radius: var(--radius); padding: 18px 20px; transition: border-color .15s, box-shadow .15s; }
+    .card:hover, .card:focus-visible { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 6px 20px color-mix(in srgb, var(--accent) 12%, transparent); outline: none; }
+    .card .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding-right: 56px; font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .pill { font-size: 12px; line-height: 1.6; color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); border-radius: 999px; padding: 0 9px; }
+    .pill.solid { background: var(--accent-soft); border-color: transparent; font-weight: 700; }
+    .badge-new { position: absolute; top: 16px; right: 16px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .02em; border-radius: 999px; padding: 1px 9px; }
+    .card h3 { font-size: 18px; line-height: 1.45; letter-spacing: -0.015em; margin: 10px 0 6px; }
+    .card .orig { font-size: 13px; color: var(--muted); font-style: italic; margin: -2px 0 6px; }
+    .card p { margin: 0; font-size: 14.5px; line-height: 1.7; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+    .group-head { display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--text); padding-bottom: 9px; margin: 30px 0 14px; }
+    .group-head h2 { font-size: 16px; margin: 0; }
+    .sortbar { display: flex; align-items: center; gap: 6px; margin: 14px 0 0; padding-bottom: 12px; border-bottom: 2px solid var(--text); }
+    .sort-cnt { margin-right: auto; font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .cards.flat { margin-top: 16px; }
+    .sortbar .chip { cursor: pointer; font: inherit; font-size: 13px; padding: 5px 13px; }
+    .card .views { margin-left: auto; }
+    .filterbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; background: var(--accent-soft); border-radius: 10px; padding: 10px 14px; font-size: 14px; margin: 14px 0 0; }
+    .filterbar b { color: var(--accent); }
+    .filterbar button { margin-left: auto; border: 0; background: none; color: var(--accent); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .empty { border: 1px dashed var(--line); border-radius: var(--radius); background: var(--surface); padding: 36px 20px; text-align: center; color: var(--muted); font-size: 14.5px; margin-top: 16px; }
+    .empty b { display: block; color: var(--text); font-size: 16px; margin-bottom: 4px; }
+    .more { margin-top: 16px; font-size: 14px; }
+    .more a { color: var(--accent); font-weight: 600; }
+
+    /* 오늘의 인사이트·논문: 카드 대신 본문을 바로 보여 줌 */
+    .today-meta { font-size: 13.5px; color: var(--muted); margin-bottom: 4px; }
+    .today-meta .upd { color: var(--accent); font-weight: 600; }
+    .inline-article > article { max-width: none; margin: 0; padding: 0; }
+    .inline-article a { color: var(--accent); }
+    .inline-article .loading { color: var(--muted); padding: 48px 0; }
+    .standalone { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 14px; }
+    .standalone a { color: var(--accent); font-weight: 600; }
+    @media (min-width: 961px) { .inline-article nav.toc, .inline-article .cats { display: none; } }
+
+    /* 사이드바 항목 */
+    .bar-row { display: grid; grid-template-columns: 92px 1fr 26px; align-items: center; gap: 10px; padding: 5px 0; font-size: 13.5px; color: var(--text); }
+    .bar-row .nm { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bar-row .tr { height: 5px; border-radius: 999px; background: var(--line); overflow: hidden; }
+    .bar-row .tr i { display: block; height: 100%; border-radius: 999px; background: var(--accent); }
+    .bar-row .c { font-size: 12px; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+    .bar-row:hover .nm, .bar-row.on .nm { color: var(--accent); font-weight: 700; }
+    .ent-group + .ent-group { margin-top: 12px; }
+    .rank-list { list-style: none; margin: 0; padding: 0; }
+    .rank-list li { padding: 9px 0; border-bottom: 1px solid var(--line); }
+    .rank-list li:last-child { border-bottom: 0; }
+    .rank-list a { display: block; font-size: 14px; font-weight: 600; line-height: 1.5; }
+    .rank-list a:hover { color: var(--accent); }
+    .rank-list time { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .stats { margin: 0; display: grid; grid-template-columns: 84px 1fr; gap: 9px 8px; font-size: 14px; }
+    .stats dt { color: var(--muted); }
+    .stats dd { margin: 0; font-variant-numeric: tabular-nums; }
+    .cal-head { display: flex; align-items: center; justify-content: space-between; font-size: 14px; font-weight: 700; margin: 4px 0 8px; }
+    .cal-head button { width: 26px; height: 26px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--text); cursor: pointer; }
+    .cal-head button:hover { border-color: var(--accent); }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+    .cal-grid > * { height: 28px; display: grid; place-items: center; border-radius: 6px; font-size: 12px; color: var(--muted); border: 0; background: none; padding: 0; font-variant-numeric: tabular-nums; }
+    .cal-grid .dow { font-size: 11.5px; height: 22px; }
+    .cal-grid button { background: var(--accent-soft); color: var(--accent); font-weight: 700; cursor: pointer; font-family: inherit; }
+    .cal-grid button:hover { outline: 1px solid var(--accent); }
+    .cal-grid button.on { background: var(--accent); color: #fff; }
+
+    /* 용어집 */
+    .gloss { margin: 0; }
+    .term { padding: 16px 0; border-bottom: 1px solid var(--line); }
+    .term:last-child { border-bottom: 0; }
+    .term dt { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; font-size: 16.5px; font-weight: 700; letter-spacing: -0.01em; }
+    .term dt .en { font-size: 12.5px; color: var(--muted); font-weight: 500; }
+    .term dd { margin: 6px 0 0; font-size: 14.5px; line-height: 1.7; color: var(--muted); }
+    .term dd.loading { opacity: .55; }
+    #main > .loading { color: var(--muted); padding: 48px 0; text-align: center; }
+    .gcount { margin-top: 14px; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .pager { display: flex; justify-content: center; align-items: center; gap: 4px; margin: 22px 0 6px; }
+    .pager button { min-width: 34px; height: 34px; padding: 0 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--text); font: inherit; font-size: 14px; font-variant-numeric: tabular-nums; cursor: pointer; }
+    .pager button:hover:not(:disabled) { border-color: var(--accent); }
+    .pager button.on { background: var(--text); border-color: var(--text); color: var(--bg); font-weight: 700; }
+    .pager button:disabled { opacity: .35; cursor: default; }
+    .pager .gap { color: var(--muted); padding: 0 2px; }
+
+    /* 비교 */
+    .ctable-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); -webkit-overflow-scrolling: touch; }
+    .ctable { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 1000px; font-size: 14px; font-variant-numeric: tabular-nums; }
+    .ctable th, .ctable td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: center; white-space: nowrap; }
+    .ctable tbody tr:last-child th, .ctable tbody tr:last-child td { border-bottom: 0; }
+    .ctable thead th { font-size: 14px; font-weight: 700; background: var(--soft); }
+    .ctable thead tr:first-child th[colspan] { border-bottom: 3px solid var(--lab); }
+    .ctable thead .mdl { font-size: 12.5px; font-weight: 600; color: var(--muted); }
+    .ctable .bm { text-align: left; position: sticky; left: 0; z-index: 1; background: var(--surface); font-weight: 700; }
+    .ctable thead .bm { background: var(--soft); }
+    .ctable .bm-en { display: block; font-size: 12px; color: var(--muted); font-weight: 500; }
+    .ctable td { font-weight: 500; }
+    .ctable td.hi, .ctable td.lo { font-weight: 800; }
+    .ctable td.hi { background: color-mix(in srgb, #16a34a 16%, var(--surface)); color: color-mix(in srgb, #15803d 75%, var(--text)); }
+    .ctable td.lo { background: color-mix(in srgb, #dc2626 14%, var(--surface)); color: color-mix(in srgb, #b91c1c 75%, var(--text)); }
+    .clegend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12.5px; color: var(--muted); margin: -6px 0 10px; }
+    .clegend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 6px; }
+    .clegend .hi i { background: color-mix(in srgb, #16a34a 30%, var(--surface)); }
+    .clegend .lo i { background: color-mix(in srgb, #dc2626 28%, var(--surface)); }
+    .ctable td small { display: block; font-size: 11px; color: var(--muted); font-weight: 500; }
+    .ctable td.na { color: var(--muted); font-weight: 400; }
+    .cbar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+    .bchart { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 16px 18px; }
+    .bchart h3 { font-size: 15px; margin: 0 0 10px; letter-spacing: -0.01em; }
+    .bchart h3 span { font-size: 12px; color: var(--muted); font-weight: 500; margin-left: 8px; }
+    .brow { display: grid; grid-template-columns: 128px 1fr 44px; align-items: center; gap: 10px; font-size: 13px; margin: 8px 0; }
+    .brow .bl { color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .btrack { height: 10px; border-radius: 999px; background: var(--soft); overflow: hidden; }
+    .bfill { height: 100%; border-radius: 999px; }
+    .brow .bv { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .brow .bna { grid-column: 2 / 4; color: var(--muted); font-size: 12.5px; }
+    .cfoot { font-size: 13px; line-height: 1.7; color: var(--muted); margin: 18px 0 0; }
+  </style>
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="./"><span class="logo-mark">AI</span><span class="logo-txt">AI 비밀 레시피</span></a>
+      <form class="hsearch" id="hsearch" role="search"><select id="hscope" aria-label="검색 범위"><option value="all">전체</option><option value="news">뉴스</option><option value="insights">인사이트</option><option value="papers">논문</option></select><input id="hq" type="search" placeholder="검색어를 입력하세요" aria-label="검색어" enterkeyhint="search" /></form>
+      <div class="tools">
+        <button class="theme-btn" id="themeBtn" type="button" aria-label="테마 전환"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg></button>
+      </div>
+    </div>
+    <div class="nav-row">
+      <nav class="gnb" aria-label="주 메뉴">
+        <a href="#today" data-sec="news">뉴스</a>
+        <a href="#insights" data-sec="insights">인사이트</a>
+        <a href="#papers" data-sec="papers">논문</a>
+        <a href="#compare" data-sec="compare">비교</a>
+        <a href="#glossary" data-sec="glossary">용어집</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="subwrap">
+    <nav class="subtabs" id="subtabs" aria-label="하위 메뉴"></nav>
+    <button type="button" class="info-btn" id="infoBtn" aria-label="선정 기준" aria-expanded="false" aria-controls="infoPop" hidden>
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 4.2v4.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="8" cy="11.3" r="0.95" fill="currentColor"/></svg>
+    </button>
+    <div class="info-pop" id="infoPop" role="dialog" aria-label="선정 기준" hidden>
+    </div>
+  </div>
+
+  <div class="layout">
+    <main id="main"></main>
+    <aside class="side" id="side" aria-label="요약 정보"></aside>
+  </div>
+
+  <footer>
+    <div class="in">
+      <span>© <span id="year"></span> AI 비밀 레시피</span>
+      <a href="#changelog">변경 이력</a>
+    </div>
+  </footer>
+
+  <script src="assets/views.js?v=20261022c"></script>
+  <script src="assets/share.js?v=20261023c"></script>
+  <script src="assets/changelog.js?v=20261023b"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    // ---------- 뉴스 선정 기준 팝업: 버튼으로 열고, 화면 어디든 누르면 닫힘 ----------
+
+    const INFO = {
+      news: ["뉴스 선정 기준", [
+        "매일 오전 8시, 직전 24시간 안에 발표·보도된 AI 뉴스만 봅니다.",
+        "여러 매체에서 많이 다루고 파급력이 큰 순서로 1~3위를 정합니다.",
+        "세 뉴스는 서로 겹치지 않게 고릅니다. (규제·안전 / 모델·제품 / 산업·투자 등)",
+        "날짜와 수치는 1차 보도·공식 발표에서 확인하고, 확인되지 않은 내용은 넣지 않습니다."]],
+      insights: ["인사이트 선정 기준", [
+        "매일 오후 4시, 전날 오후 4시 30분부터 당일 오후 4시까지의 글을 봅니다.",
+        "언론 기사보다 개발자 블로그·커뮤니티·개인 사이트를 주로 봅니다.",
+        "그 사이 가장 많이 이야기된 AI 기술·모델을 골라 순위를 정합니다.",
+        "언급된 나라·기업으로 묶어서 모아 볼 수 있게 합니다."]],
+      papers: ["논문 선정 기준", [
+        "매일 낮 12시, arXiv(cs.AI·cs.CL·cs.LG)에 최근 올라온 논문 중 1편을 고릅니다.",
+        "최근 며칠 안에 나온 논문을 우선하고, Hugging Face Daily Papers도 참고합니다.",
+        "이미 다룬 논문은 다시 고르지 않습니다.",
+        "arXiv 원문 페이지에서 제목·저자·날짜·초록을 직접 확인한 논문만 다룹니다."]]
+    };
+    const infoBtn = document.getElementById("infoBtn"), infoPop = document.getElementById("infoPop");
+    function closeInfo() { infoPop.hidden = true; infoBtn.setAttribute("aria-expanded", "false"); }
+    function setInfo(sec) {
+      closeInfo();
+      const it = sec && INFO[sec];
+      infoBtn.hidden = !it;
+      if (!it) return;
+      infoBtn.setAttribute("aria-label", it[0]);
+      infoPop.setAttribute("aria-label", it[0]);
+      infoPop.innerHTML = `<h4>${it[0]}</h4><ul>${it[1].map((t) => `<li>${t}</li>`).join("")}</ul>`;
+    }
+    infoBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const open = infoPop.hidden;
+      infoPop.hidden = !open;
+      infoBtn.setAttribute("aria-expanded", String(open));
+    });
+    document.addEventListener("click", () => { if (!infoPop.hidden) closeInfo(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !infoPop.hidden) { closeInfo(); infoBtn.focus(); } });
+
+    document.getElementById("themeBtn").addEventListener("click", () => {
+      const root = document.documentElement;
+      const dark = root.getAttribute("data-theme")
+        ? root.getAttribute("data-theme") === "dark"
+        : window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const next = dark ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    });
+
+    // ---------- 공통 도우미 ----------
+    const $ = (s) => document.querySelector(s);
+    const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const pad = (n) => String(n).padStart(2, "0");
+    const korDate = (d) => { const [y, m, dd] = String(d).split("-"); return `${y}년 ${+m}월 ${+dd}일`; };
+    const sortKey = (p) => p.publishedAt || (p.date + "T00:00:00+09:00");
+    const kst = (p) => {
+      const dt = p.publishedAt ? new Date(p.publishedAt) : null;
+      if (!dt || isNaN(dt)) return null;
+      return Object.fromEntries(new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23"
+      }).formatToParts(dt).map((x) => [x.type, x.value]));
+    };
+    const shortTime = (p) => { const k = kst(p); return k ? `${k.month}.${k.day} ${k.hour}:${k.minute}` : p.date; };
+    const fullTime = (p) => { const k = kst(p); return k ? `${k.year}.${k.month}.${k.day} ${k.hour}:${k.minute}` : p.date; };
+
+    // 필터 종류와 데이터 필드
+    const FIELD = { tag: "tags", kind: "kind", country: "countries", company: "companies", category: "category" };
+    const FLABEL = { tag: "태그", kind: "분류", country: "나라", company: "기업", category: "분류" };
+    const valuesOf = (it, type) => { const v = it[FIELD[type]]; return Array.isArray(v) ? v : (v ? [v] : []); };
+
+    // ---------- 섹션 설정 (뉴스 · 인사이트 · 논문) ----------
+    const SEC = {
+      news: {
+        file: "posts.json", unit: "뉴스",
+        tabs: { today: ["#today", "오늘의 TOP3"], all: ["#archive", "지난 뉴스"] },
+        eyebrow: "오늘의 브리핑", todayHead: "오늘의 TOP3 뉴스",
+        allTitle: "지난 뉴스",
+        chipType: "tag", bars: [["tag", "태그별 뉴스"]], placeholder: "예: 에이전트, 규제, 오픈소스",
+        empty: ["첫 뉴스를 준비하고 있어요", "곧 오늘의 AI 뉴스 3가지가 여기에 올라옵니다."]
+      },
+      insights: {
+        file: "insights.json", unit: "인사이트",
+        tabs: { today: ["#insights", "오늘의 인사이트"], all: ["#insights/all", "모든 인사이트"] },
+        eyebrow: "오늘의 인사이트", todayHead: "개발자들이 가장 많이 이야기한 것",
+        allTitle: "모든 인사이트",
+        chipType: "kind", bars: [["country", "나라별 인사이트"], ["company", "기업별 인사이트"]], placeholder: "예: 모델, 에이전트, OpenAI",
+        empty: ["첫 인사이트를 준비하고 있어요", "매일 오후 4시, 그날 개발자들이 가장 많이 이야기한 AI 기술·모델이 여기에 올라옵니다."]
+      },
+      papers: {
+        file: "papers.json", unit: "논문",
+        tabs: { today: ["#papers", "오늘의 논문"], all: ["#papers/all", "지난 논문"] },
+        eyebrow: "오늘의 논문", todayHead: "오늘 읽은 논문",
+        allTitle: "지난 논문",
+        chipType: "tag", bars: [["tag", "태그별 논문"]], placeholder: "예: 추론, 에이전트, 벤치마크",
+        empty: ["첫 논문을 준비하고 있어요", "매일 저녁 10시, 최신 AI 논문 한 편을 요약해 올립니다."]
+      },
+      glossary: {
+        file: "glossary/index.json", unit: "용어",
+        tabs: { today: ["#glossary", "용어집"], all: ["#glossary", "용어집"] },
+        eyebrow: "AI 용어집", todayHead: "용어집",
+        allTitle: "용어집",
+        chipType: "category", bars: [["category", "분류별 용어"]], placeholder: "예: 에이전트, 추론, 파인튜닝",
+        empty: ["첫 용어를 준비하고 있어요", "AI에서 자주 쓰는 말을 쉬운 설명과 함께 모아 둡니다."]
+      },
+      compare: {
+        file: "compare.json", unit: "벤치마크",
+        tabs: { today: ["#compare", "비교"], all: ["#compare", "비교"] },
+        eyebrow: "모델 비교", todayHead: "비교", allTitle: "비교",
+        chipType: "tag", bars: [], placeholder: "",
+        empty: ["비교표를 준비하고 있어요", "주요 AI 모델의 벤치마크 점수를 표와 그래프로 모아 둡니다."]
+      },
+      changelog: {
+        file: "changelog.json", unit: "버전",
+        tabs: { today: ["#changelog", "변경 이력"], all: ["#changelog", "변경 이력"] },
+        eyebrow: "변경 이력", todayHead: "변경 이력", allTitle: "변경 이력",
+        chipType: "tag", bars: [], placeholder: "",
+        empty: ["변경 이력이 없어요", ""]
+      }
+    };
+    const data = {};
+    const state = {
+      news: { q: "", f: null, date: null, month: null, sort: "new", page: 1, key: "" },
+      insights: { q: "", f: null, date: null, month: null, sort: "new", page: 1, key: "" },
+      papers: { q: "", f: null, date: null, month: null, sort: "new", page: 1, key: "" },
+      glossary: { q: "", f: null, date: null, month: null, page: 1, key: "" },
+      compare: { q: "", f: null, date: null, month: null },
+      changelog: { q: "", f: null, date: null, month: null, page: 1 }
+    };
+
+    // 상세 페이지에서 넘어온 값: ?tag=태그, ?sec=섹션&q=검색어
+    (function () {
+      const p = new URLSearchParams(location.search);
+      if (p.get("tag")) state.news.f = { type: "tag", values: [p.get("tag")] };
+      const sec = SEC[p.get("sec")] ? p.get("sec") : "news";
+      if (p.get("q")) state[sec].q = p.get("q");
+      // 한 번 읽은 값은 주소에서 지워서, 새로고침해도 필터가 되살아나지 않게 합니다
+      if (location.search) history.replaceState(null, "", location.pathname + location.hash);
+    })();
+
+    // 조회수: 처음 한 번 받아 오고, 도착하면 지금 화면을 다시 그립니다
+    let viewsReady = false;
+    function refreshViews(force) {
+      if (!Views.enabled) return;
+      Views.all(force).then(() => {
+        viewsReady = true;
+        if (cur && cur.sec === "search") { if ($("#sresults")) searchResults(); return; }
+        if (cur && cur.sec !== "glossary" && cur.sec !== "compare" && data[cur.sec]) {
+          if (cur.tab === "all") renderResults(); else if (cur.sec === "news") render();
+        }
+      });
+    }
+    refreshViews(false);
+    // 글을 읽고 '뒤로'로 돌아오거나 탭을 다시 볼 때 최신 숫자로 갱신
+    window.addEventListener("pageshow", (e) => { if (e.persisted) refreshViews(true); });
+    document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") refreshViews(true); });
+
+    // 뉴스·인사이트·논문은 최근 글(posts.json 등)과 연도별 보관 파일(archive/)로 나뉨.
+    // 첫 화면은 최근 파일만 받고, 지난 글 목록·검색에서만 보관 파일까지 받음 (tools/lists.py 참고)
+    const LIST_SECS = ["news", "insights", "papers"];
+    const listName = (sec) => SEC[sec].file.replace(/\.json$/, "");
+    let manifestP = null;
+    function manifest() {
+      if (!manifestP) {
+        manifestP = fetch("archive/manifest.json", { cache: "no-cache" })
+          .then((r) => (r.ok ? r.json() : null))
+          .catch(() => null)
+          .then((m) => (m && m.lists) || {});
+      }
+      return manifestP;
+    }
+    let manifestData = {};
+    const archived = (sec) => (LIST_SECS.includes(sec) && manifestData[listName(sec)]) || { count: 0, days: 0, files: [] };
+    const full = {};            // 보관 파일까지 합쳤는지
+    const fullP = {};
+    const byNewest = (a, b) => (new Date(sortKey(b)) - new Date(sortKey(a))) || ((a.rank || 9) - (b.rank || 9));
+    function loadFull(sec) {
+      if (!LIST_SECS.includes(sec)) return load(sec);
+      if (full[sec]) return Promise.resolve(data[sec]);
+      if (!fullP[sec]) {
+        fullP[sec] = Promise.all([load(sec), manifest()]).then(() => Promise.all(archived(sec).files.map((f) =>
+          fetch(f.file, { cache: "no-cache" }).then((r) => (r.ok ? r.json() : [])).catch(() => null)
+        ))).then((parts) => {
+          const seen = new Set(data[sec].map((i) => i.url));
+          const more = [];
+          let ok = true;
+          parts.forEach((arr) => {
+            if (!Array.isArray(arr)) { ok = false; return; }
+            arr.forEach((i) => { if (i && i.url && !seen.has(i.url)) { seen.add(i.url); more.push(i); } });
+          });
+          data[sec] = data[sec].concat(more).sort(byNewest);
+          if (ok) full[sec] = true; else delete fullP[sec];   // 못 받은 파일은 다음에 다시 시도
+          return data[sec];
+        });
+      }
+      return fullP[sec];
+    }
+
+    function load(sec) {
+      if (data[sec]) return Promise.resolve(data[sec]);
+      if (LIST_SECS.includes(sec)) manifest().then((m) => { manifestData = m; });
+      return fetch(SEC[sec].file, { cache: "no-cache" })
+        .then((r) => (r.ok ? r.json() : []))
+        .catch(() => [])
+        .then((arr) => {
+          // 용어집 목록은 {fields, items: [[이름, 영문명, 분류, 날짜, 설명 파일 키], ...]} 형식
+          if (arr && Array.isArray(arr.items) && Array.isArray(arr.fields)) {
+            arr = arr.items.map((row) => Object.fromEntries(arr.fields.map((f, i) => [f, row[i]])));
+          }
+          data[sec] = Array.isArray(arr) ? arr.slice().sort(byNewest) : [];
+          if (LIST_SECS.includes(sec)) return manifest().then((m) => { manifestData = m; return data[sec]; });
+          return data[sec];
+        });
+    }
+
+    // ---------- 조각 만들기 ----------
+    function filterAttrs(sec, type, value) {
+      const href = sec === "insights" && value && (type === "country" || type === "company")
+        ? `#insights/${type}/${encodeURIComponent(value)}`
+        : SEC[sec].tabs.all[0];
+      return `href="${href}" data-ftype="${type}" data-fval="${esc(value)}"`;
+    }
+
+    // 태그·분류 필터: 평소엔 [전체] [선택된 것 ×] [필터 아이콘]만, 아이콘을 누르면 전체 목록 패널이 펼쳐짐
+    const FILTER_ICON = `<svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3h12l-4.6 5.4v4.2l-2.8 1.4V8.4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>`;
+    // 패널이 열려 있는 동안에는 화면을 다시 그리지 않고 칩 상태와 결과 목록만 바꿈 (화면이 위아래로 흔들리지 않게)
+    let fctx = null, headDirty = false;
+    function filterHead(sec, type, items, rows, sel) {
+      const label = FLABEL[type] || "태그";
+      const SHOW = 1;   // 위 줄에 보이는 선택된 태그 수 (넘치면 +N)
+      return `<a class="chip${sel.length ? "" : " on"}" ${filterAttrs(sec, type, "")}>전체${sel.length ? "" : `<span class="n">${items.length}</span>`}</a>`
+        + sel.slice(0, SHOW).map((v) => `<a class="chip on sel" data-fmulti ${filterAttrs(sec, type, v)} title="선택 해제"><span class="t">${esc(v)}</span><span class="x" aria-hidden="true">×</span></a>`).join("")
+        + (sel.length > SHOW ? `<button type="button" class="chip on more" data-fopen>+${sel.length - SHOW}</button>` : "")
+        + `<button type="button" class="chip fbtn" data-fopen aria-expanded="false" aria-controls="fpanel" aria-label="${label} 필터 열기" title="${label} 필터">${FILTER_ICON}<span class="n">${rows.length}</span></button>`;
+    }
+    function fheadHTML(type, sel) {
+      const label = FLABEL[type] || "태그";
+      return `<span>${sel.length ? `<b>${sel.length}</b>개 선택` : `${label}를 여러 개 고를 수 있어요`}</span><button type="button" class="fclear" data-fclear="${type}"${sel.length ? "" : " hidden"}>선택 해제</button>`;
+    }
+    const selOf = (st, type) => (st.f && st.f.type === type ? st.f.values : []);
+    function filterChips(sec, type, items, rows, st) {
+      if (!rows.length) { fctx = null; return ""; }
+      fctx = { sec, type, items, rows };
+      headDirty = false;
+      const sel = selOf(st, type);
+      const label = FLABEL[type] || "태그";
+      const all = rows.map(([v, n]) => `<a class="chip${sel.includes(v) ? " on" : ""}" data-fmulti data-fname="${esc(String(v).toLowerCase())}" ${filterAttrs(sec, type, v)} aria-pressed="${sel.includes(v)}">${esc(v)}<span class="n">${n}</span></a>`).join("");
+      return `<div class="chips" id="fheadRow">${filterHead(sec, type, items, rows, sel)}</div>
+        <div class="fpanel" id="fpanel" hidden>
+          <div class="fhead">${fheadHTML(type, sel)}</div>
+          ${rows.length > 12 ? `<input class="fsearch" type="search" placeholder="${label} 검색" aria-label="${label} 검색" />` : ""}
+          <div class="chips fall">${all}</div>
+          <p class="fnone" hidden>맞는 ${label}가 없어요.</p>
+        </div>`;
+    }
+    // 패널 안에서 고른 결과를 그 자리에서 반영 (패널과 위 줄은 그대로, 아래 결과만 갱신)
+    function applyFilterInPlace() {
+      const st = state[fctx.sec], sel = selOf(st, fctx.type);
+      document.querySelectorAll("#fpanel .fall .chip").forEach((c) => {
+        const on = sel.includes(c.dataset.fval);
+        c.classList.toggle("on", on);
+        c.setAttribute("aria-pressed", String(on));
+      });
+      document.querySelector("#fpanel .fhead").innerHTML = fheadHTML(fctx.type, sel);
+      headDirty = true;
+      if (cur.sec === "glossary") glossaryResults(); else renderResults();
+    }
+    function setFilterPanel(open) {
+      const panel = $("#fpanel");
+      if (!panel) return;
+      panel.hidden = !open;
+      // 닫을 때 위 줄(전체·선택된 태그·필터 버튼)을 한 번에 갱신
+      if (!open && headDirty && fctx) {
+        headDirty = false;
+        $("#fheadRow").innerHTML = filterHead(fctx.sec, fctx.type, fctx.items, fctx.rows, selOf(state[fctx.sec], fctx.type));
+      }
+      const fb = document.querySelector(".fbtn");
+      if (fb) fb.setAttribute("aria-expanded", String(open));
+      if (open) { const q = panel.querySelector(".fsearch"); if (q && window.matchMedia("(hover: hover)").matches) q.focus(); }
+    }
+    document.addEventListener("click", (e) => {
+      if (e.target.closest("[data-fopen]")) { setFilterPanel($("#fpanel").hidden || !!e.target.closest(".more")); return; }
+      const panel = $("#fpanel");
+      if (panel && !panel.hidden && !e.target.closest("#fpanel")) setFilterPanel(false);
+    }, true);
+    document.addEventListener("input", (e) => {
+      if (!e.target.classList.contains("fsearch")) return;
+      const q = e.target.value.trim().toLowerCase();
+      let shown = 0;
+      document.querySelectorAll("#fpanel .fall .chip").forEach((c) => { const ok = !q || c.dataset.fname.includes(q); c.hidden = !ok; if (ok) shown++; });
+      document.querySelector("#fpanel .fnone").hidden = shown > 0;
+    });
+    document.addEventListener("keydown", (e) => {
+      const panel = $("#fpanel");
+      if (e.key === "Escape" && panel && !panel.hidden) { setFilterPanel(false); document.querySelector(".fbtn").focus(); }
+    });
+
+    function countBy(items, type) {
+      const m = new Map();
+      items.forEach((it) => valuesOf(it, type).forEach((v) => m.set(v, (m.get(v) || 0) + 1)));
+      return [...m.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "ko"));
+    }
+
+    function card(it, sec, latest) {
+      const pills = [];
+      if (sec === "news" && it.rank) pills.push(`<span class="pill solid">${it.rank}위</span>`);
+      if (sec === "insights" && it.kind) pills.push(`<span class="pill solid">${esc(it.kind)}</span>`);
+      if (sec === "papers") pills.push(`<span class="pill solid">논문</span>`);
+      const tags = sec === "insights" ? (it.companies || []).slice(0, 3) : (it.tags || []);
+      tags.forEach((t) => pills.push(`<span class="pill">${esc(t)}</span>`));
+      const isNew = it.date === latest;
+      return `<a class="card${isNew ? " new" : ""}" href="${esc(it.url)}">
+          ${isNew ? '<span class="badge-new">NEW</span>' : ""}
+          <div class="meta">${pills.join("")}<time datetime="${esc(it.date)}">${esc(it.date)}</time>${Views.enabled && viewsReady ? `<span class="views">조회 ${Views.fmt(Views.count(it.url))}</span>` : ""}</div>
+          <h3>${esc(it.title)}</h3>
+          ${it.paperTitle ? `<div class="orig">${esc(it.paperTitle)}</div>` : ""}
+          <p>${esc(it.summary)}</p>
+        </a>`;
+    }
+
+    function barPanel(sec, items, type, title) {
+      const st = state[sec];
+      const rows = countBy(items, type).slice(0, 10);
+      const max = rows.length ? rows[0][1] : 1;
+      const body = rows.length
+        ? rows.map(([v, n]) => {
+            const on = st.f && st.f.type === type && st.f.values.includes(v);
+            return `<a class="bar-row${on ? " on" : ""}" ${filterAttrs(sec, type, v)}><span class="nm">${esc(v)}</span><span class="tr"><i style="width:${Math.max(6, Math.round(n / max * 100))}%"></i></span><span class="c">${n}</span></a>`;
+          }).join("")
+        : `<p class="sub">아직 없어요</p>`;
+      return `<section><h3>${title}</h3>${body}</section>`;
+    }
+
+    function entityPanel(sec, title, items, groups) {
+      const body = groups.map(([type, label]) => {
+        const rows = countBy(items, type);
+        if (!rows.length) return "";
+        return `<div class="ent-group">${label ? `<p class="sub">${label}</p>` : ""}<div class="side-chips">${rows.map(([v, n]) =>
+          `<a ${filterAttrs(sec, type, v)}>${esc(v)}${n > 1 ? `<span class="n">${n}</span>` : ""}</a>`).join("")}</div></div>`;
+      }).join("");
+      return body ? `<section><h3>${title}</h3>${body}</section>` : "";
+    }
+
+    function listPanel(sec, title, arr) {
+      const s = SEC[sec];
+      return `<section><h3>${title}</h3>${arr.length
+        ? `<ol class="rank-list">${arr.map((i) => `<li><a href="${esc(i.url)}">${esc(i.title)}</a><time>${esc(i.date)}</time></li>`).join("")}</ol>`
+        : `<p class="sub">아직 없어요</p>`}<div class="more"><a href="${s.tabs.all[0]}">${s.tabs.all[1]} 전체 보기 →</a></div></section>`;
+    }
+
+    function statsPanel(sec, items) {
+      // 보관 파일을 아직 안 받았으면 manifest 의 개수를 더해서 전체 숫자를 보여 줌
+      const extra = full[sec] ? { count: 0, days: 0 } : archived(sec);
+      const days = new Set(items.map((i) => i.date)).size + extra.days;
+      return `<section><h3>숫자로 보기</h3><dl class="stats">
+          <dt>누적 ${SEC[sec].unit}</dt><dd>${(items.length + extra.count).toLocaleString()}편</dd>
+          <dt>기록한 날</dt><dd>${days.toLocaleString()}일</dd>
+          <dt>최근 갱신</dt><dd>${items.length ? fullTime(items[0]) : "—"}</dd>
+        </dl></section>`;
+    }
+
+    function shiftMonth(ym, delta) {
+      const [y, m] = ym.split("-").map(Number);
+      const d = new Date(y, m - 1 + delta, 1);
+      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}`;
+    }
+
+    function calendarPanel(sec, items) {
+      const st = state[sec];
+      const days = new Set(items.map((i) => i.date));
+      const now = new Date();
+      const base = st.month || (st.date || (items[0] && items[0].date) || `${now.getFullYear()}-${pad(now.getMonth() + 1)}-01`).slice(0, 7);
+      const [y, m] = base.split("-").map(Number);
+      const startDow = (new Date(y, m - 1, 1).getDay() + 6) % 7; // 월요일 시작
+      const n = new Date(y, m, 0).getDate();
+      let cells = ["월", "화", "수", "목", "금", "토", "일"].map((d) => `<span class="dow">${d}</span>`).join("");
+      for (let i = 0; i < startDow; i++) cells += "<span></span>";
+      for (let d = 1; d <= n; d++) {
+        const k = `${y}-${pad(m)}-${pad(d)}`;
+        cells += days.has(k)
+          ? `<button type="button" data-day="${k}" class="${st.date === k ? "on" : ""}" aria-label="${korDate(k)} 글 보기">${d}</button>`
+          : `<span>${d}</span>`;
+      }
+      return `<section><h3>달력</h3>
+        <div class="cal-head"><button type="button" data-mon="-1" aria-label="이전 달">‹</button><span>${y}년 ${m}월</span><button type="button" data-mon="1" aria-label="다음 달">›</button></div>
+        <div class="cal-grid">${cells}</div></section>`;
+    }
+
+    // ---------- 화면: 오늘 ----------
+    // ---------- 화면: 오늘의 인사이트·논문 (본문 바로 보기) ----------
+    const artCache = {};
+    let shareUrl = null;   // 공유 버튼이 복사할 주소 (펼친 글)
+    let spy = null;          // 목차에서 지금 읽는 위치 표시
+    let inlineToken = null;  // 탭을 빨리 바꿀 때 늦게 온 응답 무시
+
+    function fetchArticle(it) {
+      if (artCache[it.url]) return Promise.resolve(artCache[it.url]);
+      return fetch(it.url, { cache: "no-store" })
+        .then((r) => (r.ok ? r.text() : null))
+        .catch(() => null)
+        .then((html) => {
+          if (!html) return null;
+          const doc = new DOMParser().parseFromString(html, "text/html");
+          const art = doc.querySelector("body > article") || doc.querySelector("article");
+          if (!art) return null;
+          const base = new URL(it.url, location.href);
+          // 글 안의 상대 주소(그림, 다른 글)를 글 위치 기준으로 고쳐 줌. #s1 같은 목차 주소는 그대로
+          art.querySelectorAll("[href],[src]").forEach((el) => ["href", "src"].forEach((a) => {
+            const v = el.getAttribute(a);
+            if (!v || /^(#|[a-z][a-z0-9+.-]*:)/i.test(v)) return;
+            el.setAttribute(a, new URL(v, base).href);
+          }));
+          art.querySelectorAll(".eyebrow").forEach((e) => e.remove());
+          const css = [...doc.querySelectorAll("head style")].map((x) => x.textContent).join("\n");
+          return (artCache[it.url] = { css, html: art.innerHTML, url: base.href });
+        });
+    }
+
+    function useArticleCss(css) {
+      // 글마다 들어 있는 스타일을 본문 영역 안에서만 쓰이도록 묶어서 넣음
+      let el = document.getElementById("inlineCss");
+      if (!el) {
+        el = document.createElement("style");
+        el.id = "inlineCss";
+        const ref = document.getElementById("articleCss");
+        ref.parentNode.insertBefore(el, ref);
+      }
+      el.textContent = `:where(.inline-article) {\n${css}\n}`;
+    }
+
+    function articleSide(box, it, sec, standaloneUrl) {
+      const heads = [...box.querySelectorAll("h2[id]")];
+      const panels = [];
+      if (heads.length) {
+        panels.push(`<section class="side-toc"><h3>목차</h3><ol>${heads.map((h, i) => {
+          const no = h.querySelector(".no");
+          const t = h.textContent.replace(no ? no.textContent : "", "").trim();
+          return `<li><a href="#${esc(h.id)}" data-jump="${esc(h.id)}">${i + 1}. ${esc(t)}</a></li>`;
+        }).join("")}</ol></section>`);
+      }
+      const rows = [["구분", esc(SEC[sec].unit)], ["게시", esc(fullTime(it))]];
+      if (it.kind) rows.push(["분류", esc(it.kind)]);
+      box.querySelectorAll(".byline span").forEach((sp) => {
+        const m = sp.textContent.trim().match(/읽는 시간\s*(.+)/);
+        if (m) rows.push(["읽는 시간", esc(m[1])]);
+      });
+      if (it.arxivUrl) rows.push(["원문", `<a href="${esc(it.arxivUrl)}" target="_blank" rel="noopener">${esc(it.arxivId ? "arXiv " + it.arxivId : "원문 보기")}</a>`]);
+      const refs = box.querySelectorAll(".refs li").length;
+      if (refs) rows.push(["참고", `자료 ${refs}개`]);
+      if (Views.enabled) rows.push(["조회", `<span class="vcount">…</span>`]);
+      rows.push(["따로 보기", `<a href="${esc(standaloneUrl)}">이 글 페이지 →</a>`]);
+      panels.push(`<section class="side-info"><h3>글 정보</h3><dl>${rows.map((r) => `<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join("")}</dl></section>`);
+      return panels.join("");
+    }
+
+    function renderInline() {
+      const sec = cur.sec, s = SEC[sec], items = data[sec];
+      const latest = items[0].date;
+      const today = items.filter((i) => i.date === latest).sort((a, b) => (a.rank || 9) - (b.rank || 9));
+      const lead = today[0], rest = today.slice(1);
+      const token = (inlineToken = {});
+      $("#main").innerHTML = `<div class="today-meta">${korDate(latest)}</div>
+        <div id="inline" class="inline-article"><p class="loading">글을 불러오는 중…</p></div>
+        ${rest.length ? `<div class="sec-head"><h2>오늘의 다른 ${s.unit}</h2><span class="cnt">${rest.length}편</span></div>
+          <div class="cards">${rest.map((i) => card(i, sec, latest)).join("")}</div>` : ""}
+        <div class="more"><a href="${s.tabs.all[0]}">${s.tabs.all[1]} 전체 보기 →</a></div>`;
+
+      const tail = [];
+      if (sec === "insights") tail.push(entityPanel(sec, "관련 나라·기업", [lead], [["country", "나라"], ["company", "기업"]]));
+      else tail.push(entityPanel(sec, "관련 태그", [lead], [["tag", ""]]));
+      tail.push(listPanel(sec, `지난 ${s.unit}`, items.filter((i) => i.date !== latest).slice(0, 5)));
+      $("#side").innerHTML = tail.join("");
+
+      fetchArticle(lead).then((res) => {
+        if (inlineToken !== token) return;
+        const box = $("#inline");
+        if (!res) { box.innerHTML = `<div class="cards">${card(lead, sec, latest)}</div>`; return; }
+        useArticleCss(res.css);
+        shareUrl = res.url;
+        if (window.Share) Share.toggle(true);
+        box.innerHTML = `<article>${res.html}</article><p class="standalone"><a href="${esc(lead.url)}">이 글만 따로 보기 →</a></p>`;
+        $("#side").insertAdjacentHTML("afterbegin", articleSide(box, lead, sec, lead.url));
+        let bspan = null;
+        const bl = box.querySelector(".byline");
+        if (bl) bl.querySelectorAll("span").forEach((sp) => {
+          if (sp.textContent.trim() === "AI 비밀 레시피") { sp.remove(); return; }
+          const f = sp.firstChild;
+          if (f && f.nodeType === 3 && /^\s*게시\s*$/.test(f.nodeValue) && sp.querySelector("time")) f.remove();
+        });
+        if (Views.enabled && bl) {
+          bspan = document.createElement("span");
+          bspan.className = "views";
+          bspan.textContent = "조회 …";
+          const t = bl.querySelector("time"), after = t && t.closest("span");
+          bl.insertBefore(bspan, after && after.parentNode === bl ? after.nextSibling : null);
+        }
+        Views.hit(lead.url).then((n) => {
+          if (inlineToken !== token) return;
+          const v = document.querySelector("#side .vcount");
+          if (v) v.textContent = n == null ? "—" : `${Views.fmt(n)}회`;
+          if (bspan) { if (n == null) bspan.remove(); else bspan.textContent = `조회 ${Views.fmt(n)}`; }
+        });
+        const heads = [...box.querySelectorAll("h2[id]")];
+        const links = [...document.querySelectorAll("#side .side-toc a")];
+        spy = () => {
+          let c = 0;
+          heads.forEach((h, i) => { if (h.getBoundingClientRect().top < 160) c = i; });
+          links.forEach((a, i) => a.classList.toggle("on", i === c));
+        };
+        spy();
+      });
+    }
+
+    function renderToday() {
+      const sec = cur.sec, s = SEC[sec], items = data[sec];
+      if (sec === "glossary") return renderGlossary();
+      if (sec === "compare") return renderCompare();
+      if (sec === "changelog") return renderChangelog();
+      if ((sec === "insights" || sec === "papers") && items.length) return renderInline();
+      const main = $("#main"), side = $("#side");
+      if (!items.length) {
+        main.innerHTML = `<h1>${s.tabs.today[1]}</h1>
+          <div class="empty"><b>${s.empty[0]}</b>${s.empty[1]}</div>`;
+        side.innerHTML = statsPanel(sec, items);
+        return;
+      }
+      const latest = items[0].date;
+      const today = items.filter((i) => i.date === latest).sort((a, b) => (a.rank || 9) - (b.rank || 9));
+      main.innerHTML = `<h1>${korDate(latest)}</h1>
+        <div class="sec-head"><h2>${s.todayHead}</h2><span class="cnt">${today.length}편</span></div>
+        <div class="cards">${today.map((i) => card(i, sec, latest)).join("")}</div>
+        <div class="more"><a href="${s.tabs.all[0]}">${s.tabs.all[1]} 전체 보기 →</a></div>`;
+
+      const panels = [];
+      if (sec === "insights") panels.push(entityPanel(sec, "오늘 등장한 나라·기업", today, [["country", "나라"], ["company", "기업"]]));
+      else panels.push(entityPanel(sec, sec === "news" ? "오늘 다룬 태그" : "오늘 논문의 태그", today, [["tag", ""]]));
+      panels.push(listPanel(sec, `지난 ${s.unit}`, items.filter((i) => i.date !== latest).slice(0, 5)));
+      panels.push(statsPanel(sec, items));
+      side.innerHTML = panels.join("");
+    }
+
+    // ---------- 화면: 전체 ----------
+    function matches(it, st) {
+      if (st.f && !valuesOf(it, st.f.type).some((v) => st.f.values.includes(v))) return false;  // 여러 개 고르면 하나라도 맞으면 보임
+      if (st.date && it.date !== st.date) return false;
+      const q = st.q.trim().toLowerCase();
+      if (!q) return true;
+      return [it.title, it.summary, it.subject, it.paperTitle, it.kind, it.name, it.en, it.desc, ...(it.tags || []), ...(it.countries || []), ...(it.companies || [])]
+        .join(" ").toLowerCase().includes(q);
+    }
+
+    // ---------- 화면: 용어집 (용어 이름과 설명을 가나다순으로) ----------
+    // 용어가 수만 개가 돼도 가볍게: 목록(glossary/index.json)엔 설명이 없고,
+    // 설명은 첫 글자별 파일(glossary/desc/<키>.json)에 나눠 두어 지금 보이는 용어의 것만 받아 옵니다.
+    const G_PAGE = 50;          // 용어집 한 페이지에 보이는 용어 수
+    const G_SEARCH_MAX = 20;    // 모든 글 검색에서 보여 줄 용어 수
+    const descFiles = {};       // 키 → Promise<{이름: 설명}>
+    function descFile(k) {
+      if (!descFiles[k]) {
+        descFiles[k] = fetch(`glossary/desc/${encodeURIComponent(k)}.json`)
+          .then((r) => (r.ok ? r.json() : {}))
+          .catch(() => { delete descFiles[k]; return {}; });
+      }
+      return descFiles[k];
+    }
+    const descReady = {};       // 키 → 받아 온 설명
+    function loadDescs(terms) {
+      const keys = [...new Set(terms.map((t) => t.s).filter((k) => k && !descReady[k]))];
+      return Promise.all(keys.map((k) => descFile(k).then((m) => { descReady[k] = m; })));
+    }
+    const descOf = (t) => (descReady[t.s] ? descReady[t.s][t.name] || "" : null);
+    function termList(list) {
+      return `<dl class="gloss">${list.map((t) => {
+        const d = descOf(t);
+        return `<div class="term"><dt>${esc(t.name)}${t.en ? `<span class="en">${esc(t.en)}</span>` : ""}${t.category ? `<span class="pill">${esc(t.category)}</span>` : ""}</dt><dd${d === null ? ' class="loading"' : ""}>${d === null ? "설명을 불러오는 중…" : esc(d)}</dd></div>`;
+      }).join("")}</dl>`;
+    }
+    // 보이는 용어의 설명이 아직 없으면 받아 온 뒤 같은 화면일 때만 다시 그림
+    function fillDescs(list, redraw) {
+      if (list.every((t) => descOf(t) !== null)) return;
+      const token = (inlineToken = {});
+      loadDescs(list).then(() => { if (inlineToken === token) redraw(); });
+    }
+
+    // 용어집 검색은 이름·영문명·분류에서 찾습니다 (설명은 필요할 때만 받기 때문)
+    function glossaryList() {
+      const st = state.glossary, items = data.glossary;
+      return items.filter((i) => matches(i, st)).sort((a, b) => a.name.localeCompare(b.name, "ko"));
+    }
+
+    function pager(page, pages, attr = "data-gpage", label = "용어집 페이지") {
+      if (pages < 2) return "";
+      const nums = [];
+      const win = new Set([1, pages, page - 1, page, page + 1].filter((n) => n >= 1 && n <= pages));
+      let prev = 0;
+      [...win].sort((a, b) => a - b).forEach((n) => {
+        if (n - prev > 1) nums.push(`<span class="gap">…</span>`);
+        nums.push(`<button type="button" ${attr}="${n}"${n === page ? ' aria-current="page" class="on"' : ""}>${n}</button>`);
+        prev = n;
+      });
+      return `<nav class="pager" aria-label="${label}">
+        <button type="button" ${attr}="${page - 1}"${page <= 1 ? " disabled" : ""} aria-label="이전 페이지">‹</button>${nums.join("")}<button type="button" ${attr}="${page + 1}"${page >= pages ? " disabled" : ""} aria-label="다음 페이지">›</button></nav>`;
+    }
+
+    function glossaryResults() {
+      const st = state.glossary, items = data.glossary;
+      const list = glossaryList();
+      // 검색어·분류가 바뀌면 첫 페이지로
+      const key = `${st.q.trim()}|${st.f ? st.f.type + ":" + st.f.values.join(",") : ""}`;
+      if (key !== st.key) { st.key = key; st.page = 1; }
+      const pages = Math.max(1, Math.ceil(list.length / G_PAGE));
+      st.page = Math.min(Math.max(1, st.page || 1), pages);
+      const shown = list.slice((st.page - 1) * G_PAGE, st.page * G_PAGE);
+      const conds = [];
+      if (st.f) conds.push(`${FLABEL[st.f.type]} <b>${st.f.values.slice(0, 3).map(esc).join(", ")}</b>${st.f.values.length > 3 ? ` 외 ${st.f.values.length - 3}개` : ""}`);
+      if (st.q.trim()) conds.push(`검색어 <b>${esc(st.q.trim())}</b>`);
+      const bar = conds.length ? `<div class="filterbar">${conds.join(" · ")} — ${list.length}개<button type="button" data-clear>전체 보기 ✕</button></div>` : "";
+      const range = list.length > G_PAGE ? `<div class="gcount">${list.length.toLocaleString()}개 중 ${((st.page - 1) * G_PAGE + 1).toLocaleString()}–${((st.page - 1) * G_PAGE + shown.length).toLocaleString()}</div>` : "";
+      const body = list.length
+        ? range + termList(shown) + pager(st.page, pages)
+        : `<div class="empty">${items.length ? "조건에 맞는 용어가 없어요." : `<b>${SEC.glossary.empty[0]}</b>${SEC.glossary.empty[1]}`}</div>`;
+      $("#gresults").innerHTML = bar + body;
+      fillDescs(shown, () => { if ($("#gresults")) glossaryResults(); });
+    }
+
+    function renderGlossary() {
+      const st = state.glossary, items = data.glossary;
+      const chipRows = countBy(items, "category");
+      $("#main").innerHTML = `<h1>AI 용어집</h1>
+        <input id="q" class="search" type="search" placeholder="${esc(SEC.glossary.placeholder)}" value="${esc(st.q)}" aria-label="용어 검색" />
+        ${filterChips("glossary", "category", items, chipRows, st)}
+        <div id="gresults"></div>`;
+      $("#q").addEventListener("input", (e) => { st.q = e.target.value; glossaryResults(); });
+      glossaryResults();
+      $("#side").innerHTML = [barPanel("glossary", items, "category", "분류별 용어")]
+        .concat([`<section><h3>숫자로 보기</h3><dl class="stats">
+          <dt>누적 용어</dt><dd>${items.length}개</dd>
+          <dt>분류</dt><dd>${chipRows.length}개</dd>
+          <dt>최근 갱신</dt><dd>${items.length ? fullTime(items[0]) : "—"}</dd>
+        </dl></section>`]).join("");
+    }
+
+    function renderAll() {
+      const sec = cur.sec, s = SEC[sec], st = state[sec], items = data[sec];
+      const chipRows = countBy(items, s.chipType);
+      $("#main").innerHTML = `<h1>${s.allTitle}</h1>
+        <input id="q" class="search" type="search" placeholder="${esc(s.placeholder)}" value="${esc(st.q)}" aria-label="${s.unit} 검색" />
+        ${filterChips(sec, s.chipType, items, chipRows, st)}
+        <div class="sortbar" role="group" aria-label="정렬"><span class="sort-cnt" id="sortCnt"></span>${[["new", "최신순"], ["old", "오래된순"]].concat(Views.enabled ? [["views", "조회수순"]] : []).map(([k, l]) =>
+          `<button type="button" class="chip${st.sort === k ? " on" : ""}" data-sort="${k}" aria-pressed="${st.sort === k}">${l}</button>`).join("")}</div>
+        <div id="results"></div>`;
+      $("#q").addEventListener("input", (e) => { st.q = e.target.value; renderResults(); });
+      renderResults();
+      $("#side").innerHTML = [calendarPanel(sec, items)]
+        .concat(s.bars.map(([t, title]) => barPanel(sec, items, t, title)))
+        .concat([statsPanel(sec, items)]).join("");
+    }
+
+    const L_PAGE = 20;   // 지난 뉴스·인사이트·논문 한 페이지에 보이는 글 수
+    function renderResults() {
+      const sec = cur.sec, s = SEC[sec], st = state[sec], items = data[sec];
+      const latest = items[0] && items[0].date;
+      const list = items.filter((i) => matches(i, st));
+      const conds = [];
+      if (st.f) conds.push(`${FLABEL[st.f.type]} <b>${st.f.values.slice(0, 3).map(esc).join(", ")}</b>${st.f.values.length > 3 ? ` 외 ${st.f.values.length - 3}개` : ""}`);
+      if (st.date) conds.push(`날짜 <b>${esc(st.date)}</b>`);
+      if (st.q.trim()) conds.push(`검색어 <b>${esc(st.q.trim())}</b>`);
+      const bar = conds.length ? `<div class="filterbar">${conds.join(" · ")} — ${list.length}편<button type="button" data-clear>전체 보기 ✕</button></div>` : "";
+      // 날짜별로 묶지 않고 한 줄로 쭉: 정렬만 바꿈 (최신순 · 오래된순 · 조회수순)
+      const byNew = (a, b) => (new Date(sortKey(b)) - new Date(sortKey(a))) || ((a.rank || 9) - (b.rank || 9));
+      const sorters = {
+        new: byNew,
+        old: (a, b) => (new Date(sortKey(a)) - new Date(sortKey(b))) || ((a.rank || 9) - (b.rank || 9)),
+        views: (a, b) => (Views.count(b.url) - Views.count(a.url)) || byNew(a, b)
+      };
+      const sort = st.sort === "views" && !Views.enabled ? "new" : (sorters[st.sort] ? st.sort : "new");
+      const sorted = list.slice().sort(sorters[sort]);
+      // 검색어·필터·날짜·정렬이 바뀌면 첫 페이지로
+      const key = `${st.q.trim()}|${st.f ? st.f.type + ":" + st.f.values.join(",") : ""}|${st.date || ""}|${sort}`;
+      if (key !== st.key) { st.key = key; st.page = 1; }
+      const pages = Math.max(1, Math.ceil(sorted.length / L_PAGE));
+      st.page = Math.min(Math.max(1, st.page || 1), pages);
+      const shown = sorted.slice((st.page - 1) * L_PAGE, st.page * L_PAGE);
+      const body = sorted.length
+        ? `<div class="cards flat">${shown.map((i) => card(i, sec, latest)).join("")}</div>${pager(st.page, pages, "data-lpage", `${s.unit} 목록 페이지`)}`
+        : `<div class="empty">${items.length ? "조건에 맞는 글이 없어요." : `<b>${s.empty[0]}</b>${s.empty[1]}`}</div>`;
+      $("#results").innerHTML = bar + body;
+      if ($("#sortCnt")) $("#sortCnt").textContent = `${sorted.length.toLocaleString()}편`;
+    }
+
+    // ---------- 화면: 비교 (주요 AI 모델 벤치마크 표와 그래프) ----------
+    const LABS = [
+      { name: "OpenAI", color: "#10a37f", models: ["GPT-6 Astra", "GPT-6.1 Sol"] },
+      { name: "Claude", color: "#d97757", models: ["Claude Fable 5.1", "Claude Opus 5", "Claude Haiku 5.5"] },
+      { name: "Gemini", color: "#4285f4", models: ["Gemini 3.8 Flash"] },
+      { name: "DeepSeek", color: "#06b6d4", models: ["DeepSeek V4 Pro (0813)", "DeepSeek V4 Flash (0731)"] },
+      { name: "Qwen", color: "#8b5cf6", models: ["Qwen 3.8 Max"] }
+    ];
+    const MODELS = LABS.flatMap((l) => l.models.map((m) => ({ name: m, lab: l })));
+    const scoreOf = (s) => (s == null ? null : typeof s === "number" ? { v: s } : s);
+
+    function renderCompare() {
+      const rows = data.compare || [];
+      const head1 = LABS.map((l) => `<th colspan="${l.models.length}" style="--lab:${l.color}">${esc(l.name)}</th>`).join("");
+      const head2 = MODELS.map((m) => `<th class="mdl">${esc(m.name)}</th>`).join("");
+      // 벤치마크(행)마다 최고점·최저점 칸을 강조 (점수가 2개 이상일 때만)
+      const tbody = rows.map((b) => {
+        const vals = MODELS.map((m) => scoreOf(b.scores[m.name])).filter(Boolean).map((x) => x.v);
+        const max = Math.max(...vals), min = Math.min(...vals), mark = vals.length > 1 && max !== min;
+        return `<tr><th scope="row" class="bm">${esc(b.name)}<span class="bm-en">${esc(b.en || "")}</span></th>${MODELS.map((m) => {
+          const s = scoreOf(b.scores[m.name]);
+          if (!s) return `<td class="na">—</td>`;
+          const cls = mark && s.v === max ? ' class="hi" title="최고점"' : mark && s.v === min ? ' class="lo" title="최저점"' : "";
+          return `<td${cls}>${s.v.toFixed(1)}${s.n ? `<small>${esc(s.n)}</small>` : ""}</td>`;
+        }).join("")}</tr>`;
+      }).join("");
+      const charts = rows.map((b) => `<div class="bchart"><h3>${esc(b.name)}<span>${esc(b.en || "")}</span></h3>${MODELS.map((m) => ({ m, s: scoreOf(b.scores[m.name]) })).sort((x, y) => (y.s ? y.s.v : -1) - (x.s ? x.s.v : -1)).map(({ m, s }) => {
+        return s
+          ? `<div class="brow"><span class="bl">${esc(m.name)}</span><div class="btrack"><div class="bfill" style="width:${s.v}%;background:${m.lab.color}"></div></div><span class="bv">${s.v.toFixed(1)}</span></div>`
+          : `<div class="brow"><span class="bl">${esc(m.name)}</span><span class="bna">점수 없음</span></div>`;
+      }).join("")}</div>`).join("");
+      const notes = rows.map((b) => `<div class="term"><dt>${esc(b.name)}<span class="en">${esc(b.en || "")}</span></dt><dd>${esc(b.desc)}</dd></div>`).join("");
+      $("#main").innerHTML = `<h1>주요 AI 모델 비교</h1>
+        <div class="updated">기준일 2026.10.21 · 점수 단위 %</div>
+        <div class="sec-head"><h2>벤치마크 점수표</h2><span class="cnt">${MODELS.length}개 모델</span></div>
+        <div class="clegend"><span class="hi"><i></i>벤치마크별 최고점</span><span class="lo"><i></i>벤치마크별 최저점</span></div>
+        <div class="ctable-wrap"><table class="ctable"><thead><tr><th rowspan="2" class="bm">벤치마크</th>${head1}</tr><tr>${head2}</tr></thead><tbody>${tbody}</tbody></table></div>
+        <div class="sec-head"><h2>그래프로 보기</h2><span class="cnt">막대 길이는 0~100%</span></div>
+        <div class="cbar-grid">${charts}</div>
+        <div class="sec-head"><h2>벤치마크 설명</h2></div>
+        <dl class="gloss">${notes}</dl>
+        <p class="cfoot">점수는 Vals AI, BenchLM 등 공개 집계 기준입니다. 칸 아래 작은 글씨는 출처나 측정 방식이 다른 점수이고, '—'는 확인된 점수가 없다는 뜻입니다. SWE-bench Verified는 집계 출처마다 값 차이가 커서 이번 표에서는 뺐습니다.</p>`;
+      $("#side").innerHTML = `<section><h3>숫자로 보기</h3><dl class="stats">
+          <dt>비교 진영</dt><dd>${LABS.length}개</dd>
+          <dt>비교 모델</dt><dd>${MODELS.length}개</dd>
+          <dt>벤치마크</dt><dd>${rows.length}개</dd>
+        </dl></section>`;
+    }
+
+    // ---------- 화면: 변경 이력 (최신 버전이 맨 위) ----------
+    function verCmp(a, b) {
+      const x = String(a).split("."), y = String(b).split(".");
+      for (let i = 0; i < 3; i++) { const d = (+x[i] || 0) - (+y[i] || 0); if (d) return d; }
+      return 0;
+    }
+    function renderChangelog() {
+      const list = (data.changelog || []).slice().sort((a, b) => verCmp(b.version, a.version));
+      // 10개 버전씩 페이지로 나눔
+      const PER = 10, pages = Math.max(1, Math.ceil(list.length / PER));
+      const st = state.changelog;
+      st.page = Math.min(Math.max(1, st.page || 1), pages);
+      const shown = list.slice((st.page - 1) * PER, st.page * PER);
+      const rows = shown.map((v) => `<section class="cl-row">
+          <div class="cl-meta"><b>v${esc(v.version)}</b><span>${esc(String(v.date || "").replace(/-/g, "."))}</span>${v === list[0] ? `<em>최신</em>` : ""}</div>
+          <ul>${(v.items || []).map((t) => `<li>${esc(t)}</li>`).join("")}</ul>
+        </section>`).join("");
+      $("#main").innerHTML = `<h1>변경 이력</h1>
+        <div class="sec-head"><h2>버전별 변경 사항</h2><span class="cnt">${list.length}개 버전</span></div>
+        <div id="clList">${rows || `<div class="empty"><b>${SEC.changelog.empty[0]}</b></div>`}</div>
+        ${pager(st.page, pages, "data-clpage", "변경 이력 페이지")}`;
+      const items = list.reduce((n, v) => n + (v.items || []).length, 0);
+      $("#side").innerHTML = list.length ? `<section><h3>숫자로 보기</h3><dl class="stats">
+          <dt>현재 버전</dt><dd>v${esc(list[0].version)}</dd>
+          <dt>마지막 변경</dt><dd>${esc(String(list[0].date || "").replace(/-/g, "."))}</dd>
+          <dt>변경 항목</dt><dd>${items}개</dd>
+        </dl></section>` : "";
+    }
+
+    // ---------- 길 찾기 ----------
+    let cur = null;
+    function parse() {
+      const parts = location.hash.replace(/^#/, "").split("/");
+      if (parts[0] === "search") {
+        let rest = parts.slice(1), scope = "all";
+        const m = /^in:(news|insights|papers)$/.exec(rest[0] || "");
+        if (m) { scope = m[1]; rest = rest.slice(1); }
+        let q = rest.join("/");
+        try { q = decodeURIComponent(q); } catch (e) {}
+        return { sec: "search", tab: "today", q, scope };
+      }
+      if (parts[0] === "insights") {
+        if ((parts[1] === "country" || parts[1] === "company") && parts.length >= 3)
+          return { sec: "insights", tab: "all", ent: { type: parts[1], value: decodeURIComponent(parts.slice(2).join("/")) } };
+        return { sec: "insights", tab: parts[1] === "all" ? "all" : "today" };
+      }
+      if (parts[0] === "papers") return { sec: "papers", tab: parts[1] === "all" ? "all" : "today" };
+      if (parts[0] === "glossary") return { sec: "glossary", tab: "today" };
+      if (parts[0] === "compare") return { sec: "compare", tab: "today" };
+      if (parts[0] === "changelog") return { sec: "changelog", tab: "today" };
+      if (parts[0] === "archive") return { sec: "news", tab: "all" };
+      return { sec: "news", tab: "today" };
+    }
+
+    function render() { spy = null; inlineToken = null; if (cur.tab === "all") renderAll(); else renderToday(); }
+    window.addEventListener("scroll", () => { if (spy) spy(); }, { passive: true });
+
+    function route() {
+      const r = parse();
+      if (r.sec === "search") { if (window.Share) Share.toggle(false); return routeSearch(r); }
+      if (cur && cur.sec === "search") { $("#hq").value = ""; $("#hscope").value = "all"; }
+      const st = state[r.sec];
+      if (r.sec === "insights" && r.tab === "all") {
+        if (r.ent) st.f = { type: r.ent.type, values: [r.ent.value] };
+        else if (st.f && (st.f.type === "country" || st.f.type === "company")) st.f = null;
+      }
+      const moved = !cur || cur.sec !== r.sec || cur.tab !== r.tab;
+      cur = r;
+      document.querySelectorAll(".gnb a").forEach((a) => {
+        if (a.dataset.sec === r.sec) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+      });
+      const s = SEC[r.sec];
+      // 같은 주소를 가리키는 하위 메뉴는 한 번만 보여 줌 (용어집처럼 탭이 하나인 섹션)
+      const seenHref = new Set();
+      $("#subtabs").innerHTML = Object.entries(s.tabs).filter(([, [h]]) => {
+        if (seenHref.has(h)) return false;
+        seenHref.add(h);
+        return true;
+      }).map(([k, [h, l]]) => `<a href="${h}"${k === r.tab ? ' aria-current="page"' : ""}>${l}</a>`).join("");
+      // 하위 탭이 하나뿐인 섹션(용어집·비교)은 하위 탭 줄을 아예 숨김
+      const single = seenHref.size < 2;
+      $("#subtabs").hidden = single;
+      setInfo(r.sec);
+      // 공유 버튼은 비교 탭에서만 (비교 탭 주소를 복사)
+      shareUrl = null;
+      if (window.Share) Share.toggle(r.sec === "compare");
+      document.querySelector(".subwrap").hidden = single && $("#infoBtn").hidden;
+      document.title = r.sec === "news" && r.tab === "today" ? "AI 비밀 레시피" : `${s.tabs[r.tab][1]} | AI 비밀 레시피`;
+      if (r.tab === "all" && !full[r.sec] && LIST_SECS.includes(r.sec)) $("#main").innerHTML = `<p class="loading">목록을 불러오는 중…</p>`;
+      (r.tab === "all" ? loadFull(r.sec) : load(r.sec)).then(() => {
+        if (cur !== r) return;
+        render();
+        if (moved) window.scrollTo(0, 0);
+      });
+    }
+
+    // ---------- 화면: 모든 글 검색 (뉴스·인사이트·논문·용어집 한꺼번에) ----------
+    const SEARCH_SECS = ["news", "insights", "papers", "glossary"];
+    const search = { q: "", only: "all" };
+    // 검색 주소: 전체는 #search/검색어, 범위를 고르면 #search/in:news/검색어
+    const searchHash = (scope, q) => "#search/" + (scope && scope !== "all" ? `in:${scope}/` : "") + encodeURIComponent(q.trim());
+    const SCOPE_LABEL = { all: "전체", news: "뉴스", insights: "인사이트", papers: "논문" };
+    const terms = (q) => q.toLowerCase().split(/\s+/).filter(Boolean);
+    const haystack = (it) => [it.title, it.summary, it.subject, it.paperTitle, it.kind, it.name, it.en, it.desc, it.category,
+      ...(it.tags || []), ...(it.countries || []), ...(it.companies || [])].join(" ").toLowerCase();
+    // 띄어쓴 낱말이 모두 들어 있는 글만 (예: "오픈소스 모델")
+    const hits = (it, ts) => { const h = haystack(it); return ts.every((t) => h.includes(t)); };
+
+    function routeSearch(r) {
+      const moved = !cur || cur.sec !== "search";
+      cur = r;
+      search.q = r.q;
+      search.only = r.scope || "all";
+      $("#hscope").value = search.only;
+      document.querySelectorAll(".gnb a").forEach((a) => a.removeAttribute("aria-current"));
+      $("#subtabs").hidden = false;
+      document.querySelector(".subwrap").hidden = false;
+      $("#subtabs").innerHTML = `<a href="${location.hash || "#search"}" aria-current="page">${search.only === "all" ? "모든 글 검색" : SCOPE_LABEL[search.only] + " 검색"}</a>`;
+      setInfo(false);
+      $("#hq").value = r.q;
+      document.title = (r.q ? `'${r.q}' ` : "") + (search.only === "all" ? "검색" : SCOPE_LABEL[search.only] + " 검색") + " | AI 비밀 레시피";
+      Promise.all(SEARCH_SECS.map(loadFull)).then(() => {
+        if (cur !== r) return;
+        spy = null; inlineToken = null;
+        renderSearch();
+        if (moved) window.scrollTo(0, 0);
+      });
+    }
+
+    function renderSearch() {
+      $("#main").innerHTML = `<h1>${search.only === "all" ? "모든 글 검색" : SCOPE_LABEL[search.only] + " 검색"}</h1>
+        <input id="q" class="search" type="search" placeholder="${search.only === "all" ? "뉴스·인사이트·논문·용어집을 한꺼번에 찾아요" : SCOPE_LABEL[search.only] + "에서 찾아요"}" value="${esc(search.q)}" aria-label="검색어" enterkeyhint="search" />
+        <div class="chips" id="schips"></div>
+        <div id="sresults"></div>`;
+      const box = $("#q");
+      box.addEventListener("input", (e) => {
+        search.q = e.target.value;
+        $("#hq").value = search.q;
+        history.replaceState(null, "", searchHash(search.only, search.q));
+        cur.q = search.q;
+        searchResults();
+      });
+      if (!search.q) box.focus();
+      searchResults();
+    }
+
+    let gShown = [];
+    function searchResults() {
+      gShown = [];
+      const ts = terms(search.q.trim());
+      const found = {};
+      SEARCH_SECS.forEach((sec) => {
+        const items = data[sec] || [];
+        found[sec] = ts.length ? items.filter((it) => hits(it, ts)) : [];
+      });
+      const total = SEARCH_SECS.reduce((n, sec) => n + found[sec].length, 0);
+      const chip = (k, label, n) => `<button type="button" class="chip${search.only === k ? " on" : ""}" data-only="${k}" aria-pressed="${search.only === k}">${label}<span class="n">${n}</span></button>`;
+      $("#schips").innerHTML = ts.length
+        ? chip("all", "전체", total) + SEARCH_SECS.map((sec) => chip(sec, SEC[sec].unit, found[sec].length)).join("")
+        : "";
+      let body;
+      if (!ts.length) {
+        body = `<div class="empty"><b>찾을 낱말을 입력하세요</b>제목·요약·태그·기업·용어 이름에서 함께 찾아요.</div>`;
+      } else if (!total) {
+        body = `<div class="empty"><b>'${esc(search.q.trim())}'에 맞는 글이 없어요</b>다른 낱말로 찾아보세요.</div>`;
+      } else {
+        body = SEARCH_SECS.filter((sec) => (search.only === "all" || search.only === sec) && found[sec].length).map((sec) => {
+          const list = found[sec];
+          const head = `<div class="group-head"><h2>${SEC[sec].unit}</h2><span class="cnt">${list.length}</span></div>`;
+          if (sec === "glossary") {
+            const sorted = list.slice().sort((a, b) => a.name.localeCompare(b.name, "ko"));
+            const shown = sorted.slice(0, G_SEARCH_MAX);
+            gShown = shown;
+            return head + termList(shown) + (list.length > shown.length
+              ? `<div class="more"><a href="#glossary" data-gq="${esc(search.q.trim())}">용어집에서 ${list.length.toLocaleString()}개 모두 보기 →</a></div>` : "");
+          }
+          const latest = data[sec][0] && data[sec][0].date;
+          return head + `<div class="cards">${list.map((i) => card(i, sec, latest)).join("")}</div>`;
+        }).join("");
+      }
+      $("#sresults").innerHTML = body;
+      if (gShown.length) fillDescs(gShown, () => { if (cur && cur.sec === "search" && $("#sresults")) searchResults(); });
+      $("#side").innerHTML = ts.length ? `<section><h3>검색 결과</h3><dl class="stats">
+          ${SEARCH_SECS.map((sec) => `<dt>${SEC[sec].unit}</dt><dd>${found[sec].length}개</dd>`).join("")}
+          <dt>합계</dt><dd>${total}개</dd>
+        </dl></section>` : "";
+    }
+
+    // 범위 바꾸기(상단 콤보·결과 칩 공통): 화면 제목·주소·콤보를 함께 맞춤
+    function setScope(scope) {
+      search.only = scope;
+      $("#hscope").value = ["news", "insights", "papers"].includes(scope) ? scope : "all";
+      history.replaceState(null, "", searchHash(["news", "insights", "papers"].includes(scope) ? scope : "all", search.q));
+      if (cur) { cur.scope = $("#hscope").value; cur.q = search.q; }
+      const label = scope === "all" || !SCOPE_LABEL[scope] ? "모든 글 검색" : SCOPE_LABEL[scope] + " 검색";
+      const h1 = document.querySelector("#main h1"); if (h1) h1.textContent = label;
+      const sub = document.querySelector("#subtabs a"); if (sub) { sub.textContent = label; sub.setAttribute("href", location.hash); }
+      searchResults();
+    }
+
+    function go(target) { if (location.hash !== target) location.hash = target; else if (cur && cur.sec === "search") route(); else render(); }
+
+    document.addEventListener("click", (e) => {
+      const j = e.target.closest("[data-jump], .inline-article a[href^='#']");
+      if (j) {
+        const id = j.dataset.jump || j.getAttribute("href").slice(1);
+        const el = document.getElementById(decodeURIComponent(id));
+        if (el) { e.preventDefault(); el.scrollIntoView({ behavior: "smooth", block: "start" }); }
+        return;
+      }
+      if (!cur) return;
+      const gq = e.target.closest("[data-gq]");
+      if (gq) {
+        e.preventDefault();
+        Object.assign(state.glossary, { q: gq.dataset.gq, f: null, page: 1 });
+        go("#glossary");
+        return;
+      }
+      const lp = e.target.closest("[data-lpage]");
+      if (lp && cur.tab === "all" && state[cur.sec]) {
+        state[cur.sec].page = +lp.dataset.lpage;
+        renderResults();
+        const top = $("#results").getBoundingClientRect().top + window.scrollY - 140;
+        if (window.scrollY > top) window.scrollTo({ top, behavior: "smooth" });
+        return;
+      }
+      const cp = e.target.closest("[data-clpage]");
+      if (cp && cur.sec === "changelog") {
+        state.changelog.page = +cp.dataset.clpage;
+        renderChangelog();
+        const top = $("#clList").getBoundingClientRect().top + window.scrollY - 140;
+        if (window.scrollY > top) window.scrollTo({ top, behavior: "smooth" });
+        return;
+      }
+      const gp = e.target.closest("[data-gpage]");
+      if (gp && cur.sec === "glossary") {
+        state.glossary.page = +gp.dataset.gpage;
+        glossaryResults();
+        const top = $("#gresults").getBoundingClientRect().top + window.scrollY - 140;
+        if (window.scrollY > top) window.scrollTo({ top, behavior: "smooth" });
+        return;
+      }
+      if (cur.sec === "search") {
+        const o = e.target.closest("[data-only]");
+        if (o) { setScope(o.dataset.only); }
+        return;
+      }
+      const st = state[cur.sec];
+      const fc = e.target.closest("[data-fclear]");
+      if (fc) {
+        st.f = null; st.date = null;
+        if (fctx && $("#fpanel")) applyFilterInPlace(); else go(SEC[cur.sec].tabs.all[0]);
+        return;
+      }
+      const f = e.target.closest("[data-ftype]");
+      if (f) {
+        e.preventDefault();
+        const type = f.dataset.ftype, value = f.dataset.fval;
+        const curVals = st.f && st.f.type === type ? st.f.values : [];
+        if (!value) st.f = null;
+        else if (f.hasAttribute("data-fmulti")) {
+          // 필터 패널·선택된 칩: 여러 개 고르기 (누를 때마다 넣고 빼기)
+          const next = curVals.includes(value) ? curVals.filter((v) => v !== value) : curVals.concat(value);
+          const total = countBy(data[cur.sec] || [], type).length;
+          // 하나도 없거나 전부 고르면 필터를 풀고 '전체'로
+          st.f = !next.length || next.length >= total ? null : { type, values: next };
+          if (f.closest("#fpanel") && fctx) { st.date = null; applyFilterInPlace(); return; }
+        } else {
+          // 사이드바 막대·칩 등: 하나만 고르기
+          const same = curVals.length === 1 && curVals[0] === value;
+          st.f = same ? null : { type, values: [value] };
+        }
+        st.date = null;
+        go(cur.sec === "insights" && st.f && (type === "country" || type === "company")
+          ? `#insights/${type}/${encodeURIComponent(st.f.values[0])}`
+          : SEC[cur.sec].tabs.all[0]);
+        return;
+      }
+      const so = e.target.closest("[data-sort]");
+      if (so) {
+        st.sort = so.dataset.sort;
+        document.querySelectorAll(".sortbar .chip").forEach((b) => {
+          const on = b.dataset.sort === st.sort;
+          b.classList.toggle("on", on); b.setAttribute("aria-pressed", on);
+        });
+        renderResults();
+        return;
+      }
+      const d = e.target.closest("[data-day]");
+      if (d) { st.date = st.date === d.dataset.day ? null : d.dataset.day; render(); return; }
+      const m = e.target.closest("[data-mon]");
+      if (m) {
+        const items = data[cur.sec] || [];
+        const base = st.month || (st.date || (items[0] && items[0].date) || "").slice(0, 7) || `${new Date().getFullYear()}-${pad(new Date().getMonth() + 1)}`;
+        st.month = shiftMonth(base, +m.dataset.mon);
+        render();
+        return;
+      }
+      if (e.target.closest("[data-clear]")) {
+        st.f = null; st.date = null; st.q = "";
+        go(SEC[cur.sec].tabs.all[0]);
+      }
+    });
+
+    $("#hscope").addEventListener("change", () => {
+      if (cur && cur.sec === "search") setScope($("#hscope").value);
+      else if ($("#hq").value.trim()) $("#hsearch").requestSubmit();
+    });
+    $("#hsearch").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const q = $("#hq").value.trim();
+      go(searchHash($("#hscope").value, q));
+      $("#hq").blur();
+    });
+
+    // 공유 주소: 비교 탭은 #compare, 오늘의 인사이트·논문은 화면에 펼친 글의 개별 주소
+    if (window.Share) {
+      Share.setUrl(() => shareUrl || location.origin + location.pathname + "#compare");
+      // 캡처할 부분: 오늘의 인사이트·논문은 펼친 글, 비교는 표·그래프 화면 전체
+      Share.setTarget(() => (shareUrl ? document.querySelector("#inline article") : document.querySelector("#main")));
+      Share.setName(() => (shareUrl ? shareUrl.replace(/^.*\//, "").replace(/\.html$/, "") : "ai-model-compare"));
+    }
+    window.addEventListener("hashchange", route);
+    route();
+  </script>
+  <script>
+    // PC: 마우스를 누른 채 드래그하면 메뉴 줄이 좌우로 스크롤됩니다 (모바일은 터치 스크롤 기본 동작 사용)
+    (() => {
+      const bar = document.querySelector(".gnb");
+      if (!bar) return;
+      let down = false, startX = 0, startLeft = 0, moved = false;
+      bar.addEventListener("pointerdown", (e) => {
+        if (e.pointerType !== "mouse" || bar.scrollWidth <= bar.clientWidth) return;
+        down = true; moved = false; startX = e.clientX; startLeft = bar.scrollLeft;
+      });
+      window.addEventListener("pointermove", (e) => {
+        if (!down) return;
+        const dx = e.clientX - startX;
+        if (!moved && Math.abs(dx) > 4) { moved = true; bar.classList.add("dragging"); }
+        if (moved) bar.scrollLeft = startLeft - dx;
+      });
+      window.addEventListener("pointerup", () => {
+        if (!down) return;
+        down = false; bar.classList.remove("dragging");
+      });
+      bar.addEventListener("click", (e) => {
+        if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; }
+      }, true);
+    })();
+  </script>
+</body>
+</html>

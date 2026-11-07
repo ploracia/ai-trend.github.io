@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" role="img" aria-labelledby="t1 d1">
+  <title id="t1">GPT-6 Cyber 접근 구조</title>
+  <desc id="d1">일반 사용자는 차단되고, 승인된 고객만 API와 Codex로 모델에 접근하는 구조</desc>
+  <rect x="0" y="0" width="720" height="320" rx="16" fill="#f7f6f2" stroke="#e3e1da"/>
+  <text x="32" y="44" font-size="18" font-weight="700" fill="#1b1b1f">GPT-6 Cyber 접근 구조</text>
+  <rect x="40" y="110" width="170" height="96" rx="12" fill="#fbeae6" stroke="#c2412d" stroke-width="2"/>
+  <text x="125" y="148" font-size="15" font-weight="700" fill="#1b1b1f" text-anchor="middle">일반 사용자</text>
+  <text x="125" y="174" font-size="13" fill="#62626b" text-anchor="middle">접근 차단</text>
+  <rect x="275" y="110" width="170" height="96" rx="12" fill="#e8eefe" stroke="#2f5bea" stroke-width="2"/>
+  <text x="360" y="148" font-size="15" font-weight="700" fill="#1b1b1f" text-anchor="middle">OpenAI 승인 심사</text>
+  <text x="360" y="174" font-size="13" fill="#62626b" text-anchor="middle">신원·목적 확인</text>
+  <rect x="510" y="110" width="170" height="96" rx="12" fill="#e5f4ec" stroke="#1f8a5b" stroke-width="2"/>
+  <text x="595" y="148" font-size="15" font-weight="700" fill="#1b1b1f" text-anchor="middle">승인 고객</text>
+  <text x="595" y="174" font-size="13" fill="#62626b" text-anchor="middle">API · Codex 사용</text>
+  <line x1="210" y1="158" x2="275" y2="158" stroke="#62626b" stroke-width="2" stroke-dasharray="6 5"/>
+  <line x1="445" y1="158" x2="510" y2="158" stroke="#1f8a5b" stroke-width="2"/>
+  <polygon points="506,152 516,158 506,164" fill="#1f8a5b"/>
+  <text x="32" y="260" font-size="14" fill="#62626b">점선: 일반 경로는 승인 심사에서 멈춘다</text>
+  <text x="32" y="284" font-size="14" fill="#62626b">실선: 승인된 고객만 모델을 호출할 수 있다</text>
+</svg>

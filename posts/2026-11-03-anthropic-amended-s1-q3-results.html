@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>앤트로픽 IPO 서류 수정… 3분기 매출 170억 달러, 영업손실 전환 | AI 비밀 레시피</title>
+  <meta name="description" content="앤트로픽이 수정 S-1에서 공개한 3분기 매출, 영업손실, 8,954억 달러 컴퓨팅 약정을 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>앤트로픽 IPO 서류 수정… 3분기 매출 170억 달러, 영업손실 전환</h1>
+    <div class="byline"><span><time datetime="2026-11-03T08:28:00+09:00">2026.11.03 08:28 KST</time></span><span>읽는 시간 약 6분</span><span>#Anthropic #IPO</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>앤트로픽이 11월 2일 미국 증권거래위원회(SEC)에 수정 S-1을 공개해 3분기 실적을 추가했습니다. 3분기 매출은 170억 달러로, 직전 분기 116억 달러보다 늘었습니다.</li><li>같은 기간 영업이익은 9억 7,400만 달러 흑자에서 5억 6,700만 달러 적자로 바뀌었습니다. 회사는 단기 컴퓨팅 구매 비용이 장기 계약보다 비싸졌다고 설명했고, 컴퓨팅·인프라 약정 규모는 약 8,954억 달러입니다.</li><li>개발자에게는 Claude 같은 모델의 비용과 용량이 어떤 구조로 결정되는지 보여 주는 자료입니다. API 가격과 사용량 제한이 왜 바뀌는지 읽는 단서가 됩니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">앤트로픽, 수정 S-1에 3분기 실적 추가 (매출 170억 달러, 영업손실 5억 6,700만 달러)</span><span>보도 2026.11.02</span><span><a href="https://fortune.com/2026/11/02/anthropics-growth-slowed-and-costs-jumped-in-the-third-quarter-updated-ipo-filing-shows/">Fortune 보도</a></span></div>
+
+    <p class="lead">IPO를 앞둔 회사가 내는 서류에는 평소 잘 드러나지 않던 숫자가 담깁니다. 이번 수정 S-1은 앤트로픽이 AI 모델을 돌리는 데 실제로 얼마를 쓰고 있는지 처음으로 분기 단위로 보여 줬다는 점에서 눈여겨볼 만합니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">개발자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>앤트로픽이 상장(IPO)을 위해 제출한 S-1 서류를 수정해, 3분기 실적과 대규모 컴퓨팅 약정을 공개했습니다.</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>S-1</strong>은 미국에서 기업이 주식을 처음 공개(IPO)할 때 SEC에 내는 등록 서류입니다. <strong>컴퓨팅 약정</strong>은 클라우드와 칩 같은 연산 자원을 여러 해에 걸쳐 사기로 미리 맺은 계약입니다. <strong>전환사채 공정가치 변동</strong>은 회사가 발행한 채권의 가치가 주가에 따라 오르내리면서 장부에 생기는 평가손익입니다.
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>항목</th><th>내용 (보도 기준)</th></tr></thead>
+      <tbody>
+        <tr><td>3분기 매출</td><td>170억 달러 (2분기 116억 달러에서 증가, 전분기 대비 약 47% 성장)</td></tr>
+        <tr><td>영업 손익</td><td>3분기 5억 6,700만 달러 적자 (2분기에는 9억 7,400만 달러 흑자)</td></tr>
+        <tr><td>순손실</td><td>3분기 233억 달러, 대부분 전환사채 공정가치 변동에 따른 회계상 손실</td></tr>
+        <tr><td>컴퓨팅·인프라 약정</td><td>약 8,954억 달러</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>발행 기업</td><td><strong>앤트로픽</strong></td><td>S-1 수정본 제출, 3분기 실적과 약정 규모 공개</td></tr>
+        <tr><td>규제 기관</td><td><strong>미국 SEC</strong></td><td>상장 서류의 정확성과 충분한 정보 공개를 심사</td></tr>
+        <tr><td>투자자</td><td><strong>상장 예정 주주와 시장</strong></td><td>성장 둔화와 비용 급증을 함께 놓고 기업 가치를 판단</td></tr>
+        <tr><td>인프라 파트너</td><td><strong>클라우드·칩 공급 업체</strong></td><td>약정 규모만큼 장기 공급 계약을 이행해야 함</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+    <h3>발표된 내용</h3>
+    <p>Fortune 보도에 따르면 이번 수정본은 지난주 공개된 최초 S-1에 3분기 결과를 추가한 것입니다. 3분기 매출 성장률은 2분기의 약 144%에서 약 47%로 낮아졌지만, 전년 동기 대비로는 여전히 1,000% 넘게 늘었습니다.</p>
+    <p>회사는 영업적자의 주된 이유로 단기 컴퓨팅 구매 비용이 다년 계약보다 높았던 점을 들었습니다. 순손실 233억 달러는 영업 활동보다 전환사채의 회계 평가가 크게 작용한 결과입니다. CNBC도 같은 날 수정 S-1의 3분기 매출과 약정 규모를 전했습니다.</p>
+    <h3>진행 순서</h3>
+    <ul class="timeline">
+      <li><time>지난주</time>최초 S-1 공개 (상장 준비 본격화)</li>
+      <li><time>11월 2일 (월) 미국 동부 오전 10시 58분</time>수정 S-1 공개, 3분기 실적과 약정 규모 추가</li>
+    </ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>AI 모델을 쓰는 가격은 회사가 확보해 둔 연산 자원의 비용과 계약 구조에 따라 움직입니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>개발자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. 사용량과 비용을 함께 기록하기</h4><p>API 호출 수, 입력과 출력 토큰 수를 기록해 두면 가격이 바뀔 때 영향을 바로 계산할 수 있습니다.</p></div>
+      <div class="action"><h4>2. 모델을 바꿀 수 있게 설계하기</h4><p>한 공급자에 묶이지 않도록 모델 호출을 감싸는 얇은 계층을 두면 가격과 용량 변화에 대응하기 쉽습니다.</p></div>
+      <div class="action"><h4>3. 공개 서류를 직접 읽어 보기</h4><p>S-1에는 위험 요인과 약정 조건이 자세히 나옵니다. 뉴스 요약 말고 원문 목차에서 "리스크" 항목만 훑어 봐도 감이 옵니다.</p></div>
+      <div class="action"><h4>4. 단기와 장기 비용을 나눠 생각하기</h4><p>회사도 단기 구매가 비싸다고 밝혔습니다. 개인 프로젝트에서도 정해진 예산 안에서 쓸 모델과 호출 빈도를 미리 정해 두세요.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos"><ul>
+      <li><strong>수익 기반이 커지고 있다.</strong> 매출이 분기마다 큰 폭으로 늘고 있어, 장기 인프라 투자를 감당할 근거가 생깁니다.</li>
+      <li><strong>장기 약정이 가격 안정으로 이어질 수 있다.</strong> 다년 계약이 늘면 단기 구매 비용이 줄어들 여지가 있습니다.</li>
+      <li><strong>공개 정보가 많아진다.</strong> 상장 과정에서 나온 재무 자료는 AI 기업을 평가하는 기준을 세우는 데 도움이 됩니다.</li>
+    </ul></div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg"><ul>
+      <li><strong>영업손실이 지속될 수 있다.</strong> 2분기 흑자에서 3분기 적자로 바뀐 만큼, 비용 구조가 안정되기까지 시간이 걸릴 수 있습니다.</li>
+      <li><strong>약정 규모가 부담으로 돌아올 수 있다.</strong> 약 8,954억 달러의 약정은 매출이 그만큼 따라와야 이행됩니다.</li>
+      <li><strong>시장 변동성이 커진다.</strong> 전환사채 평가손익처럼 주가에 따라 장부가 흔들리면 투자 심리도 함께 흔들릴 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion"><p>이번 수정 S-1은 AI 서비스의 가격과 용량이 결국 연산 자원을 얼마나 어떻게 확보했는지에 달려 있다는 사실을 숫자로 보여 줍니다. 모델 성능을 고르는 기준에 가격과 안정성을 함께 넣어야 하는 이유입니다.</p><p>입문 단계라면 지금 쓰는 API의 요금표와 사용량 한도를 한 번 적어 두고, 가격이 바뀔 때 어떤 부분을 먼저 손봐야 하는지 미리 정해 두세요.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://fortune.com/2026/11/02/anthropics-growth-slowed-and-costs-jumped-in-the-third-quarter-updated-ipo-filing-shows/">Anthropic's growth slowed and costs jumped in the third quarter, updated IPO filing shows</a> <span class="src">— Fortune, 2026.11.02 (원문 열람 확인, 매출·영업손익·약정 수치 출처)</span></li>
+      <li><a href="https://www.cnbc.com/2026/11/02/anthropic-ant-s-1-quarter-financials.html">Anthropic reports $17 billion in Q3 revenue, purchase commitments of $895.4 billion in revised S-1</a> <span class="src">— CNBC, 2026.11.02 (검색 결과 제목 확인)</span></li>
+    </ol>
+
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list"><a href="2026-11-03-marvell-lumentum-115b-deal.html"><span class="r">오늘의 뉴스 2위</span><span class="t">마벨, 루멘텀 1,150억 달러 규모 전액 주식 인수 발표</span></a><a href="2026-11-03-turkey-google-ai-summary-probe.html"><span class="r">오늘의 뉴스 3위</span><span class="t">튀르키예 경쟁당국, 구글의 AI 검색 요약 조사 착수</span></a></div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

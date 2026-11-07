@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" role="img" aria-labelledby="t2 d2">
+  <title id="t2">API 사용과 로컬 실행의 차이</title>
+  <desc id="d2">개발자 코드가 API를 호출하는 경로와 가중치를 내려받아 직접 실행하는 경로 비교</desc>
+  <rect x="0" y="0" width="720" height="320" rx="16" fill="#f7f6f2" stroke="#e3e1da"/>
+  <text x="32" y="44" font-size="18" font-weight="700" fill="#1b1b1f">두 가지 사용 경로</text>
+  <rect x="40" y="70" width="130" height="60" rx="10" fill="#e8eefe" stroke="#2f5bea"/>
+  <text x="105" y="106" font-size="15" text-anchor="middle" fill="#1b1b1f">내 코드</text>
+  <rect x="230" y="70" width="170" height="60" rx="10" fill="#e8eefe" stroke="#2f5bea"/>
+  <text x="315" y="98" font-size="14" text-anchor="middle" fill="#1b1b1f">Moonshot API 서버</text>
+  <text x="315" y="117" font-size="12" text-anchor="middle" fill="#62626b">Kimi K3.1 Pro 실행</text>
+  <line x1="170" y1="100" x2="230" y2="100" stroke="#62626b" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="460" y="70" width="220" height="60" rx="10" fill="#e5f4ec" stroke="#1f8a5b"/>
+  <text x="570" y="98" font-size="14" text-anchor="middle" fill="#1b1b1f">응답 텍스트 반환</text>
+  <text x="570" y="117" font-size="12" text-anchor="middle" fill="#62626b">직접 서버를 준비할 필요 없음</text>
+  <line x1="400" y1="100" x2="460" y2="100" stroke="#62626b" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="40" y="186" width="130" height="60" rx="10" fill="#e8eefe" stroke="#2f5bea"/>
+  <text x="105" y="222" font-size="15" text-anchor="middle" fill="#1b1b1f">내 코드</text>
+  <rect x="230" y="186" width="170" height="60" rx="10" fill="#fff3e0" stroke="#b7791f"/>
+  <text x="315" y="214" font-size="14" text-anchor="middle" fill="#1b1b1f">가중치 다운로드</text>
+  <text x="315" y="233" font-size="12" text-anchor="middle" fill="#62626b">GPU 서버에서 실행</text>
+  <line x1="170" y1="216" x2="230" y2="216" stroke="#62626b" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="460" y="186" width="220" height="60" rx="10" fill="#e5f4ec" stroke="#1f8a5b"/>
+  <text x="570" y="214" font-size="14" text-anchor="middle" fill="#1b1b1f">비용·데이터 통제를 직접 관리</text>
+  <text x="570" y="233" font-size="12" text-anchor="middle" fill="#62626b">장비와 라이선스 확인 필요</text>
+  <line x1="400" y1="216" x2="460" y2="216" stroke="#62626b" stroke-width="2" marker-end="url(#arr)"/>
+  <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#62626b"/></marker></defs>
+  <text x="360" y="296" font-size="13" text-anchor="middle" fill="#62626b">출처 글을 바탕으로 다시 그림</text>
+</svg>

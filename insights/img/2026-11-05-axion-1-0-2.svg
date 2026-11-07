@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" role="img" aria-labelledby="t2 d2">
+  <title id="t2">에이전트가 도구와 주고받는 루프</title>
+  <desc id="d2">모델이 생각하고 도구를 호출하고 결과를 다시 읽는 반복 구조</desc>
+  <rect x="0" y="0" width="720" height="320" rx="16" fill="#f7f6f2" stroke="#e3e1da"/>
+  <text x="32" y="44" font-size="18" font-weight="700" fill="#1b1b1f">에이전트 한 번의 작업 루프</text>
+  <circle cx="150" cy="170" r="70" fill="#ffffff" stroke="#2f5bea" stroke-width="3"/>
+  <text x="150" y="166" font-size="17" font-weight="700" text-anchor="middle" fill="#1b1b1f">모델</text>
+  <text x="150" y="190" font-size="13" text-anchor="middle" fill="#62626b">다음 행동 결정</text>
+  <rect x="380" y="80" width="260" height="60" rx="12" fill="#e8eefe" stroke="#2f5bea" stroke-width="2"/>
+  <text x="510" y="116" font-size="15" font-weight="700" text-anchor="middle" fill="#1b1b1f">도구 호출 (검색, 코드 실행)</text>
+  <rect x="380" y="200" width="260" height="60" rx="12" fill="#e5f4ec" stroke="#1f8a5b" stroke-width="2"/>
+  <text x="510" y="236" font-size="15" font-weight="700" text-anchor="middle" fill="#1b1b1f">결과를 다시 읽고 판단</text>
+  <line x1="222" y1="140" x2="376" y2="110" stroke="#62626b" stroke-width="3"/>
+  <line x1="380" y1="230" x2="222" y2="200" stroke="#62626b" stroke-width="3"/>
+  <text x="300" y="112" font-size="13" text-anchor="middle" fill="#62626b">요청</text>
+  <text x="300" y="232" font-size="13" text-anchor="middle" fill="#62626b">관찰</text>
+  <text x="360" y="300" font-size="13" text-anchor="middle" fill="#62626b">출처 논문을 바탕으로 다시 그림</text>
+</svg>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gemini 4 Carbon: 보안 방어자부터 여는 단계적 공개, 입문 개발자가 알아야 할 것 | AI 비밀 레시피</title>
+  <meta name="description" content="구글의 새 최상위 모델 Gemini 4 Carbon이 일반 개발자보다 사이버 보안 방어자에게 먼저 열린 이유와 그 의미를 입문자 눈높이로 정리한다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+
+    /* 이슈 전용 */
+    .cats { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; margin: 14px 0 0; font-size: 13px; color: var(--muted); }
+    .cats .lbl { font-weight: 700; margin-right: 2px; }
+    .cats a { font-size: 12.5px; font-weight: 600; text-decoration: none; color: var(--text); border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 2px 8px; }
+    .cats a:hover { border-color: var(--accent); color: var(--accent); }
+    .cats .sep { width: 10px; }
+    figure.fig { margin: 22px 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    figure.fig img, figure.fig svg { display: block; width: 100%; height: auto; }
+    figure.fig figcaption { font-size: 13.5px; color: var(--muted); padding: 10px 16px; border-top: 1px solid var(--line); }
+    figure.fig figcaption .credit { display: block; font-size: 12px; margin-top: 2px; }
+    .srcfig { display: flex; gap: 12px; align-items: center; background: var(--bg); border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px; margin: 14px 0; font-size: 14.5px; }
+    .srcfig::before { content: "🖼"; font-size: 20px; }
+    .buzz { display: grid; gap: 10px; margin: 14px 0; }
+    .buzz div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; font-size: 15px; }
+    .buzz .who { display: block; font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+    pre { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; font-size: 13.5px; line-height: 1.6; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#insights"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#insights">← 인사이트 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>Gemini 4 Carbon: 보안 방어자부터 여는 단계적 공개, 입문 개발자가 알아야 할 것</h1>
+    <div class="byline"><span><time datetime="2026-11-03T16:19:53+09:00">2026.11.03 16:19 KST</time></span><span>읽는 시간 약 6분</span></div>
+    <div class="cats">
+      <span class="lbl">나라</span>
+      <a href="../#insights/country/미국">미국</a>
+      <span class="sep"></span>
+      <span class="lbl">기업</span>
+      <a href="../#insights/company/Google">Google</a>
+    </div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol><li>구글의 새 최상위 모델 Gemini 4 Carbon은 일반 개발자가 아니라 사이버 보안 방어자 조직에 먼저 열렸다.</li><li>구글은 피드백과 안전장치를 다듬은 뒤 개발자·기업·소비자에게 넓히겠다고 했고, 일반 공개 날짜는 밝히지 않았다.</li><li>입문 개발자에게는 '지금 못 쓰는 모델'을 읽는 법과, 모델을 고를 때 확인할 공개 단계·가격·안전장치 항목을 알려준다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 모델</span><span class="what">Gemini 4 Carbon</span><span>근거 글 5개</span></div>
+
+    <p class="lead">구글이 2026년 10월 28일 공개한 Gemini 4 Carbon은 발표 직후부터 개발자 커뮤니티에서 많이 언급됐다. 성능 수치도 화제였지만 더 큰 이슈는 '누구에게 먼저 주느냐'였다. 보통 새 모델은 발표와 함께 API 신청 창구가 열리는데, Carbon은 사이버 보안을 담당하는 방어자들이 먼저 쓰고 일반 개발자는 기다려야 한다. 이번 글은 이 변화가 무엇이고 입문 개발자가 어떻게 받아들이면 좋은지 풀어 본다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">한눈에 보기</a></li>
+        <li><a href="#s2">어떻게 동작하나요</a></li>
+        <li><a href="#s3">왜 지금 화제인가요</a></li>
+        <li><a href="#s4">관련 나라·기업</a></li>
+        <li><a href="#s5">기존 방식과 무엇이 다른가</a></li>
+        <li><a href="#s6">직접 해 보기</a></li>
+        <li><a href="#s7">주의할 점과 한계</a></li>
+        <li><a href="#s8">정리</a></li>
+        <li><a href="#s9">참고한 글</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>한눈에 보기</h2>
+    <p>소방서를 떠올리면 이해가 쉽다. 새로 들어온 고성능 진압 장비를 곧바로 시민 누구에게나 파는 대신, 화재를 직접 막는 소방대에 먼저 지급하고 그 사용 경험을 보며 안전 수칙을 다듬은 뒤에 일반 판매를 여는 방식이다. Gemini 4 Carbon은 이 방식으로 나왔다. 구글이 설명한 바에 따르면 Carbon은 사이버 보안과 긴 호흡이 필요한 엔지니어링 작업에 강점을 둔 모델이고, 그래서 악용 가능성이 큰 기능을 먼저 신뢰할 수 있는 조직에 제한해서 열었다.</p>
+    <figure class="fig">
+      <img src="img/2026-11-03-gemini-4-carbon-1.svg" alt="가운데 1단계 사이버 보안 방어자에서 바깥으로 갈수록 2단계 신뢰 파트너, 3단계 일반 개발자와 기업으로 공개 범위가 넓어지는 그림" />
+      <figcaption>그림 1. 공개 단계: 안쪽 원일수록 먼저 접근한다 (발표 기준 순서)<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+    <div class="callout"><b>용어 풀이</b>
+      최상위 모델: 한 회사가 내놓은 모델 중 성능이 가장 높은 것.<br/>
+      단계적 공개(staged rollout): 한 번에 전체에 열지 않고 대상을 넓혀 가며 여는 방식.<br/>
+      가드레일: 모델이 위험한 답이나 행동을 하지 않도록 두는 안전장치.<br/>
+      Fairwind 프로그램: 구글 딥마인드가 운영하며, 고위험 방어 조직에 먼저 모델을 주는 접근 프로그램.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>어떻게 동작하나요</h2>
+    <p>Carbon을 쓰는 흐름은 크게 다섯 단계로 나뉜다. 먼저 모델이 완성되면 미국 정부의 자발적 사전 테스트 절차에 참여해 외부 평가를 거친다. 그다음 인증된 방어자 조직에만 접근을 열고, 이들이 쓰면서 나온 피드백으로 안전장치를 조정한다. 마지막 단계가 일반 개발자와 기업, 소비자에게 여는 것인데 구글은 '가능한 빨리'라고만 밝혔고 날짜는 정하지 않았다. 접근 조건도 까다롭다. 허용되는 작업은 권한이 확인된 보안 점검, 취약점 분석 같은 이중 용도 업무로 한정되고, 악성코드를 만드는 용도는 금지된다. 접근자는 다단계 인증과 배경 확인을 거치며, 접근권을 다른 곳에 나눠 주거나 판매할 수 없다.</p>
+    <figure class="fig">
+      <img src="img/2026-11-03-gemini-4-carbon-2.svg" alt="모델 완성, 보안 평가, 방어자 공개, 피드백 보완, 일반 공개 순서로 이어지는 흐름도" />
+      <figcaption>그림 2. Gemini 4 Carbon 공개 흐름 (발표 기준). 일반 공개 단계의 날짜는 정해지지 않았다.<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+
+    <h2 id="s3"><span class="no">03</span>왜 지금 화제인가요</h2>
+    <p>발표 뒤 며칠 동안 두 가지 이야기가 오갔다. 하나는 구글이 발표한 벤치마크 수치이고, 다른 하나는 외부 개발자들이 Arena라는 비교 테스트에서 직접 본 결과다. 벤치마크는 구글이 자체로 낸 수치라 독립 검증을 거친 것이 아니다. 반면 외부 테스트는 선별된 프롬프트와 비공식 비교여서 정식 평가라고 보기 어렵다. 그럼에도 여러 글이 같은 방향을 말한다. 3D 작업은 직전 모델보다 좋아졌지만 프론트엔드 UI 품질은 아직 약하고, 응답 속도는 느리다는 평이다.</p>
+    <div class="buzz">
+      <div>3D 작업 품질은 올라갔지만 프론트엔드 UI는 여전히 약하다는 공개 테스트 반응이 나왔다. 응답은 직전 모델보다 느리다고 전해졌다.<span class="who">TestingCatalog · 10.23 (시각 미확인)</span></div>
+      <div>신뢰 테스터 약관상 비공개 결과를 공개 게시하는 것이 문제가 될 수 있다는 지적도 함께 나왔다.<span class="who">TestingCatalog · 10.23 (시각 미확인)</span></div>
+      <div>구글 발표 기준으로 보안 벤치마크 점수는 가드레일을 끈 상태에서 측정했다고 전해졌다. 실제 제품 성능은 다를 수 있다.<span class="who">Unite.AI · 10.28 15:07 ET</span></div>
+      <div>발표 뒤 Fairwind 파트너 조직이 우선 접근했고, 일반 공개 전까지 피드백을 모은다는 점이 가장 많이 언급됐다.<span class="who">Let's Data Science · 10.28 19:22 UTC</span></div>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>관련 나라·기업</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>이름</th><th>어떤 관련이 있나</th></tr></thead>
+      <tbody>
+        <tr><td>기업</td><td>Google</td><td>Gemini 4 Carbon을 개발하고 단계적 공개 방식을 정했다.</td></tr>
+        <tr><td>기업</td><td>Google DeepMind</td><td>고위험 방어 조직에 먼저 모델을 주는 Fairwind 프로그램을 운영한다.</td></tr>
+        <tr><td>기업</td><td>Artificial Analysis</td><td>종합 지능 지수를 집계하는 곳으로, 구글이 Carbon 1위 점수를 이 지수로 소개했다.</td></tr>
+        <tr><td>나라</td><td>미국</td><td>미국 정부의 자발적 사전 테스트 절차에 구글이 참여한다고 밝혔다.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s5"><span class="no">05</span>기존 방식과 무엇이 다른가</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>비교 항목</th><th>보통의 최상위 모델 출시</th><th>Gemini 4 Carbon (발표 기준)</th></tr></thead>
+      <tbody>
+        <tr><td>첫 접근 대상</td><td>발표와 함께 일반 개발자·기업에 열리는 경우가 많다</td><td>사이버 보안 방어자와 Fairwind 파트너 조직이 먼저 쓴다</td></tr>
+        <tr><td>가격</td><td>발표 때 가격표가 함께 나온다</td><td>도입가 백만 토큰당 입력 $2, 출력 $10. 이후 $4와 $20로 오른다. 도입가 기간은 밝히지 않았다</td></tr>
+        <tr><td>일반 공개 날짜</td><td>발표 때 일정이 함께 나오는 경우가 많다</td><td>날짜 없이 '가능한 빨리'라고만 밝혔다</td></tr>
+        <tr><td>검증 방식</td><td>공개 벤치마크와 독립 평가 결과가 쌓이는 편이다</td><td>현재는 구글 발표 수치와 제한된 외부 테스트가 대부분이다</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s6"><span class="no">06</span>직접 해 보기</h2>
+    <p>지금 Carbon을 API로 호출할 수 있는지는 공식 문서에서 확인하지 못했다. 그래서 명령이나 코드는 적지 않고 단계 설명만 남긴다.</p>
+    <ol>
+      <li>구글의 공식 Gemini API 문서에서 모델 목록 페이지를 열어, Carbon 항목이 추가되는지 주기적으로 확인한다.</li>
+      <li>Carbon이 열리기 전까지는 지금 쓸 수 있는 Gemini 모델로 같은 작업을 시켜 보고 결과를 메모해 둔다. 예를 들어 짧은 코드의 취약점을 찾게 하고 설명을 비교해 본다.</li>
+      <li>공개되면 같은 프롬프트를 다시 돌려 속도, 비용, 결과 품질을 기록한다. 발표 수치와 내 결과가 얼마나 다른지 보는 것이 입문자에게 가장 좋은 연습이다.</li>
+    </ol>
+
+    <h2 id="s7"><span class="no">07</span>주의할 점과 한계</h2>
+    <ul>
+      <li>구글이 낸 벤치마크 수치는 벤더가 직접 보고한 결과다. 독립 검증이 끝난 것이 아니다.</li>
+      <li>보안 관련 점수는 가드레일 없이 측정했다고 전해진다. 실제 제품에 안전장치가 붙으면 성능과 거부 응답이 달라질 수 있다.</li>
+      <li>Arena 비교는 선별된 프롬프트와 익명 대결이라 벤치마크로 보기 어렵다. 테스트 중인 체크포인트가 무엇인지도 확실하지 않다.</li>
+      <li>Fairwind 프로그램 조건은 원래 Argon 기준으로 쓰였고, Carbon에 같은 조건이 적용되는지는 확인되지 않았다.</li>
+      <li>구글의 공식 발표 글 원문은 이번 작성에서 직접 열지 못했다. 이 글의 사실 관계는 2차 보도를 기준으로 했다.</li>
+      <li>일반 개발자에게는 아직 열리지 않았다. 지금 바로 프로젝트에 넣을 수 있다고 기대하지 않는 것이 안전하다.</li>
+    </ul>
+
+    <h2 id="s8"><span class="no">08</span>정리</h2>
+    <div class="conclusion"><p>Gemini 4 Carbon이 던진 질문은 성능보다 '누가 먼저 쓰느냐'에 가깝다. 고성능 모델일수록 악용 위험을 먼저 다루고, 공개 범위를 단계로 나누는 흐름이 굳어지고 있다. 입문 개발자에게 이 사실은 두 가지를 의미한다. 첫째, 발표된 모델이 곧바로 내 API 키로 쓸 수 있는 모델은 아니라는 점이다. 둘째, 모델을 고를 때는 점수뿐 아니라 공개 단계, 가격 변동 시점, 안전장치 조건을 함께 봐야 한다는 점이다.</p><p>당장 할 수 있는 일은 많지 않다. 공식 모델 목록을 주기적으로 확인하고, 지금 쓰는 모델로 같은 작업을 반복해 기록을 남기는 것만으로도 충분한 준비가 된다. 발표 수치를 그대로 믿기보다 내 손으로 비교해 본 결과를 쌓는 습관이 장기적으로 더 큰 힘이 된다.</p></div>
+
+    <h2 id="s9"><span class="no">09</span>참고한 글</h2>
+    <ol class="refs">
+      <li><a href="https://www.unite.ai/staged-rollout-sends-googles-gemini-4-carbon-to-cyber-defenders-first/">Staged Rollout Sends Google's Gemini 4 Carbon To Cyber Defenders First</a> <span class="src">Unite.AI · 2026.10.28</span></li>
+      <li><a href="https://letsdatascience.com/news/google-announces-gemini-4-carbon-limiting-first-access-to-cy-f33fd14e">Google announces Gemini 4 Carbon, limiting first access to cyber defenders</a> <span class="src">Let's Data Science · 2026.10.28</span></li>
+      <li><a href="https://www.mindstudio.ai/blog/gemini-4-carbon-pricing-rollout">Gemini 4 Carbon: Pricing, Rollout, and Cyber-First Access Explained</a> <span class="src">MindStudio · 2026.10.29</span></li>
+      <li><a href="https://braindetox.kr/en/posts/gemini_4_carbon_security_agent_model_2026.html">Gemini 4 Carbon staged rollout: security scores and pricing</a> <span class="src">BrainDetox · 2026.10.29</span></li>
+      <li><a href="https://testingcatalog.com/gemini-4-carbon-early-test-results">gemini 4 carbon early test results</a> <span class="src">TestingCatalog · 2026.10.23</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#insights">← 전체 인사이트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

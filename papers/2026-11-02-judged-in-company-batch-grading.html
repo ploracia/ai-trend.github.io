@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>같이 채점하면 점수가 달라진다 | AI 비밀 레시피</title>
+  <meta name="description" content="언어모델에게 여러 항목을 한 번에 채점시키면 함께 묶인 다른 항목과 위치에 따라 판단이 바뀔 수 있다는 연구를 쉽게 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .paper-title { font-size: 15px; color: var(--muted); margin: 0 0 14px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 48px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 26px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .opinion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .opinion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#papers"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#papers">← 논문 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>같이 채점하면 점수가 달라진다: LLM 일괄 채점의 함정</h1>
+    <p class="paper-title">Judged in Company: In-Context Batching Makes LLM Verdicts Depend on Other Items</p>
+    <div class="byline"><span><time datetime="2026-11-02T12:10:49+09:00">2026.11.02 12:10 KST</time></span><span>원문 arXiv 2610.40241</span></div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol>
+        <li>언어모델에게 글 여러 개를 한 번에 붙여 넣고 채점하면 비용을 아낄 수 있습니다. 이때 각 항목의 판정이 같이 들어 있는 다른 항목이나 자리 순서에 영향을 받는지가 이 논문의 질문입니다.</li>
+        <li>저자들은 악성 댓글 판별, 짧은 답변 채점, 리뷰 별점 예측 세 가지 작업에서 2,000개 항목을 25개씩 무작위 묶음으로 바꿔 가며 판정이 얼마나 바뀌는지 측정했습니다. 항목 순서, 자리 위치, 함께 묶인 이웃을 나눠서 원인을 분해했습니다.</li>
+        <li>입문 개발자에게 중요한 결론은 "배치로 채점한 결과는 단독 채점과 다를 수 있으니, 애매한 항목은 하나씩 채점하라"는 것입니다. 다만 이 요약은 초록을 기준으로 했으므로 세부 수치는 원문에서 다시 확인해 주세요.</li>
+      </ol>
+    </div>
+
+    <h2 id="s1"><span class="no">01</span>본문 요약</h2>
+    <h3>문제 정의</h3>
+    <p>LLM을 심사위원처럼 쓰는 일이 많아졌습니다. 댓글이 유해한지, 짧은 답안을 몇 점으로 줄지 같은 판단을 맡기는 식입니다. 항목을 하나씩 물어보면 비용이 많이 들기 때문에, 여러 항목을 한 프롬프트에 묶어 한꺼번에 채점하는 방법이 흔히 쓰입니다. 그런데 이 방식은 "각 항목의 판정은 다른 항목과 무관하다"는 가정에 기대고 있습니다. 실제로 그런지는 명확하게 확인되지 않았습니다.</p>
+    <h3>방법</h3>
+    <p>저자들은 같은 2,000개 항목을 여러 번 무작위로 섞어 25개씩 묶는 실험을 반복했습니다. 항목 라벨을 바꾸거나 지시문을 살짝 고쳐 쓰는 대조 실험도 함께 했습니다. 먼저 4~9B 크기의 공개 모델 다섯 개로 실험했고, 14~32B 크기 모델 네 개로도 같은 방식을 확인했습니다. 판정이 바뀌는 원인은 항목 순서, 자리 위치, 어떤 항목과 한 프롬프트에 들어갔는지라는 세 가지로 나눠 분석했습니다. 또한 개별 답변을 편집해서 앞선 판정과 이웃 항목의 텍스트가 각각 얼마나 영향을 주는지도 살펴봤습니다.</p>
+    <h3>결과</h3>
+    <p>함께 묶는 방식을 바꾸자 위험 판별과 채점 작업에서 판정의 11~22%가 달라졌습니다. 이 변화는 라벨을 바꾸거나 지시문을 고쳐 쓴 효과보다 컸다고 보고합니다. 반면 AUROC로 측정한 정확도, 즉 사람 라벨과의 전체적인 일치도는 단독 채점과 거의 차이가 없었습니다. 큰 모델 네 개에서는 6~15%의 판정이 바뀌었습니다. 별점 예측 작업은 변화가 훨씬 작아서 2.9~3.9%에 그쳤습니다. 원인 분해 결과, 대부분의 차이는 이웃 항목의 순서와 자리 위치에서 나왔고, 함께 묶였다는 사실 자체의 영향은 비교적 작았습니다. 순서를 아홉 번 바꿔 다수결을 내도 판정의 절반 넘게는 여전히 뒤집혔습니다. 열다섯 개의 무작위 묶음에서 얻은 다수결도 단독 채점과 8.4~17.8%의 판정이 달랐습니다.</p>
+    <h3>한계</h3>
+    <ul>
+      <li>실험은 특정 작업 세 가지와 특정 공개 모델들에 한정됩니다. 상용 대형 모델이나 다른 언어에서도 같은 크기의 변화가 나올지는 이 요약만으로 알 수 없습니다.</li>
+      <li>순서를 섞어 다수결을 내는 방식이 함께 묶인 영향을 완전히 없애지 못한다고 보고했으므로, 단순한 보정으로 해결된다고 보기는 어렵습니다.</li>
+      <li>이 글은 초록을 기준으로 정리했습니다. 작업별 세부 수치와 실험 설정은 원문에서 확인하시기 바랍니다.</li>
+    </ul>
+
+    <h2 id="s2"><span class="no">02</span>최종 의견</h2>
+    <div class="opinion">
+      <p>입문 개발자가 이 논문에서 가져갈 점은 "비용을 아끼려고 묶은 채점이 결과를 조용히 바꿀 수 있다"는 경고입니다. 예를 들어 고객 문의나 댓글을 자동으로 걸러내는 기능을 만든다면, 여러 건을 한 프롬프트에 넣기 전에 같은 항목을 단독으로 채점한 결과와 한 번쯤 비교해 보는 것이 좋습니다. 점수 차이가 큰 항목만 따로 확인하는 방식도 현실적인 타협이 될 수 있습니다.</p>
+      <p>반대로 별점 예측처럼 판단이 쉬운 작업에서는 차이가 작았다는 점도 기억해 둘 만합니다. 모든 배치 채점이 나쁘다는 뜻은 아니고, 애매한 항목일수록 묶음이 결과를 흔든다는 뜻으로 읽는 편이 정확합니다. 논문이 권하는 것처럼 애매한 항목은 하나씩 채점하고, 캐시를 활용해 비용을 줄이는 방법을 먼저 검토해 보세요.</p>
+    </div>
+
+    <h2 id="s3"><span class="no">03</span>참고 사이트</h2>
+    <ol class="refs">
+      <li><a href="https://arxiv.org/abs/2610.40241">Judged in Company: In-Context Batching Makes LLM Verdicts Depend on Other Items</a> <span class="src">arXiv · 2026.10.29</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#papers">← 전체 논문 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

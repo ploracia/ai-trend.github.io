@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" role="img" aria-labelledby="t2 d2">
+  <title id="t2">GPT-6 Cyber 작업 흐름</title>
+  <desc id="d2">승인, 범위 설정, 탐색과 검증, 보고와 패치의 네 단계 흐름</desc>
+  <rect x="0" y="0" width="720" height="320" rx="16" fill="#f7f6f2" stroke="#e3e1da"/>
+  <text x="32" y="44" font-size="18" font-weight="700" fill="#1b1b1f">보안 점검 작업의 네 단계</text>
+  <rect x="30" y="100" width="150" height="110" rx="12" fill="#ffffff" stroke="#2f5bea" stroke-width="2"/>
+  <text x="105" y="138" font-size="15" font-weight="700" fill="#1b1b1f" text-anchor="middle">1. 승인</text>
+  <text x="105" y="164" font-size="13" fill="#62626b" text-anchor="middle">고객 신원 확인</text>
+  <rect x="200" y="100" width="150" height="110" rx="12" fill="#ffffff" stroke="#2f5bea" stroke-width="2"/>
+  <text x="275" y="138" font-size="15" font-weight="700" fill="#1b1b1f" text-anchor="middle">2. 범위 설정</text>
+  <text x="275" y="164" font-size="13" fill="#62626b" text-anchor="middle">허가된 대상만</text>
+  <rect x="370" y="100" width="150" height="110" rx="12" fill="#ffffff" stroke="#2f5bea" stroke-width="2"/>
+  <text x="445" y="138" font-size="15" font-weight="700" fill="#1b1b1f" text-anchor="middle">3. 탐색·검증</text>
+  <text x="445" y="164" font-size="13" fill="#62626b" text-anchor="middle">취약점과 익스플로잇</text>
+  <rect x="540" y="100" width="150" height="110" rx="12" fill="#e5f4ec" stroke="#1f8a5b" stroke-width="2"/>
+  <text x="615" y="138" font-size="15" font-weight="700" fill="#1b1b1f" text-anchor="middle">4. 보고·패치</text>
+  <text x="615" y="164" font-size="13" fill="#62626b" text-anchor="middle">개발팀이 수정</text>
+  <line x1="180" y1="155" x2="200" y2="155" stroke="#62626b" stroke-width="2"/>
+  <line x1="350" y1="155" x2="370" y2="155" stroke="#62626b" stroke-width="2"/>
+  <line x1="520" y1="155" x2="540" y2="155" stroke="#62626b" stroke-width="2"/>
+  <text x="32" y="262" font-size="14" fill="#62626b">범위 밖 서비스는 건드리지 않는 것이 원칙이다 (보도 기준 99% 이상 준수)</text>
+  <text x="32" y="286" font-size="14" fill="#62626b">발견한 취약점은 공개 전에 해당 팀에 먼저 알린다</text>
+</svg>
