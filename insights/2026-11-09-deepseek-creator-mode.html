@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeepSeek Harness Creator Mode 입문 가이드 | AI 비밀 레시피</title>
+  <meta name="description" content="DeepSeek Harness의 Creator Mode로 대화만 하고 AI 플러그인을 만드는 방법과 주의할 점을 입문 개발자 눈높이로 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+
+    /* 이슈 전용 */
+    .cats { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; margin: 14px 0 0; font-size: 13px; color: var(--muted); }
+    .cats .lbl { font-weight: 700; margin-right: 2px; }
+    .cats a { font-size: 12.5px; font-weight: 600; text-decoration: none; color: var(--text); border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 2px 8px; }
+    .cats a:hover { border-color: var(--accent); color: var(--accent); }
+    .cats .sep { width: 10px; }
+    figure.fig { margin: 22px 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    figure.fig img, figure.fig svg { display: block; width: 100%; height: auto; }
+    figure.fig figcaption { font-size: 13.5px; color: var(--muted); padding: 10px 16px; border-top: 1px solid var(--line); }
+    figure.fig figcaption .credit { display: block; font-size: 12px; margin-top: 2px; }
+    .srcfig { display: flex; gap: 12px; align-items: center; background: var(--bg); border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px; margin: 14px 0; font-size: 14.5px; }
+    .srcfig::before { content: "🖼"; font-size: 20px; }
+    .buzz { display: grid; gap: 10px; margin: 14px 0; }
+    .buzz div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; font-size: 15px; }
+    .buzz .who { display: block; font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+    pre { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; font-size: 13.5px; line-height: 1.6; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#insights"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#insights">← 인사이트 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>DeepSeek Harness Creator Mode: 대화로 AI 플러그인을 만드는 기능, 입문 개발자가 알아야 할 것</h1>
+    <div class="byline"><span><time datetime="2026-11-09T16:18:05+09:00">2026.11.09 16:18 KST</time></span><span>읽는 시간 약 5분</span></div>
+    <div class="cats">
+      <span class="lbl">나라</span>
+      <a href="../#insights/country/중국">중국</a>
+      <span class="sep"></span>
+      <span class="lbl">기업</span>
+      <a href="../#insights/company/DeepSeek">DeepSeek</a>
+    </div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol><li>DeepSeek의 에이전트 플랫폼 Harness에 Creator Mode가 추가되었다는 소식이 11월 2일부터 4일 사이 여러 매체에 보도되었다.</li><li>코드를 직접 짜는 대신 원하는 기능을 문장으로 설명하면 플러그인을 만들어 주고, 일부 결과는 대화를 거듭해 다듬는 방식이다.</li><li>입문 개발자에게는 AI에게 기능을 설명하는 연습장이 되지만, 만든 플러그인은 권한과 보안을 확인한 뒤 쓰는 것이 좋다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 기술</span><span class="what">DeepSeek Harness Creator Mode</span><span>근거 글 3개</span></div>
+
+    <p class="lead">DeepSeek가 Harness라는 에이전트 플랫폼에 Creator Mode를 붙였다. 여러 보도에 따르면 사용자는 "이런 기능이 있는 플러그인을 만들어 줘"처럼 평범한 문장으로 요청하면 되고, 플러그인이 완성되면 Harness에 설치해 쓸 수 있다. 개발자 커뮤니티가 주목한 지점은 플러그인 제작의 진입 장벽이 코드에서 대화로 내려왔다는 것이다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">한눈에 보기</a></li>
+        <li><a href="#s2">어떻게 동작하나요</a></li>
+        <li><a href="#s3">왜 지금 화제인가요</a></li>
+        <li><a href="#s4">관련 나라·기업</a></li>
+        <li><a href="#s5">기존 방식과 무엇이 다른가</a></li>
+        <li><a href="#s6">직접 해 보기</a></li>
+        <li><a href="#s7">주의할 점과 한계</a></li>
+        <li><a href="#s8">정리</a></li>
+        <li><a href="#s9">참고한 글</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>한눈에 보기</h2>
+    <p>식당에 "매운 것 말고 해산물이 들어간 메뉴를 하나 만들어 주세요"라고 말하면 주방이 새 메뉴 카드를 내놓는 것과 비슷하다. Creator Mode에서 만드는 플러그인도 그런 카드에 가깝다. 에이전트(목표를 받아 여러 단계를 스스로 처리하는 AI 프로그램)에 새로운 능력을 하나 붙이는 작은 부품이다. 그림 1의 흐름처럼 예시 문장을 가져와 Harness에서 Creator Mode를 고르고, 원하는 기능을 설명하면 된다.</p>
+    <figure class="fig">
+      <img src="img/2026-11-09-deepseek-creator-mode-1.svg" alt="예시 프롬프트를 복사해 Harness에 붙여넣고 Creator Mode에서 설명한 뒤 플러그인을 얻는 네 단계 흐름" />
+      <figcaption>그림 1. Creator Mode로 플러그인을 만드는 네 단계<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+    <div class="callout"><b>용어 풀이</b>Harness: 모델이 도구를 쓰고 작업을 끝낼 수 있도록 감싸 주는 실행 환경이다. 플러그인: 에이전트에 붙이는 기능 묶음이다. Creator Mode: 플러그인을 대화로 설계하고 생성하는 모드다.</div>
+
+    <h2 id="s2"><span class="no">02</span>어떻게 동작하나요</h2>
+    <p>입력, 처리, 출력 순서로 보면 이해가 쉽다. 입력은 "이런 화면을 보여 주는 플러그인"처럼 원하는 기능을 설명한 문장이다. 처리 단계에서는 모델이 플러그인에 필요한 코드와 설정을 만든다. 보도에 따르면 일부 플러그인은 한 번에 완성되지 않아서 여러 차례 대화로 고쳐 나간 결과였다. 출력은 Harness에 설치해 사용할 수 있는 플러그인이다.</p>
+    <p>위키트리 보도에 따르면 Creator Mode는 9월 릴리스 노트부터 언급되었고, 10월 3일 프리뷰 버전에서 플러그인 관리 화면에 "Let Agent create a plugin" 항목이 생겼다. 다만 이 기사 역시 메뉴 이름과 흐름을 전하는 수준이라, 실제 화면은 직접 확인하는 것이 안전하다.</p>
+    <figure class="fig">
+      <img src="img/2026-11-09-deepseek-creator-mode-2.svg" alt="모델이 만든 코드가 샌드박스와 승인 단계를 거쳐 허용된 범위에서만 실행되는 구조" />
+      <figcaption>그림 2. 만들어진 플러그인이 실행되기까지 거치는 확인 단계<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+
+    <h2 id="s3"><span class="no">03</span>왜 지금 화제인가요</h2>
+    <p>DeepSeek는 Creator Mode를 데모 중심으로 공개했다. 여러 매체가 공통으로 전한 내용은 "자연어로 플러그인을 만든다"는 점과, 디자인 작업 공간, 영상 편집기, 3D 시각화처럼 결과물이 눈에 보이는 예시를 함께 보여 주었다는 점이다.</p>
+    <div class="buzz">
+      <div>기사는 Creator Mode를 대화로 플러그인을 만드는 기능으로 소개하고, 디자인 작업 공간·영상 편집기·3D 시각화 데모를 함께 실었다.<span class="who"><a href="https://technode.com/2026/11/03/deepseek-showcases-creator-mode-for-building-custom-plugins-through-conversation/">TechNode</a> · 11.03</span></div>
+      <div>플러그인을 평범한 영어 문장으로 설명해 만든다는 점을 강조하며, 복잡한 작업을 맡기는 용도로 소개했다.<span class="who"><a href="https://www.implicator.ai/deepseek-releases-creator-mode-allows-deepseek-harness-users/">Implicator.ai</a> · 11.02 (미국 태평양 시간)</span></div>
+      <div>Creator Mode가 9월부터 릴리스 노트에 언급되었고, 현재 Harness가 보안 감사를 거치지 않은 개발자 프리뷰라는 점을 함께 짚었다.<span class="who"><a href="https://www.wikitree.co.kr/articles/1171566">위키트리</a> · 11.04</span></div>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>관련 나라·기업</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>이름</th><th>어떤 관련이 있나</th></tr></thead>
+      <tbody>
+        <tr><td>기업</td><td>DeepSeek</td><td>Harness와 Creator Mode를 공개한 개발사</td></tr>
+        <tr><td>나라</td><td>중국</td><td>DeepSeek 본사가 있는 나라</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s5"><span class="no">05</span>기존 방식과 무엇이 다른가</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>비교 항목</th><th>기존 방식</th><th>Creator Mode</th></tr></thead>
+      <tbody>
+        <tr><td>만드는 방법</td><td>개발자가 코드를 직접 작성한다</td><td>원하는 기능을 문장으로 설명한다</td></tr>
+        <tr><td>고치는 방법</td><td>코드를 찾아 수정한다</td><td>"이 부분만 바꿔 줘"처럼 대화로 다듬는다</td></tr>
+        <tr><td>확인 방법</td><td>코드 리뷰와 테스트</td><td>결과를 실행해 보고, 권한과 보안 설정을 함께 확인해야 한다</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s6"><span class="no">06</span>직접 해 보기</h2>
+    <p>아래는 보도 내용을 바탕으로 한 첫 걸음이다. DeepSeek 공식 저장소와 프롬프트 모음 페이지는 이번 작성 과정에서 직접 열어 확인하지 못했으므로, 실제 메뉴 이름과 설치 명령은 공식 문서에서 다시 확인하기 바란다.</p>
+    <div class="actions">
+      <div class="action"><h4>1. 예시 프롬프트 고르기</h4><p>기사에서 소개된 DeepSeek의 공식 프롬프트 모음에서 가장 단순한 예시 하나를 고른다. 처음에는 화면에 글자 하나만 보여 주는 정도의 작은 기능이 좋다.</p></div>
+      <div class="action"><h4>2. Harness에서 플러그인 메뉴 찾기</h4><p>Harness 앱에서 플러그인 관리 화면을 열고, 에이전트에게 플러그인을 만들게 하는 항목을 찾는다. 메뉴 이름은 버전마다 다를 수 있다.</p></div>
+      <div class="action"><h4>3. 한 문장으로 요청하고 결과 읽기</h4><p>Creator Mode를 고른 뒤 원하는 기능을 한두 문장으로 적는다. 만들어진 플러그인이 무엇을 하는지 설명을 먼저 읽고, 요청과 다르면 그 부분만 다시 말한다.</p></div>
+    </div>
+
+    <h2 id="s7"><span class="no">07</span>주의할 점과 한계</h2>
+    <ul>
+      <li>보도에 따르면 Harness는 개발자 프리뷰 단계이며 보안 감사를 거치지 않았다.</li>
+      <li>Harness는 모델이 만든 코드와 명령을 실행하고, 제3자 플러그인을 불러올 수 있다. 샌드박스와 승인 창이 위험을 줄여 주지만 완벽한 격리를 보장하지는 않는다고 보도되었다. 중요한 파일이나 인증 정보가 있는 환경에서는 권한을 최소로 주는 편이 안전하다.</li>
+      <li>프리뷰 단계라 호환성이 깨지는 변경이 생길 수 있다고 전해졌다.</li>
+      <li>데모 예시는 여러 차례 대화를 거쳐 다듬은 결과다. 한 번의 프롬프트로 같은 결과가 나온다고 기대하면 안 된다.</li>
+      <li>보도에 따르면 저장소 라이선스는 MIT이다. 다만 이번 글에서는 공식 저장소를 직접 열어 확인하지 못했다.</li>
+    </ul>
+
+    <h2 id="s8"><span class="no">08</span>정리</h2>
+    <div class="conclusion"><p>Creator Mode는 플러그인 제작을 코드 작성에서 문장 설명으로 옮긴다는 점에서 의미가 있다. AI를 막 시작한 개발자에게는 "무엇을 원하는지 명확히 말하는 능력"을 연습하기에 좋은 도구가 될 수 있다. 작은 기능부터 하나씩 만들어 보면 에이전트가 어떤 부품으로 움직이는지도 자연스럽게 보인다.</p><p>다만 만들어진 플러그인은 자동으로 안전하다고 믿으면 안 된다. 프리뷰 단계이고 보안 감사를 거치지 않았다는 점을 기억하고, 권한을 좁게 주고 결과를 직접 읽는 습관을 먼저 들이기 바란다.</p></div>
+
+    <h2 id="s9"><span class="no">09</span>참고한 글</h2>
+    <ol class="refs">
+      <li><a href="https://technode.com/2026/11/03/deepseek-showcases-creator-mode-for-building-custom-plugins-through-conversation/">DeepSeek showcases Creator Mode for building custom plugins through conversation</a> <span class="src">TechNode · 2026.11.03</span></li>
+      <li><a href="https://www.implicator.ai/deepseek-releases-creator-mode-allows-deepseek-harness-users/">DeepSeek releases Creator Mode, allows Harness users to build plugins</a> <span class="src">Implicator.ai · 2026.11.02 (미국 태평양 시간)</span></li>
+      <li><a href="https://www.wikitree.co.kr/articles/1171566">딥시크 Harness, 프롬프트로 플러그인 만든다…보안 감사 안 거친 프리뷰</a> <span class="src">위키트리 · 2026.11.04</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#insights">← 전체 인사이트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

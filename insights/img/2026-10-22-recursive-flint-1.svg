@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440" role="img" aria-labelledby="t1">
+  <title id="t1">Flint의 MoE 구조: 256명의 전문가 중 토큰마다 6명만 골라 일하고 2.5B 파라미터만 쓴다</title>
+  <style>
+    .bg{fill:#ffffff}.h{fill:#1b1b1f;font:800 19px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .tx{fill:#1b1b1f;font:700 15px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .sm{fill:#62626b;font:500 13px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .tw{fill:#ffffff;font:700 15px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .box{fill:#e8eefe;stroke:#2f5bea;stroke-width:1.5}
+    .cell{fill:#f7f6f2;stroke:#c9c6bc;stroke-width:1}
+    .on{fill:#2f5bea;stroke:#2f5bea;stroke-width:1}
+    .ar{stroke:#62626b;stroke-width:2;fill:none}
+    @media (prefers-color-scheme: dark){
+      .bg{fill:#1a1b1f}.h,.tx{fill:#ececf0}.sm{fill:#9a9aa5}.tw{fill:#111214}
+      .box{fill:#1f2640;stroke:#7c9cff}.cell{fill:#23252b;stroke:#3a3c44}.on{fill:#7c9cff;stroke:#7c9cff}
+      .ar{stroke:#9a9aa5}
+    }
+  </style>
+  <rect class="bg" x="0" y="0" width="800" height="440" rx="14"/>
+  <text class="h" x="32" y="44">Flint의 전문가 구조 (MoE)</text>
+  <text class="sm" x="32" y="66">전체 398억 개 중 한 번에 쓰는 것은 약 25억 개입니다 (표기: 40B 총 · 2.5B 활성)</text>
+
+  <rect class="box" x="32" y="190" width="150" height="70" rx="10"/>
+  <text class="tx" x="107" y="222" text-anchor="middle">입력 토큰</text>
+  <text class="sm" x="107" y="244" text-anchor="middle">코드 조각</text>
+
+  <rect class="box" x="222" y="190" width="150" height="70" rx="10"/>
+  <text class="tx" x="297" y="222" text-anchor="middle">라우터</text>
+  <text class="sm" x="297" y="244" text-anchor="middle">누구에게 맡길지 고름</text>
+
+  <path class="ar" d="M182 225 L218 225"/>
+  <path class="ar" d="M372 225 L408 225"/>
+
+  <g transform="translate(420,118)">
+    <text class="sm" x="0" y="-12">256명의 전문가 (파란색 6명이 선택됨)</text>
+    <rect class="cell" x="0" y="0" width="30" height="30" rx="5"/><rect class="on" x="40" y="0" width="30" height="30" rx="5"/><rect class="cell" x="80" y="0" width="30" height="30" rx="5"/><rect class="cell" x="120" y="0" width="30" height="30" rx="5"/><rect class="on" x="160" y="0" width="30" height="30" rx="5"/><rect class="cell" x="200" y="0" width="30" height="30" rx="5"/><rect class="cell" x="240" y="0" width="30" height="30" rx="5"/><rect class="cell" x="280" y="0" width="30" height="30" rx="5"/>
+    <rect class="cell" x="0" y="40" width="30" height="30" rx="5"/><rect class="cell" x="40" y="40" width="30" height="30" rx="5"/><rect class="on" x="80" y="40" width="30" height="30" rx="5"/><rect class="cell" x="120" y="40" width="30" height="30" rx="5"/><rect class="cell" x="160" y="40" width="30" height="30" rx="5"/><rect class="on" x="200" y="40" width="30" height="30" rx="5"/><rect class="cell" x="240" y="40" width="30" height="30" rx="5"/><rect class="cell" x="280" y="40" width="30" height="30" rx="5"/>
+    <rect class="cell" x="0" y="80" width="30" height="30" rx="5"/><rect class="cell" x="40" y="80" width="30" height="30" rx="5"/><rect class="cell" x="80" y="80" width="30" height="30" rx="5"/><rect class="on" x="120" y="80" width="30" height="30" rx="5"/><rect class="cell" x="160" y="80" width="30" height="30" rx="5"/><rect class="cell" x="200" y="80" width="30" height="30" rx="5"/><rect class="cell" x="240" y="80" width="30" height="30" rx="5"/><rect class="cell" x="280" y="80" width="30" height="30" rx="5"/>
+    <text class="sm" x="0" y="136">… 나머지 전문가는 이번 토큰에서 쉽니다</text>
+  </g>
+
+  <path class="ar" d="M620 225 L652 225"/>
+  <rect class="box" x="656" y="190" width="120" height="70" rx="10"/>
+  <text class="tx" x="716" y="222" text-anchor="middle">다음 토큰</text>
+  <text class="sm" x="716" y="244" text-anchor="middle">결과 출력</text>
+
+  <rect class="box" x="32" y="330" width="736" height="72" rx="12" style="fill:none;stroke:#62626b;stroke-dasharray:5 4"/>
+  <text class="tx" x="50" y="362">쉬운 비유: 40명짜리 팀에서 매번 2~3명만 회의에 들어가는 것과 같습니다.</text>
+  <text class="sm" x="50" y="386">팀 전체의 지식은 남아 있어 품질을 지키면서, 계산은 적게 해서 노트북에서도 빨라집니다.</text>
+</svg>

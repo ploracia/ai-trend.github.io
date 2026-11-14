@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anthropic, 기업공개 일정 확정… 11월 19일 나스닥에서 'ANT'로 거래 시작 | AI 비밀 레시피</title>
+  <meta name="description" content="Anthropic이 공모가 범위 70~78달러와 상장 일정을 발표했습니다. 가격 결정일, 거래 시작일, 전략 투자 규모를 쉽게 정리했습니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  
+<article>
+    <h1>Anthropic, 기업공개 일정 확정… 11월 19일 나스닥에서 'ANT'로 거래 시작</h1>
+    <div class="byline"><span><time datetime="2026-11-13T08:23:31+09:00">2026.11.13 08:23 KST</time></span><span>읽는 시간 약 7분</span><span>#Anthropic #IPO #투자</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>Anthropic이 수정 신고서를 내고 주당 70~78달러, 최대 825만 주 규모의 공모 가격대를 밝혔습니다. 미국 시간 11월 12일에는 가격 결정일을 11월 18일, 나스닥 거래 시작일을 11월 19일로 발표했습니다.</li><li>보도에 따르면 Nvidia, Google, AMD, Broadcom, Micron, Microsoft, TSMC 등 칩·클라우드 기업 7곳이 공모가로 약 260억 달러어치 비의결권 주식을 사기로 했습니다.</li><li>개발자에게는 AI 모델 회사의 가치가 어떻게 평가되는지, 그리고 그 돈이 칩과 인프라에 어떻게 흘러가는지 살펴볼 좋은 사례입니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">Anthropic 기업공개 가격대 제시와 상장 일정 발표</span><span>가격대 제출 2026.11.10 · 일정 발표 2026.11.12 (미국 시간)</span><span><a href="https://finance.yahoo.com/technology/article/anthropic-ipo-claude-maker-to-begin-trading-on-thursday-nov-19-173550865.html">Yahoo Finance</a></span></div>
+    <p class="lead">AI 모델을 만드는 회사가 주식시장에 처음 나오는 일은 그 회사의 실적뿐 아니라 AI 산업 전체의 기대치를 보여 줍니다. 이번 일정은 그 기대치가 구체적인 숫자로 바뀌기 시작했다는 신호입니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">개발자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+
+    <p><strong>기업공개(IPO)는 회사가 주식을 처음으로 일반 투자자에게 파는 절차입니다. Anthropic은 이 절차를 밟으며 가격 범위와 거래 일정을 공개했습니다.</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>공모가 범위</strong>는 주식을 팔 때 예상되는 가격의 상한과 하한입니다. <strong>S-1</strong>은 미국 증권거래위원회(SEC)에 내는 상장 신고서이고, <strong>비의결권 주식</strong>은 경영 의결권 없이 이익 배당만 받는 주식입니다.
+    </div>
+    <p>쉽게 말하면 가게를 여러 사람에게 조금씩 나눠 파는 일과 비슷합니다. 한 주당 가격이 얼마로 정해지느냐에 따라 회사의 전체 가치가 달라지고, 그 가치는 앞으로 AI 인프라에 얼마나 투자할 수 있는지를 좌우합니다.</p>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>상장 회사</td><td><strong>Anthropic</strong></td><td>Claude 모델을 만드는 회사, 나스닥 상장 추진</td></tr>
+        <tr><td>거래소</td><td><strong>나스닥</strong></td><td>티커 'ANT'로 거래 예정</td></tr>
+        <tr><td>전략 투자자</td><td><strong>Nvidia, Google, AMD, Broadcom, Micron, Microsoft, TSMC</strong></td><td>공모가로 약 260억 달러 규모 비의결권 주식 매입 약정</td></tr>
+        <tr><td>감독 기관</td><td><strong>미국 SEC</strong></td><td>신고서 검토, 등록이 효력을 얻어야 주식 판매 가능</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+
+    <h3>보도된 내용</h3>
+    <p>여러 매체의 보도를 종합하면, Anthropic은 11월 10일 화요일에 수정 신고서를 내고 보통주 825만 주를 주당 70~78달러에 팔겠다고 밝혔습니다. 가격 상단으로 계산하면 조달 규모는 약 644억 달러입니다. 보도는 회사 가치를 약 1.3조~1.45조 달러로 추산했는데, 계산 기준에 따라 숫자가 다르게 나오므로 범위로 기억하는 편이 안전합니다.</p>
+    <p>이어 11월 12일 목요일(미국 시간) 회사는 일정을 발표했습니다. 가격은 11월 18일 수요일에 정하고, 거래는 11월 19일 목요일부터 시작한다는 내용입니다. Yahoo Finance는 올해 1월부터 9월까지의 매출이 332억 달러라고 전했습니다. 다만 신고서가 SEC에서 효력을 얻기 전에는 주식을 팔 수 없다는 점도 함께 짚였습니다.</p>
+    <p>이번 정리는 여러 매체의 보도를 교차해 작성했으며, 신고서 원문은 직접 열어 확인하지 못했습니다. 금액과 날짜는 SEC 공시 자료로 한 번 더 확인해 보시기 바랍니다.</p>
+    <h3>진행 순서</h3>
+    <ul class="timeline">
+      <li><time>2026년 11월 10일 (미국 화요일)</time>수정 신고서 제출, 공모가 범위 70~78달러 공개</li>
+      <li><time>2026년 11월 12일 (미국 목요일)</time>상장 일정 발표: 가격 결정일과 거래 시작일 제시</li>
+      <li><time>2026년 11월 18일 (예정)</time>공모가 최종 결정</li>
+      <li><time>2026년 11월 19일 (예정)</time>나스닥에서 'ANT' 거래 시작</li>
+    </ul>
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>AI 회사의 몸값이 커질수록, 그 회사가 쓰는 칩과 클라우드 가격도 함께 움직입니다. 뉴스 속 숫자를 기술 선택과 연결해 보는 습관이 중요합니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>개발자가 해볼 것</h2>
+
+    <div class="actions">
+      <div class="action"><h4>1. 공개 자료에서 숫자 확인하기</h4><p>회사의 신고서나 공시 자료를 찾아 매출, 손실, 투자처를 직접 읽어 보세요. 뉴스 요약과 원문의 차이를 느끼는 것이 첫걸음입니다.</p></div>
+      <div class="action"><h4>2. 내가 쓰는 API 비용 점검하기</h4><p>사용 중인 AI 서비스의 요금 체계를 적어 보고, 한 달 사용량을 곱해 대략적인 비용을 계산해 보세요.</p></div>
+      <div class="action"><h4>3. 칩과 인프라 용어 익히기</h4><p>GPU, 클라우드, 데이터센터처럼 뉴스에 자주 나오는 단어를 한 줄씩 정리해 두면 다음 뉴스가 훨씬 잘 읽힙니다.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+
+    <div class="future pos"><ul>
+      <li><strong>연구와 인프라 투자가 늘어난다.</strong> 상장으로 확보한 자금이 더 큰 모델과 안전 연구에 쓰이면, 개발자가 쓸 수 있는 도구도 나아질 수 있습니다.</li>
+      <li><strong>산업 협력이 깊어진다.</strong> 칩과 클라우드 기업이 함께 투자하면서 AI 서비스를 안정적으로 공급하는 기반이 넓어질 수 있습니다.</li>
+      <li><strong>투명성이 높아진다.</strong> 상장 회사는 정기 공시를 내야 해서 매출과 위험 요인이 더 자주 드러날 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+
+    <div class="future neg"><ul>
+      <li><strong>기대가 과열될 수 있다.</strong> 회사 가치가 실제 수익보다 앞서 올라가면, 시장이 흔들릴 때 AI 산업 전체가 함께 출렁일 수 있습니다.</li>
+      <li><strong>수익 구조가 여전히 불확실하다.</strong> 매출이 빠르게 늘더라도 연구 비용이 크면 적자가 이어질 수 있습니다.</li>
+      <li><strong>의사결정이 주주 압력에 끌린다.</strong> 상장 후에는 안전 연구와 단기 성과 사이에서 균형을 잡기가 더 어려워질 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+
+    <div class="conclusion"><p>이번 뉴스의 핵심은 Anthropic이라는 이름보다, AI 회사가 자본 시장에서 어떤 숫자로 평가받기 시작했다는 점입니다. 입문 단계에서는 모델 성능만 보지 말고, 그 모델을 만드는 회사의 규모와 비용 구조도 함께 보는 습관이 도움이 됩니다.</p><p>이번 주에는 자신이 쓰는 AI 서비스 하나를 골라 요금 구조와 제공 회사를 적어 보세요. 뉴스를 읽을 때마다 "이 숫자가 내 개발 도구의 가격과 어떻게 이어질까?"를 묻는 것이 실용적인 공부입니다.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://finance.yahoo.com/technology/article/anthropic-ipo-claude-maker-to-begin-trading-on-thursday-nov-19-173550865.html">Yahoo Finance, Anthropic to begin trading Thursday, Nov. 19 (2026.11.12)</a> <span class="src">— 상장 일정, 9개월 매출 확인</span></li>
+      <li><a href="https://decrypt.co/382939/anthropic-sets-ipo-price-range-at-70-to-78-valuing-company-at-up-to-1-4-trillion">Decrypt, Anthropic Sets IPO Price Range at $70 to $78 (2026.11.10)</a> <span class="src">— 공모가 범위, 전략 투자자 확인</span></li>
+      <li><a href="https://abc7news.com/story/anthropic-seeks-70-78-share-new-ipo-filing-values-13-trillion/20029820/">ABC7, Anthropic seeks $70 to $78 a share in new IPO filing</a> <span class="src">— 신고서 내용 교차 확인</span></li>
+    </ol>
+
+  </article>
+
+  </article>
+
+
+    <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list">
+      <a href="2026-11-13-openai-q3-revenue.html"><span class="r">오늘의 뉴스 2위</span><span class="t">OpenAI, 3분기 매출 약 100억 달러… 매출은 50% 늘었지만 영업손실은 여전히 커</span></a>
+      <a href="2026-11-13-anthropic-regional-access-rules.html"><span class="r">오늘의 뉴스 3위</span><span class="t">Anthropic, 지원 국가 밖 사용 제한 시행… 신분 확인 절차 도입</span></a>
+    </div>
+  </section>
+
+
+
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

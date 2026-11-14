@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenAI, 저렴한 에이전트 모델 GPT-6.1 Terra 출시: 입력 100만 토큰당 1달러 | AI 비밀 레시피</title>
+  <meta name="description" content="OpenAI가 2026년 10월 26일 GPT-6.1 Terra를 내놓았습니다. 컴퓨터 사용 중심의 저가 모델로, 가격과 벤치마크, 개발자가 직접 확인할 점을 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+    <h1>OpenAI, 저렴한 에이전트 모델 GPT-6.1 Terra 출시: 입력 100만 토큰당 1달러</h1>
+    <div class="byline"><span><time datetime="2026-10-27T08:23:21+09:00">2026.10.27 08:23 KST</time></span><span>읽는 시간 약 10분</span><span>#OpenAI #에이전트</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>OpenAI가 2026년 10월 26일 GPT-6.1 Terra를 공개했습니다. API 이름은 gpt-6.1-terra이며, 컴퓨터 사용(화면을 보고 클릭·입력하는 작업)과 업무 자동화에 맞춘 모델입니다.</li><li>가격은 입력 100만 토큰당 1달러, 출력 100만 토큰당 5달러로, OpenAI가 밝힌 바에 따르면 GPT-6.1 Sol보다 50% 낮습니다. 자사 벤치마크에서 에이전트 과제 점수는 GPT-5.6 Terra보다 15%p 높았습니다.</li><li>개발자에게는 에이전트 기능을 적은 비용으로 실험할 수 있는 선택지가 늘었다는 뜻입니다. 다만 수치는 OpenAI 발표 기준이므로 우리 과제로 직접 비교해야 합니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">GPT-6.1 Terra 출시: 저가 컴퓨터 사용·업무 자동화 모델</span><span>발표 2026.10.26 · 보도 2026.10.26 (BleepingComputer)</span><span><a href="https://openai.com/index/introducing-gpt-6-1-terra/">OpenAI 공식 발표</a> · <a href="https://www.bleepingcomputer.com/news/artificial-intelligence/openai-launches-gpt-61-terra-with-3x-faster-ai-agents-50-percent-lower-pricing/">BleepingComputer</a></span></div>
+
+    <p class="lead">에이전트를 돌리는 비용은 개발자가 자동화를 얼마나 넓게 시도할지 정하는 가장 큰 제약입니다. OpenAI가 상위 모델보다 가격을 절반으로 낮춘 GPT-6.1 Terra를 내놓으면서, 작업을 대량으로 돌려 볼 수 있는 선택지가 생겼습니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">실무자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>상위 모델의 성능을 절반 가까운 비용으로 쓸 수 있는 중간 등급 모델이 나왔습니다.</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>토큰(token)</strong>은 글을 잘게 나눈 단위로, API 요금은 보통 입력과 출력 토큰 수로 계산합니다. <strong>컴퓨터 사용(computer use)</strong>은 모델이 화면을 보고 마우스와 키보드처럼 조작하는 방식으로, 웹 양식 작성이나 데스크톱 작업 자동화에 쓰입니다.
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>발표 기업</td><td><strong>OpenAI</strong></td><td>GPT-6.1 Terra를 출시하고 API 이름 gpt-6.1-terra를 공개</td></tr>
+        <tr><td>이용 가능 대상</td><td><strong>ChatGPT 유료 사용자</strong></td><td>Plus, Pro, Enterprise, Edu 플랜의 ChatGPT Work와 Codex에서 사용</td></tr>
+        <tr><td>개발자</td><td><strong>API 사용자</strong></td><td>gpt-6.1-terra 이름으로 호출 가능</td></tr>
+        <tr><td>비교 모델</td><td><strong>GPT-6.1 Sol, GPT-6 Astra</strong></td><td>복잡한 코딩 과제에는 여전히 이 모델들을 권장</td></tr>
+      </tbody>
+    </table></div>
+    
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+    <h3>오늘 발표된 내용</h3>
+    <p>OpenAI는 2026년 10월 26일 GPT-6.1 Terra를 내놓았습니다. 표준 API 가격은 입력 100만 토큰당 1달러, 캐시된 입력 100만 토큰당 0.05달러, 출력 100만 토큰당 5달러입니다. 회사는 GPT-5.6 Terra와 GPT-6.1 Sol보다 가격이 50% 낮다고 밝혔습니다.</p>
+    <p>OpenAI가 공개한 벤치마크는 다음과 같습니다. 에이전트 과제 시험인 Agents' Last Exam에서 중간 추론 강도 기준으로 GPT-5.6 Terra보다 15%p 높으면서 비용은 약 3분의 1입니다. 코딩 시험 Terminal-Bench 4.0 최고 추론 강도에서는 50.3%로, GPT-5.6 Terra의 21.5%보다 두 배 넘게 높았습니다. 낮은 추론 강도에서 내부 오류 유도 프롬프트의 오류율은 53.6%에서 16.7%로 떨어졌다고 합니다. 다만 OpenAI는 가장 복잡한 코딩에는 여전히 Sol이나 Astra를 권장했습니다.</p>
+    <p>안전 측면에서는 OpenAI가 이 모델이 자사 준비 프레임워크의 사이버보안 '크리티컬' 기준에 해당한다고 밝힌 점이 눈에 띕니다. 프롬프트 인젝션 저항성은 GPT-5.6 Terra보다 좋아졌다고 설명했습니다. 이 수치들은 모두 OpenAI가 자체 측정한 결과입니다.</p>
+
+    <h3>흐름</h3>
+    <ul class="timeline"><li><time>2026.10.26</time>OpenAI가 GPT-6.1 Terra 공식 발표와 API 공개</li><li><time>2026.10.26</time>BleepingComputer 등이 가격과 속도 주장을 보도</li><li><time>이후</time>독립 기관의 벤치마크 재측정과 실제 사용자 후기가 쌓이는 시점</li></ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>같은 자동화 작업을 훨씬 낮은 비용으로 여러 번 돌려 볼 수 있게 됐지만, 성능 수치는 우리 과제로 직접 확인해야 합니다.</strong>
+    </div>
+    
+    <h2 id="s4"><span class="no">04</span>실무자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. 같은 과제를 두 모델에 돌려 보기</h4><p>Terra와 Sol에 동일한 입력을 넣고 정답률과 토큰 비용을 기록해 보세요. 숫자로 비교하는 것이 가장 확실합니다.</p></div>
+      <div class="action"><h4>2. 추론 강도 설정 바꿔 보기</h4><p>낮은 강도에서 충분한 작업은 저렴하게, 어려운 작업만 높은 강도로 돌리는 식의 라우팅을 설계해 보세요.</p></div>
+      <div class="action"><h4>3. 컴퓨터 사용 기능은 격리된 환경에서 먼저 테스트하기</h4><p>실제 계정이나 결제 화면과 분리된 샌드박스에서 먼저 돌리고, 권한 범위를 좁게 시작하세요.</p></div>
+      <div class="action"><h4>4. 프롬프트 인젝션 테스트 넣기</h4><p>웹 페이지나 문서에 숨은 지시문이 들어왔을 때 에이전트가 따르지 않는지 자동 테스트를 추가하세요.</p></div>
+    </div>
+    
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos"><ul>
+      <li><strong>소규모 팀도 에이전트를 넓게 쓸 수 있다.</strong> 비용이 절반 수준이면 문서 정리, 양식 작성, 데이터 입력 같은 반복 업무를 더 많이 자동화해 볼 수 있습니다.</li>
+      <li><strong>환각 감소가 실제라면 신뢰도가 올라간다.</strong> 내부 오류율이 떨어졌다는 수치가 외부 검증에서도 확인되면, 고객 응대나 사실 확인이 필요한 업무에 쓰기 쉬워집니다.</li>
+    </ul></div>
+    
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg"><ul>
+      <li><strong>수치 대부분이 자체 발표다.</strong> 벤치마크 조건과 측정 방식이 충분히 공개되지 않으면, 실제 업무에서 같은 효과가 나지 않을 수 있습니다.</li>
+      <li><strong>컴퓨터 사용 권한이 넓어진다.</strong> 화면을 직접 조작하는 에이전트가 저렴해지면, 잘못된 클릭이나 악성 웹 페이지에 의한 피해도 같이 늘어날 수 있습니다.</li>
+      <li><strong>고위험 등급 모델이 쉽게 풀린다.</strong> 사이버보안 '크리티컬' 기준에 해당하는 모델이 낮은 가격으로 제공되면서 안전 논쟁이 커질 수 있습니다.</li>
+    </ul></div>
+    
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion"><p>GPT-6.1 Terra는 에이전트를 실험할 때 드는 비용을 크게 낮춘 모델입니다. 성능과 안전에 대한 OpenAI의 설명은 구체적이지만, 대부분이 회사 자체 측정이라는 점을 기억해야 합니다.</p><p>입문 개발자라면 먼저 작은 자동화 작업 하나를 고르고, Terra와 상위 모델을 같은 조건에서 비교해 보는 것이 가장 좋습니다. 비용과 정확도를 함께 기록하면 어떤 모델을 어디에 쓸지 근거가 생깁니다.</p></div>
+    
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs"><li><a href="https://openai.com/index/introducing-gpt-6-1-terra/">Introducing GPT-6.1 Terra</a> <span class="src">— OpenAI</span></li><li><a href="https://www.bleepingcomputer.com/news/artificial-intelligence/openai-launches-gpt-61-terra-with-3x-faster-ai-agents-50-percent-lower-pricing/">OpenAI launches GPT-6.1 Terra with 3x faster AI agents, 50% lower pricing</a> <span class="src">— BleepingComputer, 2026.10.26</span></li></ol>
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list"><a href="2026-10-27-anthropic-ipo-s1-filing.html"><span class="r">오늘의 뉴스 1위</span><span class="t">Anthropic, 상장 서류 제출: 상반기 매출 163억 달러와 창업자 의결권 구조</span></a><a href="2026-10-27-microsoft-60000-voluntary-exit-offer.html"><span class="r">오늘의 뉴스 3위</span><span class="t">Microsoft, 약 6만 명에게 자발적 퇴직 제안: AI 시대 조직 재편의 신호</span></a></div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

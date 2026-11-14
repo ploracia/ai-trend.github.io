@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anthropic, 상장 서류 제출: 상반기 매출 163억 달러와 창업자 의결권 구조 | AI 비밀 레시피</title>
+  <meta name="description" content="Anthropic이 2026년 10월 26일 상장을 위한 S-1 서류를 제출했습니다. 상반기 매출과 손실, 고객 규모, 창업자 의결권 구조를 정리하고 개발자가 볼 점을 짚습니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+    <h1>Anthropic, 상장 서류 제출: 상반기 매출 163억 달러와 창업자 의결권 구조</h1>
+    <div class="byline"><span><time datetime="2026-10-27T08:23:21+09:00">2026.10.27 08:23 KST</time></span><span>읽는 시간 약 14분</span><span>#Anthropic #IPO #투자</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>Anthropic이 2026년 10월 26일(월) 기업공개(IPO)를 위한 S-1 서류를 제출했고, 상장 티커는 'ANT'로 알려졌습니다. 모집 규모와 공모가는 아직 밝혀지지 않았습니다.</li><li>2026년 상반기 매출은 163억 달러로 지난해 같은 기간 12억 달러에서 크게 늘었습니다. 다만 영업손실 6억 9,300만 달러와, 전환사채 관련 비현금 조정이 크게 반영된 순손실 807억 달러도 함께 기록됐습니다.</li><li>개발자에게는 의존하는 모델 공급사의 재무 구조가 공개 문서로 드러났다는 뜻입니다. 가격 정책과 서비스 연속성을 볼 때 참고할 자료가 생겼습니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">Anthropic 상장 서류(S-1) 제출과 상반기 재무·지배 구조 공개</span><span>발표 2026.10.26 (미국 기준) · 보도 2026.10.26</span><span><a href="https://techcrunch.com/2026/10/26/anthropic-officially-files-for-its-public-debut/">TechCrunch</a> · <a href="https://aiweekly.co/ai-news-today">AI Weekly 요약</a></span></div>
+
+    <p class="lead">AI 모델을 빌려 쓰는 개발자에게 모델 공급사의 재무와 지배 구조는 먼 이야기처럼 보이지만, 서비스가 얼마나 오래 안정적으로 이어질지를 가늠하는 가장 직접적인 자료입니다. Anthropic이 상장 서류를 내면서 그 속이 처음으로 공개 문서에 담겼습니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">실무자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>AI 모델 공급사가 처음으로 공개 시장에서 재무와 지배 구조를 드러내기 시작했습니다.</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>S-1(증권 신고서)</strong>은 미국에서 주식을 일반에 팔기 전에 증권거래위원회(SEC)에 내는 서류입니다. 사업 내용, 재무제표, 위험 요인, 지배 구조가 들어가서 투자자가 판단하는 기본 자료가 됩니다.
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>제출 기업</td><td><strong>Anthropic</strong></td><td>상장 서류를 제출하고 티커 'ANT'로 상장할 계획을 밝힘</td></tr>
+        <tr><td>창업자</td><td><strong>7명의 공동창업자</strong></td><td>다리오 아모데이 등 7명이 '창업자 LLC'를 만들어 의결권 50.1%를 보유</td></tr>
+        <tr><td>이사 선임</td><td><strong>장기이익신탁(LTBT)</strong></td><td>2023년에 만든 기구로, 이사회 대부분을 선임할 권한을 가짐</td></tr>
+        <tr><td>기업 고객</td><td><strong>연간 10만 달러 이상 고객</strong></td><td>9월 말 기준 1만 1,900곳 이상, 100만 달러 이상은 1,900곳 이상</td></tr>
+        <tr><td>인프라 파트너</td><td><strong>Broadcom 등</strong></td><td>같은 날 블룸버그는 AI 가속기 구매 자금 630억 달러 조달 구조를 보도</td></tr>
+      </tbody>
+    </table></div>
+    
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+    <h3>오늘 발표된 내용</h3>
+    <p>TechCrunch 보도에 따르면 Anthropic은 2026년 10월 26일(월) 상장 서류를 제출했습니다. 기사 기준으로 회사는 아직 모집 규모와 예상 공모가를 밝히지 않았고, 상장 거래소도 기사에서 확인되지 않았습니다. 그동안 초안이 여러 차례 유출된 뒤 나온 공식 제출입니다.</p>
+    <p>재무 수치는 2026년 상반기 기준입니다. 매출은 163억 달러로 2025년 같은 기간 12억 달러에서 크게 늘었습니다. 영업손실은 6억 9,300만 달러로, 2025년 상반기 21억 달러보다 줄었습니다. 순손실은 807억 달러로 훨씬 큰데, 회사는 이것이 주로 전환사채와 관련된 비현금 회계 조정 때문이라고 설명했습니다. 회사는 서류에서 앞으로 수익성을 달성하거나 유지하지 못할 수도 있다고 적었습니다.</p>
+    <p>지배 구조도 눈에 띕니다. 공동창업자 7명이 '창업자 LLC'를 만들어 의결권 50.1%를 쥐게 되고, 장기이익신탁이 이사회 대부분을 뽑습니다. 의결권은 경제적 지분과 비례하지 않습니다. 회사는 이 구조가 AI 안전 임무를 지키기 위한 것이라고 설명했습니다. 같은 날 블룸버그는 Broadcom이 주도한 특수목적법인이 AI 가속기를 사서 Anthropic에 임대하고, 630억 달러 규모 대출을 Bank of America, Citigroup, Morgan Stanley, Blackstone 등이 제공한다는 구조를 보도했습니다. 납품은 2027년부터 시작됩니다.</p>
+
+    <h3>흐름</h3>
+    <ul class="timeline"><li><time>2026.10.26 (월) 오전 7:35 PDT (KST 10.26 밤 11시 35분)</time>TechCrunch가 상장 서류 제출을 보도</li><li><time>2026.10.26</time>블룸버그가 630억 달러 규모 칩 조달 구조를 보도</li><li><time>상장 이후</time>분기 실적 공개가 시작되면 매출 성장과 손실 축소 속도를 직접 확인할 수 있음</li></ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>Anthropic의 상장은 모델의 성능 뉴스가 아니라, 그 모델을 계속 공급할 회사의 재무와 의사결정 구조를 공개 문서로 보여 준 사건입니다.</strong>
+    </div>
+    
+    <h2 id="s4"><span class="no">04</span>실무자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. 공급사의 공개 자료를 주기적으로 읽기</h4><p>상장 이후 나오는 분기 보고서에서 매출 성장, 손실 추세, 가격 관련 설명을 한 번씩 확인하세요.</p></div>
+      <div class="action"><h4>2. 가격과 약관 변경에 대비하기</h4><p>상장 후 실적 압박이 커지면 무료 혜택이나 할인 정책이 바뀔 수 있으니 예산 알림을 미리 설정하세요.</p></div>
+      <div class="action"><h4>3. 모델 호출부를 바꿔 끼울 수 있게 두기</h4><p>특정 모델의 가격이나 정책이 바뀌어도 코드 대부분을 고치지 않도록 공통 인터페이스를 유지하세요.</p></div>
+      <div class="action"><h4>4. 재무 숫자는 신호로만 읽기</h4><p>매출과 순손실 수치는 서비스 선택의 근거라기보다, 장기 안정성을 가늠하는 참고 자료로 활용하세요.</p></div>
+    </div>
+    
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos"><ul>
+      <li><strong>공개 기업으로서 검증 가능한 정보가 늘어난다.</strong> 상장사는 정기적으로 실적과 위험 요인을 공개해야 하므로, 가격과 안전 정책을 외부에서 점검할 자료가 늘어납니다.</li>
+      <li><strong>기업 고객 수요가 확인된다.</strong> 연간 100만 달러 이상을 쓰는 고객이 1,900곳을 넘었다는 것은 엔터프라이즈 기능과 안정성에 대한 투자가 계속될 가능성을 보여 줍니다.</li>
+    </ul></div>
+    
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg"><ul>
+      <li><strong>실적 압박이 가격에 반영될 수 있다.</strong> 상장 후 분기마다 성장률을 보여 줘야 하므로, 무료 이용 폭이나 저가 요금제가 줄어들 가능성이 있습니다.</li>
+      <li><strong>의결권이 한곳에 모인다.</strong> 창업자 7명이 50.1%를 쥐는 구조는 장기 방향에는 안정감을 주지만, 주주와 외부 감시가 경영을 바꾸기 어렵다는 비판도 나올 수 있습니다.</li>
+      <li><strong>대규모 자금 조달에 의존한다.</strong> 공급 장비를 빌려 쓰는 구조라서, 자금 조건이 나빠지면 용량 확보와 서비스 안정성이 같이 흔들릴 수 있습니다.</li>
+    </ul></div>
+    
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion"><p>이번 상장 서류는 Anthropic이 어떤 돈으로 굴러가고 누가 최종 결정을 내리는지를 공개 문서로 보여 준 첫 사례입니다. 매출이 빠르게 늘고 있지만 여전히 큰 손실을 내고 있다는 점이 함께 드러났습니다.</p><p>입문 개발자라면 특정 공급사에 의존하는 구조를 피하고, 가격 변화에 따라 모델을 바꿔 쓸 수 있도록 설계하는 것이 가장 실용적입니다. 투자와 관련된 판단은 개인 상황에 맞춰 금융 전문가와 상의하시기 바랍니다.</p></div>
+    
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs"><li><a href="https://techcrunch.com/2026/10/26/anthropic-officially-files-for-its-public-debut/">Anthropic officially files for its public debut</a> <span class="src">— TechCrunch, 2026.10.26</span></li><li><a href="https://aiweekly.co/ai-news-today">AI News Today (블룸버그 칩 조달 보도 요약 확인용)</a> <span class="src">— AI Weekly</span></li></ol>
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list"><a href="2026-10-27-openai-gpt-6-1-terra-cheaper-agent-model.html"><span class="r">오늘의 뉴스 2위</span><span class="t">OpenAI, 저렴한 에이전트 모델 GPT-6.1 Terra 출시: 입력 100만 토큰당 1달러</span></a><a href="2026-10-27-microsoft-60000-voluntary-exit-offer.html"><span class="r">오늘의 뉴스 3위</span><span class="t">Microsoft, 약 6만 명에게 자발적 퇴직 제안: AI 시대 조직 재편의 신호</span></a></div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

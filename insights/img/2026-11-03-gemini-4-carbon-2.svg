@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="t2 d2">
+  <title id="t2">Gemini 4 Carbon 단계적 공개 흐름</title>
+  <desc id="d2">모델 완성, 보안 평가, 방어자 제한 공개, 피드백과 안전장치 보완, 일반 공개 순서로 이어지는 흐름도</desc>
+  <rect x="0" y="0" width="640" height="300" fill="#f4f6fb"/>
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#62626b"/>
+    </marker>
+  </defs>
+  <rect x="14" y="110" width="104" height="80" rx="10" fill="#e8eefe" stroke="#2f5bea" stroke-width="1.5"/>
+  <text x="66" y="142" text-anchor="middle" font-size="13" font-weight="700" fill="#1b1b1f" font-family="sans-serif">모델 완성</text>
+  <text x="66" y="162" text-anchor="middle" font-size="11" fill="#4a4a55" font-family="sans-serif">최상위 성능</text>
+  <rect x="146" y="110" width="104" height="80" rx="10" fill="#e8eefe" stroke="#2f5bea" stroke-width="1.5"/>
+  <text x="198" y="142" text-anchor="middle" font-size="13" font-weight="700" fill="#1b1b1f" font-family="sans-serif">보안 평가</text>
+  <text x="198" y="162" text-anchor="middle" font-size="11" fill="#4a4a55" font-family="sans-serif">사전 테스트</text>
+  <rect x="278" y="110" width="104" height="80" rx="10" fill="#2f5bea" stroke="#2f5bea" stroke-width="1.5"/>
+  <text x="330" y="142" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff" font-family="sans-serif">방어자 공개</text>
+  <text x="330" y="162" text-anchor="middle" font-size="11" fill="#ffffff" font-family="sans-serif">인증된 조직만</text>
+  <rect x="410" y="110" width="104" height="80" rx="10" fill="#e8eefe" stroke="#2f5bea" stroke-width="1.5"/>
+  <text x="462" y="142" text-anchor="middle" font-size="13" font-weight="700" fill="#1b1b1f" font-family="sans-serif">피드백 보완</text>
+  <text x="462" y="162" text-anchor="middle" font-size="11" fill="#4a4a55" font-family="sans-serif">안전장치 조정</text>
+  <rect x="530" y="110" width="0" height="0" fill="none"/>
+  <line x1="118" y1="150" x2="142" y2="150" stroke="#62626b" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="250" y1="150" x2="274" y2="150" stroke="#62626b" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="382" y1="150" x2="406" y2="150" stroke="#62626b" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="200" y="222" width="240" height="50" rx="10" fill="none" stroke="#62626b" stroke-dasharray="5 4" stroke-width="1.5"/>
+  <text x="320" y="244" text-anchor="middle" font-size="13" fill="#1b1b1f" font-family="sans-serif">일반 개발자 공개 (날짜 미정)</text>
+  <text x="320" y="262" text-anchor="middle" font-size="11" fill="#4a4a55" font-family="sans-serif">구글은 '가능한 빨리'라고만 밝힘</text>
+  <path d="M462 190 L462 212 L380 232" fill="none" stroke="#62626b" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+  <text x="30" y="40" font-size="13" font-weight="700" fill="#1b1b1f" font-family="sans-serif">Gemini 4 Carbon 공개 흐름 (발표 기준)</text>
+</svg>

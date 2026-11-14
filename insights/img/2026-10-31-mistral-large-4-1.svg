@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" role="img" aria-label="Mistral Large 4를 쓰는 두 가지 길: 가중치 내려받기와 API 호출">
+  <rect x="0" y="0" width="760" height="340" fill="#e8eefe"/>
+  <text x="380" y="40" text-anchor="middle" font-size="20" font-weight="700" fill="#1b1b1f">Mistral Large 4를 쓰는 두 가지 길</text>
+
+  <rect x="40" y="80" width="300" height="220" rx="16" fill="#ffffff" stroke="#2f5bea" stroke-width="2"/>
+  <text x="190" y="115" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5bea">길 1. 가중치 내려받기</text>
+  <text x="190" y="150" text-anchor="middle" font-size="15" fill="#1b1b1f">Hugging Face에서 파일 받기</text>
+  <text x="190" y="176" text-anchor="middle" font-size="15" fill="#1b1b1f">→ 내 서버·클라우드 GPU에 설치</text>
+  <text x="190" y="202" text-anchor="middle" font-size="15" fill="#1b1b1f">→ 데이터가 밖으로 나가지 않음</text>
+  <text x="190" y="246" text-anchor="middle" font-size="13" fill="#62626b">필요: 대형 GPU 여러 장, 라이선스 확인</text>
+
+  <rect x="420" y="80" width="300" height="220" rx="16" fill="#ffffff" stroke="#1f8a5b" stroke-width="2"/>
+  <text x="570" y="115" text-anchor="middle" font-size="18" font-weight="700" fill="#1f8a5b">길 2. API로 호출</text>
+  <text x="570" y="150" text-anchor="middle" font-size="15" fill="#1b1b1f">API 키로 요청 보내기</text>
+  <text x="570" y="176" text-anchor="middle" font-size="15" fill="#1b1b1f">→ 서버가 답을 돌려줌</text>
+  <text x="570" y="202" text-anchor="middle" font-size="15" fill="#1b1b1f">→ 토큰 수만큼 과금</text>
+  <text x="570" y="246" text-anchor="middle" font-size="13" fill="#62626b">필요: 키 하나와 HTTP 호출 코드</text>
+
+  <text x="380" y="322" text-anchor="middle" font-size="13" fill="#62626b">같은 모델이라도 '받을 수 있다'와 '내가 돌린다'는 다른 문제입니다</text>
+</svg>

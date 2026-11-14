@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Google, 제미나이 4 Carbon 일반 공개… 할인가 적용 중 | AI 비밀 레시피</title>
+  <meta name="description" content="여러 AI 매체에 따르면 Google이 Gemini 4 Carbon을 API와 Google Cloud 등에서 정식 제공하고 가격을 공개했습니다. 할인가 기간과 독립 벤치마크 결과를 함께 정리했습니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>Google, 제미나이 4 Carbon 일반 공개… 할인가 적용 중</h1>
+    <div class="byline"><span><time datetime="2026-11-12T08:22:45+09:00">2026.11.12 08:22 KST</time></span><span>읽는 시간 약 6분</span><span>#Google #모델평가 #에이전트</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>여러 매체에 따르면 Google이 Gemini 4 Carbon을 API, Google Cloud, AI Ultra 구독자에게 정식 공개했습니다. 발표 시점은 미국 서부 시간 11월 10일 오전 8시로 전해졌습니다.</li><li>가격은 입력 100만 토큰당 2달러, 출력 100만 토큰당 10달러의 할인가로, 11월 30일까지 적용됩니다. 이후에는 입력 4달러, 출력 20달러로 오른다고 보도됐습니다.</li><li>개발자에게는 성능 점수만 볼 것이 아니라 토큰 단가와 할인 기간을 함께 계산해 모델을 고르라는 신호입니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">Google, Gemini 4 Carbon 일반 공개 (여러 AI 뉴스 매체 교차 보도)</span><span>보도 2026.11.10 (미국 시간)</span><span><a href="https://aiweekly.co/ai-news-today">AIWeekly 요약</a></span></div>
+    <p class="lead">새 모델이 나오면 개발자가 가장 먼저 묻는 것은 무엇이 더 똑똑해졌는가보다, 얼마에 쓸 수 있고 내 작업에 맞는가입니다. 이번 공개에는 그 두 질문에 대한 가격표가 함께 붙었습니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">개발자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+
+    <p><strong>Google이 최신 모델 Gemini 4 Carbon을 누구나 쓸 수 있는 정식 단계로 열었고, 할인가까지 함께 내놓았다는 것이 이번 뉴스의 핵심입니다.</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>API</strong>는 내 프로그램이 모델에 질문을 보내고 답을 받는 통로입니다. <strong>토큰</strong>은 모델이 글을 읽고 쓰는 단위로, 대략 단어의 조각 하나에 해당합니다. <strong>정식 공개(GA)</strong>는 시험 단계가 끝나 누구나 요금을 내고 쓸 수 있는 상태를 뜻합니다.
+    </div>
+    <p>비유하자면 모델은 전기 요금이 다른 발전소와 같습니다. 같은 전력을 쓰더라도 단가와 할인 기간에 따라 실제 비용이 달라지기 때문에, 발전소의 성능표만 보고 고르면 계산이 어긋날 수 있습니다.</p>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>출시 주체</td><td><strong>Google</strong></td><td>Gemini 4 Carbon 개발과 정식 공개</td></tr>
+        <tr><td>기업 고객</td><td><strong>Google Cloud 사용자</strong></td><td>클라우드 계정에서 API로 호출</td></tr>
+        <tr><td>개인 구독자</td><td><strong>AI Ultra 구독자</strong></td><td>구독 요금제 안에서 사용</td></tr>
+        <tr><td>성능 측정</td><td><strong>Artificial Analysis</strong></td><td>독립 지능 지수 측정에서 4위로 보도</td></tr>
+        <tr><td>경쟁 모델</td><td><strong>Anthropic, OpenAI</strong></td><td>Claude Fable 5.2, Opus 5.5, GPT-6 Astra 등이 상위권으로 언급</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+
+    <h3>보도된 내용</h3>
+    <p>여러 매체의 요약을 종합하면, Gemini 4 Carbon은 미국 서부 시간 11월 10일 오전 8시에 정식 공개됐습니다. 제공 경로는 API, Google Cloud, AI Ultra 세 가지입니다. 가격은 입력 100만 토큰당 2달러, 출력 100만 토큰당 10달러로, 11월 30일까지 적용되는 도입 할인가입니다.</p>
+    <p>성능 측면에서는 독립 측정 사이트 Artificial Analysis의 지능 지수에서 4위로 전해졌습니다. 1위권은 Claude Fable 5.2, Opus 5.5, GPT-6 Astra가 차지했다는 보도입니다. 한편 AIWeekly는 코딩 평가 CursorBench 4.0에서 1위라고 전했지만, 이는 Google이 제시한 수치라 독립적으로 확인된 결과는 아닙니다.</p>
+    <p>이번 정리는 여러 매체의 보도를 교차해 작성했으며, Google의 공식 발표문은 직접 열어 확인하지 못했습니다. 가격과 수치는 발표문으로 한 번 더 대조해 보시기 바랍니다.</p>
+    <h3>진행 순서</h3>
+    <ul class="timeline">
+      <li><time>2026년 11월 10일 (미국 서부 시간 오전 8시)</time>Gemini 4 Carbon 정식 공개와 가격 발표</li>
+      <li><time>2026년 11월 30일</time>도입 할인가 적용 종료 예정</li>
+      <li><time>2026년 12월 1일</time>입력 4달러, 출력 20달러로 인상 예정</li>
+    </ul>
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>모델 이름보다 "얼마에, 몇 토큰을 쓰는가"를 먼저 계산하는 습관이 실제 비용을 지킵니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>개발자가 해볼 것</h2>
+
+    <div class="actions">
+      <div class="action"><h4>1. 할인 기간을 달력에 적기</h4><p>11월 30일 전에 테스트해 볼 작업 목록을 만들고, 12월 1일 이후의 예상 비용도 함께 적어 두세요.</p></div>
+      <div class="action"><h4>2. 같은 과제로 모델 비교하기</h4><p>짧은 함수 작성이나 코드 리뷰 과제 하나를 골라 두세 개 모델에 같은 질문을 던지고, 답의 품질과 걸린 시간을 기록해 보세요.</p></div>
+      <div class="action"><h4>3. 한 작업당 비용 계산하기</h4><p>응답에 포함된 사용량 정보를 확인해 입력과 출력 토큰 수를 적고, 단가를 곱해 작업 한 건의 비용을 계산해 보세요.</p></div>
+      <div class="action"><h4>4. 점수의 출처 구분하기</h4><p>회사가 발표한 점수와 독립 기관이 측정한 점수를 나눠서 보는 습관을 들이세요.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+
+    <div class="future pos"><ul>
+      <li><strong>도입 장벽이 낮아진다.</strong> 할인가가 실제로 적용되면 소규모 팀도 고성능 모델을 실험해 볼 수 있습니다.</li>
+      <li><strong>기존 클라우드에서 바로 쓴다.</strong> Google Cloud를 쓰는 기업은 계정과 보안 설정을 그대로 가져가 새 모델을 붙일 수 있습니다.</li>
+      <li><strong>코딩 도구가 나아질 수 있다.</strong> 코딩 평가에서 강한 결과가 실제 작업에서도 확인되면, 개발 도구의 자동 완성과 수정 제안이 더 정확해질 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+
+    <div class="future neg"><ul>
+      <li><strong>가격 인상을 놓치기 쉽다.</strong> 12월 이후 두 배 가격을 모른 채 설계하면 월 비용 예측이 크게 어긋날 수 있습니다.</li>
+      <li><strong>회사 수치는 과장될 수 있다.</strong> 자체 발표 점수는 실제 업무 조건과 다를 수 있어서, 내 과제로 확인하는 과정이 필요합니다.</li>
+      <li><strong>모델을 바꾸는 비용이 생긴다.</strong> 프롬프트와 도구 설정을 모델마다 다시 맞춰야 해서, 잦은 전환은 오히려 시간을 잡아먹을 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+
+    <div class="conclusion"><p>이번 뉴스의 핵심은 Gemini 4 Carbon이라는 이름보다, 정식 공개와 함께 가격과 할인 기간이 명확해졌다는 점입니다. 입문 단계에서는 가장 성능 좋은 모델을 기본값으로 두기보다, 작업마다 필요한 수준과 비용을 함께 비교하는 것이 실력을 키우는 길입니다.</p><p>이번 주에는 자주 쓰는 작업 하나를 골라 두세 모델의 비용과 결과를 표로 정리해 보세요. 뉴스를 읽을 때마다 "내 작업에서 비용이 얼마나 달라지나?"를 묻는 습관이 가장 실용적인 공부입니다.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://www.theneuron.ai/digest/everything-that-happened-in-ai-today-wednesday-november-11-2026/">The Neuron, Everything That Happened in AI Today (2026.11.11)</a> <span class="src">— 보도 요약</span></li>
+      <li><a href="https://samonai.substack.com/p/ai-brief-november-11-2026">Samonai, AI Brief (2026.11.11)</a> <span class="src">— 가격과 할인 기간 확인</span></li>
+      <li><a href="https://kellyabbott1.substack.com/p/ai-frontier-daily-2026-11-11">Kelly Abbott, AI Frontier Daily (2026.11.11)</a> <span class="src">— 벤치마크 순위 확인</span></li>
+      <li><a href="https://aiweekly.co/ai-news-today">AIWeekly, AI News Today</a> <span class="src">— CursorBench 수치 확인 (회사 제시 수치)</span></li>
+    </ol>
+
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list">
+      <a href="2026-11-12-ny-raise-act-frontier-ai.html"><span class="r">오늘의 뉴스 2위</span><span class="t">뉴욕주 AI 안전법 RAISE Act 시행… 대형 AI 개발사에 등록·사고 보고 의무</span></a>
+      <a href="2026-11-12-deepmind-alphaproof-code.html"><span class="r">오늘의 뉴스 3위</span><span class="t">DeepMind의 AlphaProof Code, AI가 쓴 증명으로 Signal 암호 코드 일부 검증</span></a>
+    </div>
+  </section>
+
+
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" role="img" aria-labelledby="t1">
+  <title id="t1">자기회귀 모델과 확산 언어 모델의 글 생성 방식 비교</title>
+  <style>
+    .bg{fill:#ffffff}.tx{fill:#1b1b1f;font:600 17px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .sm{fill:#62626b;font:500 14px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .h{fill:#1b1b1f;font:800 20px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .tok{fill:#e8eefe;stroke:#2f5bea;stroke-width:1.5}.done{fill:#2f5bea}.mask{fill:#eceae4;stroke:#b9b6ad;stroke-width:1.5;stroke-dasharray:4 3}
+    .tw{fill:#ffffff;font:700 15px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}.tk{fill:#1b1b1f;font:700 15px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .ln{stroke:#d6d3cb;stroke-width:1.5}.ar{stroke:#2f5bea;stroke-width:2;fill:none}
+    @media (prefers-color-scheme: dark){
+      .bg{fill:#1a1b1f}.tx,.h,.tk{fill:#ececf0}.sm{fill:#9a9aa5}.tok{fill:#1f2640;stroke:#7c9cff}.done{fill:#7c9cff}
+      .mask{fill:#24252b;stroke:#55565f}.tw{fill:#111214}.ln{stroke:#2c2d33}.ar{stroke:#7c9cff}
+    }
+  </style>
+  <rect class="bg" width="800" height="420"/>
+  <text class="h" x="32" y="44">① 기존 자기회귀(Autoregressive) 모델</text>
+  <text class="sm" x="32" y="68">왼쪽부터 한 토큰씩, 앞 단어가 나와야 다음 단어를 쓴다</text>
+  <g transform="translate(32,88)">
+    <rect class="done" x="0" y="0" width="100" height="40" rx="8"/><text class="tw" x="50" y="26" text-anchor="middle">확산</text>
+    <rect class="done" x="112" y="0" width="100" height="40" rx="8"/><text class="tw" x="162" y="26" text-anchor="middle">모델은</text>
+    <rect class="tok" x="224" y="0" width="100" height="40" rx="8"/><text class="tk" x="274" y="26" text-anchor="middle">빠르게</text>
+    <rect class="mask" x="336" y="0" width="100" height="40" rx="8"/>
+    <rect class="mask" x="448" y="0" width="100" height="40" rx="8"/>
+    <rect class="mask" x="560" y="0" width="100" height="40" rx="8"/>
+    <path class="ar" d="M274 52 v14 h112 v-10"/><text class="sm" x="400" y="70">다음 차례 →</text>
+  </g>
+  <text class="sm" x="32" y="184">비유: 타자기로 한 글자씩 치기 · 길이가 길수록 시간도 그만큼 늘어남</text>
+  <line class="ln" x1="32" y1="208" x2="768" y2="208"/>
+  <text class="h" x="32" y="248">② 확산 언어 모델(dLLM, Mercury 3)</text>
+  <text class="sm" x="32" y="272">빈칸투성이 초안 전체를 한꺼번에 여러 번 다듬는다</text>
+  <g transform="translate(32,292)">
+    <rect class="tok" x="0" y="0" width="100" height="40" rx="8"/><text class="tk" x="50" y="26" text-anchor="middle">확산</text>
+    <rect class="mask" x="112" y="0" width="100" height="40" rx="8"/>
+    <rect class="tok" x="224" y="0" width="100" height="40" rx="8"/><text class="tk" x="274" y="26" text-anchor="middle">빠르게</text>
+    <rect class="mask" x="336" y="0" width="100" height="40" rx="8"/>
+    <rect class="tok" x="448" y="0" width="100" height="40" rx="8"/><text class="tk" x="498" y="26" text-anchor="middle">글을</text>
+    <rect class="mask" x="560" y="0" width="100" height="40" rx="8"/>
+    <path class="ar" d="M0 52 h660"/><text class="sm" x="672" y="58">한 번에</text>
+  </g>
+  <text class="sm" x="32" y="384">비유: 연필 스케치 위에 여러 자리를 동시에 덧칠 · 단계 수만큼만 반복하면 끝</text>
+</svg>

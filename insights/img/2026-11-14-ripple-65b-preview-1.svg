@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="dense 모델과 MoE 모델의 차이 비교">
+  <style>text{font-family:Pretendard,"Malgun Gothic","Apple SD Gothic Neo",sans-serif}</style>
+  <rect x="0" y="0" width="720" height="300" fill="none"/>
+  <!-- Dense -->
+  <text x="150" y="34" font-size="17" font-weight="700" text-anchor="middle" fill="#1b1b1f">Dense 모델</text>
+  <text x="150" y="56" font-size="13" text-anchor="middle" fill="#4a4a52">토큰 하나마다 전체 구역을 모두 사용</text>
+  <rect x="60" y="80" width="180" height="150" rx="12" fill="#2f5bea"/>
+  <text x="150" y="150" font-size="15" font-weight="700" text-anchor="middle" fill="#ffffff">모든 파라미터</text>
+  <text x="150" y="172" font-size="13" text-anchor="middle" fill="#ffffff">65B 전부 동작</text>
+  <!-- MoE -->
+  <text x="570" y="34" font-size="17" font-weight="700" text-anchor="middle" fill="#1b1b1f">MoE 모델 (참고)</text>
+  <text x="570" y="56" font-size="13" text-anchor="middle" fill="#4a4a52">토큰마다 일부 전문가만 사용</text>
+  <rect x="480" y="80" width="60" height="70" rx="8" fill="#c9d6fb"/>
+  <rect x="560" y="80" width="60" height="70" rx="8" fill="#2f5bea"/>
+  <rect x="640" y="80" width="60" height="70" rx="8" fill="#c9d6fb"/>
+  <rect x="480" y="160" width="60" height="70" rx="8" fill="#c9d6fb"/>
+  <rect x="560" y="160" width="60" height="70" rx="8" fill="#c9d6fb"/>
+  <rect x="640" y="160" width="60" height="70" rx="8" fill="#2f5bea"/>
+  <text x="570" y="262" font-size="13" text-anchor="middle" fill="#4a4a52">파란 칸만 계산에 참여</text>
+  <!-- divider -->
+  <line x1="360" y1="30" x2="360" y2="270" stroke="#9a9aa5" stroke-dasharray="4 4"/>
+  <text x="150" y="268" font-size="13" text-anchor="middle" fill="#4a4a52">Ripple-65B Preview는 이쪽</text>
+</svg>

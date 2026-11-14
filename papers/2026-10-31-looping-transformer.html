@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>같은 층을 여러 번 돌리는 AI 모델 | AI 비밀 레시피</title>
+  <meta name="description" content="같은 트랜스포머 가중치를 여러 번 반복(루프)해 성능을 얻는 방법을 비교한 논문을 입문자 눈높이로 정리했습니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .paper-title { font-size: 15px; color: var(--muted); margin: 0 0 14px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 48px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 26px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .opinion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .opinion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#papers"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#papers">← 논문 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>같은 층을 여러 번 돌리면 AI가 더 똑똑해질까</h1>
+    <p class="paper-title">How to Loop Your Transformer: Loop Scaling, Specialization, and Parallel Inference</p>
+    <div class="byline"><span><time datetime="2026-10-31T12:02:14+09:00">2026.10.31 12:02 KST</time></span><span>원문 arXiv:2610.40325</span></div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol>
+        <li>보통 AI 모델은 여러 층을 한 번씩만 통과합니다. 이 논문은 같은 층 묶음을 여러 번 반복하는 '루프' 방식이 성능에 어떤 영향을 주는지 살펴봅니다.</li>
+        <li>전체 블록을 반복하는 방식과 가운데 일부만 반복하는 방식을 비교하고, 반복마다 붙이는 작은 보정 모듈(저랭크 어댑터)을 제안합니다.</li>
+        <li>같은 파라미터 예산에서는 전체 반복이 가장 좋았지만, 반복을 늘린다고 항상 좋아지지는 않았습니다. 반복이 늘면 느려지는 문제를 줄이는 병렬 방식도 함께 다룹니다.</li>
+      </ol>
+    </div>
+
+    <h2 id="s1"><span class="no">01</span>본문 요약</h2>
+    <h3>문제 정의</h3>
+    <p>AI 모델은 보통 크기를 키울수록 성능이 좋아지지만, 파라미터가 늘면 저장 공간과 학습 비용도 함께 늘어납니다. 같은 가중치를 여러 번 재사용해 계산 깊이를 늘리는 루프 방식은 저장 공간을 아낄 수 있다는 장점이 있습니다. 하지만 언제 효과가 있고 언제 없는지에 대한 체계적인 답은 부족했습니다.</p>
+    <h3>방법</h3>
+    <p>연구진은 텍스트를 앞에서부터 한 토큰씩 만들어 내는 디코더 전용 트랜스포머를 처음부터 학습했습니다. 모델 크기는 최대 10억(1B) 파라미터, 학습 데이터는 최대 155B 토큰, 루프 횟수는 최대 32회까지 실험했습니다. 루프 대상은 전체 블록을 돌리는 경우와 가운데 블록만 돌리는 경우로 나눠 비교했습니다. 또한 반복 회차마다 작은 저랭크 어댑터를 붙여, 같은 가중치를 써도 회차별로 조금씩 다르게 동작하도록 만들었습니다. 마지막으로 반복이 많을 때 느려지는 문제를 해결하려는 병렬 루프 트랜스포머 구조도 다룹니다.</p>
+    <h3>결과</h3>
+    <p>고정된 파라미터 예산에서는 전체 블록을 루프하는 방식의 품질이 가장 좋았습니다. 반면 학습 연산량(FLOPs)이 제한된 상황에서는 가운데 블록만 루프하는 편이 더 나았습니다. 루프를 늘리면 성능이 어느 순간 포화되거나, 오히려 떨어지거나, 불안정해지는 경우도 있었습니다. 어댑터를 붙이면 품질이 올라갔고, 루프 횟수가 많을수록 그 효과도 커졌습니다. 루프 모델은 반복이 늘수록 텍스트 생성이 느려지는데, 병렬 방식은 이 문제를 줄였지만 원래 형태는 품질이 떨어졌습니다. 연구진은 현재 토큰의 임베딩을 따로 보존하고 정규화하는 방식으로 이 손실을 상당 부분 되찾았다고 밝혔습니다.</p>
+    <h3>한계</h3>
+    <ul>
+      <li>이 글은 논문의 초록을 기준으로 정리했습니다. 세부 실험 조건과 정확한 수치는 원문 본문과 표에서 직접 확인해야 합니다.</li>
+      <li>실험은 최대 1B 규모의 디코더 모델에 한정되어 있습니다. 훨씬 큰 모델이나 다른 구조에서도 같은 결론이 나올지는 알 수 없습니다.</li>
+      <li>루프 방식의 효과는 파라미터 예산과 학습 연산량 조건에 따라 달라졌습니다. 어떤 조건에서 쓸지 정해진 답은 없습니다.</li>
+    </ul>
+
+    <h2 id="s2"><span class="no">02</span>최종 의견</h2>
+    <div class="opinion">
+      <p>입문 개발자에게 이 논문의 핵심은 "모델을 키우는 방법이 파라미터를 늘리는 것 말고도 있다"는 점입니다. 같은 가중치를 여러 번 쓰면 저장 공간은 아낄 수 있지만, 생성 속도가 느려진다는 대가가 따릅니다. 따라서 메모리가 부족한 환경이라면 저장 공간 절감과 응답 속도를 함께 따져 봐야 합니다. 또 반복 횟수를 늘리는 것이 항상 좋은 것은 아니라는 결과는 "많이 돌릴수록 좋아진다"는 직관을 경계하게 합니다.</p>
+      <p>과장 여부를 보면, 결과가 조건부로 제시된 만큼 실서비스 모델에 바로 적용하기보다는 작은 규모에서 직접 재현해 보는 것이 안전합니다. 다만 저랭크 어댑터처럼 적은 비용으로 반복 회차 간 차이를 보완하는 아이디어는 다른 상황에도 응용해 볼 만합니다.</p>
+    </div>
+
+    <h2 id="s3"><span class="no">03</span>참고 사이트</h2>
+    <ol class="refs">
+      <li><a href="https://arxiv.org/abs/2610.40325">How to Loop Your Transformer: Loop Scaling, Specialization, and Parallel Inference</a> <span class="src">arXiv · 2026.10.29</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#papers">← 전체 논문 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

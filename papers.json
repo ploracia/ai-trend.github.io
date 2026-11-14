@@ -1,0 +1,314 @@
+[
+  {
+    "date": "2026-11-13",
+    "publishedAt": "2026-11-13T12:08:47+09:00",
+    "title": "AI 에이전트는 언제 끼어들어야 할까: 인과 관점으로 개입 효과 재기",
+    "paperTitle": "Knowing When to Intervene: Causal Evaluation of AI Agents",
+    "summary": "에이전트 실행 중 검증·개입의 효과를 무작위 실험 데이터로 인과적으로 재는 방법을 제안한 논문(초록 기준 요약).",
+    "tags": [
+      "AI 에이전트",
+      "평가",
+      "AI 안전"
+    ],
+    "url": "papers/2026-11-13-knowing-when-to-intervene-agents.html",
+    "arxivId": "2611.09792",
+    "arxivUrl": "https://arxiv.org/abs/2611.09792"
+  },
+  {
+    "date": "2026-11-12",
+    "publishedAt": "2026-11-12T16:34:44+09:00",
+    "title": "LLM에게 라벨을 붙이게 하면 정의를 진짜 따를까?",
+    "paperTitle": "Definitions, Label Names, or Demonstrations? Auditing What Governs LLM Annotation",
+    "summary": "LLM이 붙인 라벨의 정확도가 높아도 연구자의 정의를 따르는지 감사하는 방법과 교훈",
+    "tags": [
+      "LLM",
+      "평가",
+      "AI 연구"
+    ],
+    "url": "papers/2026-11-12-llm-annotation-definitions.html",
+    "arxivId": "2611.09457",
+    "arxivUrl": "https://arxiv.org/abs/2611.09457"
+  },
+  {
+    "date": "2026-11-11",
+    "publishedAt": "2026-11-11T12:51:12+09:00",
+    "title": "같은 계산 예산이면 팀을 하나 크게 두기보다 작은 팀 여러 개를 돌려라",
+    "paperTitle": "Test-Time Compute Scales Better with Parallel Agent Teams",
+    "summary": "에이전트 계산을 큰 팀 하나보다 작은 팀 여러 개의 병렬 실행으로 쓰는 편이 같은 예산에서 더 나은 결과를 낸다는 초록 기반 요약.",
+    "tags": [
+      "AI 에이전트",
+      "추론",
+      "평가"
+    ],
+    "url": "papers/2026-11-11-parallel-agent-teams.html",
+    "arxivId": "2611.09798",
+    "arxivUrl": "https://arxiv.org/abs/2611.09798"
+  },
+  {
+    "date": "2026-11-09",
+    "publishedAt": "2026-11-09T12:08:23+09:00",
+    "title": "AI 에이전트는 돈을 어디에 버리고 있을까?",
+    "paperTitle": "How Do AI Agents Waste Your Money?",
+    "summary": "에이전트가 쓰는 추론 토큰 중 쓸데없는 부분을 측정하는 방법을 제안하고, 약 41~46%를 줄여도 성능이 대부분 유지됐다고 보고한 논문",
+    "tags": [
+      "AI 에이전트",
+      "LLM",
+      "추론"
+    ],
+    "url": "papers/2026-11-09-agent-token-waste.html",
+    "arxivId": "2611.07238",
+    "arxivUrl": "https://arxiv.org/abs/2611.07238"
+  },
+  {
+    "date": "2026-11-07",
+    "publishedAt": "2026-11-07T14:19:38+09:00",
+    "title": "벤치마크도 관리가 필요하다: 코딩 에이전트 평가 기준 점검",
+    "paperTitle": "Benchmarks as Software: Terminal-Bench and the Case for Continuous Benchmarks",
+    "summary": "코딩 에이전트 벤치마크의 결함을 지속적으로 점검하는 워크플로와 Terminal-Bench 수정 사례를 정리한 논문",
+    "tags": [
+      "평가",
+      "AI 에이전트",
+      "LLM"
+    ],
+    "url": "papers/2026-11-07-terminal-bench-continuous-benchmarks.html",
+    "arxivId": "2611.08417",
+    "arxivUrl": "https://arxiv.org/abs/2611.08417"
+  },
+  {
+    "date": "2026-11-06",
+    "publishedAt": "2026-11-06T16:17:16+09:00",
+    "title": "AI 내부를 들여다보는 기술: 기계적 해석 가능성",
+    "paperTitle": "Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety",
+    "summary": "신경망 내부를 분석하는 기계적 해석 가능성 연구가 AI 안전에 얼마나 도움이 되는지 정리한 서베이",
+    "tags": [
+      "AI 안전",
+      "LLM",
+      "AI 연구"
+    ],
+    "url": "papers/2026-11-06-mech-interp-ai-safety.html",
+    "arxivId": "2611.08438",
+    "arxivUrl": "https://arxiv.org/abs/2611.08438"
+  },
+  {
+    "date": "2026-11-05",
+    "publishedAt": "2026-11-05T12:01:56+09:00",
+    "title": "토크나이저 지표의 세 가지 오해",
+    "paperTitle": "Tokenizer Myths and Where To Find Them",
+    "summary": "토크나이저에 상관없다고 여겨지는 언어모델 지표들이 실제로는 토크나이저 차이에 흔들린다는 것을 보인 논문.",
+    "tags": [
+      "LLM",
+      "평가",
+      "AI 연구"
+    ],
+    "url": "papers/2026-11-05-tokenizer-myths.html",
+    "arxivId": "2611.04215",
+    "arxivUrl": "https://arxiv.org/abs/2611.04215"
+  },
+  {
+    "date": "2026-11-03",
+    "publishedAt": "2026-11-03T12:09:19+09:00",
+    "title": "AI 에이전트는 바뀐 정보를 언제 확인할까? 묻지 않으면 놓치는 문제",
+    "paperTitle": "BlindToChange: AI Agents Can Find Changes When Asked But Do They Look When Needed?",
+    "summary": "AI 에이전트가 바뀐 사실을 묻지 않아도 스스로 확인하는지, 벤치마크로 측정한 논문.",
+    "tags": [
+      "AI 에이전트",
+      "평가",
+      "LLM"
+    ],
+    "url": "papers/2026-11-03-blind-to-change-agents-stale-info.html",
+    "arxivId": "2610.41435",
+    "arxivUrl": "https://arxiv.org/abs/2610.41435"
+  },
+  {
+    "date": "2026-11-02",
+    "publishedAt": "2026-11-02T12:10:49+09:00",
+    "title": "같이 채점하면 점수가 달라진다: LLM 일괄 채점의 함정",
+    "paperTitle": "Judged in Company: In-Context Batching Makes LLM Verdicts Depend on Other Items",
+    "summary": "여러 항목을 한 프롬프트에 묶어 LLM에게 채점시키면 함께 묶인 항목과 위치에 따라 판정이 바뀔 수 있다는 연구를 소개합니다.",
+    "tags": [
+      "LLM",
+      "평가",
+      "AI 연구"
+    ],
+    "url": "papers/2026-11-02-judged-in-company-batch-grading.html",
+    "arxivId": "2610.40241",
+    "arxivUrl": "https://arxiv.org/abs/2610.40241"
+  },
+  {
+    "date": "2026-11-01",
+    "publishedAt": "2026-11-01T12:08:42+09:00",
+    "title": "언어모델과 규칙을 잇는 13가지 패턴",
+    "paperTitle": "Hybrid AI Patterns: Thirteen Ways to Couple Language Models with Rules, and How to Choose Among Them",
+    "summary": "언어모델과 규칙 엔진을 함께 쓰는 시스템을 13개 설계 패턴으로 정리하고, 상황에 맞는 구조를 고르는 기준을 살펴봅니다.",
+    "tags": [
+      "AI 에이전트",
+      "AI 연구",
+      "LLM"
+    ],
+    "url": "papers/2026-11-01-hybrid-ai-patterns.html",
+    "arxivId": "2610.40036",
+    "arxivUrl": "https://arxiv.org/abs/2610.40036"
+  },
+  {
+    "date": "2026-10-31",
+    "publishedAt": "2026-10-31T12:02:14+09:00",
+    "title": "같은 층을 여러 번 돌리는 AI 모델",
+    "paperTitle": "How to Loop Your Transformer: Loop Scaling, Specialization, and Parallel Inference",
+    "summary": "같은 트랜스포머 가중치를 여러 번 반복(루프)해 성능을 얻는 방법과 그 한계를 입문자 눈높이로 풀어 봅니다.",
+    "tags": [
+      "LLM",
+      "추론",
+      "AI 연구"
+    ],
+    "url": "papers/2026-10-31-looping-transformer.html",
+    "arxivId": "2610.40325",
+    "arxivUrl": "https://arxiv.org/abs/2610.40325"
+  },
+  {
+    "date": "2026-10-30",
+    "publishedAt": "2026-10-30T12:03:55+09:00",
+    "title": "사전학습 중 AI는 무엇을 언제 배울까",
+    "paperTitle": "What Improves During Pretraining? Tracking Knowledge Acquisition with Point-in-Time Models",
+    "summary": "연도별 웹 자료로 만든 모델들을 비교해, 어떤 지식이 학습 후반에 더 좋아지는지 추적한 논문을 입문자 눈높이로 풀어 봅니다.",
+    "tags": [
+      "LLM",
+      "평가",
+      "AI 연구"
+    ],
+    "url": "papers/2026-10-30-pretraining-knowledge-timing.html",
+    "arxivId": "2610.37631",
+    "arxivUrl": "https://arxiv.org/abs/2610.37631"
+  },
+  {
+    "date": "2026-10-29",
+    "publishedAt": "2026-10-29T12:10:20+09:00",
+    "title": "검색기 없이 문서를 훑는 AI: 결정 모델로 찾는 DecisionRAG",
+    "paperTitle": "Retriever-Free Retrieval: Navigating Documents with Decision Models",
+    "summary": "검색기가 놓친 문서를 언어 모델이 직접 판단하며 찾아가는 DecisionRAG 방식을 입문자 눈높이로 풀어 봅니다.",
+    "tags": [
+      "LLM",
+      "AI 연구",
+      "추론"
+    ],
+    "url": "papers/2026-10-29-retriever-free-retrieval.html",
+    "arxivId": "2610.35868",
+    "arxivUrl": "https://arxiv.org/abs/2610.35868"
+  },
+  {
+    "date": "2026-10-28",
+    "publishedAt": "2026-10-28T12:49:33+09:00",
+    "title": "복잡한 에이전트보다 단순한 하네스가 장애 원인을 더 잘 찾았다",
+    "paperTitle": "Free to Look, Free to Reason: Simple LLM Harnesses Outdiagnose Hand-Crafted Root Cause Analysis Agents",
+    "summary": "장애 원인을 찾는 LLM 에이전트에서, 단계를 미리 정해 준 복잡한 설계보다 단순한 하네스가 더 정확했다는 결과를 풀어 봅니다.",
+    "tags": [
+      "AI 에이전트",
+      "평가"
+    ],
+    "url": "papers/2026-10-28-simple-llm-harness-root-cause.html",
+    "arxivId": "2610.35767",
+    "arxivUrl": "https://arxiv.org/abs/2610.35767"
+  },
+  {
+    "date": "2026-10-27",
+    "publishedAt": "2026-10-27T12:21:06+09:00",
+    "title": "언어 에이전트에게 기억은 얼마나 가치 있을까",
+    "paperTitle": "The Value of Memory in Language Agents",
+    "summary": "AI 에이전트의 기억이 실제로 쓸모 있는지 '피한 작업 손실'로 재는 틀을 쉽게 풀어 봅니다.",
+    "tags": [
+      "AI 에이전트",
+      "장기 기억"
+    ],
+    "url": "papers/2026-10-27-memory-value-language-agents.html",
+    "arxivId": "2610.31303",
+    "arxivUrl": "https://arxiv.org/abs/2610.31303"
+  },
+  {
+    "date": "2026-10-25",
+    "publishedAt": "2026-10-25T12:10:57+09:00",
+    "title": "믿음직한 AI의 틀린 답을 사람은 어떻게 받아들일까",
+    "paperTitle": "Who Is Sycophantic to Whom? Confident LLMs, Human Deference, and the Collapse of Trust Calibration",
+    "summary": "AI가 자신 있게 틀린 답을 하면 사람은 얼마나 믿을까? 신뢰 보정이 무너지는 현상을 32명 실험으로 살펴봅니다.",
+    "tags": [
+      "AI 안전",
+      "평가"
+    ],
+    "url": "papers/2026-10-25-human-deference-trust-calibration.html",
+    "arxivId": "2610.31579",
+    "arxivUrl": "https://arxiv.org/abs/2610.31579"
+  },
+  {
+    "date": "2026-10-24",
+    "publishedAt": "2026-10-24T12:11:06+09:00",
+    "title": "추가 학습 없이 최적화 문제 풀기: LLM 추론 하네스의 힘",
+    "paperTitle": "Harnessing Language Models as Optimization Modeling Agents",
+    "summary": "LLM이 최적화 문제를 솔버 코드로 바꾸는 작업을, 추가 학습 없이 실행 피드백 기반 추론 하네스로 개선할 수 있는지 검증한 연구",
+    "tags": [
+      "LLM",
+      "AI 에이전트",
+      "평가"
+    ],
+    "url": "papers/2026-10-24-optimization-modeling-harness.html",
+    "arxivId": "2610.30917",
+    "arxivUrl": "https://arxiv.org/abs/2610.30917"
+  },
+  {
+    "date": "2026-10-23",
+    "publishedAt": "2026-10-23T12:16:43+09:00",
+    "title": "AI의 '창발'을 어떻게 증명할까? 정보 분해로 본 시너지",
+    "paperTitle": "Claims of emergence in AI should be grounded in information decomposition",
+    "summary": "AI의 창발·시너지 주장을 정보 분해로 검증 가능한 기준에 올려놓자는 개념 논문",
+    "tags": [
+      "AI 연구",
+      "평가",
+      "추론"
+    ],
+    "url": "papers/2026-10-23-emergence-information-decomposition.html",
+    "arxivId": "2610.28479",
+    "arxivUrl": "https://arxiv.org/abs/2610.28479"
+  },
+  {
+    "date": "2026-10-22",
+    "publishedAt": "2026-10-22T22:38:08+09:00",
+    "title": "모델의 생각을 믿을 수 있을까? 체인 오브 쏘트 감시 능력을 학습으로 지키기",
+    "paperTitle": "Monitorability Is Trainable: Post-Training for Chain-of-Thought Monitorability",
+    "summary": "AI의 생각 과정(CoT)을 읽는 감시가 학습 중 약해질 수 있고, 후처리 학습으로 감시 능력을 되찾을 수 있다는 연구",
+    "tags": [
+      "AI 안전",
+      "LLM",
+      "추론"
+    ],
+    "url": "papers/2026-10-22-monitorability-trainable.html",
+    "arxivId": "2610.29734",
+    "arxivUrl": "https://arxiv.org/abs/2610.29734"
+  },
+  {
+    "date": "2026-10-21",
+    "publishedAt": "2026-10-21T22:26:19+09:00",
+    "title": "도구 결과를 파일로 저장하면 에이전트 정확도가 떨어질까?",
+    "paperTitle": "Same Simulation, Different Evidence: Where Retrieved Tool Output Costs LLM Agents Accuracy",
+    "summary": "긴 도구 출력을 파일에 저장하고 검색해 읽는 방식이 일부 모델에서 정확도를 떨어뜨리는 원인을 분석",
+    "tags": [
+      "AI 에이전트",
+      "LLM",
+      "평가"
+    ],
+    "url": "papers/2026-10-21-same-simulation-retrieved-evidence.html",
+    "arxivId": "2610.26836",
+    "arxivUrl": "https://arxiv.org/abs/2610.26836"
+  },
+  {
+    "date": "2026-10-20",
+    "publishedAt": "2026-10-20T22:13:37+09:00",
+    "title": "대화가 길어져도 기억을 잃지 않는 AI 에이전트 만들기",
+    "paperTitle": "From Memory Hits to Answerable Evidence: Query-Conditioned Memory Compilation for Long-Term Agent Memory",
+    "summary": "긴 대화의 기억에서 질문에 필요한 근거만 골라 답변용 문맥으로 정리하는 MemCompile 방식",
+    "tags": [
+      "AI 에이전트",
+      "LLM",
+      "장기 기억"
+    ],
+    "url": "papers/2026-10-20-memcompile-evidence.html",
+    "arxivId": "2610.23313",
+    "arxivUrl": "https://arxiv.org/abs/2610.23313"
+  }
+]

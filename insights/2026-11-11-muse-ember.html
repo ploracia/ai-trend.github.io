@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muse Ember: 에이전트의 자잘한 단계만 맡는 메타의 소형 모델, 입문 개발자가 알아야 할 것 | AI 비밀 레시피</title>
+  <meta name="description" content="메타의 소형 에이전트 모델 Muse Ember의 특징, 가격, 한계를 입문 개발자 눈높이로 정리했다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+
+    /* 이슈 전용 */
+    .cats { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; margin: 14px 0 0; font-size: 13px; color: var(--muted); }
+    .cats .lbl { font-weight: 700; margin-right: 2px; }
+    .cats a { font-size: 12.5px; font-weight: 600; text-decoration: none; color: var(--text); border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 2px 8px; }
+    .cats a:hover { border-color: var(--accent); color: var(--accent); }
+    .cats .sep { width: 10px; }
+    figure.fig { margin: 22px 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    figure.fig img, figure.fig svg { display: block; width: 100%; height: auto; }
+    figure.fig figcaption { font-size: 13.5px; color: var(--muted); padding: 10px 16px; border-top: 1px solid var(--line); }
+    figure.fig figcaption .credit { display: block; font-size: 12px; margin-top: 2px; }
+    .srcfig { display: flex; gap: 12px; align-items: center; background: var(--bg); border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px; margin: 14px 0; font-size: 14.5px; }
+    .srcfig::before { content: "🖼"; font-size: 20px; }
+    .buzz { display: grid; gap: 10px; margin: 14px 0; }
+    .buzz div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; font-size: 15px; }
+    .buzz .who { display: block; font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+    pre { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; font-size: 13.5px; line-height: 1.6; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#insights"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#insights">← 인사이트 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>Muse Ember: 에이전트의 자잘한 단계만 맡는 메타의 소형 모델, 입문 개발자가 알아야 할 것</h1>
+    <div class="byline"><span><time datetime="2026-11-11T16:12:46+09:00">2026.11.11 16:12 KST</time></span><span>읽는 시간 약 6분</span></div>
+    <div class="cats">
+      <span class="lbl">나라</span>
+      <a href="../#insights/country/미국">미국</a>
+      <span class="sep"></span>
+      <span class="lbl">기업</span>
+      <a href="../#insights/company/Meta">Meta</a>
+      <a href="../#insights/company/OpenRouter">OpenRouter</a>
+    </div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol><li>메타가 2026년 11월 9일 공개한 Muse Ember는 에이전트가 반복하는 작은 작업(도구 호출, 분류, 문서 추출)을 맡기 위한 소형 모델이다.</li><li>컨텍스트 창이 1M 토큰이고, 입력은 텍스트·이미지·영상·음성·PDF를 받으며, 입력 100만 토큰당 0.10달러라는 낮은 가격을 내세운다.</li><li>입문 개발자에게는 "큰 모델 하나에 다 맡기기"보다 "작은 모델을 여러 번 부르는 설계"를 처음 연습해 볼 좋은 재료라는 뜻이다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 모델</span><span class="what">Muse Ember (Meta)</span><span>확인한 근거 글 2개 + 출시 목록 1개</span></div>
+
+    <p class="lead">에이전트를 만들어 보면 금방 깨닫는 사실이 하나 있다. 사용자의 질문 한 개를 처리하려고 모델이 도구를 열 번쯤 부르고, 문서를 나눠 읽고, 결과를 분류하는 식으로 자잘한 단계가 쌓인다는 것이다. 그런데 매 단계마다 가장 큰 모델을 쓰면 비용과 속도가 금세 무거워진다. 11월 9일 Meta가 내놓은 Muse Ember는 바로 이 "자잘한 단계"만 전담하도록 만든 소형 모델로 소개되고 있다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">한눈에 보기</a></li>
+        <li><a href="#s2">어떻게 동작하나요</a></li>
+        <li><a href="#s3">왜 지금 화제인가요</a></li>
+        <li><a href="#s4">관련 나라·기업</a></li>
+        <li><a href="#s5">기존 방식과 무엇이 다른가</a></li>
+        <li><a href="#s6">직접 해 보기</a></li>
+        <li><a href="#s7">주의할 점과 한계</a></li>
+        <li><a href="#s8">정리</a></li>
+        <li><a href="#s9">참고한 글</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>한눈에 보기</h2>
+    <p>식당에 비유해 보자. 주방장(큰 모델)은 메뉴를 짜고 어려운 요리를 맡는다. 그런데 채소를 썰고, 주문서를 옮기고, 재료 개수를 세는 일은 숙련된 주방보조가 훨씬 빠르고 싸게 끝낸다. Muse Ember는 이 주방보조 역할의 모델이다. OpenRouter 모델 페이지는 이를 메타가 낸 "가장 작고 효율적인 모델"이라고 소개하며, 도구 호출, 코딩 에이전트의 하위 작업, 요청 분배(라우팅), 정보 추출, 긴 문서 파싱을 대상으로 적어 두었다.</p>
+    <figure class="fig">
+      <img src="img/2026-11-11-muse-ember-1.svg" alt="사용자 요청이 작은 모델의 반복 호출을 거쳐 결과로 합쳐지는 흐름을 보여 주는 그림" />
+      <figcaption>그림 1. 에이전트 한 번의 작업이 작은 단계로 쪼개지는 모습<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+    <div class="callout"><b>용어 풀이</b>에이전트: 모델이 도구를 골라 여러 단계를 스스로 수행하는 프로그램. 도구 호출: 모델이 검색, 파일 읽기 같은 외부 기능을 요청하는 것. 라우팅: 들어온 요청을 어느 모델이나 기능에 보낼지 고르는 일. 컨텍스트 창: 모델 한 번에 읽을 수 있는 입력의 최대 길이.</div>
+
+    <h2 id="s2"><span class="no">02</span>어떻게 동작하나요</h2>
+    <p>입력은 사용자 요청과 이전 단계의 결과, 긴 문서 등이 된다. 처리는 Ember가 맡는다. 예를 들어 "이 PDF에서 금액만 뽑아 달라"는 요청이 오면, Ember가 문서를 읽고 필요한 항목을 추출하는 식이다. 출력은 텍스트다. 이 모델이 1M 토큰의 컨텍스트를 갖는다는 점은 긴 문서나 여러 단계의 기록을 한꺼번에 넣고도 맥락을 잃지 않게 해 준다는 뜻이다. OpenRouter 페이지에 따르면 입력은 텍스트, 이미지, 영상, 오디오, PDF 문서를 받고 출력은 텍스트다.</p>
+    <figure class="fig">
+      <img src="img/2026-11-11-muse-ember-2.svg" alt="1M 토큰 컨텍스트 안에 긴 문서, 도구 호출 기록, 이미지와 음성이 함께 들어가는 구조 그림" />
+      <figcaption>그림 2. 1M 토큰 컨텍스트는 한 번에 올려 둘 수 있는 작업대의 크기다<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+    <p>요약 글에 따르면 메타는 Ember를 큰 계획 모델과 짝지어 쓰라고 권한다. 큰 모델이 "무엇을 할지" 정하고, Ember가 그 아래의 작은 단계를 여러 번 수행하는 역할 분담이다. 이 구조가 이 모델을 이해하는 가장 중요한 열쇠다.</p>
+
+    <h2 id="s3"><span class="no">03</span>왜 지금 화제인가요</h2>
+    <p>Ember는 11월 9일 공개됐고, 같은 날 여러 모델 목록 사이트가 이를 함께 실었다. 아직 개발자 커뮤니티의 긴 후기가 쌓이기 전이라 반응은 대부분 출시 소식과 가격 비교에 머물러 있다. 특히 "에이전트 한 단계당 비용"을 전면에 내세운 점이 눈에 띈다.</p>
+    <div class="buzz">
+      <div>출시 목록 사이트는 Ember를 같은 날 공개된 여러 AI 릴리스 가운데 하나로 정리했다. Meta 외에 ByteDance의 이미지 모델 Seedream 5.5도 같은 날 제한 공개됐다고 적었다.<span class="who"><a href="https://www.nocode.mba/ai-release-tracker/2026/11">nocode.mba AI 릴리스 추적</a> · 11.10 기준 갱신</span></div>
+      <div>요약 글은 Ember가 Meta의 평가 자료에서 에이전트 작업당 비용을 강조한다고 전했다. 다만 이는 요약 글이 옮긴 내용이라 원문 수치는 확인하지 못했다.<span class="who"><a href="https://ai-tldr.dev/releases/meta-muse-ember/index.md">AI TL;DR 릴리스 요약</a> · 11.09</span></div>
+      <div>OpenRouter 모델 페이지에는 Vals AI가 측정한 표가 실려 있다. 예를 들어 Vibe Code Bench v1.1에서 83.7%, Vals Legal Index에서 75.7%로 나와 있다. 이는 Meta가 아니라 제3자 평가라는 점을 기억해야 한다.<span class="who"><a href="https://openrouter.ai/meta/muse-ember">OpenRouter Muse Ember 페이지</a> · 11.09</span></div>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>관련 나라·기업</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>이름</th><th>어떤 관련이 있나</th></tr></thead>
+      <tbody>
+        <tr><td>기업</td><td>Meta</td><td>Muse Ember를 개발해 공개했다. 공개 모델 제공자로서 Meta Model API로 쓸 수 있다고 요약 글은 전한다.</td></tr>
+        <tr><td>기업</td><td>OpenRouter</td><td>여러 모델을 한 API로 호출하게 해 주는 플랫폼이다. 이 페이지에서 Ember는 Meta가 직접 운영하는 제공자로 올라 있다.</td></tr>
+        <tr><td>나라</td><td>미국</td><td>Meta 본사가 있는 나라다.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s5"><span class="no">05</span>기존 방식과 무엇이 다른가</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>비교 항목</th><th>기존 방식</th><th>Muse Ember</th></tr></thead>
+      <tbody>
+        <tr><td>단계마다 쓰는 모델</td><td>큰 모델 하나로 전부 처리</td><td>작은 단계는 소형 모델이 맡고, 계획만 큰 모델에 맡기는 분담</td></tr>
+        <tr><td>입력 형식</td><td>모델마다 다름</td><td>텍스트, 이미지, 영상, 오디오, PDF를 한 모델이 받는다고 소개</td></tr>
+        <tr><td>컨텍스트 길이</td><td>모델마다 다름</td><td>1M 토큰</td></tr>
+        <tr><td>입력 가격(100만 토큰당)</td><td>큰 모델은 보통 훨씬 비쌈</td><td>0.10달러, 출력은 0.50달러, 캐시 입력은 0.004달러로 표시</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s6"><span class="no">06</span>직접 해 보기</h2>
+    <p>공식 발표 페이지를 열지 못해 예제 코드는 확인하지 못했다. 그래서 아래는 확인된 사실 범위에서만 쓴 첫 걸음이다. 코드를 짜기 전에 먼저 해 볼 수 있는 일이다.</p>
+    <ol>
+      <li>OpenRouter에서 계정을 만들고 API 키를 발급받는다.</li>
+      <li>모델 페이지에서 모델 슬러그 <code>meta/muse-ember</code>를 확인한다. OpenRouter 페이지는 OpenAI 호환 API라고 설명한다.</li>
+      <li>이미 쓰고 있는 OpenAI 호환 SDK 코드를 떠올리고, 모델 이름만 이 슬러그로 바꿔 짧은 질문 한 개를 던져 본다.</li>
+      <li>같은 질문을 큰 모델에도 던져 보고, 답의 품질과 토큰 사용량을 나란히 비교해 본다. 입문 단계에서는 이 비교가 가장 많이 배우게 한다.</li>
+    </ol>
+
+    <h2 id="s7"><span class="no">07</span>주의할 점과 한계</h2>
+    <ul>
+      <li>Meta의 공식 발표 페이지를 열지 못했다. 이 글의 출시일과 가격은 OpenRouter 모델 페이지와 릴리스 목록 사이트에 근거한다. 공식 문서를 확인한 뒤 다시 보는 것이 좋다.</li>
+      <li>요약 글이 옮긴 "최대 출력 512K 토큰", "에이전트 작업당 비용 비교" 같은 수치는 원문으로 확인하지 못해 이 글에 쓰지 않았다.</li>
+      <li>OpenRouter 페이지 기준으로 EU 지역 라우팅에서는 아직 쓸 수 없다고 적혀 있다. 유럽 리전이 필요한 서비스라면 먼저 확인해야 한다.</li>
+      <li>가중치는 공개되지 않은 독점 모델로 소개된다. 자체 서버에 올려 돌릴 수 있는 오픈 웨이트 모델이 아니다.</li>
+      <li>벤치마크 표는 Vals AI 같은 제3자 평가다. 내 업무에 맞는지는 직접 작은 데이터로 한 번 돌려 봐야 한다.</li>
+    </ul>
+
+    <h2 id="s8"><span class="no">08</span>정리</h2>
+    <div class="conclusion"><p>Muse Ember가 던지는 메시지는 간단하다. 에이전트는 똑똑한 모델 한 개보다, 자잘한 단계를 싸고 빠르게 처리하는 여러 모델의 조합으로 만들어진다는 것이다. 입문 개발자라면 지금 당장 큰 모델만 쓰던 습관을 한 번 되돌아보고, 작은 단계가 무엇인지 적어 보는 것부터 시작하면 좋다.</p><p>다만 이 글의 정보는 출시 목록과 모델 페이지에 근거하고, 공식 발표는 아직 확인하지 못했다. 가격과 기능은 바뀔 수 있으니 공식 문서를 한 번 더 보고 실제 요금을 계산해 보길 권한다.</p></div>
+
+    <h2 id="s9"><span class="no">09</span>참고한 글</h2>
+    <ol class="refs">
+      <li><a href="https://openrouter.ai/meta/muse-ember">Muse Ember 모델 페이지</a> <span class="src">OpenRouter · 2026.11.09 기준</span></li>
+      <li><a href="https://ai-tldr.dev/releases/meta-muse-ember/index.md">Muse Ember — Meta's smallest Muse model for agent sub-tasks</a> <span class="src">AI TL;DR · 2026.11.09</span></li>
+      <li><a href="https://www.nocode.mba/ai-release-tracker/2026/11">AI release tracker 2026/11</a> <span class="src">nocode.mba · 2026.11.10 갱신</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#insights">← 전체 인사이트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

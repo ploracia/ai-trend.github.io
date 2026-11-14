@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI의 '창발'을 어떻게 증명할까: 정보 분해로 본 시너지 | AI 비밀 레시피</title>
+  <meta name="description" content="AI가 부품의 합 이상을 보여준다는 '창발' 주장을 정보 분해라는 수학적 도구로 검증하자는 논문 요약" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .paper-title { font-size: 15px; color: var(--muted); margin: 0 0 14px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 48px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 26px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .opinion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .opinion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#papers"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#papers">← 논문 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>AI의 '창발'을 어떻게 증명할까: 정보 분해로 본 시너지</h1>
+    <p class="paper-title">Claims of emergence in AI should be grounded in information decomposition</p>
+    <div class="byline"><span><time datetime="2026-10-23T12:16:43+09:00">2026.10.23 12:16 KST</time></span><span>원문 arXiv:2610.28479</span></div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol><li>AI 연구에서는 부품을 따로 봐서는 설명되지 않는 행동, 즉 '창발(emergence)'이나 '시너지'를 자주 말하지만, 그 주장은 대개 느슨하게 쓰여 검증하기 어렵다.</li><li>저자들은 정보 분해(information decomposition)라는 정보이론 도구로 정보를 고유, 중복, 시너지 세 가지로 나눠서 보자고 제안한다. 과제의 결과에 대해 부품이 함께 있을 때만 나오는 시너지 정보가 있어야 창발이라고 부를 수 있다는 검증 가능한 기준이다.</li><li>이 관점을 어텐션 헤드, 자율 에이전트, 사람과 AI가 함께 일하는 팀에 적용해 보고 분야 사이를 잇는 가설을 제시한다. 입문 개발자에게는 "똑똑해 보인다"는 인상과 "실제로 그렇다"는 증거를 구분하는 습관을 준다.</li></ol>
+    </div>
+
+    <h2 id="s1"><span class="no">01</span>본문 요약</h2>
+    <p>이 글은 논문 초록(abstract)을 기준으로 정리했다. 본문의 수식과 실험 세부 사항은 원문에서 직접 확인하지 않았다.</p>
+    <h3>문제 정의</h3>
+    <p>언어 모델이 갑자기 새로운 능력을 보이거나, 여러 에이전트가 혼자일 때보다 잘하거나, 사람과 AI가 함께 있을 때 둘 다 못하는 일을 해내는 경우가 있다. 이런 현상을 연구자들은 창발이나 시너지라고 부른다. 그런데 용어마다 뜻이 제각각이라 누가 무엇을 주장하는지 비교하거나 반박하기 어렵다.</p>
+    <h3>방법</h3>
+    <p>저자들은 정보 분해를 공통 틀로 쓰자고 한다. 전체 정보를 한 구성 요소에만 있는 고유 정보, 여러 구성 요소가 공유하는 중복 정보, 구성 요소를 함께 써야만 생기는 시너지 정보로 나눈다. 그리고 "시스템의 행동이 과제 결과에 대한 시너지 정보를 담고 있을 때만 창발이라고 본다"는 시험 가능한 규칙을 세운다.</p>
+    <h3>결과</h3>
+    <p>초록에 따르면 이 틀을 어텐션 헤드, 자율 에이전트, 사람과 AI 팀 세 가지 사례에 적용했다. 또한 서로 다른 연구 분야 사이에서 빠져 있을 수 있는 교차 수준의 가설을 제안했다. 이 논문은 NeurIPS 2026 스포트라이트 발표작이다. 구체적인 측정값은 초록 요약에서 확인하지 않아 옮기지 않는다.</p>
+    <h3>한계</h3>
+    <ul>
+      <li>정보 분해를 실제 큰 모델에서 계산하는 것은 변수가 많으면 어렵다. 초록은 개념적 틀과 사례 적용을 중심으로 소개하며, 대규모 모델에서의 계산 비용과 실용성은 본문을 봐야 판단할 수 있다.</li>
+      <li>이 기준은 "창발이 있었는가"를 가리는 도구이지, 창발이 왜 생겼는지까지 설명해 주지는 않는다.</li>
+    </ul>
+
+    <h2 id="s2"><span class="no">02</span>최종 의견</h2>
+    <div class="opinion"><p>이 논문이 실무자에게 주는 힌트는 "창발이라는 말을 들으면 근거를 먼저 물어보라"는 것이다. 에이전트를 여러 개 엮어 더 나은 결과가 나왔다고 해도, 그 이유가 부품들이 함께 만든 정보인지, 한 부품이 혼자 잘한 것인지, 평가 방식이 달랐던 것인지 구분해야 한다. 정보 분해라는 용어는 낯설지만, 입문자도 "이 결과가 어느 부품 덕분인가"라는 질문으로 바꿔서 생각해 볼 수 있다.</p><p>다만 이 논문은 개념 정리와 기준을 제시하는 성격이 강해 보인다. 당장 제품에 적용할 수 있는 도구라기보다, 과장된 성능 주장을 읽는 눈을 기르는 참고 자료로 보는 편이 안전하다.</p></div>
+
+    <h2 id="s3"><span class="no">03</span>참고 사이트</h2>
+    <ol class="refs">
+      <li><a href="https://arxiv.org/abs/2610.28479">Claims of emergence in AI should be grounded in information decomposition</a> <span class="src">arXiv · 2026.10.20</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#papers">← 전체 논문 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

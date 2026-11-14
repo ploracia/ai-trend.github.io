@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>같은 컴퓨팅이면 팀을 여러 개로 나누는 편이 낫다 | AI 비밀 레시피</title>
+  <meta name="description" content="AI 에이전트에게 계산 자원을 더 줄 때, 큰 팀 하나보다 작은 팀 여러 개를 병렬로 돌리는 편이 더 좋은 결과를 낸다는 논문 요약." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .paper-title { font-size: 15px; color: var(--muted); margin: 0 0 14px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 48px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 26px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .opinion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .opinion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#papers"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#papers">← 논문 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>같은 계산 예산이면 팀을 하나 크게 두기보다 작은 팀 여러 개를 돌려라</h1>
+    <p class="paper-title">Test-Time Compute Scales Better with Parallel Agent Teams</p>
+    <div class="byline"><span><time datetime="2026-11-11T12:51:12+09:00">2026.11.11 12:51 KST</time></span><span>원문 arXiv 2611.09798 (cs.AI)</span></div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol>
+        <li>AI 에이전트에게 계산을 더 쓰게 하면 성능이 오르는데, 그 계산을 어떻게 나눠 쓰는지가 결과를 크게 바꾼다.</li>
+        <li>에이전트를 여러 개 독립적으로 돌리는 방식은 금방 한계에 닿고, 큰 팀 하나는 커질수록 더 이상 좋아지지 않는다. 이 논문은 작은 팀 여러 개를 병렬로 돌리고 가장 좋은 결과를 고르는 방식을 제안한다.</li>
+        <li>초록 기준으로 같은 예산에서 작은 팀 병렬 방식이 여러 긴 작업에서 더 나은 결과를 냈다. 입문 개발자에게는 "에이전트 수를 늘리는 것"보다 "어떻게 묶어 쓰는가"가 중요하다는 힌트가 된다.</li>
+      </ol>
+    </div>
+
+    <h2 id="s1"><span class="no">01</span>본문 요약</h2>
+    <p>이 글은 논문 초록과 arXiv 초록 페이지에 적힌 내용을 바탕으로 정리했습니다. 전체 본문과 실험 세부 사항은 원문에서 직접 확인해 주세요.</p>
+
+    <h3>문제 정의</h3>
+    <p>요즘 AI 모델은 답을 내기 전에 더 많은 계산을 쓰면 정확도가 올라갑니다. 이를 테스트 시점 계산(test-time scaling)이라고 부릅니다. 특히 여러 단계로 일하는 에이전트는 시도를 여러 번 하고, 검증기(verifier)가 각 결과를 점수로 매기는 구조를 많이 씁니다. 문제는 같은 양의 계산을 쓰더라도 "에이전트를 몇 명 쓰고 어떻게 연결하느냐"에 따라 결과 차이가 크다는 점입니다.</p>
+
+    <h3>방법</h3>
+    <p>논문은 두 가지 기존 방식을 비교합니다. 첫째는 독립적인 에이전트 N개를 각자 돌려 가장 좋은 답을 고르는 방식(Best-of-N)입니다. 둘째는 에이전트를 많이 모아 큰 팀 하나로 협업시키는 방식입니다. 논문은 두 방식 모두 계산을 늘려도 어느 지점에서 성능이 더 오르지 않는다고 봅니다.</p>
+    <p>제안하는 방식은 "병렬 에이전트 팀(parallel agent teams)"입니다. 작은 팀 여러 개를 동시에 돌리고, 그중 가장 좋은 팀의 결과를 채택합니다. 예를 들어 에이전트 100개를 쓸 수 있다면, 10명짜리 팀 10개를 병렬로 돌리는 식입니다. 논문은 이 방식이 왜 잘 되는지를 간단한 통계 모델로 설명합니다. 개별 에이전트의 결과는 평균 품질이 낮은 편이고, 큰 팀 하나에서는 결과의 흩어짐(분산)에서 얻는 이득이 거의 없다는 것입니다.</p>
+
+    <h3>결과</h3>
+    <p>초록에 따르면, 12개의 긴 작업(GPU 커널 작성, 형식 증명, 익스플로잇 개발 등)에서 실험했습니다. 27B 모델과 에이전트 100개 예산을 기준으로 하면, 10명짜리 병렬 팀이 12개 중 10개 작업에서 병렬 에이전트 방식을 앞섰습니다. 큰 팀 하나(100명)와 비교가 가능했던 4개 작업에서는 모두 이겼습니다. 같은 달러 비용으로 비교했을 때는 절반의 작업에서 최신 상용 모델을 앞섰다고 보고합니다.</p>
+
+    <h3>한계</h3>
+    <ul>
+      <li>이 글은 초록과 초록 페이지 정보만 기반으로 합니다. 논문 본문에 적힌 세부 한계는 확인하지 못했습니다.</li>
+      <li>실험 대상이 긴 작업 12개에 한정되어 있어, 일상적인 짧은 질문이나 채팅 응답에도 같은 결과가 나온다고 단정하기는 어렵습니다.</li>
+      <li>"같은 달러 비용"의 기준과 비교 대상 모델의 버전은 원문에서 자세히 확인이 필요합니다.</li>
+    </ul>
+
+    <h2 id="s2"><span class="no">02</span>최종 의견</h2>
+    <div class="opinion">
+      <p>이 논문에서 입문 개발자가 가져갈 메시지는 간단합니다. 에이전트를 많이 띄우는 것 자체보다, 그 계산을 어떻게 묶어 쓰고 결과를 어떻게 고르느냐가 중요하다는 것입니다. 직접 만든 에이전트 시스템에서 "여러 번 돌려서 가장 좋은 것 고르기"를 쓰고 있다면, 한 번에 큰 작업을 맡기는 대신 작은 묶음으로 나눠 병렬로 돌리는 구조를 시험해 볼 만합니다.</p>
+      <p>다만 이 결과는 초록에 보고된 실험 조건에서 나온 것입니다. 검증기의 품질, 작업 종류, 모델 크기에 따라 효과가 달라질 수 있으므로 과장해서 받아들이지 않는 것이 좋습니다. 실제로 적용하기 전에 원문의 실험 설정과 공개된 코드 저장소를 먼저 살펴보세요.</p>
+    </div>
+
+    <h2 id="s3"><span class="no">03</span>참고 사이트</h2>
+    <ol class="refs">
+      <li><a href="https://arxiv.org/abs/2611.09798">Test-Time Compute Scales Better with Parallel Agent Teams</a> <span class="src">arXiv · 2026.11.06</span></li>
+      <li><a href="https://github.com/modal-projects/parallel-agent-teams-scaling">parallel-agent-teams-scaling (공개 코드)</a> <span class="src">GitHub · 논문 초록 페이지 링크</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#papers">← 전체 논문 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

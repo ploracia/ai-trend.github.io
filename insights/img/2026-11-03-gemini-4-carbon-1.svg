@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="t1 d1">
+  <title id="t1">Gemini 4 Carbon 공개 단계 그림</title>
+  <desc id="d1">가운데 1단계 사이버 보안 방어자에서 바깥으로 갈수록 2단계 신뢰 파트너, 3단계 일반 개발자와 기업으로 공개 범위가 넓어지는 그림</desc>
+  <rect x="0" y="0" width="640" height="400" fill="#f4f6fb"/>
+  <circle cx="220" cy="200" r="170" fill="#dfe7fb" stroke="#2f5bea" stroke-width="2"/>
+  <circle cx="220" cy="200" r="115" fill="#c5d4f7" stroke="#2f5bea" stroke-width="2"/>
+  <circle cx="220" cy="200" r="60" fill="#2f5bea"/>
+  <text x="220" y="196" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff" font-family="sans-serif">1단계</text>
+  <text x="220" y="216" text-anchor="middle" font-size="12" fill="#ffffff" font-family="sans-serif">방어자</text>
+  <text x="220" y="140" text-anchor="middle" font-size="13" font-weight="700" fill="#1b1b1f" font-family="sans-serif">2단계: 신뢰 파트너</text>
+  <text x="220" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#1b1b1f" font-family="sans-serif">3단계: 개발자·기업·소비자</text>
+  <text x="220" y="94" text-anchor="middle" font-size="11" fill="#4a4a55" font-family="sans-serif">일반 공개 날짜 미정</text>
+  <line x1="400" y1="140" x2="470" y2="110" stroke="#62626b" stroke-width="1.5"/>
+  <line x1="340" y1="200" x2="470" y2="200" stroke="#62626b" stroke-width="1.5"/>
+  <line x1="290" y1="250" x2="470" y2="290" stroke="#62626b" stroke-width="1.5"/>
+  <text x="476" y="108" font-size="13" fill="#1b1b1f" font-family="sans-serif">Fairwind 프로그램</text>
+  <text x="476" y="122" font-size="11" fill="#4a4a55" font-family="sans-serif">정부·핵심 인프라·플랫폼</text>
+  <text x="476" y="198" font-size="13" fill="#1b1b1f" font-family="sans-serif">Google 발표 순서</text>
+  <text x="476" y="212" font-size="11" fill="#4a4a55" font-family="sans-serif">안쪽일수록 먼저 접근</text>
+  <text x="476" y="288" font-size="13" fill="#1b1b1f" font-family="sans-serif">피드백 반영 후 확대</text>
+  <text x="476" y="302" font-size="11" fill="#4a4a55" font-family="sans-serif">가드레일을 다듬는 중</text>
+</svg>

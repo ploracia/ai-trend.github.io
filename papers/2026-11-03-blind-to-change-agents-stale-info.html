@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 에이전트는 바뀐 정보를 언제 확인할까? 묻지 않으면 놓치는 문제 | AI 비밀 레시피</title>
+  <meta name="description" content="AI 에이전트가 최근 바뀐 사실을 스스로 검색해 확인하는지, 그리고 질문을 받았을 때와 아닐 때 얼마나 달라지는지 측정한 논문 요약." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .paper-title { font-size: 15px; color: var(--muted); margin: 0 0 14px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 48px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 26px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .opinion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .opinion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#papers"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#papers">← 논문 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>AI 에이전트는 바뀐 정보를 언제 확인할까? 묻지 않으면 놓치는 문제</h1>
+    <p class="paper-title">BlindToChange: AI Agents Can Find Changes When Asked But Do They Look When Needed?</p>
+    <div class="byline"><span><time datetime="2026-11-03T12:09:19+09:00">2026.11.03 12:09 KST</time></span><span>원문 arXiv:2610.41435</span></div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol>
+        <li>AI 에이전트는 학습이 끝난 뒤 바뀐 사실(예: 최근 사건으로 더 이상 맞지 않게 된 추천 대상)을 놓치기 쉽다.</li>
+        <li>저자들은 실제 사건을 Wikidata에서 자동으로 뽑아 만든 벤치마크 BlindToChange로, 사건을 요청에 언급했을 때와 언급하지 않았을 때를 비교했다.</li>
+        <li>묻지 않으면 확인을 건너뛰는 경우가 많았고 차이는 최대 27.5점까지 났다. 입문 개발자는 에이전트에 "최근 변화를 확인하는 단계"를 명시적으로 넣어야 한다.</li>
+      </ol>
+    </div>
+
+    <h2 id="s1"><span class="no">01</span>본문 요약</h2>
+    <p>이 글은 논문 초록과 공개된 요약 정보를 기준으로 썼다. 원문 전체의 실험 표와 세부 조건은 직접 확인이 필요하다.</p>
+    <h3>문제 정의</h3>
+    <p>에이전트는 검색 도구를 쓸 수 있을 때도 항상 최신 정보를 찾아보지는 않는다. 예를 들어 "이 상황에 맞는 제품을 추천해 줘"라는 요청에, 최근 일어난 사건 때문에 이미 맞지 않게 된 후보를 그대로 추천할 수 있다. 저자들은 이런 최신성 문제를 측정할 도구가 필요하다고 본다.</p>
+    <h3>방법</h3>
+    <p>저자들은 추천 요청 벤치마크 BlindToChange를 만들었다. 요청마다 "겉보기에 가장 좋은 후보"가 있지만, 최근 실제 사건 때문에 더 이상 적절하지 않도록 설계했다. 사건은 Wikidata에서 자동으로 뽑기 때문에 주기적으로 새로 만들 수 있다. 같은 상황을 두 방식으로 물었다. 하나는 사건을 요청에 언급하지 않은 조건이고, 다른 하나는 사건에 대해 직접 묻는 조건이다.</p>
+    <h3>결과</h3>
+    <p>두 조건의 차이가 컸다. 논문 초록은 이 차이가 최대 27.5점이며, 추론 강도(reasoning effort)를 높여도 나타난다고 보고한다. 실패 사례를 분석한 결과, 절반이 넘는 실패는 관련 사실이 바뀌었는지 에이전트가 검색으로 확인하지 않았기 때문에 생겼다. 즉 검색 도구가 있어도 "언제 검색할지"를 스스로 판단하지 못하는 것이 핵심 문제다.</p>
+    <h3>한계</h3>
+    <ul>
+      <li>이 글은 초록을 기준으로 정리했다. 벤치마크의 세부 분야, 평가한 모델 목록, 실험 설정의 전체 조건은 원문에서 확인해야 한다.</li>
+      <li>결과는 논문이 만든 추천 시나리오에 대한 것이다. 실제 서비스의 정확도로 바로 옮겨 해석하기는 이르다.</li>
+    </ul>
+
+    <h2 id="s2"><span class="no">02</span>최종 의견</h2>
+    <div class="opinion"><p>검색 도구를 붙이면 최신성 문제가 해결된다고 생각하기 쉽다. 이 논문은 도구가 있어도 에이전트가 검색을 건너뛰면 틀린 답을 낸다는 것을 보여준다. 입문 단계에서 실무에 적용한다면, 시스템 프롬프트에 "추천이나 판단 전에 관련 사실이 최근 바뀌었는지 확인하라"는 규칙을 명시하고, 검색을 했는지 로그로 남겨 검증하는 방식이 현실적이다.</p><p>다만 벤치마크 점수는 논문이 설계한 시나리오에서 나온 결과다. 27.5점이라는 숫자를 내 서비스에 그대로 대입하기보다는, "묻지 않으면 확인하지 않는다"는 경향이 내 시스템에도 있는지 작은 테스트로 먼저 확인해 보는 것이 좋다.</p></div>
+
+    <h2 id="s3"><span class="no">03</span>참고 사이트</h2>
+    <ol class="refs">
+      <li><a href="https://arxiv.org/abs/2610.41435">BlindToChange: AI Agents Can Find Changes When Asked But Do They Look When Needed?</a> <span class="src">arXiv · 2026.10.30</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#papers">← 전체 논문 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

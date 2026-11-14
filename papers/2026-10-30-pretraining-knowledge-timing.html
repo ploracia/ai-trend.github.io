@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>사전학습 중 AI는 무엇을 언제 배울까 | AI 비밀 레시피</title>
+  <meta name="description" content="웹 데이터로 사전학습하는 언어 모델이 지식을 언제 얼마나 배우는지, 시기별 모델을 비교해 본 논문을 입문자 눈높이로 정리했습니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .paper-title { font-size: 15px; color: var(--muted); margin: 0 0 14px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 48px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 26px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .opinion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .opinion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#papers"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#papers">← 논문 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>사전학습 중 AI는 무엇을 언제 배울까</h1>
+    <p class="paper-title">What Improves During Pretraining? Tracking Knowledge Acquisition with Point-in-Time Models</p>
+    <div class="byline"><span><time datetime="2026-10-30T12:03:55+09:00">2026.10.30 12:03 KST</time></span><span>원문 arXiv 2610.37631</span></div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol><li>언어 모델은 인터넷 글을 모아 미리 학습하는데, 어떤 지식이 학습 과정의 어느 시점에 좋아지는지는 잘 드러나지 않았습니다.</li><li>연도별 웹 자료로 만든 모델들을 나란히 두고, 항목마다 ‘시기별로 얼마나 들쭉날쭉한가’를 재는 점수를 만들어 학습 패턴을 봤습니다.</li><li>들쭉날쭉한 지식일수록 학습 후반에 더 많이 좋아졌습니다. 최종 점수만 보는 평가로는 놓치기 쉬운 학습 과정을 들여다보는 도구가 될 수 있다는 점이 의미입니다.</li></ol>
+    </div>
+
+    <h2 id="s1"><span class="no">01</span>본문 요약</h2>
+    <h3>문제 정의</h3>
+    <p>언어 모델은 수많은 웹 문서를 읽으며 다음 단어를 맞히는 방식으로 미리 학습합니다. 이때 모델이 일반 상식을 먼저 익히는지, 특정 분야 지식을 먼저 익히는지는 대부분 학습이 끝난 뒤의 벤치마크 점수로만 판단합니다. 그러다 보니 학습 도중 무엇이 언제 좋아졌는지 알기 어렵습니다. 저자들은 이 과정을 시간 순서대로 추적하려고 했습니다.</p>
+    <h3>방법</h3>
+    <p>첫째, 연도별 웹 스냅샷으로 여러 ‘시점 모델(point-in-time model)’을 만듭니다. 각 모델은 해당 연도까지의 웹 자료로만 학습됩니다. 둘째, 문항 하나하나에 대해 모델이 그 답을 얼마나 낮은 확률로 맞히는지(음의 로그우도)를 여러 시점 모델에서 잽니다. 셋째, 그 값이 시점마다 얼마나 흔들리는지를 변동계수로 계산해 ‘시기별 흔들림 점수’로 씁니다. 흔들림이 큰 문항은 웹 글에서 연도마다 일관되게 등장하지 않은 지식일 가능성이 높다고 봅니다. 이 점수를 기준으로 낮은 그룹과 높은 그룹을 나눠 학습 곡선을 비교했습니다.</p>
+    <h3>결과</h3>
+    <p>여섯 개 벤치마크와 여섯 개 오픈소스 모델을 대상으로 했습니다. 학습 초반에는 두 그룹이 비슷한 속도로 좋아졌습니다. 그러나 학습이 진행될수록 흔들림이 큰 문항 쪽이 더 빠르게 좋아졌고, 학습이 끝날 무렵에는 36개 모델-벤치마크 조합 중 34개에서 흔들림이 큰 문항이 더 높은 점수를 얻었습니다. 평균 차이는 정규화된 정확도 기준으로 약 7.3점이었습니다. 이 경향은 지식 중심 과제에서 가장 강했고, 난이도가 비슷한 문항끼리 비교해도 유지됐습니다.</p>
+    <h3>한계</h3>
+    <ul>
+      <li>이 글은 논문 초록에 담긴 요약 정보를 기준으로 정리했습니다. 실험 세부 조건과 통계 검정 방식은 원문에서 직접 확인해야 합니다.</li>
+      <li>흔들림 점수는 웹 자료의 연도별 분포에 기대는 지표입니다. 흔들림이 크다는 것이 곧 지식이 어렵다는 뜻은 아니므로, 해석에 주의가 필요합니다.</li>
+      <li>실험 대상이 공개된 여섯 개 모델과 여섯 개 벤치마크로 한정되어 있어, 다른 학습 데이터나 규모에서도 같은 결과가 나올지는 아직 검증되지 않았습니다.</li>
+    </ul>
+
+    <h2 id="s2"><span class="no">02</span>최종 의견</h2>
+    <div class="opinion"><p>입문 개발자에게 이 논문의 가장 실용적인 메시지는 ‘최종 점수 하나로 모델을 판단하지 말자’는 것입니다. 같은 점수라도 어떤 지식을 언제 배웠는지에 따라 모델의 성격이 다를 수 있습니다. 직접 모델을 평가할 때 문항을 주제별·시기별로 나눠 보는 습관을 들이면 도움이 됩니다.</p><p>다만 이 결과가 학습 방법을 바로 바꿔야 한다는 뜻은 아닙니다. 흔들림 점수와 성능 향상 사이의 관계를 인과로 보기는 어렵고, 초록 기준의 수치이므로 원문의 실험 조건을 확인한 뒤 참고하는 것이 좋습니다.</p></div>
+
+    <h2 id="s3"><span class="no">03</span>참고 사이트</h2>
+    <ol class="refs">
+      <li><a href="https://arxiv.org/abs/2610.37631">What Improves During Pretraining? Tracking Knowledge Acquisition with Point-in-Time Models</a> <span class="src">arXiv · 2026.10.27</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#papers">← 전체 논문 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" role="img" aria-label="에이전트 작업 한 번이 작은 모델 여러 번 호출로 나뉘는 흐름">
+  <rect x="0" y="0" width="720" height="320" rx="16" fill="#f7f6f2"/>
+  <text x="32" y="44" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="18" font-weight="700" fill="#1b1b1f">에이전트 한 번의 작업이 작은 단계로 쪼개지는 모습</text>
+  <rect x="32" y="100" width="150" height="90" rx="12" fill="#e8eefe" stroke="#2f5bea" stroke-width="2"/>
+  <text x="107" y="138" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="16" font-weight="700" fill="#1b1b1f">사용자 요청</text>
+  <text x="107" y="162" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="13" fill="#62626b">"이 PDF에서 금액만 뽑아 줘"</text>
+  <line x1="182" y1="145" x2="222" y2="145" stroke="#62626b" stroke-width="2"/>
+  <polygon points="222,139 232,145 222,151" fill="#62626b"/>
+  <rect x="232" y="100" width="180" height="90" rx="12" fill="#e5f4ec" stroke="#1f8a5b" stroke-width="2"/>
+  <text x="322" y="132" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="16" font-weight="700" fill="#1b1b1f">작은 모델 호출 반복</text>
+  <text x="322" y="156" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="13" fill="#1b1b1f">도구 호출 · 추출 · 라우팅</text>
+  <text x="322" y="176" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="13" fill="#1b1b1f">하위 작업을 여러 번</text>
+  <line x1="412" y1="145" x2="452" y2="145" stroke="#62626b" stroke-width="2"/>
+  <polygon points="452,139 462,145 452,151" fill="#62626b"/>
+  <rect x="462" y="100" width="226" height="90" rx="12" fill="#fbeae6" stroke="#c2412d" stroke-width="2"/>
+  <text x="575" y="132" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="16" font-weight="700" fill="#1b1b1f">결과 합치기</text>
+  <text x="575" y="156" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="13" fill="#1b1b1f">최종 답변 한 번</text>
+  <text x="32" y="250" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="14" fill="#62626b">핵심: 한 단계마다 드는 비용이 낮아야 에이전트가 많은 단계를 감당할 수 있다.</text>
+  <text x="32" y="276" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="12" fill="#62626b">출처 글을 바탕으로 다시 그림</text>
+</svg>
