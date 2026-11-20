@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kimi K3.1 Pro: 2.8조 파라미터 중 일부만 깨우는 오픈 웨이트 모델 | AI 비밀 레시피</title>
+  <meta name="description" content="중국 Moonshot AI의 Kimi K3.1 Pro 공개 소식을 AI를 막 시작한 개발자 눈높이에서 정리했다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+
+    /* 이슈 전용 */
+    .cats { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; margin: 14px 0 0; font-size: 13px; color: var(--muted); }
+    .cats .lbl { font-weight: 700; margin-right: 2px; }
+    .cats a { font-size: 12.5px; font-weight: 600; text-decoration: none; color: var(--text); border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 2px 8px; }
+    .cats a:hover { border-color: var(--accent); color: var(--accent); }
+    .cats .sep { width: 10px; }
+    figure.fig { margin: 22px 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    figure.fig img, figure.fig svg { display: block; width: 100%; height: auto; }
+    figure.fig figcaption { font-size: 13.5px; color: var(--muted); padding: 10px 16px; border-top: 1px solid var(--line); }
+    figure.fig figcaption .credit { display: block; font-size: 12px; margin-top: 2px; }
+    .srcfig { display: flex; gap: 12px; align-items: center; background: var(--bg); border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px; margin: 14px 0; font-size: 14.5px; }
+    .srcfig::before { content: "🖼"; font-size: 20px; }
+    .buzz { display: grid; gap: 10px; margin: 14px 0; }
+    .buzz div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; font-size: 15px; }
+    .buzz .who { display: block; font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+    pre { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; font-size: 13.5px; line-height: 1.6; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#insights"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#insights">← 인사이트 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>Kimi K3.1 Pro: 2.8조 파라미터 중 일부만 깨우는 오픈 웨이트 모델</h1>
+    <div class="byline"><span><time datetime="2026-10-25T16:11:14+09:00">2026.10.25 16:11 KST</time></span><span>읽는 시간 약 6분</span></div>
+    <div class="cats">
+      <span class="lbl">나라</span>
+      <a href="../#insights/country/중국">중국</a>
+      <span class="sep"></span>
+      <span class="lbl">기업</span>
+      <a href="../#insights/company/Moonshot%20AI">Moonshot AI</a>
+      <a href="../#insights/company/Anthropic">Anthropic</a>
+      <a href="../#insights/company/OpenAI">OpenAI</a>
+    </div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol>
+        <li>중국 Moonshot AI가 Kimi K3.1 Pro와 더 빠른 변형 Highspeed를 공개했다. 미국 시간 10월 23일, 한국 시간으로는 10월 24일 새벽이다.</li>
+        <li>전체 2.8조 파라미터 중 한 번에 약 1040억 개만 쓰는 MoE 구조에 100만 토큰 컨텍스트를 붙였고, 가중치는 11월 4일까지 공개한다고 밝혔다.</li>
+        <li>입문 개발자는 지금은 클라우드 API로 먼저 써 보고, 가중치가 풀리면 내 환경에서 돌려 볼지 나중에 판단하면 된다.</li>
+      </ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 모델</span><span class="what">Kimi K3.1 Pro</span><span>근거 글 6개</span></div>
+
+    <p class="lead">중국 AI 기업 Moonshot AI가 10월 23일(미국 기준) 새 플래그십 Kimi K3.1 Pro를 내놓으면서 개발자 커뮤니티가 다시 오픈 모델 이야기로 들썩였다. 이 모델의 특징은 크기가 매우 크지만 답을 만들 때 쓰는 부분은 일부뿐이라는 점, 그리고 100만 토큰이라는 긴 입력을 받는다는 점이다. 아직 가중치가 공개되지 않았기 때문에 지금은 발표와 독립 매체 보도를 중심으로 정리했다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">한눈에 보기</a></li>
+        <li><a href="#s2">어떻게 동작하나요</a></li>
+        <li><a href="#s3">왜 지금 화제인가요</a></li>
+        <li><a href="#s4">관련 나라·기업</a></li>
+        <li><a href="#s5">기존 방식과 무엇이 다른가</a></li>
+        <li><a href="#s6">직접 해 보기</a></li>
+        <li><a href="#s7">주의할 점과 한계</a></li>
+        <li><a href="#s8">정리</a></li>
+        <li><a href="#s9">참고한 글</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>한눈에 보기</h2>
+    <p>Kimi K3.1 Pro의 핵심 구조는 MoE(Mixture of Experts, 전문가 혼합)라고 부른다. 큰 종합병원을 떠올리면 쉽다. 병원에 전문의가 수백 명 있어도 환자 한 명을 진료할 때는 관련 과의 의사 몇 명만 진료실에 들어간다. 병원 전체 규모는 크지만, 한 번의 진료에 드는 인력은 적다. Moonshot의 공식 발표와 여러 매체는 Kimi K3.1 Pro가 전체 2.8조 파라미터를 갖고 질문마다 약 1040억 파라미터만 쓴다고 전했다. 파라미터는 모델 안에서 학습으로 조정된 숫자들이고, 많을수록 많은 지식을 담을 수 있지만 그만큼 무겁다.</p>
+    <figure class="fig">
+      <img src="img/2026-10-25-kimi-k3-1-pro-1.svg" alt="질문이 라우터를 거쳐 전문가 묶음 중 일부 칸만 활성화되고 답변으로 나가는 흐름도" />
+      <figcaption>그림 1. MoE 구조 개념도. 파란 칸만 계산에 참여한다.<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+    <div class="callout"><b>용어 풀이</b>
+      컨텍스트 윈도우: 모델이 한 번에 읽고 기억할 수 있는 입력의 길이. 100만 토큰은 책 여러 권 분량에 해당한다.<br />
+      오픈 웨이트(open-weight): 학습이 끝난 가중치 파일을 누구나 내려받아 쓸 수 있게 공개하는 방식. 소스 코드 전체가 공개되는 오픈소스와는 다르다.<br />
+      MoE: 여러 전문가 중 필요한 일부만 골라 계산하는 구조. 같은 크기의 밀집 모델보다 한 번 답할 때의 계산량이 적다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>어떻게 동작하나요</h2>
+    <p>동작은 네 단계로 나눠 보면 이해가 쉽다. 먼저 질문이 들어온다. 다음으로 라우터라는 작은 부품이 질문을 보고 어떤 전문가가 답하기 좋은지 고른다. 그다음 선택된 전문가만 계산에 참여하고, 마지막으로 그 결과를 합쳐 답변을 낸다. 나머지 전문가는 쉬고 있으므로 전체 크기에 비해 실제 계산량은 훨씬 작다. 공식 발표는 이 모델을 코딩, 3D 모델링, 금융 리서치, 도구를 쓰는 장기 작업에 강하다고 소개했다. Moonshot은 이 모델을 멀티모달 모델이라고 소개했다.</p>
+    <figure class="fig">
+      <img src="img/2026-10-25-kimi-k3-1-pro-2.svg" alt="지금 가능한 클라우드 API 경로와 11월 4일 목표로 공개 예정인 가중치 직접 실행 경로 비교" />
+      <figcaption>그림 2. 사용 경로 두 가지. 위는 지금 바로 가능한 API, 아래는 공개 예정인 자체 실행이다.<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+
+    <h2 id="s3"><span class="no">03</span>왜 지금 화제인가요</h2>
+    <p>가장 크게 반응을 부른 지점은 두 가지다. 하나는 독립 평가 기관 Artificial Analysis의 지능 지수에서 55점으로 4위에 올랐고, 공개 모델 가운데서는 1위라는 보도다. 다른 하나는 가격이다. 기존 Kimi K3보다 저렴하다는 주장이 나왔다. 다만 가격은 매체마다 숫자가 달라서 이 글에서는 확정된 값으로 적지 않았다. 아래 반응은 개발자 블로그와 매체 보도에서 확인한 내용이다.</p>
+    <div class="buzz">
+      <div>회사가 공개한 벤치마크에서 Terminal-Bench 4.0 65.7%, BenchCAD 92.7%를 기록했다. 다만 Claude Opus 5.5 등과 비교하면 어떤 항목은 앞서고 어떤 항목은 뒤진다.<span class="who"><a href="https://tech-insider.org/kimi-k3-1-pro-moonshot-ai-1m-context-open-weight-2026/">tech-insider</a> · 10.24</span></div>
+      <div>Highspeed 변형은 K3.1 Pro보다 2~3배 빠르다고 Moonshot이 밝혔다. 입문 개발자에게는 응답이 빨라야 체감이 좋으니 중요한 소식이다.<span class="who"><a href="https://www.unite.ai/moonshot-ai-releases-kimi-k3-1-pro-first-model-in-new-k3-1-series/">Unite.AI</a> · 10.23</span></div>
+      <div>DEV Community 글은 가격이 저렴하다는 점을 강조하면서도, 에이전트 작업은 토큰을 많이 써서 실제 비용은 작업 단위로 봐야 한다고 짚었다.<span class="who"><a href="https://dev.to/976905690/kimi-k31-pro-3-trillion-parameters-open-weights-one-fifth-the-price-moonshots-biggest-flex-2m8k">DEV Community</a> · 10.24</span></div>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>관련 나라·기업</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>이름</th><th>어떤 관련이 있나</th></tr></thead>
+      <tbody>
+        <tr><td>나라</td><td>중국</td><td>모델을 개발한 Moonshot AI의 본사 국가</td></tr>
+        <tr><td>기업</td><td>Moonshot AI</td><td>Kimi 시리즈를 만든 개발사. K3.1 Pro를 발표하고 가중치 공개 일정을 밝혔다</td></tr>
+        <tr><td>기업</td><td>Anthropic</td><td>비교 기준으로 쓰인 Claude Opus 5.5를 만든 회사</td></tr>
+        <tr><td>기업</td><td>OpenAI</td><td>비교 기준으로 쓰인 GPT-6 Astra를 만든 회사</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s5"><span class="no">05</span>기존 방식과 무엇이 다른가</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>비교 항목</th><th>일반적인 밀집(dense) 모델</th><th>Kimi K3.1 Pro</th></tr></thead>
+      <tbody>
+        <tr><td>답변 한 번에 쓰는 파라미터</td><td>전체를 매번 사용</td><td>전체 2.8조 중 약 1040억 (보도 기준)</td></tr>
+        <tr><td>계산량 감각</td><td>모델이 클수록 무거워짐</td><td>전체 규모는 크지만 실제 계산은 일부만</td></tr>
+        <tr><td>입력 길이</td><td>모델마다 다름</td><td>100만 토큰 컨텍스트</td></tr>
+        <tr><td>가중치 공개</td><td>모델마다 다름</td><td>11월 4일까지 공개 예정이라고 밝힘</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s6"><span class="no">06</span>직접 해 보기</h2>
+    <p>지금 당장 할 수 있는 일은 공식 안내를 읽고 계정과 요금제를 확인하는 것이다. 아래 단계는 Moonshot 공식 포럼과 Unite.AI가 인용한 Kimi 문서에 나온 내용을 바탕으로 했다. 호출 코드는 공식 문서에서 직접 확인하지 못해 적지 않았다.</p>
+    <div class="actions">
+      <div class="action"><h4>1. 공식 공지 확인하기</h4><p>Moonshot 공식 포럼의 Kimi K3.1 Pro 출시 공지를 열어 모델 소개와 가중치 공개 계획을 읽는다.</p></div>
+      <div class="action"><h4>2. 모델 이름 확인하기</h4><p>API에서 쓰는 모델 ID는 kimi-k3.1-pro와 kimi-k3.1-pro-highspeed라고 보도됐다. 실제 ID는 공식 API 문서에서 한 번 더 맞춰 본다.</p></div>
+      <div class="action"><h4>3. 요금제 조건 보기</h4><p>보도에 따르면 Pro 모델은 Plus 이상, Highspeed는 Pro 이상 요금제에서 쓸 수 있다. 가격표는 매체마다 달라서 공식 가격 페이지에서 직접 확인한다.</p></div>
+      <div class="action"><h4>4. 가중치 공개 기다리기</h4><p>11월 4일 전후로 가중치가 풀리면 공개 저장소에서 파일 크기와 실행 요구 사항을 본 뒤, 내 노트북으로 감당 가능한지 판단한다. 2.8조 파라미터 모델은 일반 노트북에 올리기 어려울 가능성이 크다.</p></div>
+    </div>
+
+    <h2 id="s7"><span class="no">07</span>주의할 점과 한계</h2>
+    <ul>
+      <li>벤치마크 대부분은 Moonshot이 발표한 수치다. 독립적으로 재현된 결과는 아직 많지 않다.</li>
+      <li>사이버 보안 관련 벤치마크에서는 Claude Opus 5.5와 GPT-6 Astra보다 뒤진다고 보도됐다. Moonshot은 보안 위험 때문에 사이버 관련 학습 데이터를 뺐다고 설명했다.</li>
+      <li>발표 문구는 "3T급"이지만 다른 보도는 총 2.8조 파라미터라고 적었다. 숫자는 공식 자료 기준으로 읽는 것이 안전하다.</li>
+      <li>가격은 매체마다 달라서(한 곳은 달러, 다른 곳은 위안으로 보도) 실제 청구 금액은 반드시 공식 페이지에서 확인해야 한다.</li>
+      <li>가중치 공개는 11월 4일까지라는 목표일 뿐 확정된 날짜가 아니다. 공개 전까지는 자체 실행이 불가능하다.</li>
+    </ul>
+
+    <h2 id="s8"><span class="no">08</span>정리</h2>
+    <div class="conclusion">
+      <p>Kimi K3.1 Pro가 주는 메시지는 "크다고 매번 전부 계산할 필요는 없다"는 설계 방향이다. MoE 구조는 이미 여러 모델에서 쓰이고 있고, 이 모델은 그 방향을 공개 모델 쪽에서 밀어붙인다는 점에서 의미가 있다. 입문 개발자 입장에서는 모델 이름보다 구조의 원리를 이해해 두면 다음 모델이 나와도 빠르게 따라갈 수 있다.</p>
+      <p>지금 할 일은 단순하다. 공식 API로 짧은 질문을 던져 보고 응답 속도와 비용을 직접 재 보는 것이다. 벤치마크 점수보다 내 작업에서 얼마나 잘 되는지가 더 중요하다. 가중치가 공개되면 그때 다시 실행 환경과 비용을 따져 보면 된다.</p>
+    </div>
+
+    <h2 id="s9"><span class="no">09</span>참고한 글</h2>
+    <ol class="refs">
+      <li><a href="https://forum.moonshot.ai/t/kimi-k3-1-pro-has-launched-start-exploring-now/629">📢 Kimi K3.1 Pro has launched! Start exploring now!</a> <span class="src">Moonshot 공식 포럼 · 2026.10.23</span></li>
+      <li><a href="https://x.com/Kimi_Moonshot/status/2113680701770068067">Introducing Kimi K3.1 Pro (공식 게시글)</a> <span class="src">Kimi 공식 X · 2026.10.23</span></li>
+      <li><a href="https://siliconangle.com/2026/10/23/moonshot-ai-launches-new-flagship-kim-k3-1-pro-model-with-3t-parameters/">Moonshot AI launches new flagship Kimi K3.1 Pro model with 3T parameters</a> <span class="src">SiliconANGLE · 2026.10.23</span></li>
+      <li><a href="https://www.unite.ai/moonshot-ai-releases-kimi-k3-1-pro-first-model-in-new-k3-1-series/">Moonshot AI Releases Kimi K3.1 Pro, First Model in New K3.1 Series</a> <span class="src">Unite.AI · 2026.10.23 (페이지 표기 기준)</span></li>
+      <li><a href="https://tech-insider.org/kimi-k3-1-pro-moonshot-ai-1m-context-open-weight-2026/">Kimi K3.1 Pro: 1M Context, 3T Open Weights [2026]</a> <span class="src">tech-insider · 2026.10.24</span></li>
+      <li><a href="https://dev.to/976905690/kimi-k31-pro-3-trillion-parameters-open-weights-one-fifth-the-price-moonshots-biggest-flex-2m8k">Kimi K3.1 Pro: 3 Trillion Parameters, Open Weights, One-Fifth the Price</a> <span class="src">DEV Community · 2026.10.24</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#insights">← 전체 인사이트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

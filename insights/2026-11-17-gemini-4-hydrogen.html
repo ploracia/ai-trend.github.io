@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gemini 4 Hydrogen: 빠르고 싼 구글의 새 모델, 입문 개발자가 알아야 할 것 | AI 비밀 레시피</title>
+  <meta name="description" content="구글이 11월 12일 공개한 Gemini 4 Hydrogen의 가격·성능·사용 범위를 공식 발표 기준으로 정리했습니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+
+    .cats { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; margin: 14px 0 0; font-size: 13px; color: var(--muted); }
+    .cats .lbl { font-weight: 700; margin-right: 2px; }
+    .cats a { font-size: 12.5px; font-weight: 600; text-decoration: none; color: var(--text); border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 2px 8px; }
+    .cats a:hover { border-color: var(--accent); color: var(--accent); }
+    .cats .sep { width: 10px; }
+    figure.fig { margin: 22px 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    figure.fig img, figure.fig svg { display: block; width: 100%; height: auto; }
+    figure.fig figcaption { font-size: 13.5px; color: var(--muted); padding: 10px 16px; border-top: 1px solid var(--line); }
+    figure.fig figcaption .credit { display: block; font-size: 12px; margin-top: 2px; }
+    .srcfig { display: flex; gap: 12px; align-items: center; background: var(--bg); border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px; margin: 14px 0; font-size: 14.5px; }
+    .srcfig::before { content: "🖼"; font-size: 20px; }
+    .buzz { display: grid; gap: 10px; margin: 14px 0; }
+    .buzz div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; font-size: 15px; }
+    .buzz .who { display: block; font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+    pre { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; font-size: 13.5px; line-height: 1.6; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#insights"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#insights">← 인사이트 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>Gemini 4 Hydrogen: 빠르고 싼 구글의 새 모델, 입문 개발자가 알아야 할 것</h1>
+    <div class="byline"><span><time datetime="2026-11-17T16:25:00+09:00">2026.11.17 16:25 KST</time></span><span>읽는 시간 약 6분</span></div>
+    <div class="cats">
+      <span class="lbl">나라</span>
+      <a href="../#insights/country/미국">미국</a>
+      <span class="sep"></span>
+      <span class="lbl">기업</span>
+      <a href="../#insights/company/Google">Google</a>
+    </div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol>
+        <li>구글이 2026년 11월 12일 Gemini 4 Hydrogen을 전 세계에 공개했고, 이전 빠른 모델인 Gemini 3.8 Flash를 대체합니다.</li>
+        <li>100만 토큰 입력을 받는 긴 문맥 모델이며, 개발자 API 가격은 입력 100만 토큰당 1.50달러, 출력 100만 토큰당 7.50달러입니다.</li>
+        <li>코딩 도구와 에이전트 작업에 쓰기 좋은 "빠르고 싼" 선택지라서, 입문자가 API를 처음 써 볼 때 후보로 올리기 좋습니다.</li>
+      </ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 모델</span><span class="what">Gemini 4 Hydrogen</span><span>근거 글 2개 (시각 직접 확인) · 발표 요약 1개</span></div>
+
+    <p class="lead">오늘 개발자 커뮤니티에서는 "비싼 최상위 모델 말고, 매일 쓸 만큼 빠르고 싼 모델"을 찾는 이야기가 많아졌습니다. 그 흐름에 맞춰 구글이 11월 12일 내놓은 것이 Gemini 4 Hydrogen입니다. 구글은 이 모델을 "3.8 Flash의 후계"로 소개하면서, 코딩과 에이전트 작업에서 더 빠르고 더 저렴하다고 설명합니다. 다만 아래 숫자는 모두 구글의 발표 기준이므로, 여러분이 직접 측정해 보기 전까지는 참고용으로 읽어 주세요.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">한눈에 보기</a></li>
+        <li><a href="#s2">어떻게 동작하나요</a></li>
+        <li><a href="#s3">왜 지금 화제인가요</a></li>
+        <li><a href="#s4">관련 나라·기업</a></li>
+        <li><a href="#s5">기존 방식과 무엇이 다른가</a></li>
+        <li><a href="#s6">직접 해 보기</a></li>
+        <li><a href="#s7">주의할 점과 한계</a></li>
+        <li><a href="#s8">정리</a></li>
+        <li><a href="#s9">참고한 글</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>한눈에 보기</h2>
+    <p>모델을 고르는 일은 식당 메뉴를 고르는 것과 비슷합니다. 최고급 코스 요리는 맛이 깊지만 비싸고 오래 걸리고, 분식집의 든든한 한 끼는 빠르고 싸지만 복잡한 요리는 어렵습니다. Gemini 4 Hydrogen은 "매일 시키기 좋은 빠른 한 끼"를 노린 모델이라고 보면 됩니다. 구글은 이 모델이 Gemini 3.8 Flash보다 약 2.5배 빠르다고 밝혔습니다.</p>
+    <figure class="fig">
+      <img src="img/2026-11-17-gemini-4-hydrogen-1.svg" alt="Gemini 4 Hydrogen의 위치를 최상위 모델과 빠른 모델 사이에 놓은 개념도" />
+      <figcaption>그림 1. 최상위 모델과 빠른 모델 사이에서 Hydrogen이 맡는 자리<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+    <div class="callout"><b>용어 풀이</b>
+      토큰: 모델이 글을 읽고 쓸 때 쓰는 작은 조각입니다. 영어 단어 하나, 한글 한두 글자 정도로 생각하면 됩니다.<br />
+      문맥 창(context window): 모델이 한 번에 붙잡고 볼 수 있는 입력 분량입니다. 100만 토큰이면 책 여러 권 분량에 가깝습니다.<br />
+      에이전트: 모델이 도구를 골라 호출하며 여러 단계를 스스로 진행하는 방식입니다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>어떻게 동작하나요</h2>
+    <p>흐름은 세 단계로 나눠 보면 쉽습니다. 먼저 입력 단계에서 텍스트뿐 아니라 PDF, 스프레드시트, 차트, 음성, 녹화 영상까지 한 번에 넣을 수 있습니다. 구글은 이 점을 강조합니다. 다음 처리 단계에서는 생각의 깊이를 low, medium, high, 그리고 새로 추가된 xhigh 중에서 고를 수 있습니다. 기본값은 high입니다. 깊게 생각할수록 답은 정확해지지만 시간과 비용이 늘어납니다. 마지막 출력 단계에서는 도구를 호출해 결과를 얻거나, 근거를 붙인 보고서 형태의 답을 만듭니다.</p>
+    <figure class="fig">
+      <img src="img/2026-11-17-gemini-4-hydrogen-2.svg" alt="입력, 생각 깊이 조절, 출력으로 이어지는 처리 흐름도" />
+      <figcaption>그림 2. 입력 → 생각 깊이 선택 → 도구 호출·출력으로 이어지는 흐름<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+
+    <h2 id="s3"><span class="no">03</span>왜 지금 화제인가요</h2>
+    <p>11월 12일 구글 공식 블로그와 IT 매체 9to5Google이 같은 날 소식을 전하면서 빠르게 퍼졌습니다. 구글은 이 모델을 AI 모드 검색의 기본 모델로 삼았고, 안티그래비티(Antigravity) 유료 구독자에게도 열었다고 밝혔습니다. 동시에 Gemini 앱의 무료 사용자도 상황에 맞춰 자동 선택되는 방식으로 이 모델을 쓸 수 있다고 설명했습니다.</p>
+    <div class="buzz">
+      <div>가격을 한 가지로 통일해서 긴 문맥을 써도 요금 구간이 바뀌지 않는다는 점이 눈에 띈다고 전해졌습니다.<span class="who"><a href="https://blog.google/intl/en-in/products/introducing-gemini-4-hydrogen/">Google 공식 블로그</a> · 11.12 19:30 UTC</span></div>
+      <div>9to5Google은 개발자용 가격이 입력 100만 토큰당 1.50달러, 출력 100만 토큰당 7.50달러라고 전했습니다.<span class="who"><a href="https://9to5google.com/2026/11/12/gemini-4-hydrogen-launch/">9to5Google</a> · 11.12 10:01 PT</span></div>
+      <div>ThursdAI는 11월 12일 주간 발표 목록에 Gemini 4 Hydrogen을 함께 실어 정리했습니다.<span class="who"><a href="https://thursdai.news/releases/2026-11">ThursdAI 11월 릴리스 목록</a> · 11.12</span></div>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>관련 나라·기업</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>이름</th><th>어떤 관련이 있나</th></tr></thead>
+      <tbody>
+        <tr><td>기업</td><td>Google (Google DeepMind)</td><td>모델을 개발하고 API, AI Studio, Gemini 앱, AI 모드 검색에 배포합니다.</td></tr>
+        <tr><td>나라</td><td>미국</td><td>모델을 만든 기업의 본사가 있는 나라입니다.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s5"><span class="no">05</span>기존 방식과 무엇이 다른가</h2>
+    <p>가장 큰 차이는 "빠르고 싼 모델을 더 긴 입력과 함께 쓸 수 있게 했다"는 점입니다. 아래 표는 구글 발표에 나온 항목만 옮긴 것입니다. 표에 없는 비교 수치는 구글이 공개하지 않았으므로 여기서 추측하지 않았습니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>비교 항목</th><th>Gemini 3.8 Flash (이전 빠른 모델)</th><th>Gemini 4 Hydrogen</th></tr></thead>
+      <tbody>
+        <tr><td>응답 속도</td><td>기준</td><td>구글 발표 기준 약 2.5배 빠름</td></tr>
+        <tr><td>입력 가격</td><td>구글 발표에 직접 비교값 없음</td><td>100만 토큰당 1.50달러 (전 구간 동일)</td></tr>
+        <tr><td>출력 가격</td><td>구글 발표에 직접 비교값 없음</td><td>100만 토큰당 7.50달러 (전 구간 동일)</td></tr>
+        <tr><td>입력 한도</td><td>—</td><td>네이티브 100만 토큰 입력</td></tr>
+        <tr><td>생각 깊이</td><td>—</td><td>low, medium, high(기본), xhigh</td></tr>
+        <tr><td>터미널 작업 점수 (Terminal-Bench 4.1)</td><td>18.2%</td><td>57%</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s6"><span class="no">06</span>직접 해 보기</h2>
+    <p>오늘 확인한 공식 문서에서는 API에서 쓸 모델 이름 문자열을 정확히 찾지 못했습니다. 그래서 명령이나 코드는 적지 않고, 단계만 적습니다. 공식 모델 목록 페이지에서 Hydrogen 항목을 확인한 뒤 이름을 복사해 쓰면 됩니다.</p>
+    <div class="actions">
+      <div class="action"><h4>1단계: 무료로 먼저 써 보기</h4><p>Google AI Studio에 로그인해서 모델 선택 메뉴에서 Hydrogen을 고르고, 질문 하나를 넣어 봅니다.</p></div>
+      <div class="action"><h4>2단계: 생각 깊이 바꿔 보기</h4><p>같은 질문을 low와 high로 각각 돌려 보고, 답의 차이와 응답 시간을 메모합니다.</p></div>
+      <div class="action"><h4>3단계: 내 데이터로 비교하기</h4><p>평소 쓰는 PDF 한 장을 넣고 요약을 시켜 본 뒤, 이전에 쓰던 모델의 결과와 나란히 두고 비교합니다.</p></div>
+    </div>
+
+    <h2 id="s7"><span class="no">07</span>주의할 점과 한계</h2>
+    <ul>
+      <li>속도·점수·가격 대부분은 구글이 발표한 수치입니다. 실제 서비스에서의 속도는 요청 크기, 네트워크, 시간대에 따라 달라질 수 있으니 직접 재 보세요.</li>
+      <li>구글 블로그 기준 "출력 최대 100만 토큰"과 "입력 100만 토큰"은 발표문 표현이라, 입력과 출력을 합산한 한도인지 개별 한도인지는 공식 모델 문서에서 다시 확인해야 합니다.</li>
+      <li>API 무료 등급이 있는지는 오늘 확인한 페이지에서 찾지 못했습니다. 비용을 걱정한다면 결제 전에 요금 페이지를 먼저 보세요.</li>
+      <li>"더 빠르고 싸다"는 말은 작업 종류에 따라 다르게 체감될 수 있습니다. 어려운 추론 문제에서는 상위 모델을 쓰는 편이 나을 수 있습니다.</li>
+    </ul>
+
+    <h2 id="s8"><span class="no">08</span>정리</h2>
+    <div class="conclusion">
+      <p>Gemini 4 Hydrogen은 "최고 성능"보다 "매일 쓸 수 있는 속도와 가격"에 무게를 둔 모델입니다. 입문 개발자에게 중요한 것은 모델 이름보다 자신의 작업에서 비용과 품질이 어떻게 나오는지 직접 재 보는 습관입니다. 같은 질문을 두 모델에 넣고 결과를 비교하는 일만 해도 모델 선택 감각이 빠르게 생깁니다.</p>
+      <p>이번 글의 수치는 모두 구글이 11월 12일 발표한 내용과 IT 매체 보도를 바탕으로 했습니다. 발표 이후 가격이나 한도가 바뀌었을 수 있으니, 실제 사용 전에는 공식 문서를 한 번 더 확인해 주세요.</p>
+    </div>
+
+    <h2 id="s9"><span class="no">09</span>참고한 글</h2>
+    <ol class="refs">
+      <li><a href="https://blog.google/intl/en-in/products/introducing-gemini-4-hydrogen/">Introducing Gemini 4 Hydrogen (Google 공식 블로그)</a> <span class="src">Google · 2026.11.12</span></li>
+      <li><a href="https://9to5google.com/2026/11/12/gemini-4-hydrogen-launch/">Gemini 4 Hydrogen 보도 (9to5Google)</a> <span class="src">9to5Google · 2026.11.12</span></li>
+      <li><a href="https://thursdai.news/releases/2026-11">Everything AI Released in November 2026 (ThursdAI)</a> <span class="src">ThursdAI · 2026.11.12 항목</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#insights">← 전체 인사이트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

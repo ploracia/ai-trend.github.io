@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anthropic, 먼저 말 거는 AI 에이전트 앱 'Claude Duet' 공개 | AI 비밀 레시피</title>
+  <meta name="description" content="Anthropic이 공개한 능동형 에이전트 앱 Claude Duet의 기능과 승인·보안 설계를 입문 개발자 눈높이로 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>Anthropic, 먼저 말 거는 AI 에이전트 앱 'Claude Duet' 공개</h1>
+    <div class="byline"><span><time datetime="2026-10-22T08:23:04+09:00">2026.10.22 08:23 KST</time></span><span>읽는 시간 약 7분</span><span>#Anthropic #에이전트</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>Anthropic이 10월 21일(현지시간) 연결된 앱을 지켜보다가 챙길 일을 먼저 알려 주고, 사용자가 자리를 비워도 일을 이어 가는 에이전트 앱 'Claude Duet'을 연구 미리보기로 공개했습니다.</li><li>메시지 전송·결제·서명·삭제 전에는 반드시 승인을 받고 일부 금융 행위는 아예 막는 등, "알아서 일하는 AI"를 실제 생활에 들이는 안전장치 설계가 함께 공개됐다는 점이 중요합니다.</li><li>개발자에게는 질문에 답하는 챗봇에서 백그라운드에서 일하는 에이전트로 제품의 중심이 옮겨 가고 있으며, 커넥터·권한·승인 흐름 설계가 핵심 기술이 된다는 뜻입니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">Anthropic, 능동형 에이전트 앱 Claude Duet 연구 미리보기 출시(미국 Pro·Max 대기자 명단)</span><span>발표 2026.10.21(현지) · 국내 2026.10.22 새벽(KST)</span><span><a href="https://claude.com/resources/articles/claude-duet">Anthropic 공식 소개</a> · <a href="https://wsau.com/2026/10/21/anthropic-unveils-claude-duet-ai-agent-app/">Reuters(WSAU 전재)</a></span></div>
+
+    <p class="lead">지금까지 AI 챗봇은 우리가 물어봐야 대답했습니다. Claude Duet은 반대로, 메일·메신저·결제 앱을 몇 시간마다 살펴보다가 "이건 확인이 필요해요"라고 먼저 말을 겁니다. 사용자가 앱을 닫아도 클라우드 컴퓨터에서 일을 계속합니다. AI 비서가 실제로 내 계정에서 일하기 시작할 때 무엇이 필요한지 보여 주는 출시입니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">이 이슈는 무엇인가?</a></li>
+        <li><a href="#s2">누가 움직이나?</a></li>
+        <li><a href="#s3">무슨 일이 있었나?</a></li>
+        <li><a href="#s4">실무자가 해볼 것</a></li>
+        <li><a href="#s5">긍정적인 방향으로 간다면?</a></li>
+        <li><a href="#s6">부정적인 방향으로 간다면?</a></li>
+        <li><a href="#s7">입문 개발자에게 남는 것은?</a></li>
+        <li><a href="#s8">참고 자료</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>능동형(proactive) AI 에이전트 'Claude Duet' 출시: 먼저 알려 주고, 승인받고 행동하는 AI</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>AI 에이전트</strong>는 목표를 받으면 여러 단계를 스스로 계획하고 도구를 써서 일을 끝내는 AI입니다. <strong>능동형 에이전트</strong>는 지시를 기다리지 않고 상황을 지켜보다 먼저 제안하거나 알림을 보냅니다. <strong>커넥터</strong>는 AI가 Gmail·Slack 같은 외부 서비스에 접근하도록 이어 주는 연결 장치입니다. <strong>프롬프트 인젝션</strong>은 이메일이나 웹페이지에 숨긴 문장으로 AI에게 몰래 엉뚱한 지시를 내리는 공격입니다. <strong>연구 미리보기</strong>는 정식 출시 전 일부 사용자에게 먼저 써 보게 하는 단계입니다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl">
+    <table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>출시</td><td><strong>Anthropic</strong></td><td>Claude Opus 5.5 기반의 Claude Duet을 iOS·Android·claude.ai에 연구 미리보기로 공개</td></tr>
+        <tr><td>결제 연동</td><td><strong>Stripe · Shopify</strong></td><td>Stripe의 Link 지갑(가상 카드)과 Shop Pay로 사용자 승인 후 구매 가능</td></tr>
+        <tr><td>업무 앱 연동</td><td><strong>Gmail · Slack · QuickBooks · DocuSign · HubSpot 등</strong></td><td>Claude 마켓플레이스의 6,000개가 넘는 커넥터·플러그인으로 연결</td></tr>
+        <tr><td>경쟁사</td><td><strong>OpenAI · Meta</strong></td><td>Reuters에 따르면 OpenAI는 지난달 'dots' 에이전트를 내놨고, Meta의 Muse 에이전트는 수백만 다운로드를 기록</td></tr>
+        <tr><td>대상 국가</td><td><strong>미국</strong></td><td>미국 Pro·Max 구독자부터 대기자 명단으로 순차 제공</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+
+    <h3>오늘 발표된 내용</h3>
+    <p>Anthropic 공식 소개에 따르면 Claude Duet은 전문직 종사자와 소상공인을 겨냥한 별도 앱입니다. 매일 아침 연결된 앱에서 중요한 일을 모아 브리핑하고, 하루 동안 몇 시간 간격으로 계정을 살펴 주의가 필요할 때만 메시지를 보냅니다. 일정 잡기부터 대시보드·매출 예측·시제품·웹앱 만들기까지 맡길 수 있고, 사용자가 자리를 비워도 작업을 이어 갑니다.</p>
+    <p>9to5Mac 보도에 따르면 진행 중인 일은 '할 일' 탭에서, 리서치 보고서·재무 모델·슬라이드 같은 결과물은 별도 탭에서 파일로 볼 수 있습니다. 기존 Claude의 메모리·스킬·커넥터를 그대로 쓰며, 커넥터가 없는 사이트는 자체 클라우드 브라우저로 처리합니다.</p>
+    <p>안전장치가 이번 발표의 핵심입니다. Duet은 읽기·초안 작성·준비 작업은 스스로 하지만, <strong>메시지 전송·결제·문서 서명·삭제</strong> 전에는 할 일을 보여 주고 승인을 기다립니다. 증권 매매나 계좌 간 송금은 승인이 있어도 하지 않습니다. 에이전트는 별도 가상 머신에서 돌아 비밀번호나 로그인 토큰을 직접 보지 않고, 프롬프트 인젝션 방어와 민감 정보(카드 번호·신분증 번호) 공유 차단 분류기를 갖췄다고 회사는 설명했습니다. 긴급도를 잘못 판단하거나 티켓 예매 같은 개인 업무에 아직 약하다는 한계도 스스로 밝혔습니다.</p>
+    <p>추가 요금은 없지만 백그라운드 작업도 요금제 사용량 한도에 포함됩니다. Team·Enterprise 요금제는 아직 대상이 아닙니다.</p>
+
+    <h3>배경: 짧은 타임라인</h3>
+    <ul class="timeline">
+      <li><time>2026.09</time>Reuters에 따르면 OpenAI가 Slack·Teams 등을 오가며 목표를 수행하는 'dots' 에이전트를 출시합니다.</li>
+      <li><time>2026.10.20</time>Microsoft가 기업용 에이전트를 감시·통제하는 도구를 내놓으며 '에이전트 보안'이 화두가 됩니다.</li>
+      <li><time>2026.10.21</time>Anthropic이 Claude Duet 연구 미리보기를 공개합니다.</li>
+      <li><time>향후</time>Anthropic은 Team·Enterprise 요금제 등으로 대상 확대를 계획하고 있다고 밝혔습니다.</li>
+    </ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      AI 앱의 기본 모습이 <strong>"물으면 답하는 채팅창"에서 "지켜보다 먼저 알리고, 중요한 행동은 허락받는 비서"</strong>로 바뀌고 있습니다.
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>실무자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. "사람 승인" 단계를 설계에 넣기</h4><p>에이전트를 만들 때 되돌릴 수 없는 행동(전송, 결제, 삭제)은 실행 전 사용자 확인을 받도록 코드 구조에 넣으세요. Duet의 승인 규칙이 좋은 참고서입니다.</p></div>
+      <div class="action"><h4>2. 허용·금지 행동 목록 만들기</h4><p>에이전트가 스스로 해도 되는 일, 승인받을 일, 절대 하면 안 되는 일을 세 칸으로 나눠 적어 보세요. 권한 설계의 출발점입니다.</p></div>
+      <div class="action"><h4>3. MCP 같은 커넥터 표준 익히기</h4><p>에이전트의 힘은 연결된 도구에서 나옵니다. 간단한 커넥터(예: 내 할 일 목록 읽기)를 직접 만들어 보면 구조가 금방 이해됩니다.</p></div>
+      <div class="action"><h4>4. 프롬프트 인젝션 테스트하기</h4><p>에이전트가 읽는 이메일이나 문서에 "이전 지시를 무시하라" 같은 문장을 넣어 보고, 내 앱이 따라가는지 확인하세요.</p></div>
+      <div class="action"><h4>5. 비밀 정보와 에이전트를 분리하기</h4><p>API 키와 비밀번호를 에이전트가 직접 읽지 못하게 별도 저장소나 대리 호출 구조로 감싸세요. Duet도 토큰을 에이전트에 보여 주지 않는 방식을 택했습니다.</p></div>
+      <div class="action"><h4>6. 알림 빈도를 사용자에게 맡기기</h4><p>능동형 기능은 너무 자주 말을 걸면 바로 꺼집니다. 무엇을, 얼마나 자주 알릴지 사용자가 정하게 하세요.</p></div>
+      <div class="action"><h4>7. 백그라운드 작업 비용 계산하기</h4><p>몇 시간마다 계정을 확인하는 작업도 토큰을 씁니다. 하루 몇 번 확인하면 비용이 얼마인지 미리 계산해 보세요.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos">
+      <ul>
+        <li><strong>소상공인의 잡무가 줄어든다.</strong> 미수금 확인, 일정 조율, 보고서 작성 같은 일을 에이전트가 맡아 사람이 핵심 업무에 집중할 수 있습니다.</li>
+        <li><strong>승인 기반 설계가 업계 표준이 된다.</strong> 위험한 행동 전 확인, 금지 행동 목록 같은 방식이 다른 에이전트 제품에도 퍼질 수 있습니다.</li>
+        <li><strong>커넥터 생태계가 커진다.</strong> 수천 개 커넥터 수요가 생기면서 개발자가 만든 플러그인이 새로운 사업 기회가 됩니다.</li>
+        <li><strong>에이전트 보안 기술이 빨리 발전한다.</strong> 실제 계정에서 일하는 제품이 늘면서 프롬프트 인젝션 방어와 권한 관리 연구에 투자가 몰립니다.</li>
+      </ul>
+    </div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg">
+      <ul>
+        <li><strong>알림 피로가 생긴다.</strong> 긴급도를 잘못 판단하면 중요한 일을 놓치거나 쓸데없는 알림이 쌓여 신뢰를 잃을 수 있습니다.</li>
+        <li><strong>한 번의 실수가 크게 번진다.</strong> 여러 계정에 연결된 에이전트가 조작당하면 메일·결제·문서까지 한꺼번에 피해를 볼 수 있습니다.</li>
+        <li><strong>승인 버튼이 형식이 된다.</strong> 확인 요청이 너무 많으면 사용자가 내용을 보지 않고 습관적으로 승인할 위험이 있습니다.</li>
+        <li><strong>사용량 한도 경쟁이 심해진다.</strong> 백그라운드 작업이 한도를 빨리 소모해 요금제 인상이나 사용 제한 불만으로 이어질 수 있습니다.</li>
+      </ul>
+    </div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion">
+      <p>Claude Duet은 AI가 "대화 상대"에서 "같이 일하는 동료"로 넘어가는 장면을 보여 줍니다. 그리고 그 동료가 신뢰받으려면 똑똑함만큼이나 무엇을 묻고 무엇을 하지 않을지 정한 규칙이 중요하다는 점도 함께 보여 줍니다.</p>
+      <p>입문 개발자라면 작은 에이전트를 직접 만들어 보면서 <strong>도구 연결, 권한 나누기, 사람 승인 받기</strong> 세 가지를 꼭 연습해 보세요. 앞으로 AI 제품을 만드는 일의 상당 부분이 바로 이 설계에 달려 있습니다.</p>
+    </div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://claude.com/resources/articles/claude-duet">Introducing Claude Duet</a> <span class="src">— Anthropic(Claude), 2026.10.21</span></li>
+      <li><a href="https://wsau.com/2026/10/21/anthropic-unveils-claude-duet-ai-agent-app/">Anthropic unveils Claude Duet AI agent app (Reuters)</a> <span class="src">— WSAU/Reuters, 2026.10.21</span></li>
+      <li><a href="https://9to5mac.com/2026/10/21/anthropic-takes-on-chatgpt-dots-and-meta-muse-with-claude-duet/">Anthropic takes on ChatGPT Dots and Meta Muse with Claude Duet</a> <span class="src">— 9to5Mac, 2026.10.21</span></li>
+    </ol>
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list">
+      <a href="2026-10-22-meta-q3-ai-capex-class-c.html"><span class="r">오늘의 뉴스 1위</span><span class="t">Meta 3분기 실적: 매출 646억 달러, AI 설비투자에 현금흐름 적자…의결권 없는 C주식 신설</span></a>
+      <a href="2026-10-22-litellm-pypi-supply-chain-attack.html"><span class="r">오늘의 뉴스 3위</span><span class="t">LiteLLM 1.107.0 악성 배포: 설치만 해도 API 키·클라우드 자격 증명이 빠져나갔다</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

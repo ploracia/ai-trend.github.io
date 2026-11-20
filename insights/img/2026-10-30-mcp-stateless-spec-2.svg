@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-labelledby="t2 d2">
+  <title id="t2">MRTR 방식의 왕복 요청 흐름</title>
+  <desc id="d2">클라이언트가 요청을 보내면 서버가 입력이 더 필요하다고 답하고, 클라이언트가 답을 붙여 같은 요청을 다시 보내 결과를 받는다.</desc>
+  <rect x="0" y="0" width="720" height="380" rx="14" fill="#f4f6fb"/>
+  <text x="360" y="38" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="18" font-weight="700" fill="#1b1b1f">서버가 되묻고, 클라이언트가 답을 붙여 다시 보낸다 (MRTR)</text>
+
+  <!-- 세로 생명선 -->
+  <line x1="150" y1="80" x2="150" y2="345" stroke="#2f5bea" stroke-width="2" stroke-dasharray="6 5"/>
+  <line x1="570" y1="80" x2="570" y2="345" stroke="#1f8a5b" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="150" y="72" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="15" font-weight="700" fill="#1b1b1f">클라이언트</text>
+  <text x="570" y="72" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="15" font-weight="700" fill="#1b1b1f">MCP 서버</text>
+
+  <!-- 1: 요청 -->
+  <line x1="150" y1="115" x2="570" y2="115" stroke="#62626b" stroke-width="2"/>
+  <polygon points="562,109 570,115 562,121" fill="#62626b"/>
+  <text x="360" y="108" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="13" fill="#1b1b1f">① tools/call 요청 (예: 파일 삭제)</text>
+
+  <!-- 2: input_required -->
+  <line x1="570" y1="185" x2="150" y2="185" stroke="#c2412d" stroke-width="2"/>
+  <polygon points="158,179 150,185 158,191" fill="#c2412d"/>
+  <text x="360" y="178" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="13" fill="#1b1b1f">② "입력 필요" 응답 (input_required)</text>
+  <text x="360" y="202" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="12" fill="#4a4a55">사용자에게 확인을 요청하라는 뜻</text>
+
+  <!-- 3: 재요청 -->
+  <line x1="150" y1="255" x2="570" y2="255" stroke="#62626b" stroke-width="2"/>
+  <polygon points="562,249 570,255 562,261" fill="#62626b"/>
+  <text x="360" y="248" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="13" fill="#1b1b1f">③ 같은 요청 재전송 + inputResponses</text>
+  <text x="360" y="272" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="12" fill="#4a4a55">사용자가 고른 답을 붙여서</text>
+
+  <!-- 4: 결과 -->
+  <line x1="570" y1="325" x2="150" y2="325" stroke="#1f8a5b" stroke-width="2"/>
+  <polygon points="158,319 150,325 158,331" fill="#1f8a5b"/>
+  <text x="360" y="318" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="13" fill="#1b1b1f">④ 최종 결과 응답</text>
+</svg>

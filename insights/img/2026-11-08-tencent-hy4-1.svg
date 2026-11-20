@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 280" role="img" aria-labelledby="t1 d1">
+  <title id="t1">Hy4 공개 흐름</title>
+  <desc id="d1">2026년 8월 28일 프리뷰 공개, 11월 4일 정식 발표, 가중치 공개는 일정 미정</desc>
+  <rect x="0" y="0" width="640" height="280" rx="14" fill="#f7f6f2"/>
+  <text x="32" y="44" font-family="Pretendard, sans-serif" font-size="18" font-weight="700" fill="#1b1b1f">Hy4 공개 흐름</text>
+  <text x="32" y="66" font-family="Pretendard, sans-serif" font-size="13" fill="#62626b">출처 글을 바탕으로 다시 그림</text>
+  <line x1="90" y1="140" x2="550" y2="140" stroke="#62626b" stroke-width="3"/>
+  <line x1="390" y1="140" x2="550" y2="140" stroke="#2f5bea" stroke-width="3" stroke-dasharray="0"/>
+  <circle cx="90" cy="140" r="14" fill="#e8eefe" stroke="#2f5bea" stroke-width="3"/>
+  <circle cx="320" cy="140" r="14" fill="#e8eefe" stroke="#2f5bea" stroke-width="3"/>
+  <circle cx="550" cy="140" r="14" fill="#2f5bea"/>
+  <circle cx="550" cy="140" r="20" fill="none" stroke="#2f5bea" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="90" y="112" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="14" font-weight="700" fill="#1b1b1f">8월 28일</text>
+  <text x="90" y="182" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="14" fill="#1b1b1f">프리뷰 공개</text>
+  <text x="90" y="202" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="12" fill="#62626b">가중치 포함</text>
+  <text x="320" y="112" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="14" font-weight="700" fill="#1b1b1f">11월 4일</text>
+  <text x="320" y="182" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="14" fill="#1b1b1f">정식(GA) 발표</text>
+  <text x="320" y="202" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="12" fill="#62626b">이미지 입력 추가</text>
+  <text x="550" y="112" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="14" font-weight="700" fill="#1b1b1f">일정 미정</text>
+  <text x="550" y="182" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="14" fill="#1b1b1f">가중치 공개</text>
+  <text x="550" y="202" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="12" fill="#62626b">라이선스 미확인</text>
+  <text x="32" y="250" font-family="Pretendard, sans-serif" font-size="13" fill="#62626b">Hy4 Flash는 "곧 출시" 예고만 있음</text>
+</svg>

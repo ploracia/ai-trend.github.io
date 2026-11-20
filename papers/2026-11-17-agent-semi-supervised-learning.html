@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 에이전트는 라벨 없는 데이터를 쓸 줄 알까? | AI 비밀 레시피</title>
+  <meta name="description" content="정답이 붙은 데이터가 적을 때, AI 에이전트가 준지도 학습 프로그램을 스스로 만들고 골라 쓸 수 있는지 살펴본 논문 요약." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .paper-title { font-size: 15px; color: var(--muted); margin: 0 0 14px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 48px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 26px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .opinion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .opinion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#papers"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#papers">← 논문 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>AI 에이전트는 라벨 없는 데이터를 쓸 줄 알까?</h1>
+    <p class="paper-title">AgentSSL: Can MLE Agents Leverage Unlabeled Data?</p>
+    <div class="byline"><span><time datetime="2026-11-17T12:01:58+09:00">2026.11.17 12:01 KST</time></span><span>원문 arXiv:2611.17323</span></div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol>
+        <li>정답(라벨)이 붙은 데이터는 비싸서 적은데, 정답 없는 데이터는 많을 때 모델을 어떻게 잘 만들지가 문제다.</li>
+        <li>저자들은 AI 에이전트가 여러 준지도 학습 기법을 조합한 프로그램을 만들고, 그중 좋은 것을 고르는 AgentSSL을 제안한다.</li>
+        <li>12개 설정 중 8개에서 사람이 만든 강한 기준선을 이겼고 최대 21.8% 높았다. 입문자에게는 실험 설계의 일부를 에이전트에게 맡길 수 있다는 가능성을 보여준다.</li>
+      </ol>
+    </div>
+
+    <h2 id="s1"><span class="no">01</span>본문 요약</h2>
+    <p>이 요약은 논문 초록을 기준으로 정리했습니다. 실험 세부 내용은 본문에서 따로 확인하지 않았습니다.</p>
+
+    <h3>문제 정의</h3>
+    <p>머신러닝 모델은 보통 정답이 붙은 데이터로 학습합니다. 그런데 정답을 사람이 하나씩 붙이는 일은 시간과 돈이 많이 듭니다. 반면 정답이 없는 데이터는 주변에 많이 쌓여 있습니다. 이 둘을 함께 써서 성능을 올리는 방법을 <strong>준지도 학습(semi-supervised learning)</strong>이라고 부릅니다. 문제는 어떤 준지도 학습 기법을 어떻게 조합해야 하는지 사람이 직접 골라야 한다는 점입니다.</p>
+
+    <h3>방법</h3>
+    <p>논문은 이 선택 과정 자체를 <strong>프로그램 탐색 문제</strong>로 봅니다. 쉽게 말해, 좋은 학습 코드를 여러 개 만들어 보고 그중 가장 잘 되는 것을 고르는 일입니다. AgentSSL에서는 ML 엔지니어링 에이전트가 이런 코드들을 만들고, 기존의 준지도 학습 기법들을 조합해 후보를 늘립니다. 저자들은 이 평가를 위해 <strong>ProgramSelectBench</strong>라는 벤치마크도 공개했습니다. 에이전트가 만든 프로그램과 사람이 만든 프로그램 16,977개가 들어 있습니다. 실제 문제로는 생태학의 탐지 과제에 적용했습니다.</p>
+
+    <h3>결과</h3>
+    <p>12개 설정 중 8개에서 사람이 설계한 가장 강한 기준선보다 나은 결과를 냈고, 개선 폭은 최대 21.8%였습니다. 논문은 가장 큰 병목을 <strong>프로그램 선택</strong>으로 지목합니다. 에이전트 자신의 평가 지표를 기준으로 고르면 성능이 최대 47%까지 떨어졌습니다. 즉, 후보를 만드는 것보다 좋은 후보를 고르는 것이 더 어렵다는 뜻입니다.</p>
+
+    <h3>한계</h3>
+    <ul>
+      <li>12개 설정 중 4개에서는 사람이 만든 기준선을 이기지 못했습니다. 모든 경우에 유효하다고 볼 수는 없습니다.</li>
+      <li>선택 단계가 에이전트의 자체 지표에 기대면 성능이 크게 떨어진다는 점이 논문에서 확인됩니다. 실무에서는 이 부분을 따로 검증해야 합니다.</li>
+      <li>초록 기준으로 정리했기에, 데이터셋의 구성과 재현 조건은 본문에서 추가로 확인이 필요합니다.</li>
+    </ul>
+
+    <h2 id="s2"><span class="no">02</span>최종 의견</h2>
+    <div class="opinion">
+      <p>입문 개발자에게 이 논문의 핵심 교훈은, 라벨이 부족할 때 곧바로 데이터를 더 모으기 전에 기존 기법을 조합해 여러 후보를 만들어 보는 접근이 가치 있을 수 있다는 점입니다. 다만 이 논문에서 승부를 가른 것은 에이전트가 똑똑하게 코드를 짠 것보다 후보를 골라내는 단계였습니다. 직접 적용한다면, 에이전트가 매긴 점수만 믿지 말고 사람이 따로 준비한 검증 데이터로 최종 선택을 확인하는 습관이 중요합니다.</p>
+      <p>과장되지 않게 보면, "12개 중 8개에서 이겼다"는 결과는 유망하지만 "언제나 이긴다"는 뜻은 아닙니다. 또한 이번 정리는 초록에 기반하므로, 실제 재현 여부는 본문과 프로젝트 페이지에서 확인해 보는 것이 좋습니다.</p>
+    </div>
+
+    <h2 id="s3"><span class="no">03</span>참고 사이트</h2>
+    <ol class="refs">
+      <li><a href="https://arxiv.org/abs/2611.17323">AgentSSL: Can MLE Agents Leverage Unlabeled Data?</a> <span class="src">arXiv · 2026.11.12</span></li>
+      <li><a href="https://codiscovery.ai/AgentSSL">AgentSSL 프로젝트 페이지</a> <span class="src">논문에 기재된 주소 · 2026.11.17</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#papers">← 전체 논문 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

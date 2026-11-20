@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenAI, 구글 AI 칩 구매 검토 보도: 칩 공급선 다변화 신호 | AI 비밀 레시피</title>
+  <meta name="description" content="Reuters 인용 보도에 따르면 OpenAI가 구글 TPU를 구매하는 방안을 검토하고 있다고 합니다. 보도의 범위와 아직 확인되지 않은 내용을 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>OpenAI, 구글 AI 칩 구매 검토 보도: 칩 공급선 다변화 신호</h1>
+    <div class="byline"><span><time datetime="2026-10-29T08:23:00+09:00">2026.10.29 08:23 KST</time></span><span>읽는 시간 약 7분</span><span>#OpenAI #Google #AI칩</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>The Neuron의 10월 28일자 요약에 따르면, Reuters가 OpenAI가 구글의 AI 칩을 구매할 계획이라고 보도했습니다. 구글 TPU를 추가로 들이는 방안이라고 합니다.</li><li>수량, 계약 조건, 납품 일정은 공개되지 않았고 두 회사 모두 확인하지 않았습니다. 계획 단계 보도로 읽어야 합니다.</li><li>개발자에게는 특정 칩에 묶인 코드보다 여러 하드웨어에서 돌아가는 추론 환경을 준비할 필요가 있다는 신호입니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">OpenAI, 구글 AI 칩(TPU) 구매 검토 보도 (Reuters 인용, 정보 보도 기반)</span><span>보도 2026.10.28 (The Neuron 요약 기준)</span><span><a href="https://www.theneuron.ai/digest/everything-that-happened-in-ai-today-wednesday-october-28-2026/">The Neuron 일일 요약</a></span></div>
+
+    <p class="lead">AI 서비스의 비용과 속도는 모델만큼 어떤 칩에서 돌리느냐에 달려 있습니다. 이번 보도는 그 칩 공급선이 엔비디아 한 곳에 머물지 않을 수 있다는 것을 보여 줍니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">실무자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>OpenAI가 구글의 AI 칩 TPU를 구매하는 방안을 검토한다는 보도가 나왔습니다.</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>TPU(Tensor Processing Unit)</strong>는 구글이 자체 설계한 AI 가속 칩입니다. 주로 구글 클라우드에서 쓰이며, 같은 모델이라도 어떤 칩에서 돌리느냐에 따라 응답 속도와 비용이 달라집니다.
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>내용</th><th>수치와 조건</th></tr></thead>
+      <tbody>
+        <tr><td>보도 내용</td><td><strong>구글 TPU 구매 검토</strong></td><td>Reuters 인용 보도, 계획 단계</td></tr>
+        <tr><td>거래 규모</td><td><strong>미공개</strong></td><td>수량과 금액은 보도에 없음</td></tr>
+        <tr><td>이전 배경</td><td><strong>2025년 7월 무렵</strong></td><td>OpenAI가 구글 TPU를 일부 제품에 쓰기 시작했다는 정보 보도가 있었음</td></tr>
+        <tr><td>확인 상태</td><td><strong>양사 미확인</strong></td><td>계약 발표 전까지 확정 사실이 아님</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>칩 구매 검토</td><td><strong>OpenAI</strong></td><td>AI 모델 학습과 서비스 운영에 쓸 칩을 검토</td></tr>
+        <tr><td>칩 공급 후보</td><td><strong>Google</strong></td><td>자체 설계 TPU를 공급할 수 있는 측</td></tr>
+        <tr><td>보도</td><td><strong>Reuters</strong></td><td>정보 보도를 인용해 계획을 전함(The Neuron 요약 기준)</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+    <h3>오늘 발표된 내용</h3>
+    <p>The Neuron의 10월 28일자 일일 요약은 이 소식을 “OpenAI reportedly plans to buy Google’s AI chips”라는 제목으로 소개했습니다. 원보도는 Reuters이며, 정보 보도를 근거로 했다고 적혀 있습니다.</p>
+    <p>보도에 따르면 거래가 이뤄지면 구글 TPU가 OpenAI의 AI 인프라에 더해지는 셈입니다. 다만 거래 규모, 가격, 납품 시기는 알려지지 않았고, 두 회사 모두 아직 확인하지 않았습니다.</p>
+    <p>이 소식은 ‘계획’과 ‘검토’ 단계이므로, 실제 계약이나 사용 확대와는 거리가 있을 수 있습니다. 계약 발표가 나온 뒤에야 영향 범위를 판단하는 것이 안전합니다.</p>
+    <h3>흐름</h3>
+    <ul class="timeline"><li><time>2025년 7월 무렵</time>OpenAI가 구글 TPU 사용을 시작했다는 정보 보도</li><li><time>2026.10.28</time>Reuters가 OpenAI의 구글 칩 구매 계획을 보도</li><li><time>이후</time>계약 발표 또는 양사의 공식 입장 확인 시점</li></ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>AI 서비스의 비용과 속도는 모델만큼 칩 선택에도 좌우됩니다. 특정 하드웨어에 묶이지 않는 호출 구조를 먼저 만들어 두면 이런 변화에 빠르게 대응할 수 있습니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>실무자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. 모델 호출부를 한 곳에 모으기</h4><p>모델 API 호출을 하나의 함수나 모듈로 감싸면 공급자를 바꿀 때 수정 범위가 줄어듭니다.</p></div>
+      <div class="action"><h4>2. 공급자별 비용과 지연 시간 기록하기</h4><p>같은 작업의 응답 시간과 호출 비용을 측정해 두면 판단 근거가 생깁니다.</p></div>
+      <div class="action"><h4>3. 두 개 이상의 환경에서 시험하기</h4><p>같은 프롬프트를 여러 모델이나 클라우드에서 돌려 결과 차이를 확인하세요.</p></div>
+      <div class="action"><h4>4. 계획 단계 보도를 설계 기준으로 삼지 않기</h4><p>계약이나 공식 발표가 나오기 전에는 가격과 가용성을 전제로 한 설계를 확정하지 마세요.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos"><ul>
+      <li><strong>공급 경쟁이 심해진다.</strong> 칩 선택지가 늘면 API 가격과 대기 시간이 낮아질 가능성이 커집니다.</li>
+      <li><strong>이식성이 좋아진다.</strong> 여러 하드웨어에서 돌아가는 도구와 표준이 자리 잡으면 개발자가 특정 클라우드에 덜 묶입니다.</li>
+    </ul></div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg"><ul>
+      <li><strong>대형 기업 간 묶음이 강해진다.</strong> 모델과 칩, 클라우드가 한 묶음으로 움직이면 소규모 개발자의 선택지가 줄 수 있습니다.</li>
+      <li><strong>최적화 부담이 커진다.</strong> 칩마다 최적화 방식이 다르면 작은 팀이 여러 환경을 동시에 관리하기 어려워집니다.</li>
+    </ul></div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion"><p>이번 보도는 AI 인프라 경쟁이 ‘누가 GPU를 더 많이 사느냐’에서 ‘어떤 칩을 어떻게 섞느냐’로 넓어지고 있음을 보여 줍니다. 다만 확인되지 않은 계획이므로 결론을 서두를 필요는 없습니다.</p><p>입문 개발자라면 특정 공급자의 기능에 바로 기대기보다, 모델 호출을 추상화해 두고 비용과 속도를 직접 재 보는 습관이 가장 실용적입니다.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://www.theneuron.ai/digest/everything-that-happened-in-ai-today-wednesday-october-28-2026/">Everything That Happened in AI Today, Wednesday, October 28</a> <span class="src">— The Neuron, 2026.10.28 (Reuters 원문 링크는 열람하지 못함)</span></li>
+    </ol>
+
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list"><a href="2026-10-29-axiom-cfsg-lean-formal-proof.html"><span class="r">오늘의 뉴스 1위</span><span class="t">Axiom, 군론 분류 정리를 AI 에이전트로 형식 검증: Lean 증명 4,310만 줄 공개</span></a><a href="2026-10-29-google-genie-4-world-model.html"><span class="r">오늘의 뉴스 3위</span><span class="t">구글 딥마인드, 실시간 상호작용 월드 모델 Genie 4 발표: 신뢰 테스터부터 공개</span></a></div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

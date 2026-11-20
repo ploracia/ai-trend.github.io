@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>오픈AI, 2028 대선 겨냥 AI 정책 에세이… 노동·안전·데이터센터 5대 과제 제시 | AI 비밀 레시피</title>
+  <meta name="description" content="오픈AI 크리스 레인의 2028 대선 AI 정책 에세이 핵심: 5대 정책 과제, 데이터센터 모라토리엄 반대 논리, 개발자가 볼 포인트." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>오픈AI, 2028 대선 겨냥 AI 정책 에세이… 노동·안전·데이터센터 5대 과제 제시</h1>
+    <div class="byline"><span><time datetime="2026-11-05T11:45:00+09:00">2026.11.05 11:45 KST</time></span><span>읽는 시간 약 5분</span><span>#OpenAI #규제</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>오픈AI의 크리스 레인 글로벌 정책 총괄이 2028년 미국 대선을 AI 정책의 분기점으로 보는 에세이를 공개했습니다. 기사 기준 발표 시각은 2026년 11월 5일 오전 6시 25분(KST)입니다.</li><li>에세이는 노동자 보호, 교육, AI 안전, 데이터센터 개발을 아우르는 5대 정책 과제를 제시합니다. 데이터센터 건설을 멈추자는 모라토리엄은 미국의 중국 경쟁력을 해친다고 주장합니다.</li><li>개발자에게는 AI 정책이 전력, 안전 평가, 인재 교육처럼 실제 인프라와 규칙에 직접 닿는다는 신호입니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">오픈AI 크리스 레인, 2028 대선 겨냥 AI 정책 에세이 공개 (5대 정책 과제)</span><span>보도 2026.11.05</span><span><a href="https://techcrunch.com/2026/11/04/openai-is-already-trying-to-shape-the-2028-election/">TechCrunch 보도</a></span></div>
+
+    <p class="lead">AI 기업이 선거를 앞두고 정책 방향을 먼저 내놓는 일이 늘고 있습니다. 이번 에세이는 오픈AI가 AI의 경제적 파급 효과와 시민들의 불안을 어떻게 정치 의제로 바꾸려는지 보여 주는 자료입니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">개발자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>오픈AI가 2028년 미국 대선을 겨냥해, AI가 가져올 경제 변화를 다룰 정책 방향을 에세이로 정리했습니다.</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>데이터센터</strong>는 AI 모델을 학습시키고 실행하는 대형 서버 건물입니다. <strong>모라토리엄</strong>은 특정 활동을 일정 기간 멈추는 임시 중단 조치를 뜻합니다. <strong>킬 스위치</strong>는 AI 시스템에 문제가 생기면 즉시 가동을 멈출 수 있게 하는 비상 장치입니다.
+    </div>
+    <p>쉽게 말하면, 공장 하나가 동네 전기와 일자리에 영향을 미치기 시작하면 그 공장을 어떻게 운영할지를 두고 정치권이 나서는 것과 비슷합니다. AI 데이터센터도 같은 단계에 들어섰다는 뜻입니다.</p>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>발언 주체</td><td><strong>오픈AI</strong> (크리스 레인 글로벌 정책 총괄)</td><td>2028 대선 정책 의제와 5대 과제 제안</td></tr>
+        <tr><td>정치권</td><td><strong>미국 의회와 대선 후보</strong></td><td>최근 중간선거 이후 의회 주도권이 바뀌었고, 생활비 부담 민심을 반영한 정책을 준비</td></tr>
+        <tr><td>비판 측</td><td><strong>AI Now Institute</strong></td><td>케이트 브레넌 연구원이 오픈AI의 입장을 "불성실하다"고 평가</td></tr>
+        <tr><td>지역 사회</td><td><strong>데이터센터 반대 주민과 정치인</strong></td><td>모라토리엄 도입을 요구하며 건설 반대 목소리를 높이는 중</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+    <h3>발표된 내용</h3>
+    <p>TechCrunch 보도에 따르면, 레인은 공식 뉴스레터에 올린 '2028: AI 선거' 특별호 에세이에서 AI가 가져올 경제 변화를 프랭클린 루스벨트의 뉴딜에 비유했습니다. 그는 정치인들이 AI에 대한 대중의 우려를 말로만 달래지 말고, 실제 정책으로 답해야 한다고 주장했습니다.</p>
+    <p>에세이가 제시한 5대 과제는 노동자 보호, 교육, AI 안전, 데이터센터 개발을 포함합니다. 구체적으로는 AI 기술을 배우는 사람에게 주는 세액 공제, 창업자의 자본 접근성 확대, 직원 지분과 이익 공유 제도 등이 거론됩니다. 안전 분야에서는 집행 가능한 안전 기준, 독립적인 외부 평가, 공적 감독, 킬 스위치를 요구했습니다.</p>
+    <p>반면 데이터센터 모라토리엄을 주장하는 정치인들에 대해서는 미국이 중국과의 경쟁에서 뒤처질 수 있다며 강하게 반대했습니다. 보도는 이 대목을 2002년 이라크 전쟁 승인 표결에 빗댄 부분도 짚었습니다. 다만 TechCrunch는 기사 작성 시점까지 오픈AI의 답변을 받지 못했다고 밝혔습니다.</p>
+    <h3>진행 순서</h3>
+    <ul class="timeline">
+      <li><time>2024년</time>오픈AI가 캘리포니아 AI 안전 법안 SB 1047에 반대 (보도에서 함께 언급)</li>
+      <li><time>최근 중간선거</time>민주당이 승리해 미국 의회의 통제권이 바뀜</li>
+      <li><time>2026년 11월 4일 (미국 현지)</time>레인 에세이 공개, 5대 정책 과제 제시</li>
+    </ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>AI 정책은 이제 데이터센터 전력, 안전 평가, 인재 교육처럼 개발자가 매일 쓰는 기술 환경에 직접 영향을 줍니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>개발자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. AI 규제 소식을 주기적으로 확인하기</h4><p>정책 뉴스 한두 곳을 정해 두고 주 1회 훑어보세요. 어떤 안전 기준이 논의되는지 알면 나중에 제품을 설계할 때 실수를 줄일 수 있습니다.</p></div>
+      <div class="action"><h4>2. 간단한 안전 점검 기준 만들기</h4><p>자신이 만든 AI 기능이 엉뚱한 답을 내는지 확인하는 열 개 안팎의 테스트 질문을 만들어 두세요. 이것만으로도 외부 평가에 대응하는 연습이 됩니다.</p></div>
+      <div class="action"><h4>3. 호출량과 연산 비용 줄이기</h4><p>데이터센터 전력 문제가 커지면 AI 사용 비용도 오를 수 있습니다. 불필요한 반복 호출을 줄이고 짧은 프롬프트로 같은 결과를 얻는 습관을 들이세요.</p></div>
+      <div class="action"><h4>4. 공식 교육 자료로 기초 쌓기</h4><p>정책 에세이는 AI 교육 세액 공제를 언급합니다. 입문자라면 공개된 무료 강의나 공식 문서로 기초 개념부터 익혀 두는 것이 가장 확실한 준비입니다.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos"><ul>
+      <li><strong>교육과 창업 지원이 넓어진다.</strong> AI 학습 세액 공제와 창업 자본 접근성 확대가 실제 제도가 되면, 입문 개발자에게 진입 장벽이 낮아집니다.</li>
+      <li><strong>안전 기준이 제도로 자리 잡는다.</strong> 독립 평가와 공적 감독이 자리를 잡으면 AI 제품을 믿고 쓸 수 있는 근거가 생깁니다.</li>
+      <li><strong>인프라 투자가 이어진다.</strong> 데이터센터 건설이 계속되면 연산 자원이 늘어 장기적으로 사용 비용이 내려갈 여지가 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg"><ul>
+      <li><strong>기업 주도 설계에 대한 논란이 커진다.</strong> 정책을 제안한 기업이 규칙까지 정하면 이해관계 충돌 우려가 제기될 수 있습니다. 실제로 비판 측은 이미 입장의 진정성을 문제 삼고 있습니다.</li>
+      <li><strong>데이터센터 반대가 공급을 늦춘다.</strong> 모라토리엄이 현실화되면 서버 증설이 늦어지고 전기 요금 부담도 커질 수 있습니다.</li>
+      <li><strong>강한 안전 장치가 실험을 위축시킨다.</strong> 킬 스위치나 사전 평가 의무가 지나치게 엄격하면 작은 팀과 오픈소스 개발자가 불리해질 수 있습니다.</li>
+      <li><strong>정쟁에 정책이 휘둘린다.</strong> 중간선거 이후 의회 구도가 바뀌어 정책 방향이 자주 바뀔 가능성도 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion"><p>이번 에세이는 AI 정책이 더 이상 먼 나라 이야기가 아니라 전력, 일자리, 안전 기준이라는 실제 조건으로 바뀌고 있음을 보여 줍니다. 한쪽의 주장만 받아들이지 말고, 찬반 논리를 나란히 놓고 읽는 습관이 필요합니다.</p><p>입문 단계라면 지금 쓰는 AI 도구가 어떤 안전 장치와 데이터 정책을 갖고 있는지 한 번 확인해 보세요. 정책이 바뀌어도 자기 프로젝트를 설명할 수 있는 힘이 됩니다.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://techcrunch.com/2026/11/04/openai-is-already-trying-to-shape-the-2028-election/">OpenAI is already trying to shape the 2028 election</a> <span class="src">— TechCrunch, 2026.11.04 (미국 시간 기준 발표, 원문 열람 확인)</span></li>
+    </ol>
+
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>베선트 장관, 엔비디아에 외부 CEO 검토와 중국 칩 판매 10일 내 해명 요구 | AI 비밀 레시피</title>
+  <meta name="description" content="보도에 따르면 미국 베선트 재무장관이 엔비디아 이사회에 외부 CEO 검토와 중국 칩 판매 해명을 요구했습니다. 개발자가 알아 둘 공급망 맥락을 정리했습니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+<article>
+    <h1>베선트 장관, 엔비디아에 외부 CEO 검토와 중국 칩 판매 10일 내 해명 요구</h1>
+    <div class="byline"><span><time datetime="2026-11-16T08:21:16+09:00">2026.11.16 08:21 KST</time></span><span>읽는 시간 약 5분</span><span>#Nvidia #AI칩 #규제</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>보도에 따르면 베선트 미국 재무장관은 엔비디아 이사회에 외부 인사를 CEO로 검토하라고 요구했고, 중국 칩 판매를 두고 10일 안에 답변하라고 했습니다.</li><li>이번 보도는 젠슨 황 CEO를 둘러싼 논란과 맞물려 나왔습니다. 일부 매체는 중국 판매가 실적을 부풀렸는지까지 따져 물었다고 전했습니다.</li><li>개발자에게는 GPU 공급과 수출 규제가 AI 서비스 비용과 일정에 직접 영향을 준다는 점을 보여 주는 사건입니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">베선트 장관의 엔비디아 이사회 질의와 외부 CEO 검토 요구</span><span>보도 2026.11.15</span><span><a href="https://www.axios.com/2026/11/15/bessent-nvidia-earnings-china-chip-sales-ceo">Axios</a></span></div>
+    <p class="lead">AI 모델을 쓰는 개발자에게 GPU는 보이지 않는 인프라입니다. 그 GPU를 만드는 회사의 지배구조와 중국 수출 문제가 흔들리면, 클라우드 가격과 서비스 공급에도 시차를 두고 영향이 옵니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">개발자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+
+    <p><strong>미국 정부 고위 인사가 세계 최대 AI 칩 회사 이사회에 경영진 문제와 중국 칩 판매 문제를 직접 따져 묻기 시작했다는 보도입니다.</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>수출 통제</strong>는 특정 국가에 고성능 칩이나 장비를 파는 것을 정부가 제한하는 제도입니다. <strong>GPU</strong>는 AI 모델을 학습하고 실행할 때 쓰는 연산 칩으로, 엔비디아가 이 시장에서 가장 큰 공급자입니다.
+    </div>
+    <p>회사 내부의 지배구조 문제가 정부 규제 문제와 만나면, 칩을 쓰는 쪽은 공급 일정과 가격 전망을 다시 계산하게 됩니다. 이번 보도가 주목받는 이유입니다.</p>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>정부</td><td><strong>베선트 미국 재무장관</strong></td><td>엔비디아 이사회에 외부 CEO 검토와 중국 판매 해명을 요구했다고 보도됨</td></tr>
+        <tr><td>기업</td><td><strong>엔비디아</strong></td><td>이사회가 질의에 답해야 하는 당사자. 중국 칩 판매 실적이 쟁점</td></tr>
+        <tr><td>인물</td><td><strong>젠슨 황 CEO</strong></td><td>최근 논란의 중심. 보도 제목에서 거론된 인물</td></tr>
+        <tr><td>정부 내 다른 인사</td><td><strong>러트닉 상무장관</strong></td><td>칩 수출 규칙을 두고 별도로 논란이 된 인물로 보도됨</td></tr>
+        <tr><td>이용자</td><td><strong>개발자와 기업</strong></td><td>GPU 공급과 클라우드 가격이 바뀌는지 지켜봐야 하는 쪽</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+
+    <h3>보도된 내용</h3>
+    <p>11월 15일 여러 매체가 같은 날 이 소식을 전했습니다. AI Weekly 요약에 따르면 베선트 장관은 엔비디아가 외부 인사를 CEO로 세우는 것을 검토해야 한다고 말했고, 이사회에 중국 칩 판매 관련 질문에 답할 시간으로 10일을 주었습니다.</p>
+    <p>Axios는 중국 칩 판매가 실적을 부풀렸는지를 의심하는 취지로 이 문제를 다뤘습니다. 알자지라도 같은 날 미국 재무장관이 엔비디아를 이끌 외부인을 요구했다고 보도했습니다. 여러 매체의 제목이 일치하지만, 이 글은 기사 본문 전체가 아니라 제목과 요약에 근거해 쓰였습니다.</p>
+    <p>배경으로는 11월 초부터 젠슨 황 CEO를 둘러싼 논란이 이어졌다는 점이 있습니다. 일부 매체는 회사가 황 CEO를 물러나게 할 준비를 한다는 보도를 전하기도 했습니다. 이 보도는 아직 회사 공식 발표로 확인되지 않았습니다.</p>
+    <h3>진행 순서</h3>
+    <ul class="timeline">
+      <li><time>2026년 11월 9일 무렵</time>젠슨 황 CEO를 둘러싼 위기가 매체에서 다뤄지기 시작함</li>
+      <li><time>2026년 11월 15일</time>베선트 장관의 외부 CEO 검토 요구와 10일 답변 기한이 여러 매체에서 보도됨</li>
+    </ul>
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>AI 서비스의 비용과 공급은 모델뿐 아니라 칩 회사의 경영과 수출 규제에도 묶여 있습니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>개발자가 해볼 것</h2>
+
+    <div class="actions">
+      <div class="action"><h4>1. 쓰는 클라우드의 GPU 종류 확인하기</h4><p>서비스가 어떤 GPU 세대에서 돌아가는지 문서에서 확인해 두면, 공급 변화가 생겼을 때 대응 속도가 빨라집니다.</p></div>
+      <div class="action"><h4>2. 모델 호출을 한 공급자에 묶지 않기</h4><p>API 추상화 계층을 두고 모델 공급자를 바꿀 수 있게 설계하면, 특정 칩이나 서비스의 가격 변화에 덜 흔들립니다.</p></div>
+      <div class="action"><h4>3. 비용 알림 설정하기</h4><p>클라우드와 모델 API에 월 사용량 알림을 걸어 두면, 가격이나 한도가 바뀌었을 때 바로 알 수 있습니다.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+
+    <div class="future pos"><ul>
+      <li><strong>경영 공백이 정리되면 공급이 안정된다.</strong> 이사회가 질의에 답하고 지배구조가 정리되면, 칩 공급 계획을 세우기가 쉬워집니다.</li>
+      <li><strong>수출 규칙이 명확해진다.</strong> 중국 판매 문제가 공개적으로 따져지면, 기업이 규칙을 지키는 방식이 투명해질 수 있습니다.</li>
+      <li><strong>경쟁 칩 생태계가 자랄 여지가 생긴다.</strong> 한 회사에 대한 의존을 줄이려는 움직임이 힘을 얻을 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+
+    <div class="future neg"><ul>
+      <li><strong>리더십 공백이 장기화된다.</strong> 핵심 인물을 둘러싼 불확실성이 길어지면, 제품 로드맵과 파트너 계약에도 영향을 줄 수 있습니다.</li>
+      <li><strong>가격과 공급이 흔들린다.</strong> 규제와 경영 문제가 겹치면 GPU 가격이 오르거나 대기 기간이 길어질 수 있습니다.</li>
+      <li><strong>정치화 위험이 커진다.</strong> 기업 경영을 정부 인사가 공개적으로 요구하는 선례가 생기면, 다른 기업에도 같은 압력이 번질 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+
+    <div class="conclusion"><p>이번 보도의 핵심은 AI 개발 환경이 모델과 앱만으로 이루어지지 않고, 칩 공급과 정부 규제 위에 놓여 있다는 사실입니다. 입문 개발자는 기술 선택에서 성능뿐 아니라 공급 안정성과 비용 변동 가능성도 함께 봐야 합니다.</p><p>이번 주에는 자신이 쓰는 AI 서비스의 비용 구조를 한 번 적어 보고, 특정 공급자에게만 묶여 있는 부분이 있는지 확인해 보세요.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://www.axios.com/2026/11/15/bessent-nvidia-earnings-china-chip-sales-ceo">Axios, Bessent questions did Nvidia "goose" earnings with suspect China chip sales (2026.11.15)</a> <span class="src">— 검색 결과의 제목과 날짜만 확인. 본문은 열람하지 못함</span></li>
+      <li><a href="https://www.aljazeera.com/news/2026/11/15/us-treasury-chief-calls-for-outsider-to-lead-embattled-tech-firm-nvidia">Al Jazeera, US Treasury chief calls for outsider to lead embattled tech firm Nvidia (2026.11.15)</a> <span class="src">— 검색 결과의 제목과 날짜만 확인. 본문은 열람하지 못함</span></li>
+      <li><a href="https://aiweekly.co/alerts/bessent-demands-outside-nvidia-ceo-10-day-answer-on-china-sales">AI Weekly, Bessent demands outside Nvidia CEO, 10-day answer on China sales</a> <span class="src">— 요약 내용으로 10일 기한과 외부 CEO 요구를 확인. 본문은 열람하지 못함</span></li>
+      <li><a href="https://cointelegraph.com/news/nvidia-preparing-to-oust-ceo-jensen-huang-reports">Cointelegraph, Nvidia preparing to oust CEO Jensen Huang, reports</a> <span class="src">— 배경 보도 제목만 확인. 본문은 열람하지 못함</span></li>
+    </ol>
+
+    </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

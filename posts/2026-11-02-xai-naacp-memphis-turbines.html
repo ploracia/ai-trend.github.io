@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>법원, xAI 멤피스 데이터센터 가스터빈 소송 계속 진행 허용 | AI 비밀 레시피</title>
+  <meta name="description" content="연방 판사가 xAI의 각하 신청을 기각해, 멤피스 콜로서스 데이터센터의 가스터빈 허가 문제를 둘러싼 NAACP 소송이 계속 진행됩니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>법원, xAI 멤피스 데이터센터 가스터빈 소송 계속 진행 허용</h1>
+    <div class="byline"><span><time datetime="2026-11-02T05:08:46+09:00">2026.11.02 05:08 KST</time></span><span>읽는 시간 약 6분</span><span>#규제 #데이터센터</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>연방 판사 Debra M. Brown이 xAI가 낸 소송 각하(기각 요청) 신청을 물리쳐, 주민 단체 NAACP가 제기한 대기오염 소송이 계속 진행됩니다.</li><li>원고는 xAI가 멤피스 외곽 콜로서스 데이터센터에서 허가 없이 가스터빈 최소 35기를 운영했다고 주장합니다. xAI는 터빈이 이동형이라 허가 대상이 아니며, 원고에게는 소송 자격이 없다고 맞섰습니다.</li><li>개발자에게는 AI 인프라의 전력과 대기 규제가 서비스 일정과 비용에 영향을 줄 수 있다는 신호입니다. 대형 데이터센터 위에 서비스를 올릴 때는 환경 규제도 함께 봐야 합니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">연방 법원, xAI의 가스터빈 소송 각하 신청 기각 (NAACP 청정대기법 소송 계속)</span><span>판결 보도 2026.10.31 (미국 시각)</span><span><a href="https://techcrunch.com/2026/10/31/judge-allows-naacp-lawsuit-over-xai-data-center-pollution-to-move-forward/">TechCrunch 보도</a></span></div>
+
+    <p class="lead">AI 모델을 학습하고 돌리는 데이터센터는 막대한 전기를 씁니다. 발전 설비를 어떻게 허가받았는지가 소송으로 번지면, 모델 서비스의 가용량과 비용에 영향을 줄 수 있습니다. 이번 판결은 그 가능성을 보여 준 사례입니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">개발자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>데이터센터 전력을 공급하는 가스터빈의 허가 여부를 두고, 법원이 주민 단체의 소송을 계속 진행하도록 허용했습니다.</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>가스터빈</strong>은 가스를 태워 전기를 만드는 발전 장치입니다. <strong>청정대기법(Clean Air Act)</strong>은 미국에서 대기오염 배출원을 규제하는 연방 법입니다. <strong>각하 신청</strong>은 소송 내용을 재판에서 다루지 말자고 요청하는 절차로, 기각되면 재판이 계속됩니다.
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>항목</th><th>내용 (보도 기준)</th></tr></thead>
+      <tbody>
+        <tr><td>법원</td><td>연방 법원 (기사에 법원 이름은 명시되지 않음)</td></tr>
+        <tr><td>재판관</td><td>Debra M. Brown</td></tr>
+        <tr><td>원고</td><td>NAACP (남부환경법률센터 SELC 대리)</td></tr>
+        <tr><td>피고</td><td>xAI</td></tr>
+        <tr><td>문제 설비</td><td>콜로서스 데이터센터의 가스터빈 최소 35기와 기타 오염원</td></tr>
+        <tr><td>판결 요지</td><td>원고 소송 자격 인정, 터빈은 '이동형 배출원'이 아니라고 판단, 시민소송 조항은 위헌이 아니라고 판단</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>원고</td><td><strong>NAACP와 지역 주민</strong></td><td>허가 없이 운영된 터빈이 대기오염을 일으켰다며 시민소송 제기</td></tr>
+        <tr><td>피고</td><td><strong>xAI</strong></td><td>터빈은 이동형이라 허가 대상이 아니고, 원고에게 자격이 없으며, 시민소송 제도 자체가 위헌이라고 주장</td></tr>
+        <tr><td>재판부</td><td><strong>Debra M. Brown 판사</strong></td><td>xAI의 각하 신청을 기각해 재판을 계속하도록 결정</td></tr>
+        <tr><td>관련 기업</td><td><strong>SpaceX</strong></td><td>기사에 따르면 TechCrunch가 논평을 요청했으나 보도 시점까지 답변이 없었음</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+    <h3>발표된 내용</h3>
+    <p>TechCrunch 보도에 따르면 Brown 판사는 xAI의 각하 신청을 기각하며 원고의 주장이 계속 진행된다고 밝혔습니다. 판사는 원고가 청정대기법상 소송 자격을 갖췄다고 봤고, 콜로서스의 터빈이 미시시피주 이행계획에서 말하는 '이동형 배출원'이 아니라고 판단했습니다.</p>
+    <p>헌법 쟁점도 있었습니다. xAI는 시민소송 조항이 헌법 제2조와 권한 위임 원칙에 어긋난다고 주장했지만, 판사는 원고가 연방 행정권을 행사하는 것이 아니라며 이 주장을 받아들이지 않았습니다. 앞서 10월 초에는 법무부가 낸 비슷한 신청도 기각되었다고 기사는 전했습니다.</p>
+    <h3>진행 순서</h3>
+    <ul class="timeline">
+      <li><time>10월 초</time>법무부의 유사한 각하 신청이 기각 (기사 언급)</li>
+      <li><time>10월 31일 (미국 시각)</time>Brown 판사, xAI의 각하 신청 기각 결정이 TechCrunch를 통해 보도됨</li>
+    </ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>AI 서비스의 뒤편에는 전기와 발전 설비가 있고, 그 허가가 흔들리면 서비스 용량과 비용도 흔들릴 수 있다는 점을 기억해 두세요.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>개발자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. 서버 리전을 고를 때 전력 여건도 보기</h4><p>클라우드 리전을 고를 때 가격과 지연 시간뿐 아니라 해당 지역 데이터센터의 증설 계획과 규제 이슈도 함께 확인하세요.</p></div>
+      <div class="action"><h4>2. 공급사 리스크 메모 남기기</h4><p>사용하는 모델이나 클라우드가 어떤 환경 소송이나 허가 문제에 걸려 있는지 분기마다 한 줄씩 기록해 두세요.</p></div>
+      <div class="action"><h4>3. 비용을 토큰 단위로만 보지 않기</h4><p>토큰당 요금 외에도 용량 부족, 대기 시간 증가 가능성을 함께 넣어 월간 예산을 세워 보세요.</p></div>
+      <div class="action"><h4>4. 원문 소송 기록 읽는 습관 들이기</h4><p>뉴스만 보지 말고 법원 공개 기록에서 사건 번호와 청구 내용을 직접 확인하면 기사의 해석을 검증할 수 있습니다.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos"><ul>
+      <li><strong>설비 운영이 투명해진다.</strong> 허가와 배출 기준을 법정에서 다루면, 기업이 공개 자료를 더 충실히 남기고 운영 기준을 명확히 하게 됩니다.</li>
+      <li><strong>주민이 법적 수단을 쓸 수 있다는 선례가 생긴다.</strong> 대규모 설비가 들어설 때 지역 사회의 감시 수단이 강화됩니다.</li>
+    </ul></div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg"><ul>
+      <li><strong>프로젝트가 지연되고 비용이 오른다.</strong> 소송이 길어지면 데이터센터 완공과 AI 서비스 용량 확보가 늦어져, 결국 사용자 요금에 반영될 수 있습니다.</li>
+      <li><strong>규제 해석이 불확실하다.</strong> '이동형 터빈'의 범위가 확정되지 않으면, 다른 기업도 같은 방식으로 허가 문제를 겪을 수 있습니다.</li>
+      <li><strong>환경 부담이 특정 지역에 몰린다.</strong> 데이터센터가 몰리는 지역의 주민이 대기 질과 전력 공급 문제를 함께 떠안을 가능성이 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion"><p>이번 판결은 AI 인프라가 기술 문제만이 아니라 환경과 법률 문제이기도 하다는 점을 보여 줍니다. 개발자가 직접 데이터센터를 짓지는 않더라도, 어디서 어떤 전력으로 돌아가는 서비스인지 이해하면 설계 판단의 질이 달라집니다.</p><p>입문 단계라면 자신이 쓰는 클라우드나 모델 API가 어느 리전에서 돌아가는지 확인해 보고, 그 지역의 데이터센터 관련 뉴스를 한 달에 한 번 정도 찾아 읽는 습관을 들여 보세요.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://techcrunch.com/2026/10/31/judge-allows-naacp-lawsuit-over-xai-data-center-pollution-to-move-forward/">Judge allows NAACP lawsuit over xAI data center pollution to move forward</a> <span class="src">— TechCrunch, 2026.10.31 (원문 열람 확인, 판결 요지와 소송 주장 출처)</span></li>
+    </ol>
+
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list"><a href="2026-11-02-apple-alibaba-qwen-apple-intelligence.html"><span class="r">오늘의 뉴스 1위</span><span class="t">애플, 중국판 애플 인텔리전스에 알리바바 Qwen 탑재… 개발자 베타는 11월 4일부터</span></a><a href="2026-11-02-google-hermantown-data-center.html"><span class="r">오늘의 뉴스 3위</span><span class="t">구글, 미네소타 허맨타운 500MW 데이터센터 승인… 세금 감면 요청 철회</span></a></div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

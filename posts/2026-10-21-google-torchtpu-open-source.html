@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Google, PyTorch를 TPU에서 그대로: 'TorchTPU' 오픈소스 공개 | AI 비밀 레시피</title>
+  <meta name="description" content="Google이 PyTorch Conference에서 공개한 TorchTPU와 Amazon TorchNeuron으로 본 Nvidia 의존 줄이기 경쟁을 입문 개발자 눈높이로 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>Google, PyTorch를 TPU에서 그대로: 'TorchTPU' 오픈소스 공개</h1>
+    <div class="byline"><span><time datetime="2026-10-21T08:15:28+09:00">2026.10.21 08:15 KST</time></span><span>읽는 시간 약 7분</span><span>#PyTorch #Google #오픈소스</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>Google이 10월 20일(현지시간) PyTorch Conference에서 PyTorch 코드를 자사 AI 칩 TPU에서 그대로 돌릴 수 있게 하는 'TorchTPU'를 Apache 2.0 오픈소스로 공개했습니다.</li><li>하루 전 Amazon도 Trainium용 TorchNeuron을 내놓아, 클라우드 대기업들이 "PyTorch = Nvidia GPU"라는 공식을 깨려고 소프트웨어 경쟁에 본격적으로 나섰습니다.</li><li>개발자에게는 같은 PyTorch 코드를 설정만 바꿔 여러 칩에서 돌릴 수 있는 선택지가 생긴다는 뜻이라, 하드웨어 가격과 공급에 따라 실행 환경을 고를 여지가 커집니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">Google, PyTorch용 네이티브 TPU 백엔드 'TorchTPU' 오픈소스 공개</span><span>발표 2026.10.20(현지, PyTorch Conference) · 국내 2026.10.21 01:29 KST 무렵 첫 보도</span><span><a href="https://www.marktechpost.com/2026/10/20/google-torchtpu-open-source-native-pytorch-tpu/">MarkTechPost</a> · <a href="https://www.digitaltoday.co.kr/en/view/117238/google-open-sources-torchtpu-to-help-move-pytorch-apps-to-tpus">Digital Today(TechCrunch 인용)</a></span></div>
+
+    <p class="lead">AI 모델을 만드는 개발자 대부분은 PyTorch를 씁니다. 그런데 PyTorch는 오랫동안 Nvidia GPU에서 가장 잘 돌아가도록 다듬어져 왔습니다. Google이 자사 칩 TPU에서도 PyTorch가 "원래 그랬던 것처럼" 돌아가게 하는 도구를 오픈소스로 풀었습니다. AI 칩 경쟁이 하드웨어에서 소프트웨어로 번지고 있다는 뉴스입니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">이 이슈는 무엇인가?</a></li>
+        <li><a href="#s2">누가 움직이나?</a></li>
+        <li><a href="#s3">무슨 일이 있었나?</a></li>
+        <li><a href="#s4">실무자가 해볼 것</a></li>
+        <li><a href="#s5">긍정적인 방향으로 간다면?</a></li>
+        <li><a href="#s6">부정적인 방향으로 간다면?</a></li>
+        <li><a href="#s7">입문 개발자에게 남는 것은?</a></li>
+        <li><a href="#s8">참고 자료</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>Google TorchTPU 오픈소스 공개: PyTorch의 Nvidia 의존을 줄이려는 빅테크의 소프트웨어 경쟁</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>PyTorch</strong>는 Meta가 2016년에 만든 AI 개발 프레임워크로, 2022년 리눅스 재단으로 넘어갔습니다. <strong>TPU</strong>는 Google이 직접 설계한 AI 전용 칩입니다. <strong>CUDA</strong>는 Nvidia GPU용 프로그래밍 환경으로, 많은 AI 소프트웨어가 여기에 맞춰져 있어 Nvidia의 가장 큰 강점으로 꼽힙니다. <strong>백엔드</strong>는 PyTorch 코드를 실제 칩에서 실행해 주는 연결 계층이고, <strong>즉시 실행(eager)</strong> 모드는 코드를 한 줄씩 바로 실행해 디버깅이 쉬운 방식입니다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl">
+    <table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>개발·공개</td><td><strong>Google</strong></td><td>TorchTPU 오픈소스 공개, TPU 이전을 돕는 TPU Agent Suite 출시</td></tr>
+        <tr><td>공동 개발</td><td><strong>Meta(PyTorch 팀)</strong></td><td>MarkTechPost 보도 기준 TorchTPU를 Google과 함께 개발</td></tr>
+        <tr><td>생태계 협력</td><td><strong>Hugging Face · Inferact(vLLM) · RadixArk(SGLang)</strong></td><td>주요 AI 도구와의 호환성 확보에 협력</td></tr>
+        <tr><td>경쟁 클라우드</td><td><strong>Amazon(AWS)</strong></td><td>하루 전 Trainium용 TorchNeuron 공개, PyTorch 핵심 코드에서 Nvidia 의존 분리 기여 예정</td></tr>
+        <tr><td>기존 강자</td><td><strong>Nvidia</strong></td><td>CUDA 생태계로 AI 개발 표준을 쥐고 있는 GPU 1위 기업</td></tr>
+        <tr><td>관리 단체</td><td><strong>PyTorch Foundation(리눅스 재단)</strong></td><td>PyTorch Conference 개최, 이번 행사에서 신규 회원 9곳 발표</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+
+    <h3>오늘 발표된 내용</h3>
+    <p>MarkTechPost가 정리한 내용에 따르면 TorchTPU는 PyTorch의 확장 인터페이스(PrivateUse1)에 연결돼, TPU가 GPU·CPU와 나란히 <code>tpu</code>라는 일반 장치로 보입니다. 라이선스는 Apache 2.0이고 현재 버전은 0.2.0(Python 3.11 이상)입니다. Google은 기존 PyTorch/XLA를 대체하는 도구라며 새 작업에는 TorchTPU를 쓰라고 권했습니다.</p>
+    <p>기능 면에서는 디버깅용·기본·연산 융합 등 세 가지 즉시 실행 모드를 제공하고, <code>torch.compile</code>로 그래프를 컴파일해 XLA 컴파일러로 넘깁니다. 분산 학습은 DDP, FSDP2, DTensor를 지원하며 vLLM·SGLang용 연동 저장소도 함께 공개됐습니다. Google과 파트너가 직접 밝힌 수치로는 Ironwood 칩 8,192개까지 확장했고, Qwen 3 8B 학습에서 최대 52%의 하드웨어 활용률(MFU)을 냈다고 합니다. 독립 검증된 수치는 아닙니다.</p>
+    <p>TechCrunch를 인용한 Digital Today 보도에 따르면 기존 PyTorch 앱을 다시 짜지 않고 설정만 바꿔 TPU로 옮길 수 있는 것이 목표입니다. Google은 이전 과정의 오류 수정을 돕는 TPU Agent Suite와, 휴대폰·노트북에서 PyTorch 모델을 돌리는 LiteRT 개선도 함께 내놓았습니다. 하루 전 Amazon도 Trainium 칩용 TorchNeuron을 발표해, 두 클라우드 회사가 연이어 같은 방향의 수를 뒀습니다.</p>
+
+    <h3>배경: 짧은 타임라인</h3>
+    <ul class="timeline">
+      <li><time>2016</time>Meta가 PyTorch를 공개합니다. 2022년 리눅스 재단으로 이관됩니다.</li>
+      <li><time>2025.12</time>Reuters가 Google이 Meta와 함께 TorchTPU를 개발 중이라고 보도합니다(TechInformed 인용).</li>
+      <li><time>2026.04.07</time>Google 개발자 블로그가 TorchTPU의 설계와 로드맵을 처음 공식 소개합니다.</li>
+      <li><time>2026.10.19</time>Amazon이 Trainium용 PyTorch 백엔드 TorchNeuron을 내놓습니다.</li>
+      <li><time>2026.10.20</time>Google이 PyTorch Conference에서 TorchTPU를 오픈소스로 공개합니다.</li>
+    </ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      PyTorch를 배워 두면 이제 <strong>Nvidia GPU뿐 아니라 Google TPU, Amazon Trainium에서도 같은 코드로</strong> 모델을 돌릴 수 있는 길이 열리고 있습니다. 칩보다 프레임워크를 먼저 익히는 것이 이득입니다.
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>실무자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. 장치 코드를 한 곳에 모으기</h4><p>코드 곳곳에 <code>.cuda()</code>를 쓰지 말고 <code>device</code> 변수 하나로 관리하세요. 그래야 <code>cuda</code>, <code>tpu</code>, <code>cpu</code>를 설정만으로 바꿀 수 있습니다.</p></div>
+      <div class="action"><h4>2. 공식 문서와 저장소 읽어 보기</h4><p>Google Cloud 문서의 "PyTorch on TPU" 페이지와 GitHub 저장소의 예제로 설치(<code>pip install torch_tpu</code>)와 지원 범위를 확인하세요. CPU용 torch 휠을 함께 지정해야 한다는 안내도 있습니다.</p></div>
+      <div class="action"><h4>3. torch.compile 익히기</h4><p>TPU든 GPU든 성능을 끌어내는 핵심은 컴파일입니다. 작은 모델로 eager 모드와 <code>torch.compile</code> 속도를 비교해 보세요.</p></div>
+      <div class="action"><h4>4. 서빙은 vLLM·SGLang으로 시작하기</h4><p>두 도구 모두 TPU 연동이 공개됐습니다. 모델을 서비스로 띄울 때 이런 표준 도구를 쓰면 하드웨어를 바꿔도 코드를 덜 고칩니다.</p></div>
+      <div class="action"><h4>5. 같은 작업을 두 하드웨어에서 비용 비교하기</h4><p>무료 체험 크레딧 등으로 같은 학습·추론 작업을 GPU와 TPU에서 돌려 시간당 비용과 처리량을 비교하면, 숫자로 실행 환경을 고를 수 있습니다.</p></div>
+      <div class="action"><h4>6. 커스텀 CUDA 커널 의존 줄이기</h4><p>직접 짠 CUDA 커널이 많을수록 다른 칩으로 옮기기 어렵습니다. 가능하면 PyTorch 기본 연산이나 이식 가능한 커널 도구를 쓰세요.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos">
+      <ul>
+        <li><strong>칩 선택지가 늘어 가격이 내려간다.</strong> 같은 코드를 여러 칩에서 돌릴 수 있으면 클라우드 간 가격 경쟁이 붙습니다.</li>
+        <li><strong>GPU 부족의 숨통이 트인다.</strong> Nvidia GPU를 구하기 어려울 때 TPU나 Trainium으로 쉽게 옮겨 갈 수 있습니다.</li>
+        <li><strong>PyTorch 자체가 더 좋아진다.</strong> 특정 하드웨어 의존을 분리하는 작업이 PyTorch 핵심 코드에 들어가 모든 사용자에게 이득이 됩니다.</li>
+        <li><strong>오픈소스 협력이 커진다.</strong> 경쟁사들이 함께 표준 프레임워크를 다듬는 모델이 다른 AI 도구로도 퍼질 수 있습니다.</li>
+      </ul>
+    </div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg">
+      <ul>
+        <li><strong>"그대로 돌아간다"가 말처럼 쉽지 않다.</strong> 연산 일부가 지원되지 않거나 성능이 GPU보다 낮으면 결국 코드를 손봐야 합니다.</li>
+        <li><strong>클라우드 종속이 다른 형태로 생긴다.</strong> TPU는 Google Cloud, Trainium은 AWS에서만 쓸 수 있어 칩 대신 클라우드에 묶일 수 있습니다.</li>
+        <li><strong>도구가 파편화된다.</strong> 회사마다 다른 백엔드와 최적화 옵션이 늘면 배워야 할 것이 많아지고 문서도 흩어집니다.</li>
+        <li><strong>CUDA 생태계의 벽이 여전히 높다.</strong> 수많은 라이브러리와 자료가 CUDA 기준이라, 개발자 이동이 느리게 진행될 수 있습니다.</li>
+      </ul>
+    </div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion">
+      <p>TorchTPU 공개는 AI 칩 경쟁의 무대가 실리콘에서 소프트웨어로 넓어졌다는 신호입니다. Google과 Amazon이 연달아 PyTorch를 자기 칩에서 매끄럽게 돌리는 도구를 내놓은 것은, 개발자가 익숙한 도구를 바꾸지 않아도 되게 만들어야 칩을 팔 수 있다는 판단 때문입니다.</p>
+      <p>입문 개발자에게 이 흐름은 좋은 소식입니다. <strong>특정 칩이 아니라 PyTorch라는 표준을 깊이 익히는 것</strong>이 가장 오래가는 투자가 됩니다. 장치 코드를 깔끔하게 분리하고 컴파일과 서빙 도구를 다룰 줄 알면, 어떤 칩이 싸고 넉넉해지든 그쪽으로 옮겨 갈 수 있습니다.</p>
+    </div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://www.marktechpost.com/2026/10/20/google-torchtpu-open-source-native-pytorch-tpu/">Google Open-Sources TorchTPU, a Native PyTorch Backend for Cloud TPUs</a> <span class="src">— MarkTechPost, 2026.10.20</span></li>
+      <li><a href="https://www.digitaltoday.co.kr/en/view/117238/google-open-sources-torchtpu-to-help-move-pytorch-apps-to-tpus">Google open-sources TorchTPU to help move PyTorch apps to TPUs</a> <span class="src">— Digital Today, 2026.10.21</span></li>
+      <li><a href="https://ua.news/en/technologies/google-vidkrila-kod-torchtpu-dlia-zapusku-pytorch-na-yiyi-shi-chipakh-techcrunch">Google open-sources TorchTPU for PyTorch on AI chips — TechCrunch</a> <span class="src">— UA.NEWS(TechCrunch 인용), 2026.10.20</span></li>
+      <li><a href="https://www.efficientlyconnected.com/torchtpu-pytorch-open-source-google-cloud-tpu/">Google TorchTPU: Native PyTorch for Cloud TPUs Goes Open Source</a> <span class="src">— Efficiently Connected, 2026.10.20</span></li>
+      <li><a href="https://developers.googleblog.com/torchtpu-running-pytorch-natively-on-tpus-at-google-scale/">TorchTPU: Running PyTorch Natively on TPUs at Google Scale</a> <span class="src">— Google Developers Blog, 2026.04.07</span></li>
+      <li><a href="https://techinformed.com/google-moves-to-make-tpus-feel-native-to-pytorch-as-it-targets-nvidias-cuda-advantage/">Google moves to make TPUs feel native to PyTorch as it targets Nvidia's CUDA advantage</a> <span class="src">— TechInformed, 2025.12.18</span></li>
+    </ol>
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list">
+      <a href="2026-10-21-anthropic-s1-ipo-filing.html"><span class="r">오늘의 뉴스 1위</span><span class="t">Anthropic 상장 신청서 초안 공개: 상반기 매출 163억 달러, 손실 807억 달러</span></a>
+      <a href="2026-10-21-china-nvidia-rtx-pro-5500-orders.html"><span class="r">오늘의 뉴스 2위</span><span class="t">中 바이트댄스·알리바바·텐센트, Nvidia GPU 350억 달러어치 주문: 받을 수 있는 건 일부뿐</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

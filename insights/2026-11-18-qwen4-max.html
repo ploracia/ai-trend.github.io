@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qwen4-Max: 100만 토큰을 읽는 알리바바의 새 모델, 입문 개발자가 알아야 할 것 | AI 비밀 레시피</title>
+  <meta name="description" content="알리바바 클라우드가 11월 16일 공개한 Qwen4-Max의 컨텍스트 길이, 가격, 활용 방식을 공식 문서 기준으로 정리했습니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+
+    .cats { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; margin: 14px 0 0; font-size: 13px; color: var(--muted); }
+    .cats .lbl { font-weight: 700; margin-right: 2px; }
+    .cats a { font-size: 12.5px; font-weight: 600; text-decoration: none; color: var(--text); border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 2px 8px; }
+    .cats a:hover { border-color: var(--accent); color: var(--accent); }
+    .cats .sep { width: 10px; }
+    figure.fig { margin: 22px 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    figure.fig img, figure.fig svg { display: block; width: 100%; height: auto; }
+    figure.fig figcaption { font-size: 13.5px; color: var(--muted); padding: 10px 16px; border-top: 1px solid var(--line); }
+    figure.fig figcaption .credit { display: block; font-size: 12px; margin-top: 2px; }
+    .srcfig { display: flex; gap: 12px; align-items: center; background: var(--bg); border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px; margin: 14px 0; font-size: 14.5px; }
+    .srcfig::before { content: "🖼"; font-size: 20px; }
+    .buzz { display: grid; gap: 10px; margin: 14px 0; }
+    .buzz div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; font-size: 15px; }
+    .buzz .who { display: block; font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+    pre { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; font-size: 13.5px; line-height: 1.6; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#insights"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#insights">← 인사이트 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>Qwen4-Max: 100만 토큰을 읽는 알리바바의 새 모델, 입문 개발자가 알아야 할 것</h1>
+    <div class="byline"><span><time datetime="2026-11-18T16:13:00+09:00">2026.11.18 16:13 KST</time></span><span>읽는 시간 약 7분</span></div>
+    <div class="cats">
+      <span class="lbl">나라</span>
+      <a href="../#insights/country/중국">중국</a>
+      <span class="sep"></span>
+      <span class="lbl">기업</span>
+      <a href="../#insights/company/Alibaba">Alibaba</a>
+    </div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol>
+        <li>알리바바 클라우드가 2026년 11월 16일 Qwen4-Max를 정식 공개했고, 11월 11일부터 있던 제한 공개(프리뷰)를 마쳤습니다.</li>
+        <li>입력 컨텍스트가 100만 토큰이고 텍스트·이미지·영상을 받으며, 전문가 여러 명 중 필요한 일부만 깨우는 MoE 구조로 계산 비용을 줄였다고 설명합니다.</li>
+        <li>가중치 공개(오픈 웨이트)는 Max에는 없고 더 작은 Qwen4 모델부터 나중에 풀린다고 해서, 입문자는 API로 먼저 써 보는 것이 현실적입니다.</li>
+      </ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 모델</span><span class="what">Qwen4-Max (qwen4-max)</span><span>근거 글 5개(공식 2 · 2차 3)</span></div>
+
+    <p class="lead">11월 중순 중국 빅테크들이 잇달아 새 모델을 내놓는 가운데, 알리바바의 Qwen4-Max는 "긴 문서를 한 번에 읽고, 일을 끝까지 해내는 모델"이라는 메시지로 개발자 사이에서 주목받았습니다. 특히 입력 컨텍스트가 100만 토큰이라는 점과 API 가격 인하가 함께 언급되면서, 긴 코드베이스나 문서를 다루는 개발자들의 관심이 몰렸습니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">한눈에 보기</a></li>
+        <li><a href="#s2">어떻게 동작하나요</a></li>
+        <li><a href="#s3">왜 지금 화제인가요</a></li>
+        <li><a href="#s4">관련 나라·기업</a></li>
+        <li><a href="#s5">기존 방식과 무엇이 다른가</a></li>
+        <li><a href="#s6">직접 해 보기</a></li>
+        <li><a href="#s7">주의할 점과 한계</a></li>
+        <li><a href="#s8">정리</a></li>
+        <li><a href="#s9">참고한 글</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>한눈에 보기</h2>
+    <p>Qwen4-Max를 큰 도서관에 비유하면 이해가 쉽습니다. 도서관에는 전문 사서가 총 2.4조 개 파라미터 규모로 많이 있지만, 질문 한 개가 들어올 때 그중 관련 있는 사서 몇 명(토큰마다 약 71B)만 불러서 답을 맞힙니다. 모든 사서를 매번 부르지 않으니 같은 규모의 모델을 전부 돌리는 것보다 계산이 가볍습니다. 그리고 한 번에 펼쳐 볼 수 있는 책의 분량, 즉 컨텍스트는 100만 토큰으로 넓습니다.</p>
+    <figure class="fig">
+      <img src="img/2026-11-18-qwen4-max-1.svg" alt="전문가 24칸 중 몇 칸만 파란색으로 켜져 있는 MoE 개념도" />
+      <figcaption>그림 1. MoE 구조 개념: 전체 전문가 중 일부만 호출합니다.<span class="credit">출처 글과 Alibaba Cloud 발표를 바탕으로 다시 그림 (칸 수는 설명용 예시)</span></figcaption>
+    </figure>
+    <div class="callout"><b>용어 풀이</b>
+      · <strong>MoE(전문가 혼합)</strong>: 여러 전문가 블록 중 입력마다 일부만 골라 쓰는 구조입니다.<br />
+      · <strong>토큰</strong>: 모델이 읽고 쓰는 글자 조각입니다. 한글은 보통 영어보다 토큰을 더 많이 씁니다.<br />
+      · <strong>컨텍스트 길이</strong>: 한 번의 요청에 넣을 수 있는 입력 분량의 상한입니다.<br />
+      · <strong>오픈 웨이트</strong>: 학습된 가중치 파일을 누구나 내려받아 자기 서버에서 돌릴 수 있게 공개하는 방식입니다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>어떻게 동작하나요</h2>
+    <p>개발자 입장에서 흐름은 단순합니다. 텍스트, 이미지, 영상 중 하나 이상을 입력으로 넣으면 모델 안에서 필요한 전문가가 골라지고, 텍스트 답변이 나옵니다. 공식 문서 기준으로 입력 최대치는 991,808토큰(사고 모드에서는 983,616토큰)이고, 출력은 사고 모드를 끈 상태에서 최대 131,072토큰, 켠 상태에서 최대 262,144토큰입니다. 호출 방식은 OpenAI Chat Completions, OpenAI Responses, Anthropic Messages 형식을 지원해서, 기존에 쓰던 SDK에서 모델 이름을 바꾸는 정도로 시작할 수 있다고 문서에 적혀 있습니다. 함수 호출(도구 사용), 구조화 출력, 웹 검색, 캐시도 지원합니다.</p>
+    <figure class="fig">
+      <img src="img/2026-11-18-qwen4-max-2.svg" alt="입력, 라우팅, 생성, 출력 네 단계로 이어지는 API 호출 흐름도" />
+      <figcaption>그림 2. 요청이 들어와서 답이 나오기까지의 흐름입니다.<span class="credit">Alibaba Cloud Model Studio 문서 내용을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+
+    <h2 id="s3"><span class="no">03</span>왜 지금 화제인가요</h2>
+    <p>보도에서 강조된 부분은 가격과 에이전트 작업 비용이었습니다. 발표문은 Qwen4-Max가 이전 세대인 Qwen3.8-Max보다 활성 파라미터를 25% 적게 쓴다고 밝혔고, 자체 평가 기준인 Work360에서 작업당 평균 비용이 크게 줄었다고 설명했습니다. 독립 기관 수치를 인용한 eWeek는 Vals AI 지수에서 Qwen4-Max가 63.20%로 Qwen3.8-Max(59.05%)보다 높다고 전했습니다. 다만 이런 수치는 대부분 제작사나 평가 업체가 공개한 결과라서, 실제 프로젝트에 적용하기 전에 직접 돌려 보는 것이 안전합니다.</p>
+    <div class="buzz">
+      <div>가격 인하와 1M 컨텍스트가 함께 언급되며 긴 문서·코드 작업용 모델로 소개됐습니다. 작업당 평균 비용이 약 26.58위안에서 11.16위안으로 줄었다는 수치가 핵심으로 인용됐습니다.<span class="who"><a href="https://technode.com/2026/11/16/alibaba-launches-qwen4-max-with-lower-api-prices-and-a-million-token-context-window/">TechNode</a> · 11.16</span></div>
+      <div>독립 평가 기관 Vals AI의 지수에서 Qwen3.8-Max보다 높은 점수를 받았다는 점이 전해졌습니다. 같은 매체는 Max 모델이 상용 모델이고, 작은 Qwen4 모델만 오픈 웨이트로 풀릴 예정이라고 정리했습니다.<span class="who"><a href="https://www.eweek.com/news/alibaba-qwen4-max-features-pricing/">eWeek</a> · 11.16</span></div>
+      <div>에이전트 작업 벤치마크와 가격표를 한 번에 정리한 글입니다. 다만 벤치마크 차트는 제작사가 모은 자료라는 점을 밝히고 있습니다.<span class="who"><a href="https://www.datacamp.com/sv/blog/qwen4-max">DataCamp</a> · 11.16 갱신</span></div>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>관련 나라·기업</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>이름</th><th>어떤 관련이 있나</th></tr></thead>
+      <tbody>
+        <tr><td>기업</td><td>Alibaba (알리바바 클라우드)</td><td>Qwen4-Max를 개발해 자사 클라우드 플랫폼 QwenCloud로 제공합니다.</td></tr>
+        <tr><td>나라</td><td>중국</td><td>모델 개발 주체가 중국 기업이며, 호스팅 리전에는 베이징·싱가포르·미국·독일·일본·홍콩이 포함됩니다.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s5"><span class="no">05</span>기존 방식과 무엇이 다른가</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>비교 항목</th><th>기존 (Qwen3.8-Max)</th><th>Qwen4-Max</th></tr></thead>
+      <tbody>
+        <tr><td>입력 컨텍스트</td><td>확인된 자료 없음</td><td>1,000,000 토큰 (공식 문서)</td></tr>
+        <tr><td>활성 파라미터</td><td>기준 모델</td><td>25% 적음 (발표 수치)</td></tr>
+        <tr><td>입력·출력 단가</td><td>입력 $2.00 · 출력 $6.00 (eWeek 달러 표기)</td><td>입력 $1.50 · 출력 $4.50 (eWeek 달러 표기, 공식 문서는 위안화 표기)</td></tr>
+        <tr><td>오픈 웨이트</td><td>없음</td><td>없음, 작은 Qwen4 모델은 예고</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s6"><span class="no">06</span>직접 해 보기</h2>
+    <p>아래 단계는 공식 문서(Alibaba Cloud Model Studio)에서 확인한 내용만 담았습니다. 실제 호출용 주소와 키 발급 화면은 제공사 콘솔 메뉴가 바뀔 수 있으니 문서를 따라가 주세요.</p>
+    <ol>
+      <li>Alibaba Cloud Model Studio(QwenCloud)에서 계정을 만들고 API 키를 발급받습니다. 공식 문서에는 무료 쿼터(100만 토큰, 90일 유효)가 있다고 나와 있습니다.</li>
+      <li>이미 OpenAI SDK를 쓰고 있다면 base URL과 키만 바꾸고, 모델 이름은 <code>qwen4-max</code>로 지정합니다.</li>
+      <li>먼저 짧은 텍스트 질문 하나로 응답을 확인하고, 그다음 긴 문서를 넣어 컨텍스트 한도를 시험해 봅니다.</li>
+      <li>함수 호출이나 구조화 출력을 켜서, 모델이 JSON 형식으로 답하는지 확인합니다.</li>
+    </ol>
+
+    <h2 id="s7"><span class="no">07</span>주의할 점과 한계</h2>
+    <ul>
+      <li><strong>가격 표기가 출처마다 다릅니다.</strong> 공식 문서의 베이징 리전 기준 입력 10위안, 출력 30위안(100만 토큰당)과 eWeek의 달러 표기(입력 1.50, 출력 4.50)가 서로 맞지 않습니다. 리전과 통화를 확인하고 콘솔의 과금 화면에서 최종 단가를 보세요.</li>
+      <li><strong>오픈 웨이트가 아닙니다.</strong> 내 서버에 설치해 쓰는 로컬 LLM 용도로는 지금 당장 쓸 수 없습니다.</li>
+      <li><strong>벤치마크는 제작사 발표 중심입니다.</strong> Code Arena 6위, Work360 비용 절감 같은 수치는 발표 자료 기준이라 실제 업무 성능과 다를 수 있습니다.</li>
+      <li><strong>100만 토큰은 많아 보여도 비용이 빠르게 늘 수 있습니다.</strong> 긴 문서를 매번 통째로 넣으면 입력 토큰이 쌓이므로, 캐시와 필요한 부분만 넣는 방식을 함께 고려하세요.</li>
+      <li><strong>중국 기업 모델이라 데이터 보관 위치와 규정을 확인해야 합니다.</strong> 회사 데이터를 넣기 전에 사내 보안 정책과 제공사 약관을 확인하세요.</li>
+    </ul>
+
+    <h2 id="s8"><span class="no">08</span>정리</h2>
+    <div class="conclusion"><p>Qwen4-Max는 "많이 읽고, 싸게, 끝까지 일하는" 모델을 목표로 한 발표입니다. 100만 토큰 컨텍스트와 MoE 구조, 텍스트·이미지·영상 입력이라는 조건은 공식 문서로 확인됐습니다. 반면 가격과 성능 수치는 출처마다 달라서, 입문 개발자라면 숫자를 믿기보다 짧은 실험으로 직접 비교하는 습관이 중요합니다.</p><p>처음 시작한다면 기존에 쓰던 OpenAI 호환 SDK에 모델 이름만 바꿔 끼워 보세요. 같은 질문을 두 모델에 던져 답과 비용을 나란히 적어 두면, 어떤 상황에 어떤 모델이 맞는지 스스로 판단하는 감각이 생깁니다.</p></div>
+
+    <h2 id="s9"><span class="no">09</span>참고한 글</h2>
+    <ol class="refs">
+      <li><a href="https://www.alibabacloud.com/press-room/alibaba-unveils-qwen4-max">Alibaba Unveils Qwen4-Max: New AI Teammate for Work, Creativity, and Discovery</a> <span class="src">Alibaba Cloud 보도자료 · 2026.11.16 (공식)</span></li>
+      <li><a href="https://help.aliyun.com/en/model-studio/qwen4-max">qwen4-max (Latest Model)</a> <span class="src">Alibaba Cloud Model Studio 문서 · 2026.11.16 작성, 2026.11.17 갱신 (공식)</span></li>
+      <li><a href="https://technode.com/2026/11/16/alibaba-launches-qwen4-max-with-lower-api-prices-and-a-million-token-context-window/">Alibaba launches Qwen4-Max with lower API prices and a million-token context window</a> <span class="src">TechNode · 2026.11.16</span></li>
+      <li><a href="https://www.eweek.com/news/alibaba-qwen4-max-features-pricing/">Alibaba Launches Qwen4-Max: What's New and How Much It Costs</a> <span class="src">eWeek · 2026.11.16</span></li>
+      <li><a href="https://www.datacamp.com/sv/blog/qwen4-max">Qwen4-Max: funktioner, benchmarkresultat, pris och åtkomst</a> <span class="src">DataCamp · 2026.11.16 갱신</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#insights">← 전체 인사이트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-labelledby="t1 d1">
+  <title id="t1">GPT-6.2 Astra와 Sol 가격 비교</title>
+  <desc id="d1">100만 토큰당 입력과 출력 가격을 Astra 8달러와 40달러, Sol 2달러와 10달러로 나란히 보여 주는 막대 그림</desc>
+  <rect x="0" y="0" width="720" height="360" fill="#f4f6fb"/>
+  <text x="360" y="40" text-anchor="middle" font-size="20" font-weight="700" fill="#1b1b1f">GPT-6.2 가격 비교 (100만 토큰당, 달러)</text>
+
+  <rect x="60" y="80" width="280" height="240" rx="14" fill="#ffffff" stroke="#d6dae6"/>
+  <text x="200" y="112" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5bea">Astra</text>
+  <text x="200" y="134" text-anchor="middle" font-size="13" fill="#4a4a55">가장 어려운 작업용</text>
+  <text x="90" y="176" font-size="14" fill="#1b1b1f">입력 $8</text>
+  <rect x="170" y="162" width="48" height="20" rx="4" fill="#2f5bea"/>
+  <text x="90" y="216" font-size="14" fill="#1b1b1f">출력 $40</text>
+  <rect x="170" y="202" width="192" height="20" rx="4" fill="#2f5bea"/>
+  <text x="200" y="262" text-anchor="middle" font-size="12" fill="#4a4a55">이전 Astra 출력 $50 → 20% 인하</text>
+
+  <rect x="380" y="80" width="280" height="240" rx="14" fill="#ffffff" stroke="#d6dae6"/>
+  <text x="520" y="112" text-anchor="middle" font-size="18" font-weight="700" fill="#1f8a5b">Sol</text>
+  <text x="520" y="134" text-anchor="middle" font-size="13" fill="#4a4a55">일상 업무용, 효율형</text>
+  <text x="410" y="176" font-size="14" fill="#1b1b1f">입력 $2</text>
+  <rect x="490" y="162" width="12" height="20" rx="4" fill="#1f8a5b"/>
+  <text x="410" y="216" font-size="14" fill="#1b1b1f">출력 $10</text>
+  <rect x="490" y="202" width="48" height="20" rx="4" fill="#1f8a5b"/>
+  <text x="520" y="262" text-anchor="middle" font-size="12" fill="#4a4a55">가격은 이전 Sol과 동일</text>
+
+  <text x="360" y="340" text-anchor="middle" font-size="12" fill="#4a4a55">막대 길이는 출력 가격 기준 (OpenAI 발표 가격, 2026.11.17)</text>
+</svg>

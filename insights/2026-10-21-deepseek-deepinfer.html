@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeepSeek DeepInfer: 모델이 아니라 '모델을 돌리는 주방'을 통째로 공개하다 | AI 비밀 레시피</title>
+  <meta name="description" content="DeepSeek이 자사 API를 돌리는 추론 엔진 DeepInfer를 오픈소스로 공개했습니다. 추론 엔진이 무엇이고 왜 화제인지 입문 개발자 눈높이로 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+
+    /* 이슈 전용 */
+    .cats { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; margin: 14px 0 0; font-size: 13px; color: var(--muted); }
+    .cats .lbl { font-weight: 700; margin-right: 2px; }
+    .cats a { font-size: 12.5px; font-weight: 600; text-decoration: none; color: var(--text); border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 2px 8px; }
+    .cats a:hover { border-color: var(--accent); color: var(--accent); }
+    .cats .sep { width: 10px; }
+    figure.fig { margin: 22px 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    figure.fig img, figure.fig svg { display: block; width: 100%; height: auto; }
+    figure.fig figcaption { font-size: 13.5px; color: var(--muted); padding: 10px 16px; border-top: 1px solid var(--line); }
+    figure.fig figcaption .credit { display: block; font-size: 12px; margin-top: 2px; }
+    .srcfig { display: flex; gap: 12px; align-items: center; background: var(--bg); border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px; margin: 14px 0; font-size: 14.5px; }
+    .srcfig::before { content: "🖼"; font-size: 20px; }
+    .buzz { display: grid; gap: 10px; margin: 14px 0; }
+    .buzz div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; font-size: 15px; }
+    .buzz .who { display: block; font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+    pre { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; font-size: 13.5px; line-height: 1.6; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#insights"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#insights">← 인사이트 목록</a>
+    </div>
+  </header>
+  <article>
+    <h1>DeepSeek DeepInfer: 모델이 아니라 '모델을 돌리는 주방'을 통째로 공개하다</h1>
+    <div class="byline"><span><time datetime="2026-10-21T16:24:10+09:00">2026.10.21 16:24 KST</time></span><span>읽는 시간 약 8분</span></div>
+    <div class="cats">
+      <span class="lbl">나라</span>
+      <a href="../#insights/country/중국">중국</a>
+      <a href="../#insights/country/미국">미국</a>
+      <span class="sep"></span>
+      <span class="lbl">기업</span>
+      <a href="../#insights/company/DeepSeek">DeepSeek</a>
+      <a href="../#insights/company/NVIDIA">NVIDIA</a>
+      <a href="../#insights/company/Huawei">Huawei</a>
+    </div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol><li>중국 DeepSeek이 자사 API를 실제로 돌리는 추론 엔진 DeepInfer를 Apache 2.0 라이선스로 공개했고, 하루 사이 Hacker News와 해외 기술 블로그에서 가장 많이 다뤄졌습니다.</li><li>DeepInfer는 모델 자체가 아니라 모델을 빠르고 싸게 실행하는 소프트웨어로, 최적화 커널·병렬 처리·추측 디코딩 같은 기법을 한데 묶었고 NVIDIA SM100 GPU와 Huawei Ascend 950을 지원합니다.</li><li>당장 내 노트북에서 돌릴 물건은 아니지만, "AI 서비스 비용은 모델만큼이나 추론 엔진이 좌우한다"는 점을 배우기에 좋은 실전 교재입니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 기술</span><span class="what">DeepSeek DeepInfer</span><span>근거 글 9개</span></div>
+
+    <p class="lead">한국 시간 10월 20일 저녁, DeepSeek이 GitHub에 DeepInfer 저장소를 열자 하룻밤 사이 Hacker News 1위 토론(1,800점 이상), Medium·Substack·개인 기술 블로그의 해설 글이 줄줄이 올라왔습니다. 새 모델이 아니라 "모델을 돌리는 엔진"이 이렇게 큰 관심을 받은 이유는, 그동안 베일에 싸여 있던 DeepSeek의 저렴한 API 가격 비결 일부가 코드로 드러났기 때문입니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">한눈에 보기</a></li>
+        <li><a href="#s2">어떻게 동작하나요</a></li>
+        <li><a href="#s3">왜 지금 화제인가요</a></li>
+        <li><a href="#s4">관련 나라·기업</a></li>
+        <li><a href="#s5">기존 방식과 무엇이 다른가</a></li>
+        <li><a href="#s6">직접 해 보기</a></li>
+        <li><a href="#s7">주의할 점과 한계</a></li>
+        <li><a href="#s8">정리</a></li>
+        <li><a href="#s9">참고한 글</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>한눈에 보기</h2>
+    <p>AI 모델을 음식점에 비유해 보겠습니다. 모델 가중치(학습으로 얻은 수십억 개의 숫자)는 <strong>레시피</strong>이고, 추론 엔진은 그 레시피로 주문을 받아 음식을 내보내는 <strong>주방 운영 방식</strong>입니다. 같은 레시피라도 요리사를 어떻게 배치하고, 재료를 어떻게 미리 손질해 두고, 주문을 어떤 순서로 처리하느냐에 따라 한 시간에 내보내는 접시 수와 원가가 크게 달라집니다. DeepSeek은 지금까지 레시피(오픈 웨이트 모델)는 공개해 왔지만, 실제 주방 운영 노하우는 공개하지 않았습니다. 이번 DeepInfer 공개는 그 주방의 핵심 설비와 동선을 보여 준 셈입니다.</p>
+    <figure class="fig">
+      <img src="img/2026-10-21-deepseek-deepinfer-1.svg" alt="모델 가중치와 사용자 요청 사이에서 DeepInfer가 하는 일, 지원 하드웨어, 이번 공개에서 빠진 부분을 보여 주는 그림" />
+      <figcaption>그림 1. 모델(레시피)과 추론 엔진(주방)의 관계. DeepInfer는 커널·통신·병렬 처리·추측 디코딩을 묶었지만 KV 캐시 시스템 등은 빠져 있습니다.<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+    <div class="callout"><b>용어 풀이</b>
+      <strong>추론(inference)</strong>: 학습이 끝난 모델에 질문을 넣어 답을 받아 내는 일. 우리가 챗봇을 쓸 때 일어나는 과정입니다.<br />
+      <strong>추론 엔진</strong>: 추론을 GPU 위에서 효율적으로 실행해 주는 소프트웨어. vLLM, SGLang, TensorRT-LLM이 대표적입니다.<br />
+      <strong>커널(kernel)</strong>: GPU에서 실제 계산을 수행하는 아주 작은 저수준 프로그램. 행렬 곱셈 같은 핵심 연산을 얼마나 잘 짜느냐가 속도를 좌우합니다.<br />
+      <strong>오픈 웨이트 vs 오픈소스 엔진</strong>: 전자는 모델 숫자를 공개하는 것, 후자는 그 모델을 돌리는 코드를 공개하는 것입니다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>어떻게 동작하나요</h2>
+    <p>LLM이 질문 하나에 답하는 과정은 크게 두 단계입니다. 먼저 <strong>프리필(prefill)</strong> 단계에서 질문 전체를 한 번에 읽고, 읽은 내용을 <strong>KV 캐시</strong>라는 메모로 GPU 메모리에 남겨 둡니다. 이어서 <strong>디코드(decode)</strong> 단계에서 그 메모를 참고하며 답을 한 토큰(단어 조각)씩 만들어 냅니다. 프리필은 계산량이 많고, 디코드는 한 번에 하나씩 차례를 기다려야 해서 느려지기 쉽습니다.</p>
+    <p>DeepInfer의 README에 따르면 이 엔진은 두 단계를 빠르게 만들기 위해 다음 부품을 묶었습니다.</p>
+    <ul>
+      <li><strong>최적화 커널</strong>: DeepSeek이 앞서 따로 공개했던 FlashMLA(어텐션 계산), DeepGEMM(행렬 곱셈), DeepEP(GPU 간 통신) 등을 엔진 안에 통합했습니다.</li>
+      <li><strong>병렬 처리</strong>: 어텐션은 데이터 병렬로, MoE(전문가 혼합, 질문마다 일부 '전문가' 신경망만 쓰는 구조) 부분은 전문가 병렬로 여러 GPU에 나눠 싣고, 전문가별 부하를 고르게 맞춥니다.</li>
+      <li><strong>추측 디코딩</strong>: 빠른 초안 작성기가 몇 토큰을 먼저 제안하면 본 모델이 한 번에 검증해, 맞은 만큼 건너뛰는 방식입니다. README는 이를 DSpark와 신뢰도 기반 검증이라고 부릅니다.</li>
+      <li><strong>비동기 스케줄링</strong>: CPU가 다음 묶음(배치)을 준비하는 동안 GPU는 쉬지 않고 계산하도록 겹쳐 돌립니다. 기본으로 켜져 있습니다.</li>
+      <li><strong>구조화 출력</strong>: 답이 정규식, JSON 스키마, EBNF 문법을 반드시 따르도록 생성을 제한합니다. 앱에서 JSON을 받아 쓰는 개발자에게 특히 유용한 기능입니다.</li>
+      <li><strong>배치 불변·결정적 추론</strong>(NVIDIA 전용): 같은 입력이면 함께 처리되는 다른 요청과 상관없이 같은 결과가 나오도록 맞춥니다. 디버깅과 평가 재현에 도움이 됩니다.</li>
+    </ul>
+    <figure class="fig">
+      <img src="img/2026-10-21-deepseek-deepinfer-2.svg" alt="질문을 한 번에 읽는 프리필, 답을 한 토큰씩 쓰는 디코드, 초안을 미리 쓰고 한 번에 검증하는 추측 디코딩의 흐름도" />
+      <figcaption>그림 2. 프리필 → 디코드 흐름과, 디코드를 빠르게 만드는 추측 디코딩의 '초안 → 검증' 과정.</figcaption>
+    </figure>
+    <div class="srcfig"><span>DeepSeek이 공개한 프리필·디코드 성능(파레토) 차트 — <a href="https://github.com/deepseek-ai/DeepInfer">원문 그림 보기 (DeepInfer GitHub README)</a></span></div>
+
+    <h2 id="s3"><span class="no">03</span>왜 지금 화제인가요</h2>
+    <p>CellCog 블로그에 따르면 DeepSeek은 10월 20일 18:30(KST)쯤 X(옛 트위터)로 공개를 알렸고, The New Stack은 이날 함께 API 요청을 모델 입력으로 바꿔 주는 보조 라이브러리 deepseek-recipe의 새 버전도 나왔다고 전했습니다. 커뮤니티가 크게 반응한 지점은 세 가지였습니다. 첫째, 실제 상용 서비스에 쓰는 엔진이라는 점. 둘째, NVIDIA와 나란히 Huawei Ascend 950을 1급 지원 대상으로 올렸다는 점. 셋째, 함께 언급된 운영 수치(한 클러스터에서 하루 155조 토큰 처리 등)가 "AI 추론은 돈이 되는가"라는 오래된 논쟁에 불을 붙였다는 점입니다.</p>
+    <div class="buzz">
+      <div>DeepSeek이 밝힌 처리량과 카드당 시간당 매출 수치를 두고, 추론 자체는 이미 수익이 나며 손실은 주로 학습비에서 온다는 의견과 "최상위가 아닌 모델은 결국 범용재가 된다"는 전망이 오갔습니다.<span class="who"><a href="https://news.ycombinator.com/item?id=50163277">Hacker News 토론</a> · 10.21 08:00경</span></div>
+      <div>엔진은 여러 GPU에 나눠 돌리는 대규모 배포용이며, KV 캐시 시스템이 빠졌고 공개된 벤치마크만으로 vLLM·SGLang보다 낫다고 단정할 수 없다고 정리했습니다.<span class="who"><a href="https://medium.com/data-science-in-your-pocket/what-is-deepseek-deepinfer-the-inference-engine-behind-its-production-ai-systems-c91c5070de38">Medium · Data Science in Your Pocket</a> · 10.20 21:18</span></div>
+      <div>DeepSeek의 비용 우위는 엔진 튜닝보다 사전학습 단계의 설계(층 간 KV 캐시 공유 등)에서 나오므로, 다른 모델에 그대로 옮겨 쓰기 어렵다는 분석을 내놓았습니다.<span class="who"><a href="https://wukong123.substack.com/p/reflections-on-deepseek-open-sourcing">Substack · WK</a> · 10.20 21:20경</span></div>
+      <div>성능 차트는 참고 자료일 뿐 어디서나 빠르다거나 호스팅 비용이 싸진다는 보증은 아니며, 실서비스 부품 일부는 운영자가 직접 만들어야 한다고 짚었습니다.<span class="who"><a href="https://kingy.ai/blog/deepinfer-deepseek-inference-engine/">Kingy AI 블로그</a> · 10.20 23:48</span></div>
+      <div>Latent.Space는 공개된 운영 수치로 추론 마진을 80% 이상으로 어림했지만, 이는 DeepSeek 자체 수치와 자체 계산에 기댄 추정이라는 점을 함께 밝혔습니다.<span class="who"><a href="https://latent.space/p/ainews-deepseek-deepinfer-open-source">Latent.Space AINews</a> · 10.21</span></div>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>관련 나라·기업</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>이름</th><th>어떤 관련이 있나</th></tr></thead>
+      <tbody>
+        <tr><td>나라</td><td>중국</td><td>DeepSeek과 Huawei의 본거지. 자국 칩(Ascend)을 엔진의 정식 지원 대상으로 올린 점이 주목받았습니다.</td></tr>
+        <tr><td>나라</td><td>미국</td><td>엔진이 지원하는 NVIDIA GPU의 나라. 공개 즈음 미국 연방 민간기관에서 DeepSeek 기술을 퇴출하라는 명령이 보도돼 HN에서도 함께 논의됐습니다.</td></tr>
+        <tr><td>기업</td><td>DeepSeek</td><td>DeepInfer와 deepseek-recipe를 만들고 공개한 주체. 지원 모델은 자사 DeepSeek-V4.1-Flash입니다.</td></tr>
+        <tr><td>기업</td><td>NVIDIA</td><td>지원 하드웨어인 SM100 아키텍처(Blackwell 계열 데이터센터 GPU)의 제조사. 배치 불변·결정적 샘플링은 NVIDIA에서만 됩니다.</td></tr>
+        <tr><td>기업</td><td>Huawei</td><td>또 하나의 지원 하드웨어인 Ascend 950 NPU의 제조사.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s5"><span class="no">05</span>기존 방식과 무엇이 다른가</h2>
+    <p>README는 DeepInfer가 처음에 주로 vLLM을 바탕으로 만들어졌고 SGLang·TensorRT-LLM에서 영감을 받았다고 밝힙니다. 즉 '전혀 새로운 엔진'이라기보다 범용 엔진을 한 모델과 두 하드웨어에 맞춰 극한까지 다듬은 버전에 가깝습니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>비교 항목</th><th>범용 엔진 (vLLM·SGLang 등)</th><th>DeepInfer</th></tr></thead>
+      <tbody>
+        <tr><td>지원 모델</td><td>수백 종의 오픈 모델</td><td>DeepSeek-V4.1-Flash 하나</td></tr>
+        <tr><td>지원 하드웨어</td><td>여러 세대 GPU, 일부는 CPU·기타 가속기</td><td>NVIDIA SM100, Huawei Ascend 950</td></tr>
+        <tr><td>목표 규모</td><td>GPU 1장부터 클러스터까지</td><td>여러 GPU로 묶인 대규모 배포 (벤치마크: 프리필 4장, 디코드 64장)</td></tr>
+        <tr><td>서빙 기능</td><td>OpenAI 호환 API 서버 등 바로 쓸 수 있는 구성</td><td>오프라인 추론 중심. KV 캐시 시스템·프리필/디코드 분리·부하 분산은 미포함</td></tr>
+        <tr><td>성격</td><td>누구나 쓰는 범용 도구</td><td>실제 상용 서비스의 '참고 구현'</td></tr>
+        <tr><td>라이선스</td><td>Apache 2.0 (vLLM 기준)</td><td>Apache 2.0</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s6"><span class="no">06</span>직접 해 보기</h2>
+    <p>솔직히 말해 DeepInfer는 Blackwell급 GPU 여러 장이 필요해서 개인이 바로 돌려 보기는 어렵습니다. README가 밝힌 준비물은 Linux, GCC 13 이상, Python 3.12, CUDA 13(NVIDIA) 또는 CANN 9.2(Ascend)입니다. 그래도 하드웨어가 있는 환경이라면 README에 나온 순서는 아래처럼 간단합니다. 빈 Python 3.12 가상 환경을 만들어 활성화한 뒤 진행하라고 안내합니다.</p>
+    <pre><code># 저장소 받기
+git clone https://github.com/deepseek-ai/DeepInfer
+cd DeepInfer
+
+# Ascend 환경이면 nvidia 대신 ascend
+# DeepInfer를 실행하는 셸에서도 계속 export 상태로 둘 것
+export DEEPINFER_ACCELERATOR=nvidia
+./build.sh
+
+# 오프라인 추론 예제 실행 (첫 실행 때 기본 체크포인트를 Hugging Face 캐시로 내려받음)
+python examples/offline_inference.py</code></pre>
+    <p>모델 파일을 이미 갖고 있다면 <code>DEEPINFER_HF_MODEL_DIR=/path/to/DeepSeek-V4.1-Flash-1017</code>로 위치를 지정할 수 있습니다. GPU가 없는 입문 개발자라면 이렇게 해 보길 권합니다.</p>
+    <div class="actions">
+      <div class="action"><h4>1. README의 기능 목록을 용어 사전처럼 읽기</h4><p>프리필, 디코드, 전문가 병렬, 추측 디코딩, 구조화 출력이 실제 서비스에서 어떻게 쓰이는지 한눈에 볼 수 있는 요약본입니다.</p></div>
+      <div class="action"><h4>2. 구조화 출력 예제 코드 열어 보기</h4><p>저장소의 <code>examples/_structured_output.py</code>를 보면 JSON 스키마로 답 형식을 강제하는 방법을 알 수 있습니다. 같은 개념은 다른 엔진·API에서도 쓰입니다.</p></div>
+      <div class="action"><h4>3. 가지고 있는 범용 엔진과 비교하기</h4><p>이미 vLLM 같은 엔진을 써 봤다면, 같은 기능(추측 디코딩·구조화 출력)이 어떤 옵션으로 켜지는지 나란히 비교해 보세요.</p></div>
+    </div>
+
+    <h2 id="s7"><span class="no">07</span>주의할 점과 한계</h2>
+    <ul>
+      <li><strong>하드웨어 장벽</strong>: NVIDIA SM100과 Huawei Ascend 950만 지원합니다. The New Stack에 따르면 Hopper(H100 등) 같은 이전 세대는 지원하지 않습니다.</li>
+      <li><strong>완성된 서버가 아님</strong>: KV 캐시 시스템, 프리필/디코드 분리, 데이터 병렬 복제본 간 부하 분산이 빠져 있어 그대로 API 서비스를 띄울 수는 없습니다.</li>
+      <li><strong>모델 하나만 지원</strong>: 현재는 DeepSeek-V4.1-Flash 전용입니다.</li>
+      <li><strong>수치는 자체 발표</strong>: AI타임스 보도에 따르면 디코드 처리량은 GPU당 초당 2만5천 토큰 이상이라고 하지만 DeepSeek 자체 측정입니다. AgentsPulse는 이 디코드 수치가 초안 적중률 75%를 가정한 값이라고 짚었습니다. 하루 155조 토큰이라는 수치도 캐시에서 재사용한 입력 토큰을 포함한 것이라고 Latent.Space는 설명합니다.</li>
+      <li><strong>규제 이슈</strong>: 미국 연방 민간기관의 DeepSeek 기술 사용 금지 보도처럼, 회사·기관에 따라 DeepSeek 관련 소프트웨어 도입에 정책 검토가 필요할 수 있습니다. 코드는 Apache 2.0이지만 쓰려는 조직의 규정을 먼저 확인하세요.</li>
+    </ul>
+
+    <h2 id="s8"><span class="no">08</span>정리</h2>
+    <div class="conclusion">
+      <p>DeepInfer는 "어떤 모델을 쓰느냐"만큼 "그 모델을 어떻게 돌리느냐"가 AI 서비스의 속도와 비용을 결정한다는 사실을 보여 준 사례입니다. 같은 레시피로도 주방 운영에 따라 접시당 원가가 달라지듯, 커널 최적화·병렬 처리·추측 디코딩이 쌓여 DeepSeek의 낮은 API 가격을 떠받치고 있다는 점이 코드로 확인됐습니다.</p>
+      <p>입문 개발자에게 지금 필요한 것은 이 엔진을 직접 돌리는 일이 아니라, 프리필·디코드·KV 캐시·추측 디코딩 같은 개념을 익혀 두는 일입니다. 나중에 vLLM으로 작은 모델을 서빙하거나 API 비용을 줄일 방법을 고민할 때, 오늘 본 주방 설계도가 좋은 지도가 되어 줄 것입니다.</p>
+    </div>
+
+    <h2 id="s9"><span class="no">09</span>참고한 글</h2>
+    <ol class="refs">
+      <li><a href="https://github.com/deepseek-ai/DeepInfer">deepseek-ai/DeepInfer (README)</a> <span class="src">GitHub · 공식 저장소 · 2026.10.20</span></li>
+      <li><a href="https://news.ycombinator.com/item?id=50163277">DeepSeek just open-sourced its inference engine</a> <span class="src">Hacker News · 2026.10.21</span></li>
+      <li><a href="https://medium.com/data-science-in-your-pocket/what-is-deepseek-deepinfer-the-inference-engine-behind-its-production-ai-systems-c91c5070de38">What is DeepSeek DeepInfer? The Inference Engine Behind Its Production AI Systems</a> <span class="src">Medium · Mehul Gupta · 2026.10.20</span></li>
+      <li><a href="https://wukong123.substack.com/p/reflections-on-deepseek-open-sourcing">Reflections on DeepSeek Open-Sourcing Its Inference Engine, DeepInfer</a> <span class="src">Substack · WK · 2026.10.20</span></li>
+      <li><a href="https://kingy.ai/blog/deepinfer-deepseek-inference-engine/">DeepInfer Explained: DeepSeek's Open Inference Engine, Benchmarks, Specs, and Costs</a> <span class="src">Kingy AI · 2026.10.20</span></li>
+      <li><a href="https://aireiter.com/blog/deepseek-deepinfer-open-source-inference-engine">DeepSeek DeepInfer: What the Open-Source Engine Actually Ships</a> <span class="src">AIReiter · 2026.10.21(KST)</span></li>
+      <li><a href="https://cellcog.ai/blog/deepseek-deepinfer-open-source/">DeepSeek Open-Sources DeepInfer: What It Takes to Run</a> <span class="src">CellCog 블로그 · 2026.10.20</span></li>
+      <li><a href="https://explainx.ai/blog/deepseek-deepinfer-open-source-inference-engine-v4-1-flash-155-trillion-tokens-claimed-vs-verified-2026">DeepSeek DeepInfer: Open Engine, 155T Tokens/Day Claim</a> <span class="src">explainx 블로그 · 2026.10.20</span></li>
+      <li><a href="https://agentspulse.github.io/tutorials/deepseek-deepinfer/">DeepInfer: DeepSeek's Open Inference Engine</a> <span class="src">AgentsPulse · 2026.10.20</span></li>
+      <li><a href="https://latent.space/p/ainews-deepseek-deepinfer-open-source">[AINews] DeepSeek DeepInfer: Open Source SOTA Inference</a> <span class="src">Latent.Space · 2026.10.21</span></li>
+      <li><a href="https://thenewstack.io/deepseek-deepinfer-huawei-nvidia/">DeepSeek open-sources the inference engine behind its API</a> <span class="src">The New Stack · 2026.10.20</span></li>
+      <li><a href="https://www.aitimes.com/news/articleView.html?idxno=216462">딥시크, AI 운영 비용 낮출 핵심 추론 기술 '딥인퍼' 오픈소스 공개</a> <span class="src">AI타임스 · 2026.10.21</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#insights">← 전체 인사이트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

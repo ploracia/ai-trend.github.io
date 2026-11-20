@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" role="img" aria-labelledby="t2">
+  <title id="t2">확산 언어 모델이 답을 다듬어 가는 단계별 흐름</title>
+  <style>
+    .bg{fill:#ffffff}.h{fill:#1b1b1f;font:800 19px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .tx{fill:#1b1b1f;font:700 15px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .sm{fill:#62626b;font:500 13.5px Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .card{fill:#f7f6f2;stroke:#e3e1da;stroke-width:1.5}.hi{fill:#e8eefe;stroke:#2f5bea;stroke-width:1.5}
+    .ok{fill:#e5f4ec;stroke:#1f8a5b;stroke-width:1.5}.ar{stroke:#2f5bea;stroke-width:2.5;fill:none}.ah{fill:#2f5bea}
+    .m{fill:#62626b;font:700 13px ui-monospace,Menlo,Consolas,monospace}
+    @media (prefers-color-scheme: dark){
+      .bg{fill:#1a1b1f}.h,.tx{fill:#ececf0}.sm,.m{fill:#9a9aa5}.card{fill:#111214;stroke:#2c2d33}
+      .hi{fill:#1f2640;stroke:#7c9cff}.ok{fill:#16291f;stroke:#4cc38a}.ar{stroke:#7c9cff}.ah{fill:#7c9cff}
+    }
+  </style>
+  <rect class="bg" width="800" height="400"/>
+  <text class="h" x="32" y="40">질문 하나가 답이 되기까지 (확산 방식)</text>
+  <g transform="translate(32,70)">
+    <rect class="card" width="168" height="190" rx="12"/>
+    <text class="tx" x="16" y="30">1. 입력</text>
+    <text class="sm" x="16" y="58">질문 + 답 길이만큼의</text>
+    <text class="sm" x="16" y="78">빈칸(마스크) 준비</text>
+    <text class="m" x="16" y="128">[?][?][?][?]</text>
+    <text class="m" x="16" y="152">[?][?][?][?]</text>
+  </g>
+  <g transform="translate(222,70)">
+    <rect class="hi" width="168" height="190" rx="12"/>
+    <text class="tx" x="16" y="30">2. 거친 초안</text>
+    <text class="sm" x="16" y="58">모든 칸을 동시에 예측,</text>
+    <text class="sm" x="16" y="78">확신 높은 칸부터 확정</text>
+    <text class="m" x="16" y="128">[함수][?][로][?]</text>
+    <text class="m" x="16" y="152">[?][정렬][?][.]</text>
+  </g>
+  <g transform="translate(412,70)">
+    <rect class="hi" width="168" height="190" rx="12"/>
+    <text class="tx" x="16" y="30">3. 반복 다듬기</text>
+    <text class="sm" x="16" y="58">남은 칸과 어색한 칸을</text>
+    <text class="sm" x="16" y="78">다시 고쳐 쓴다</text>
+    <text class="m" x="16" y="128">[함수][를][로][리]</text>
+    <text class="m" x="16" y="152">[스트][정렬][해][.]</text>
+  </g>
+  <g transform="translate(602,70)">
+    <rect class="ok" width="166" height="190" rx="12"/>
+    <text class="tx" x="16" y="30">4. 출력</text>
+    <text class="sm" x="16" y="58">정해진 단계 수만에</text>
+    <text class="sm" x="16" y="78">답 전체가 완성</text>
+    <text class="sm" x="16" y="128">“함수를 써서 리스트를</text>
+    <text class="sm" x="16" y="150">정렬해요.”</text>
+  </g>
+  <path class="ar" d="M204 165 h12"/><polygon class="ah" points="216,159 222,165 216,171"/>
+  <path class="ar" d="M394 165 h12"/><polygon class="ah" points="406,159 412,165 406,171"/>
+  <path class="ar" d="M584 165 h12"/><polygon class="ah" points="596,159 602,165 596,171"/>
+  <path class="ar" d="M496 270 v30 h-190 v-26"/><polygon class="ah" points="300,276 306,266 312,276"/>
+  <text class="sm" x="320" y="320">2↔3을 몇 번 반복 (단계 수 = 속도와 품질의 손잡이)</text>
+  <text class="sm" x="32" y="368">핵심: GPU가 한 번에 여러 칸을 계산하므로 토큰 하나씩 기다리는 시간이 줄어든다</text>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" role="img" aria-label="개발자 앱이 모델 이름을 적어 요청을 보내면 Gemini API가 답을 돌려주고 사용한 토큰만큼 비용이 붙는 흐름도">
+  <rect x="0" y="0" width="680" height="300" rx="14" fill="#f4f6fb"/>
+  <text x="340" y="34" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="16" font-weight="700" fill="#1b1b1f">API로 쓸 때의 흐름 (순서대로 읽기)</text>
+  <defs><marker id="arr2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f5bea"/></marker></defs>
+  <rect x="24" y="100" width="130" height="110" rx="12" fill="#ffffff" stroke="#2f5bea" stroke-width="2"/>
+  <text x="89" y="130" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="14" font-weight="700" fill="#1b1b1f">1. 내 앱</text>
+  <text x="89" y="152" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="12" fill="#444">질문과 자료를</text>
+  <text x="89" y="170" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="12" fill="#444">묶어서 보냄</text>
+  <path d="M158 155 L192 155" stroke="#2f5bea" stroke-width="3" fill="none" marker-end="url(#arr2)"/>
+  <rect x="196" y="100" width="150" height="110" rx="12" fill="#e8eefe" stroke="#2f5bea" stroke-width="2"/>
+  <text x="271" y="130" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="14" font-weight="700" fill="#1b1b1f">2. 모델 선택</text>
+  <text x="271" y="152" text-anchor="middle" font-family="Consolas, monospace" font-size="12" fill="#1b1b1f">gemini-4-argon</text>
+  <text x="271" y="176" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="12" fill="#444">모델 이름으로 지정</text>
+  <path d="M350 155 L384 155" stroke="#2f5bea" stroke-width="3" fill="none" marker-end="url(#arr2)"/>
+  <rect x="388" y="100" width="130" height="110" rx="12" fill="#e5f4ec" stroke="#1f8a5b" stroke-width="2"/>
+  <text x="453" y="130" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="14" font-weight="700" fill="#1b1b1f">3. 생각과 답</text>
+  <text x="453" y="152" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="12" fill="#444">모델이 내부에서</text>
+  <text x="453" y="170" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="12" fill="#444">생각한 뒤 답을 씀</text>
+  <path d="M522 155 L546 155" stroke="#2f5bea" stroke-width="3" fill="none" marker-end="url(#arr2)"/>
+  <rect x="550" y="100" width="110" height="110" rx="12" fill="#fff4e0" stroke="#b7791f" stroke-width="2"/>
+  <text x="605" y="130" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="14" font-weight="700" fill="#1b1b1f">4. 청구</text>
+  <text x="605" y="152" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="12" fill="#444">쓴 토큰 수만큼</text>
+  <text x="605" y="170" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="12" fill="#444">요금 계산</text>
+  <rect x="24" y="236" width="636" height="44" rx="10" fill="#ffffff" stroke="#9aa3b5"/>
+  <text x="342" y="262" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="13" fill="#1b1b1f">같은 모델을 Google AI Studio 화면이나 Gemini 앱 구독으로도 쓸 수 있습니다 (접근 조건은 보도마다 다름)</text>
+</svg>

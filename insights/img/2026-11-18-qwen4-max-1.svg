@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-label="MoE 개념도: 전체 전문가 중 일부만 활성화">
+  <style>
+    .t { font: 700 18px sans-serif; fill: #1b1b1f; }
+    .s { font: 400 14px sans-serif; fill: #62626b; }
+    .b { font: 600 14px sans-serif; fill: #1b1b1f; }
+    .on { fill: #2f5bea; }
+    .off { fill: #e3e1da; }
+    @media (prefers-color-scheme: dark) {
+      .t { fill: #ececf0; } .s { fill: #9a9aa5; } .b { fill: #ececf0; } .off { fill: #2c2d33; } .on { fill: #7c9cff; }
+    }
+  </style>
+  <rect width="720" height="380" fill="none"/>
+  <text x="24" y="34" class="t">MoE(전문가 혼합): 전체 2.4T 중 71B만 깨운다</text>
+  <text x="24" y="58" class="s">질문 한 개가 들어올 때 필요한 전문가 몇 명만 호출합니다</text>
+
+  <g>
+    <text x="24" y="100" class="b">전문가 그룹 (예시 24칸)</text>
+    <rect x="24" y="116" width="48" height="48" rx="8" class="on"/>
+    <rect x="80" y="116" width="48" height="48" rx="8" class="off"/>
+    <rect x="136" y="116" width="48" height="48" rx="8" class="off"/>
+    <rect x="192" y="116" width="48" height="48" rx="8" class="on"/>
+    <rect x="248" y="116" width="48" height="48" rx="8" class="off"/>
+    <rect x="304" y="116" width="48" height="48" rx="8" class="off"/>
+    <rect x="360" y="116" width="48" height="48" rx="8" class="off"/>
+    <rect x="416" y="116" width="48" height="48" rx="8" class="on"/>
+    <rect x="472" y="116" width="48" height="48" rx="8" class="off"/>
+    <rect x="528" y="116" width="48" height="48" rx="8" class="off"/>
+    <rect x="584" y="116" width="48" height="48" rx="8" class="off"/>
+    <rect x="640" y="116" width="48" height="48" rx="8" class="off"/>
+    <rect x="24" y="172" width="48" height="48" rx="8" class="off"/>
+    <rect x="80" y="172" width="48" height="48" rx="8" class="off"/>
+    <rect x="136" y="172" width="48" height="48" rx="8" class="on"/>
+    <rect x="192" y="172" width="48" height="48" rx="8" class="off"/>
+    <rect x="248" y="172" width="48" height="48" rx="8" class="off"/>
+    <rect x="304" y="172" width="48" height="48" rx="8" class="off"/>
+    <rect x="360" y="172" width="48" height="48" rx="8" class="off"/>
+    <rect x="416" y="172" width="48" height="48" rx="8" class="off"/>
+    <rect x="472" y="172" width="48" height="48" rx="8" class="off"/>
+    <rect x="528" y="172" width="48" height="48" rx="8" class="off"/>
+    <rect x="584" y="172" width="48" height="48" rx="8" class="off"/>
+    <rect x="640" y="172" width="48" height="48" rx="8" class="off"/>
+  </g>
+
+  <text x="24" y="262" class="b">파란 칸 = 이번 질문에 실제로 호출된 전문가</text>
+  <text x="24" y="284" class="s">나머지 칸은 쉬고 있어서 계산 비용이 적게 듭니다</text>
+
+  <text x="24" y="330" class="b">Qwen4-Max 공식 발표 수치</text>
+  <text x="24" y="352" class="s">총 파라미터 2.4T, 토큰마다 활성 71B, 이전 세대(Qwen3.8-Max)보다 활성 파라미터 25% 적음</text>
+</svg>

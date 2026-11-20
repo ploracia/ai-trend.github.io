@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LFM3: 폰과 노트북에서 도는 2B급 오픈 모델 가족, 입문 개발자가 알아야 할 것 | AI 비밀 레시피</title>
+  <meta name="description" content="Liquid AI가 2026년 10월 27일 공개한 2B급 온디바이스 모델 가족 LFM3를 입문 개발자 관점에서 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+
+    /* 이슈 전용 */
+    .cats { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; margin: 14px 0 0; font-size: 13px; color: var(--muted); }
+    .cats .lbl { font-weight: 700; margin-right: 2px; }
+    .cats a { font-size: 12.5px; font-weight: 600; text-decoration: none; color: var(--text); border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 2px 8px; }
+    .cats a:hover { border-color: var(--accent); color: var(--accent); }
+    .cats .sep { width: 10px; }
+    figure.fig { margin: 22px 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    figure.fig img, figure.fig svg { display: block; width: 100%; height: auto; }
+    figure.fig figcaption { font-size: 13.5px; color: var(--muted); padding: 10px 16px; border-top: 1px solid var(--line); }
+    figure.fig figcaption .credit { display: block; font-size: 12px; margin-top: 2px; }
+    .srcfig { display: flex; gap: 12px; align-items: center; background: var(--bg); border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px; margin: 14px 0; font-size: 14.5px; }
+    .srcfig::before { content: "🖼"; font-size: 20px; }
+    .buzz { display: grid; gap: 10px; margin: 14px 0; }
+    .buzz div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; font-size: 15px; }
+    .buzz .who { display: block; font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+    pre { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; font-size: 13.5px; line-height: 1.6; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#insights"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#insights">← 인사이트 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>LFM3: 폰과 노트북에서 도는 2B급 오픈 모델 가족, 입문 개발자가 알아야 할 것</h1>
+    <div class="byline"><span><time datetime="2026-11-01T16:19:05+09:00">2026.11.01 16:19 KST</time></span><span>읽는 시간 약 7분</span></div>
+    <div class="cats">
+      <span class="lbl">나라</span>
+      <a href="../#insights/country/미국">미국</a>
+      <a href="../#insights/country/중국">중국</a>
+      <span class="sep"></span>
+      <span class="lbl">기업</span>
+      <a href="../#insights/company/Liquid%20AI">Liquid AI</a>
+      <a href="../#insights/company/Hugging%20Face">Hugging Face</a>
+      <a href="../#insights/company/Alibaba">Alibaba</a>
+      <a href="../#insights/company/Google">Google</a>
+    </div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol>
+        <li>미국 Liquid AI가 2026년 10월 27일, 파라미터 약 2B급 모델 6종으로 이뤄진 LFM3 가족을 공개했습니다.</li>
+        <li>기반 모델 LFM3-1.7B는 4비트로 줄이면 약 1GB 메모리에 올라가고, 컨텍스트는 256K 토큰이며, 한국어를 포함한 16개 언어를 지원한다고 밝혔습니다.</li>
+        <li>입문 개발자에게는 '내 기기에서 직접 돌려 보고 파인튜닝할 수 있는 출발점'이라는 점이 핵심이고, 코딩이나 복잡한 추론에는 약하다는 한계도 함께 봐야 합니다.</li>
+      </ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 모델</span><span class="what">LFM3</span><span>근거 글 9개 (확인한 것만)</span></div>
+
+    <p class="lead">큰 모델이 계속 커지는 흐름 속에서, Liquid AI는 반대쪽 방향의 모델 가족을 내놓았습니다. 약 20억 파라미터(2B)급 모델을 휴대폰과 노트북에서 돌리는 것을 목표로 한다고 밝혔고, 글·이미지·음성을 한 뼈대에서 다루는 모델 여섯 종을 한꺼번에 공개했습니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">한눈에 보기</a></li>
+        <li><a href="#s2">어떻게 동작하나요</a></li>
+        <li><a href="#s3">왜 지금 화제인가요</a></li>
+        <li><a href="#s4">관련 나라·기업</a></li>
+        <li><a href="#s5">기존 방식과 무엇이 다른가</a></li>
+        <li><a href="#s6">직접 해 보기</a></li>
+        <li><a href="#s7">주의할 점과 한계</a></li>
+        <li><a href="#s8">정리</a></li>
+        <li><a href="#s9">참고한 글</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>한눈에 보기</h2>
+    <p>LFM3를 한 문장으로 말하면 '작은 뼈대 하나에 감각 기관을 하나씩 붙인 모델 가족'입니다. 사람으로 치면 같은 두뇌를 공유하면서 눈이나 귀를 필요에 따라 달아 준 것과 비슷합니다. 기반이 되는 LFM3-1.7B가 글을 이해하고, 여기에 이미지(VL), 음성(Audio), 둘 다(Omni) 기능을 붙인 변형이 나옵니다. 파라미터는 모델이 학습으로 익힌 조절 숫자의 개수로, 보통 많을수록 똑똑하지만 그만큼 무겁습니다.</p>
+    <figure class="fig">
+      <img src="img/2026-11-01-liquid-lfm3-1.svg" alt="LFM3-1.7B-Base 뼈대에서 텍스트, 이미지, 음성, 전체 입력 모델이 파생되고, 그 아래 판단 특화 모델 두 개가 붙는 구조도" />
+      <figcaption>그림 1. 하나의 뼈대에서 갈라져 나온 LFM3 모델 가족 (개념 도식)<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+    <div class="callout"><b>용어 풀이</b>
+      · 파라미터: 모델이 학습으로 익힌 숫자들. 1.7B는 약 17억 개입니다.<br/>
+      · 양자화(quantization): 숫자를 더 적은 비트로 담아 용량과 메모리를 줄이는 기술. 4비트는 원래보다 훨씬 작게 담는다는 뜻입니다.<br/>
+      · 온디바이스(on-device): 클라우드 서버가 아니라 내 기기에서 직접 실행하는 것.<br/>
+      · 컨텍스트 윈도우: 한 번에 다룰 수 있는 입력과 출력의 합산 길이. 256K 토큰은 긴 보고서 여러 편을 한 번에 넣을 수 있는 길이입니다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>어떻게 동작하나요</h2>
+    <p>답을 만드는 방식은 다른 대형 언어 모델과 같습니다. 입력 글을 토큰(글자 조각)으로 쪼갠 뒤, 앞에서 읽은 내용을 바탕으로 다음 조각을 하나씩 고릅니다. 다만 LFM3-1.7B는 24개 층을 세 가지 방식으로 나눠 씁니다. 대부분은 주변 몇 토큰만 가볍게 보는 짧은 합성곱(short convolution) 층이고, 가까운 범위만 보는 어텐션 층이 5개, 전체 문맥을 보는 글로벌 어텐션 층이 6개 섞여 있습니다. 전부를 무겁게 보지 않아 긴 글을 다룰 때 메모리 부담을 줄이려는 설계로 읽힙니다. 비유하자면 정독하는 사람 몇 명과 훑어보는 사람 여러 명을 섞어 쓰는 팀과 비슷합니다.</p>
+    <p>메모리 수치도 회사가 공개했습니다. 128K 컨텍스트를 채울 때 이미 읽은 내용을 기억해 두는 KV 캐시가 1.6GB이고, 같은 조건의 Qwen3.5-4B는 4.3GB라고 비교했습니다. 이 수치는 회사가 직접 낸 것입니다.</p>
+    <figure class="fig">
+      <img src="img/2026-11-01-liquid-lfm3-2.svg" alt="모델 내려받기, 설치, 불러오기, 답 받기의 네 단계 흐름도" />
+      <figcaption>그림 2. 내 기기에서 LFM3를 쓰는 순서 (개념 도식)<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+
+    <h2 id="s3"><span class="no">03</span>왜 지금 화제인가요</h2>
+    <p>발표는 10월 27일이었고, 이후 하루 이틀 사이 여러 기술 매체와 블로그가 '여섯 개 모델을 한 번에 공개했다'는 점을 중심으로 다뤘습니다. 소개 글들은 공통적으로 온디바이스에서 쓸 수 있는 멀티모달 소형 모델이라는 점과, 특정 업무에 맞게 파인튜닝하는 출발점으로 쓸 수 있다는 점을 강조했습니다. 이번 조사에서는 Reddit이나 Hacker News의 토론 글을 작성 시각까지 확인하지 못해 반응으로 인용하지 않았습니다.</p>
+    <div class="buzz">
+      <div>회사 공식 블로그에 따르면 LFM3-1.7B는 LFM2.5-2.6B보다 파라미터를 35% 적게 쓰면서 더 나은 성능을 냈다고 합니다. 모두 회사가 보고한 수치입니다.<span class="who"><a href="https://www.liquid.ai/blog/lfm3">Liquid AI 공식 블로그</a> · 10.27</span></div>
+      <div>eesel 정리에 따르면 회사 표 기준으로 아이폰 17 Pro에서 LFM3-1.7B는 초당 43.6토큰을 내며 메모리는 1.9GB를 씁니다. 같은 표에서 다음으로 빠른 모델은 15.8토큰이었습니다.<span class="who"><a href="https://www.eesel.ai/blog/lfm3">eesel</a> · 10.28</span></div>
+      <div>andrew.ooo 정리에 따르면 제3자 테스트에서 맥 에이전트 작업 65개 중 64%를 성공해 Qwen3.5-2B의 48%보다 높았다고 합니다. 같은 글은 독립 평가가 아직 충분하지 않다고도 적었습니다.<span class="who"><a href="https://andrew.ooo/answers/what-is-liquid-ai-lfm3-open-weight-2b-models-2026/">andrew.ooo</a> · 10.28</span></div>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>관련 나라·기업</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>이름</th><th>어떤 관련이 있나</th></tr></thead>
+      <tbody>
+        <tr><td>기업</td><td>Liquid AI</td><td>LFM3 개발사. 보스턴에 본사를 둔 MIT 출신 회사로 알려져 있습니다</td></tr>
+        <tr><td>기업</td><td>Hugging Face</td><td>모델 가중치와 모델 카드를 배포하는 플랫폼. 공식 소개 글도 이곳에 올라왔습니다</td></tr>
+        <tr><td>기업</td><td>Alibaba</td><td>벤치마크 비교 대상인 Qwen3.5 계열의 개발사</td></tr>
+        <tr><td>기업</td><td>Google</td><td>비교 대상인 Gemma 4 계열의 개발사</td></tr>
+        <tr><td>나라</td><td>미국</td><td>Liquid AI의 본사 소재지</td></tr>
+        <tr><td>나라</td><td>중국</td><td>비교 대상 모델(Qwen, MiniCPM 등)의 개발국</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s5"><span class="no">05</span>기존 방식과 무엇이 다른가</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>비교 항목</th><th>기존 클라우드 모델 호출</th><th>LFM3-1.7B 직접 실행</th></tr></thead>
+      <tbody>
+        <tr><td>실행 장소</td><td>제공사 서버</td><td>내 PC나 휴대폰 (4비트 기준 약 1GB)</td></tr>
+        <tr><td>비용 구조</td><td>토큰마다 API 요금</td><td>API 요금 없음 (전기와 기기 자원을 사용)</td></tr>
+        <tr><td>컨텍스트</td><td>모델마다 다름</td><td>256K 토큰 (입력과 출력 합계)</td></tr>
+        <tr><td>한국어</td><td>모델마다 다름</td><td>모델 카드의 지원 언어 16개에 한국어 포함</td></tr>
+        <tr><td>강점</td><td>복잡한 추론과 코딩</td><td>작고 특정한 업무, 기기 안에서 빠른 응답 (회사 주장)</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s6"><span class="no">06</span>직접 해 보기</h2>
+    <p>오늘 해 볼 첫 걸음은 공식 모델 카드를 열어 보고, 파이썬 환경에서 짧은 대화 한 번을 실행해 보는 것입니다. 1단계는 Hugging Face에서 <code>LiquidAI/LFM3-1.7B</code> 페이지를 열어 라이선스와 지원 언어를 읽는 일입니다. 2단계는 아래 명령으로 라이브러리를 설치하는 것입니다.</p>
+    <pre><code>pip install -U transformers accelerate</code></pre>
+    <p>3단계는 모델 카드의 빠른 시작 예시를 그대로 실행하는 것입니다. 첫 실행에는 모델 파일을 내려받느라 시간이 걸립니다.</p>
+    <pre><code>from transformers import pipeline
+
+generator = pipeline(
+    "text-generation",
+    model="LiquidAI/LFM3-1.7B",
+    trust_remote_code=True,
+)
+
+messages = [{"role": "user", "content": "What is C. elegans?"}]
+output = generator(
+    messages,
+    do_sample=True,
+    temperature=0.1,
+    top_k=50,
+    repetition_penalty=1.1,
+    max_new_tokens=2048,
+)
+print(output[0]["generated_text"][-1]["content"])</code></pre>
+    <p>서버처럼 띄워 보고 싶다면 모델 카드에 적힌 <code>vllm serve "LiquidAI/LFM3-1.7B"</code> 명령을 쓸 수 있습니다. 카드는 llama.cpp, Ollama, LM Studio용 GGUF 변환본도 안내하지만, 이 글에서는 그 도구들의 실행 명령을 공식 문서로 확인하지 못해 적지 않았습니다.</p>
+
+    <h2 id="s7"><span class="no">07</span>주의할 점과 한계</h2>
+    <ul>
+      <li>벤치마크 대부분이 회사가 직접 낸 수치입니다. 같은 자료에서도 LFM3-1.7B의 GPQA Diamond 점수는 63.37로, Qwen3.5-9B의 80.40보다 낮습니다(eesel 정리). SWE-bench Verified 역시 43.40 대 51.20으로 뒤처집니다.</li>
+      <li>모델 카드는 이 모델을 agentic 코딩이나 복잡한 다단계 추론에 권하지 않는다고 적었습니다. 지식이 필요한 질문에는 검색 기능을 붙이라고도 안내합니다.</li>
+      <li>라이선스는 LFM Open License v1.0입니다. 2차 보도에 따르면 연매출 1,000만 달러 이하 기업은 상업적으로 무료로 쓸 수 있고, 그 이상은 Liquid AI와 별도 계약이 필요합니다. 이 조건은 원문에서 직접 확인하세요. OSI 기준의 오픈소스 라이선스는 아니라는 설명도 있습니다.</li>
+      <li>사고(thinking) 기능이 기본으로 켜져 있고, 끄면 결과가 들쭉날쭉할 수 있다고 모델 카드가 밝혔습니다.</li>
+      <li>보도마다 파라미터 수가 조금씩 다르게 적혀 있습니다. 모델 카드로 정확히 확인된 것은 LFM3-1.7B의 1.73B뿐입니다.</li>
+      <li>독립 평가는 발표 직후 기준으로 아직 충분하지 않습니다. 메모리 수치와 속도 수치는 회사 환경에서 측정된 값이라, 내 기기에서는 다를 수 있습니다.</li>
+    </ul>
+
+    <h2 id="s8"><span class="no">08</span>정리</h2>
+    <div class="conclusion">
+      <p>LFM3가 흥미로운 이유는 성능 1등을 노려서가 아니라, 작은 모델을 얼마나 실용적으로 만들 수 있는지 보여 주는 방향에 있기 때문입니다. 1.7B 모델이 4비트로 약 1GB에 들어가고, 음성과 이미지 기능까지 같은 가족으로 묶인다는 점은 휴대폰이나 노트북 안에서 돌아가는 앱을 떠올리게 합니다.</p>
+      <p>입문 개발자라면 이 모델로 내 기기에서 모델을 돌려 보고, 짧은 질문을 던져 보고, 필요하면 작은 데이터로 파인튜닝까지 해 보는 경험을 쌓기 좋습니다. 다만 코딩 에이전트나 어려운 추론을 맡기기 전에는 반드시 자신의 과제로 직접 테스트해 보세요. 발표 수치보다 내 데이터에서 나온 결과가 훨씬 중요합니다.</p>
+    </div>
+
+    <h2 id="s9"><span class="no">09</span>참고한 글</h2>
+    <ol class="refs">
+      <li><a href="https://www.liquid.ai/blog/lfm3">Introducing LFM3: Every Modality for Specialized Intelligence</a> <span class="src">Liquid AI 공식 블로그 · 2026.10.27</span></li>
+      <li><a href="https://huggingface.co/LiquidAI/LFM3-1.7B">LiquidAI/LFM3-1.7B 모델 카드</a> <span class="src">Hugging Face · 공식 모델 카드 (날짜 표기 없음)</span></li>
+      <li><a href="https://huggingface.co/LiquidAI/LFM3-1.7B-Base">LiquidAI/LFM3-1.7B-Base 모델 카드</a> <span class="src">Hugging Face · 공식 모델 카드 (날짜 표기 없음)</span></li>
+      <li><a href="https://runtimewire.com/article/liquid-ai-lfm3-specialized-multimodal-models">Liquid AI releases six LFM3 models for on-device specialization</a> <span class="src">RuntimeWire · 2026.10.27</span></li>
+      <li><a href="https://www.eesel.ai/blog/lfm3">LFM3: Liquid AI's 2B model family, benchmarks, speed, and the catch</a> <span class="src">eesel · 2026.10.28</span></li>
+      <li><a href="https://tilnote.io/pages/6ae1e6bbc8c9a9d38eaf59b4">온디바이스 멀티모달의 한계를 넘는 Liquid AI LFM3: 1GB 용량에 담긴 12B급 성능의 비밀</a> <span class="src">tilnote · 2026.10.28</span></li>
+      <li><a href="https://andrew.ooo/answers/what-is-liquid-ai-lfm3-open-weight-2b-models-2026/">What Is Liquid AI LFM3? Six Open-Weight 2B Models Explained</a> <span class="src">andrew.ooo · 2026.10.28</span></li>
+      <li><a href="https://horadecodar.com.br/lfm3-liquid-ai/">Liquid AI lança a família LFM3 (포르투갈어 기사)</a> <span class="src">Horadecodar · 2026.10.28</span></li>
+      <li><a href="https://www.nocode.mba/ai-release-tracker/releases/liquid-ai-lfm3">Liquid AI LFM3 릴리스 기록</a> <span class="src">nocode.mba 릴리스 트래커 · 2026.10.27</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#insights">← 전체 인사이트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

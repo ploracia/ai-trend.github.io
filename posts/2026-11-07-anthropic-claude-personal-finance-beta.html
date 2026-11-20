@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anthropic, Claude에 개인 금융 기능 베타 공개… 읽기 전용·광고 없음 | AI 비밀 레시피</title>
+  <meta name="description" content="Anthropic이 Claude에 개인 금융 베타를 열었습니다. 미국 유료 구독자, Plaid 연동, 읽기 전용 구조와 학습 제외 정책 핵심 정리." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>Anthropic, Claude에 개인 금융 기능 베타 공개… 읽기 전용·광고 없음</h1>
+    <div class="byline"><span><time datetime="2026-11-07T08:18:36+09:00">2026.11.07 08:18 KST</time></span><span>읽는 시간 약 5분</span><span>#Anthropic #보안 #개인정보</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>Anthropic이 AI 비서 Claude에 개인 금융 기능을 베타로 공개했습니다. 로이터 보도에 따르면 발표는 2026년 11월 5일(미국 시간)에 이뤄졌고, 대상은 미국의 유료 Pro·Max·Ultra 구독자입니다.</li><li>사용자는 은행과 카드 계정을 Plaid로 연결해 잔액, 지출, 청구서를 자연어로 물어볼 수 있습니다. 다만 접근은 읽기 전용이라 송금이나 투자는 할 수 없으며, 광고 없이 운영되고 금융 허브 대화는 모델 학습에 쓰지 않는다고 밝혔습니다.</li><li>개발자에게는 금융처럼 민감한 데이터를 AI에 연결할 때 권한을 최소화하고 데이터 정책을 먼저 설계해야 한다는 실전 사례입니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">Anthropic, Claude 개인 금융 기능 베타 공개 (Plaid 연동, 읽기 전용)</span><span>보도 2026.11.05 (미국)</span><span><a href="https://www.thestar.com.my/tech/tech-news/2026/11/06/anthropic-rolls-out-personal-finance-feature-for-claude">로이터 보도 (The Star)</a></span></div>
+
+    <p class="lead">AI 비서에게 "이번 달 카드값이 얼마나 나왔지?"라고 묻는 일이 현실이 됐습니다. 이번 기능은 편리함과 개인정보 보호가 맞부딪히는 지점을 보여 주는 사례라서, 입문 개발자가 짚고 넘어갈 만한 뉴스입니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">개발자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>Claude가 사용자의 은행·카드 계정을 읽어 금융 현황을 설명해 주는 개인 금융 기능이 베타로 열렸습니다.</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>Plaid</strong>는 앱과 은행을 안전하게 이어 주는 중간 연동 서비스입니다. <strong>읽기 전용</strong>은 데이터를 보기만 할 수 있고 바꾸거나 이체할 수 없는 권한을 뜻합니다. <strong>베타</strong>는 정식 출시 전 일부 사용자에게 먼저 여는 시험 단계입니다.
+    </div>
+    <p>쉽게 말하면, 가계부 앱이 은행 명세서를 자동으로 읽어 주는 것과 비슷합니다. 차이점은 질문을 자연어로 던질 수 있고, 답을 대화 속에서 바로 받는다는 점입니다.</p>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>출시 주체</td><td><strong>Anthropic</strong></td><td>Claude에 개인 금융 허브(베타) 추가, 블로그를 통해 기능 안내</td></tr>
+        <tr><td>연동 서비스</td><td><strong>Plaid</strong></td><td>은행·카드 계정을 앱에 연결하는 중개 역할</td></tr>
+        <tr><td>대상 사용자</td><td><strong>미국의 Pro·Max·Ultra 구독자</strong></td><td>유료 구독자만 먼저 사용 가능</td></tr>
+        <tr><td>보도 매체</td><td><strong>로이터</strong></td><td>기능 출시 소식과 상장(IPO) 준비 상황을 함께 전달</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+    <h3>발표된 내용</h3>
+    <p>로이터 보도에 따르면 Anthropic은 11월 5일 목요일, 이번 주 안에 Claude의 개인 금융 기능을 베타로 제공하기 시작한다고 밝혔습니다. 이용자는 은행과 카드 계정을 Plaid로 연결한 뒤, 잔액이나 지출 내역, 청구서에 대해 평범한 말로 질문할 수 있습니다.</p>
+    <p>회사는 접근이 읽기 전용이라 Claude가 돈을 옮기거나 관리하거나 투자할 수 없다고 설명했습니다. 투자 조언을 주도록 설계되지 않았고, 광고나 협찬 추천도 붙지 않는다고 밝혔습니다. 금융 허브에서 나눈 대화는 모델 학습에 쓰지 않는다는 정책도 함께 제시했습니다.</p>
+    <p>보도는 이번 출시가 Anthropic의 상장(IPO) 준비가 본격화되는 시점과 맞물린다고 덧붙였습니다. 다만 출시 시각과 연동 가능한 은행 목록, 데이터 보관 기간 같은 세부 내용은 보도에 나와 있지 않았습니다.</p>
+    <h3>진행 순서</h3>
+    <ul class="timeline">
+      <li><time>2026년 11월 5일 (미국 시간)</time>Anthropic이 개인 금융 기능 베타 출시를 발표 (로이터 보도)</li>
+      <li><time>2026년 11월 6일</time>아시아권 매체가 로이터 기사를 재보도하며 국내외 관심 확산</li>
+    </ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>AI가 내 돈의 흐름을 볼 수 있게 되는 순간, 권한 범위와 데이터 정책이 기능만큼 중요해집니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>개발자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. 권한은 읽기 전용부터 설계하기</h4><p>외부 데이터를 AI에 연결할 때는 조회 권한만 주고, 쓰기나 이체 권한은 꼭 필요한 뒤에 여는 습관을 들이세요.</p></div>
+      <div class="action"><h4>2. 민감 정보 마스킹 테스트 만들기</h4><p>계좌번호나 카드 끝자리가 로그나 응답에 그대로 남지 않는지 확인하는 테스트 질문을 열 개쯤 만들어 두세요.</p></div>
+      <div class="action"><h4>3. 연동 서비스의 약관 읽기</h4><p>Plaid처럼 중간에서 데이터를 옮기는 서비스가 무엇을 저장하고 얼마나 보관하는지 확인해 보세요. 서비스 구조를 이해하면 설계 판단이 빨라집니다.</p></div>
+      <div class="action"><h4>4. 학습 데이터 정책 비교하기</h4><p>사용하는 AI 서비스마다 대화 데이터를 학습에 쓰는지, 끌 수 있는지 표로 정리해 두면 프로젝트 설명 자료로도 쓸 수 있습니다.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos"><ul>
+      <li><strong>개인 재무 관리의 문턱이 낮아진다.</strong> 복잡한 명세서를 대화로 풀어 주면 금융 지식이 적은 사람도 지출 습관을 점검할 수 있습니다.</li>
+      <li><strong>읽기 전용 설계가 표준이 된다.</strong> 조회만 가능한 권한 모델이 자리 잡으면 AI 서비스에 대한 신뢰가 높아질 수 있습니다.</li>
+      <li><strong>개발자 도구로 확장된다.</strong> 같은 방식의 안전한 연동 패턴이 다른 업무 도구에도 응용될 여지가 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg"><ul>
+      <li><strong>민감 데이터가 한곳에 모인다.</strong> 계좌와 소비 기록이 한 서비스에 모이면 유출 사고의 피해 규모가 커질 수 있습니다.</li>
+      <li><strong>AI 답변을 금융 조언으로 오해한다.</strong> 회사는 투자 조언용이 아니라고 밝혔지만, 사용자가 이를 전문가 의견처럼 받아들일 위험이 있습니다.</li>
+      <li><strong>정책 변화가 사용자 모르게 일어난다.</strong> 현재의 학습 제외 정책이 나중에 바뀌면 이용자가 이를 놓칠 수 있습니다.</li>
+      <li><strong>상장 시점의 홍보 효과가 과장될 수 있다.</strong> 기능 발표가 기업 가치 평가와 맞물리면 실제 성능보다 기대가 앞설 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion"><p>이번 뉴스의 핵심은 AI가 더 많은 개인 데이터를 다룰수록, 기능 자체보다 권한 설계와 데이터 정책이 제품의 신뢰를 결정한다는 점입니다. 읽기 전용, 학습 제외, 광고 없음이라는 조건은 좋은 출발점이지만, 개발자가 직접 확인해야 할 항목이기도 합니다.</p><p>입문 단계라면 자신이 만든 작은 프로젝트에서 외부 데이터를 연결해 보고, 권한과 보관 기간을 한 줄씩 문서로 남겨 보세요. 이 습관이 나중에 금융이나 의료 같은 민감한 분야로 넘어갈 때 가장 큰 자산이 됩니다.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://www.thestar.com.my/tech/tech-news/2026/11/06/anthropic-rolls-out-personal-finance-feature-for-claude">Anthropic rolls out personal finance feature for Claude</a> <span class="src">— 로이터 기사(The Star 게재), 2026.11.05 미국 발표 기준 보도</span></li>
+      <li><a href="https://www.theneuron.ai/digest/everything-that-happened-in-ai-today-friday-november-6-2026/">Everything That Happened in AI Today (Friday, November 6, 2026)</a> <span class="src">— The Neuron 일일 요약, 2026.11.06 (보조 확인용)</span></li>
+    </ol>
+
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

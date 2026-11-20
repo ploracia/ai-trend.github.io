@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mistral, 1조 파라미터급 모델 Large 4 가중치 공개… 코딩·사이버 보안 겨냥 | AI 비밀 레시피</title>
+  <meta name="description" content="Mistral이 1조 파라미터급 멀티모달 모델 Large 4의 가중치를 공개하고, 제한적 상업 라이선스와 API 가격을 함께 밝혔습니다. 개발자가 API와 자체 호스팅을 비교할 때 볼 내용을 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>Mistral, 1조 파라미터급 모델 Large 4 가중치 공개… 코딩·사이버 보안 겨냥</h1>
+    <div class="byline"><span><time datetime="2026-10-31T08:30:00+09:00">2026.10.31 08:30 KST</time></span><span>읽는 시간 약 6분</span><span>#오픈소스 #보안</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>Mistral은 1조 파라미터급 멀티모달 모델 Large 4의 가중치를 10월 29일 공개했습니다. 이전에 공개 미리보기로 먼저 선보인 뒤 내려받아 직접 실행할 수 있는 형태로 풀었습니다.</li><li>회사가 내세운 주요 용도는 소프트웨어 개발과 방어적 사이버 보안입니다. 다운로드 라이선스는 제한적이어서, 모델 서비스를 판매하는 기업은 상업 사용 전에 별도 라이선스가 필요합니다. 사내 사용과 Mistral 공식 제품은 예외입니다.</li><li>개발자에게는 API로 쓸지, 자체 서버에 올릴지 비교할 수 있는 선택지가 생겼습니다. 다만 1조급 모델을 직접 돌리려면 대규모 GPU가 필요하므로, 먼저 API 가격으로 작업 비용을 계산해 보는 것이 좋습니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">Mistral, 1조 파라미터급 Large 4 모델 가중치 공개 (코딩·사이버 보안 대상)</span><span>발표 2026.10.29</span><span><a href="https://techcrunch.com/2026/10/29/mistral-releases-weights-for-its-trillion-parameter-ai-model-targeting-cybersecurity/">TechCrunch 보도</a> · <a href="https://kingy.ai/news/2026-10-30-ai-launch-radar/">Kingy AI 정리</a></span></div>
+
+    <p class="lead">모델의 학습 결과 파일인 가중치(weights)를 누구나 내려받을 수 있게 공개하는 방식을 오픈 웨이트라고 부릅니다. API로만 쓰던 최상위급 모델을 내 서버나 사내망에서 돌릴 수 있게 되었다는 점에서, 직접 AI 서비스를 만드는 개발자에게 관련이 큰 소식입니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">개발자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>Mistral이 대형 모델의 가중치를 공개해, 상용 API에 묶이지 않고 직접 실행할 수 있는 선택지를 열었습니다.</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>파라미터</strong>는 모델이 학습으로 조정하는 값의 개수로, 모델 규모를 가늠하는 대표 지표입니다. <strong>자체 호스팅</strong>은 모델을 API 대신 내 서버나 클라우드 GPU에 올려 직접 운영하는 방식입니다. <strong>토큰</strong>은 모델이 글을 나누어 처리하는 단위이며, API 요금은 보통 입력과 출력 토큰 수로 계산합니다.
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>항목</th><th>내용 (보도 기준)</th></tr></thead>
+      <tbody>
+        <tr><td>모델</td><td>Mistral Large 4 (별칭 Le Chonk)</td></tr>
+        <tr><td>규모</td><td>1조 파라미터급 (TechCrunch 헤드라인 기준, 정확한 수치는 모델 카드에서 확인 필요)</td></tr>
+        <tr><td>입력 · 출력</td><td>텍스트와 이미지 입력, 텍스트 출력</td></tr>
+        <tr><td>문맥 길이</td><td>100만 토큰</td></tr>
+        <tr><td>공개 방식</td><td>가중치 다운로드 (제한적 라이선스)</td></tr>
+        <tr><td>API 가격</td><td>입력 100만 토큰당 $0.70, 캐시 입력 $0.07, 출력 $2.10</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>공개 주체</td><td><strong>Mistral</strong></td><td>모델 가중치를 공개하고, 소프트웨어 개발과 방어적 사이버 보안을 주요 용도로 제시</td></tr>
+        <tr><td>이용 주체</td><td><strong>개발자와 기업</strong></td><td>자체 서버에서 실행하거나, 호스팅 API로 호출해 서비스에 적용</td></tr>
+        <tr><td>라이선스 적용 대상</td><td><strong>모델 서비스 운영 기업</strong></td><td>서비스 형태로 제공하려면 상업 라이선스를 별도로 받아야 함</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+    <h3>발표된 내용</h3>
+    <p>TechCrunch 보도에 따르면 Mistral은 10월 29일 1조 파라미터급 모델의 가중치를 공개했습니다. 이 모델은 공개 미리보기 단계를 거쳤고, 이번에는 직접 내려받아 실행할 수 있는 형태로 제공됩니다. 회사는 용도로 소프트웨어 개발과 방어적 사이버 보안을 제시했습니다.</p>
+    <p>라이선스는 제한적입니다. 보도 요약에 따르면 Model-as-a-Service(모델을 서비스로 판매하는 형태)를 운영하는 기업은 상업적으로 쓰기 전에 별도 라이선스를 받아야 합니다. 사내 용도와 Mistral 공식 제품은 예외로 열어 두었습니다. 개발자 개인이 내부 프로젝트에 쓰는 경우와, 이를 외부 고객에게 판매하는 경우는 다르게 봐야 합니다.</p>
+    <p>성능 주장은 아직 독립적으로 확인되지 않았습니다. 확인한 보도 요약에는 벤치마크 수치가 빠져 있어, 코딩 성능이 좋다는 회사 측 설명은 직접 시험해 보고 판단하는 것이 안전합니다.</p>
+    <h3>진행 순서</h3>
+    <ul class="timeline">
+      <li><time>이전</time>공개 미리보기 제공 (정확한 날짜는 확인하지 못함)</li>
+      <li><time>10월 29일</time>가중치 공개와 제한적 상업 라이선스 조건 발표</li>
+    </ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>가중치가 공개되었다는 것은 같은 모델을 API 요금 없이 내 환경에서 돌릴 수 있는 가능성이 생겼다는 뜻이지만, 실행 비용과 라이선스 조건을 먼저 따져야 합니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>개발자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. 라이선스부터 읽기</h4><p>사내 도구로만 쓸지, 고객에게 서비스로 제공할지 정한 뒤 해당 조항을 확인하세요.</p></div>
+      <div class="action"><h4>2. API 비용을 먼저 계산하기</h4><p>작업 한 건의 입력·출력 토큰 수를 세고, 예를 들어 <code>입력 토큰 수 × 0.70 ÷ 1,000,000</code>으로 입력 비용을 계산해 보세요.</p></div>
+      <div class="action"><h4>3. 작은 오픈 모델로 실행 연습하기</h4><p>1조급 모델을 바로 올리기 전에 vLLM이나 Ollama 같은 도구로 작은 오픈 모델을 띄워 보며 환경을 익히세요.</p></div>
+      <div class="action"><h4>4. 보안 결과는 사람이 검증하기</h4><p>코드 리뷰나 취약점 탐지에 쓸 때는 모델이 지적한 항목을 사람이 재현하고 확인하는 절차를 두세요.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos"><ul>
+      <li><strong>API 종속이 줄어든다.</strong> 데이터를 사내망에 두고 모델을 운영할 수 있어, 민감한 코드나 고객 정보를 다루는 팀에 선택지가 됩니다.</li>
+      <li><strong>방어 도구가 늘어난다.</strong> 보안 팀이 코드 검토와 취약점 탐지를 자동화하면 공격이 성공하기 전에 결함을 찾을 가능성이 커집니다.</li>
+    </ul></div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg"><ul>
+      <li><strong>악용 우려가 커진다.</strong> 가중치가 공개되면 안전장치를 걷어낸 변형 모델이 나올 수 있고, 공격 도구로 쓰일 가능성도 함께 커집니다.</li>
+      <li><strong>실행 장벽이 높다.</strong> 1조급 모델을 직접 돌리려면 대규모 GPU가 필요해, 소규모 팀에게는 API보다 비용이 더 들 수 있습니다.</li>
+      <li><strong>성능 근거가 부족하다.</strong> 보도 요약에 벤치마크 수치가 없어, 주장된 코딩 성능을 독립적으로 확인하기 전까지는 판단을 미루는 편이 안전합니다.</li>
+    </ul></div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion"><p>이번 공개는 최상위급 모델을 직접 다룰 수 있는 길이 넓어졌다는 신호입니다. 그러나 가중치를 받았다고 곧바로 서비스에 쓸 수 있는 것은 아닙니다. 라이선스, 실행 비용, 성능 검증이라는 세 가지 확인 절차를 거쳐야 합니다.</p><p>입문 단계라면 API로 같은 과제를 시험해 보고, 토큰당 비용과 응답 품질을 기록하는 습관부터 들여 보세요. 그다음에야 자체 호스팅이 비용과 보안 면에서 이득인지 판단할 수 있습니다.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://techcrunch.com/2026/10/29/mistral-releases-weights-for-its-trillion-parameter-ai-model-targeting-cybersecurity/">Mistral releases weights for its trillion-parameter AI model, targeting cybersecurity</a> <span class="src">— TechCrunch, 2026.10.29 (보도 요약 확인)</span></li>
+      <li><a href="https://kingy.ai/news/2026-10-30-ai-launch-radar/">Daily AI Launch Radar: Mistral Large 4 weights</a> <span class="src">— Kingy AI, 2026.10.30 (원문 열람 확인, 라이선스·API 가격 출처)</span></li>
+    </ol>
+
+  </article>
+
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list"><a href="2026-10-31-reddit-logged-in-ai-search.html"><span class="r">오늘의 뉴스 2위</span><span class="t">Reddit, 검색 유입 급감에 로그인 중심 서비스로 전환 발표</span></a><a href="2026-10-31-canada-cohere-stake.html"><span class="r">오늘의 뉴스 3위</span><span class="t">캐나다 정부, AI 기업 Cohere에 최대 C$16억 지분 투자… 자국 AI 주권 강화</span></a></div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "v": 1,
+  "lists": {
+    "posts": {
+      "count": 0,
+      "days": 0,
+      "files": []
+    },
+    "insights": {
+      "count": 1,
+      "days": 1,
+      "files": [
+        {
+          "file": "archive/insights-2026.json",
+          "count": 1,
+          "days": 1,
+          "from": "2026-10-20",
+          "to": "2026-10-20"
+        }
+      ]
+    },
+    "papers": {
+      "count": 0,
+      "days": 0,
+      "files": []
+    }
+  }
+}

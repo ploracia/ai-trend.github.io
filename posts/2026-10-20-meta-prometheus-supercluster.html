@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meta, GPU 100만 개 향하는 '프로메테우스' 슈퍼클러스터 내부 공개 | AI 비밀 레시피</title>
+  <meta name="description" content="Meta가 오하이오의 기가와트급 AI 슈퍼클러스터 Prometheus의 설계와 운영 경험을 공개한 뉴스를 입문 개발자 눈높이로 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>Meta, GPU 100만 개 향하는 '프로메테우스' 슈퍼클러스터 내부 공개</h1>
+    <div class="byline"><span><time datetime="2026-10-20T08:31:41+09:00">2026.10.20 08:31 KST</time></span><span>읽는 시간 약 7분</span><span>#인프라 #데이터센터 #Meta</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>Meta가 10월 19일 엔지니어링 블로그에서 미국 오하이오주의 기가와트급 AI 슈퍼클러스터 Prometheus의 1단계 완공을 알리고, 수십만 개 GPU를 묶어 운영한 경험과 GPU 약 100만 개로 키우는 계획을 공개했습니다.</li><li>학습 중단을 1년 만에 99% 줄이고 사전 학습 실효 처리율(goodput) 85% 이상을 냈다는 수치는, AI 경쟁이 모델 설계뿐 아니라 고장·전력·네트워크를 다루는 운영 능력의 싸움이 됐음을 보여 줍니다.</li><li>개발자에게는 체크포인트 저장, 장애 복구, 분산 학습 같은 기초가 규모와 상관없이 중요하며, AI 인프라 엔지니어링이 유망한 진로라는 뜻입니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">Meta, 오하이오 Prometheus 슈퍼클러스터 설계·운영 경험 공개</span><span>발표 2026.10.19 22:00 KST (Engineering at Meta)</span><span><a href="https://engineering.fb.com/2026/10/19/data-center-engineering/inside-prometheus-meta-gigawatt-scale-supercluster/">Engineering at Meta</a> · <a href="https://www.storagereview.com/news/meta-prometheus-gigawatt-supercluster-1-million-gpus-gb200-gb300-nvl72">StorageReview</a></span></div>
+
+    <p class="lead">"GPU 몇 만 개로 모델을 학습했다"는 말은 자주 듣지만, 그 GPU들이 실제로 어떻게 하나처럼 움직이는지는 잘 공개되지 않습니다. Meta가 자사 Muse 모델을 학습시킨 초대형 클러스터 Prometheus의 내부를 수치와 함께 공개했습니다. 데이터센터 건설 차질 뉴스가 이어지는 가운데, 실제로 기가와트급 클러스터를 굴려 본 회사의 기록이라 관심이 컸습니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">이 이슈는 무엇인가?</a></li>
+        <li><a href="#s2">누가 움직이나?</a></li>
+        <li><a href="#s3">무슨 일이 있었나?</a></li>
+        <li><a href="#s4">실무자가 해볼 것</a></li>
+        <li><a href="#s5">긍정적인 방향으로 간다면?</a></li>
+        <li><a href="#s6">부정적인 방향으로 간다면?</a></li>
+        <li><a href="#s7">입문 개발자에게 남는 것은?</a></li>
+        <li><a href="#s8">참고 자료</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>Meta Prometheus: 기가와트급 AI 슈퍼클러스터와 대규모 학습 운영</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>슈퍼클러스터</strong>는 수많은 GPU 서버를 초고속 네트워크로 묶어 하나의 거대한 컴퓨터처럼 쓰는 시설입니다. <strong>기가와트(GW)</strong>는 전력 단위로, 1GW는 대형 발전소 한 기 수준입니다. <strong>goodput(실효 처리율)</strong>은 장애·재시작으로 버린 시간을 빼고 실제 학습에 쓰인 계산의 비율입니다. <strong>체크포인트</strong>는 학습 중간 상태를 저장해 두는 것으로, 고장이 나도 처음부터 다시 하지 않게 해 줍니다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl">
+    <table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>발표 기업</td><td><strong>Meta</strong></td><td>Prometheus 1단계 완공, Muse 모델 학습에 사용. 루이지애나 Hyperion도 설계 중</td></tr>
+        <tr><td>하드웨어 협력</td><td><strong>Nvidia</strong></td><td>GB200·GB300 NVL72 랙 공급, 원격 측정 데이터 공유와 공동 원인 분석</td></tr>
+        <tr><td>지역</td><td><strong>미국 오하이오주 뉴올버니</strong></td><td>Prometheus 위치. 2년 전에는 일반 웹 서비스용 데이터센터였음</td></tr>
+        <tr><td>다음 거점</td><td><strong>미국 루이지애나주 리치랜드 패리시</strong></td><td>차세대 클러스터 Hyperion. 전력사 Entergy와 전력망 연결</td></tr>
+        <tr><td>경쟁 구도</td><td><strong>Microsoft, Google, Amazon, OpenAI 등</strong></td><td>모두 기가와트급 AI 데이터센터를 짓는 중. 운영 효율이 경쟁력</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+
+    <h3>오늘 발표된 내용</h3>
+<p>Meta 엔지니어링 블로그에 따르면 Prometheus는 오하이오주 뉴올버니에 있으며, 기존 데이터센터 건물과 AI 전용 건물, 빠르게 세울 수 있는 간이 구조물을 묶어 현재 수십만 개의 GPU가 하나의 기계처럼 돌아갑니다. 완공된 1단계에서 Meta의 Muse 모델(최상위 Muse Wonder 포함)을 학습시켰고, 최종적으로 GPU 약 100만 개 규모로 키울 계획입니다.</p>
+<p>하드웨어는 세대별로 섞여 있습니다. Nvidia GB200 기반 Catalina 랙, GPU당 메모리가 288GB로 1.5배 늘어난 GB300 기반 Clemente 랙(랙당 약 135kW), 그리고 앞으로 들어올 Vera Rubin 기반 San Miguel 랙(랙당 170kW 이상)입니다. 건물 하나의 네트워크에 GPU 최대 20,736개가 연결되고, 건물끼리는 2km에서 100km 넘는 거리까지 광케이블로 이어집니다.</p>
+<p>가장 흥미로운 부분은 고장과의 싸움입니다. 2025년 중반에는 GPU 8천 개당 하루 1,000건 가까운 학습 중단이 일어났지만, 펌웨어 수정과 고장 대응 방식을 바꿔 약 1년 만에 99% 줄였다고 합니다. 고장 난 부분만 빼고 나머지는 계속 학습하는 방식, 바뀐 부분만 비동기로 저장하는 체크포인트, 랙마다 예비 GPU 8개를 두는 설계를 썼습니다. 학습이 동시에 시작·멈출 때 전력 부하가 30~40%씩 출렁여, GPU 전력을 서서히 낮추는 장치와 배터리로 이를 흡수한다는 내용도 담겼습니다. 그 결과 Muse Wonder 사전 학습의 goodput은 85% 이상, 강화학습은 90% 이상이었다고 Meta는 밝혔습니다.</p>
+
+    <h3>배경: 짧은 타임라인</h3>
+    <ul class="timeline">
+      <li><time>약 2년 전</time>오하이오 부지는 일반 웹 트래픽용 데이터센터였습니다.</li>
+      <li><time>2025년 중반</time>학습 중단이 GPU 8천 개당 하루 1,000건 가까이로 정점을 찍습니다.</li>
+      <li><time>2026.03</time>안정화 집중 작업을 진행합니다.</li>
+      <li><time>2026.10.19</time>Meta가 1단계 완공과 운영 경험, 100만 GPU 계획을 공개합니다.</li>
+      <li><time>다음 단계</time>루이지애나 Hyperion 클러스터를 설계 중입니다.</li>
+    </ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      초대형 AI는 <strong>"고장이 늘 일어난다"는 전제</strong> 위에서 만들어집니다. 잘 멈추고, 빨리 저장하고, 빨리 다시 시작하는 능력이 곧 학습 속도입니다.
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>실무자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. 체크포인트 습관 들이기</h4><p>작은 모델을 학습하거나 파인튜닝할 때도 일정 간격으로 상태를 저장하고, 중단된 지점에서 다시 시작하는 코드를 직접 써 보세요.</p></div>
+      <div class="action"><h4>2. 분산 학습 기초 익히기</h4><p>PyTorch의 <code>DDP</code>, <code>FSDP</code> 같은 분산 학습 방식을 GPU 2개 수준에서라도 실습해 보면 대규모 인프라 글이 훨씬 잘 읽힙니다.</p></div>
+      <div class="action"><h4>3. goodput 관점으로 내 작업 보기</h4><p>학습 시간 중 실제 계산 비율이 얼마인지 측정하세요. 데이터 로딩 대기나 재시작으로 버리는 시간을 줄이는 것만으로 비용이 크게 줄어듭니다.</p></div>
+      <div class="action"><h4>4. 전력·비용을 숫자로 감 잡기</h4><p>GPU 한 장이 학습 중 약 1,400W를 쓴다는 수치처럼, 내 작업에 드는 전력과 비용을 대략 계산해 보는 습관을 들이세요.</p></div>
+      <div class="action"><h4>5. 기업 엔지니어링 블로그 읽기</h4><p>Meta, Google, Microsoft 등의 인프라 글은 실제 문제와 해결책을 담은 무료 교과서입니다. 한 달에 한 편이라도 정리해 보세요.</p></div>
+      <div class="action"><h4>6. AI 인프라 진로 고려하기</h4><p>네트워크, 냉각, 전력, 펌웨어, 클러스터 스케줄링은 사람이 부족한 분야입니다. 모델 개발만이 AI 일자리가 아닙니다.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos">
+      <ul>
+        <li><strong>학습 비용이 내려간다.</strong> 고장 대응과 효율이 좋아지면 같은 모델을 더 싸게 학습할 수 있고, 그 효과가 API 가격 인하로 이어질 수 있습니다.</li>
+        <li><strong>운영 노하우가 공유된다.</strong> Meta처럼 구체적인 수치를 공개하는 회사가 늘면 중소 클라우드와 연구기관도 시행착오를 줄입니다.</li>
+        <li><strong>더 좋은 오픈 도구가 나온다.</strong> 대규모 운영에서 나온 장애 복구·체크포인트 기술이 오픈소스로 풀리면 일반 개발자도 혜택을 봅니다.</li>
+        <li><strong>전력 관리 기술이 발전한다.</strong> 부하 출렁임을 흡수하는 기술이 발전하면 전력망 부담이 줄어 데이터센터 반대 여론도 누그러질 수 있습니다.</li>
+      </ul>
+    </div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg">
+      <ul>
+        <li><strong>컴퓨팅 격차가 더 벌어진다.</strong> 기가와트급 클러스터를 가진 몇몇 기업만 최상위 모델을 만들 수 있어 경쟁이 줄어듭니다.</li>
+        <li><strong>전력·지역사회 갈등이 커진다.</strong> 100만 GPU 규모의 전력 수요는 지역 전기요금과 환경 문제로 번질 수 있습니다.</li>
+        <li><strong>투자 부담이 실패로 돌아온다.</strong> 막대한 인프라 투자가 수익으로 이어지지 않으면 AI 투자 전반에 대한 의문이 커질 수 있습니다.</li>
+        <li><strong>공급망 의존이 깊어진다.</strong> 특정 GPU 공급사의 하드웨어와 펌웨어에 묶일수록 공급 차질이 곧 학습 차질이 됩니다.</li>
+      </ul>
+    </div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion">
+      <p>Prometheus 공개는 AI 경쟁의 승부처가 모델 아이디어만이 아니라 수십만 개 GPU를 고장 속에서도 쉬지 않게 돌리는 <strong>운영 능력</strong>에 있음을 보여 줍니다. 학습 중단 99% 감소, goodput 85% 이상 같은 수치는 그 능력을 얼마나 오래 다듬어 왔는지 말해 줍니다.</p>
+      <p>입문 개발자에게 100만 GPU는 먼 이야기처럼 들리지만, 그 안의 원리는 내 노트북 학습과 같습니다. <strong>중간 저장, 장애 복구, 계산 낭비 줄이기</strong>를 작은 프로젝트에서부터 몸에 익혀 두면, 규모가 커져도 통하는 실력이 됩니다.</p>
+    </div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://engineering.fb.com/2026/10/19/data-center-engineering/inside-prometheus-meta-gigawatt-scale-supercluster/">Inside Prometheus: Meta's Journey to a Gigawatt-Scale Supercluster</a> <span class="src">— Engineering at Meta, 2026.10.19</span></li>
+      <li><a href="https://www.storagereview.com/news/meta-prometheus-gigawatt-supercluster-1-million-gpus-gb200-gb300-nvl72">Meta Prometheus: Inside the Gigawatt Supercluster Scaling to 1 Million GPUs</a> <span class="src">— StorageReview, 2026.10.19</span></li>
+      <li><a href="https://www.unite.ai/meta-details-prometheus-supercluster-scaling-toward-1-million-gpus/">Meta Details Prometheus Supercluster Scaling Toward 1 Million GPUs</a> <span class="src">— Unite.AI, 2026.10.19</span></li>
+      <li><a href="https://aiweekly.co/ai-news-today">AI News Today, October 19: Top Stories</a> <span class="src">— AI Weekly, 2026.10.19</span></li>
+    </ol>
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list">
+      <a href="2026-10-20-dhs-deepseek-federal-ban.html"><span class="r">오늘의 뉴스 1위</span><span class="t">미국 국토안보부, 연방 기관에서 DeepSeek 퇴출 명령: 제3자 서비스까지 포함</span></a>
+      <a href="2026-10-20-microsoft-agentic-insider.html"><span class="r">오늘의 뉴스 2위</span><span class="t">Microsoft "AI 에이전트는 내부자 위협": Guardian Agents로 에이전트 감시 나선다</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

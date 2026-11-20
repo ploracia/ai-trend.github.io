@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-labelledby="t2 d2">
+  <title id="t2">작업 하나를 Sol 또는 Astra로 보내는 흐름</title>
+  <desc id="d2">작업 요청이 들어오면 어려운 작업인지 확인하고, 어려우면 Astra, 아니면 Sol로 API를 호출해 응답을 받는 흐름도</desc>
+  <rect x="0" y="0" width="720" height="300" fill="#f4f6fb"/>
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a4a55"/>
+    </marker>
+  </defs>
+
+  <rect x="20" y="120" width="130" height="60" rx="12" fill="#ffffff" stroke="#4a4a55"/>
+  <text x="85" y="146" text-anchor="middle" font-size="15" font-weight="700" fill="#1b1b1f">작업 요청</text>
+  <text x="85" y="166" text-anchor="middle" font-size="12" fill="#4a4a55">요약, 코딩 등</text>
+
+  <line x1="150" y1="150" x2="200" y2="150" stroke="#4a4a55" stroke-width="2" marker-end="url(#arr)"/>
+
+  <polygon points="290,120 370,150 290,180 210,150" fill="#ffffff" stroke="#4a4a55"/>
+  <text x="290" y="146" text-anchor="middle" font-size="13" font-weight="700" fill="#1b1b1f">어려운</text>
+  <text x="290" y="164" text-anchor="middle" font-size="13" font-weight="700" fill="#1b1b1f">작업?</text>
+
+  <line x1="370" y1="150" x2="440" y2="80" stroke="#2f5bea" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="400" y="104" font-size="12" fill="#2f5bea">예</text>
+  <line x1="370" y1="150" x2="440" y2="220" stroke="#1f8a5b" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="400" y="200" font-size="12" fill="#1f8a5b">아니오</text>
+
+  <rect x="450" y="50" width="150" height="60" rx="12" fill="#ffffff" stroke="#2f5bea" stroke-width="2"/>
+  <text x="525" y="76" text-anchor="middle" font-size="15" font-weight="700" fill="#2f5bea">gpt-6.2-astra</text>
+  <text x="525" y="96" text-anchor="middle" font-size="12" fill="#4a4a55">비싸지만 강력</text>
+
+  <rect x="450" y="190" width="150" height="60" rx="12" fill="#ffffff" stroke="#1f8a5b" stroke-width="2"/>
+  <text x="525" y="216" text-anchor="middle" font-size="15" font-weight="700" fill="#1f8a5b">gpt-6.2-sol</text>
+  <text x="525" y="236" text-anchor="middle" font-size="12" fill="#4a4a55">기본값으로 쓰기 좋음</text>
+
+  <line x1="600" y1="80" x2="640" y2="120" stroke="#4a4a55" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="600" y1="220" x2="640" y2="180" stroke="#4a4a55" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="620" y="120" width="90" height="60" rx="12" fill="#ffffff" stroke="#4a4a55"/>
+  <text x="665" y="146" text-anchor="middle" font-size="14" font-weight="700" fill="#1b1b1f">응답</text>
+  <text x="665" y="166" text-anchor="middle" font-size="12" fill="#4a4a55">결과 확인</text>
+</svg>
