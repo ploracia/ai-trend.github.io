@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qwen3.8-27B: 그래픽카드 한 장으로 돌리는 다중 모달 모델, 입문 개발자가 알아야 할 것 | AI 비밀 레시피</title>
+  <meta name="description" content="알리바바의 오픈 웨이트 모델 Qwen3.8-27B가 무엇이고, 내 컴퓨터에서 어떻게 돌려 볼 수 있는지 입문 개발자 눈높이로 정리했습니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+
+    /* 인사이트 전용 */
+    .cats { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; margin: 14px 0 0; font-size: 13px; color: var(--muted); }
+    .cats .lbl { font-weight: 700; margin-right: 2px; }
+    .cats a { font-size: 12.5px; font-weight: 600; text-decoration: none; color: var(--text); border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 2px 8px; }
+    .cats a:hover { border-color: var(--accent); color: var(--accent); }
+    .cats .sep { width: 10px; }
+    figure.fig { margin: 22px 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    figure.fig img, figure.fig svg { display: block; width: 100%; height: auto; }
+    figure.fig figcaption { font-size: 13.5px; color: var(--muted); padding: 10px 16px; border-top: 1px solid var(--line); }
+    figure.fig figcaption .credit { display: block; font-size: 12px; margin-top: 2px; }
+    .srcfig { display: flex; gap: 12px; align-items: center; background: var(--bg); border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px; margin: 14px 0; font-size: 14.5px; }
+    .srcfig::before { content: "🖼"; font-size: 20px; }
+    .buzz { display: grid; gap: 10px; margin: 14px 0; }
+    .buzz div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; font-size: 15px; }
+    .buzz .who { display: block; font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+    pre { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; font-size: 13.5px; line-height: 1.6; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#insights"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#insights">← 인사이트 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>Qwen3.8-27B: 그래픽카드 한 장으로 돌리는 오픈 모델, 입문 개발자가 알아야 할 것</h1>
+    <div class="byline"><span><time datetime="2026-10-29T16:15:03+09:00">2026.10.29 16:15 KST</time></span><span>읽는 시간 약 6분</span></div>
+    <div class="cats">
+      <span class="lbl">나라</span>
+      <a href="../#insights/country/중국">중국</a>
+      <span class="sep"></span>
+      <span class="lbl">기업</span>
+      <a href="../#insights/company/Alibaba">Alibaba</a>
+      <a href="../#insights/company/AMD">AMD</a>
+    </div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol>
+        <li>알리바바가 공개한 오픈 웨이트 모델 Qwen3.8-27B는 이미지와 영상까지 이해하는 270억 파라미터급 모델이다.</li>
+        <li>압축 파일(4비트 등)로 바꾸면 메모리 16GB 안팎의 일반 그래픽카드나 고사양 노트북에서도 돌릴 수 있고, 라이선스는 Apache 2.0이다.</li>
+        <li>입문 개발자는 클라우드 API 요금 없이 내 컴퓨터에서 AI를 직접 실험해 볼 수 있는 좋은 첫 모델이다.</li>
+      </ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 모델</span><span class="what">Qwen3.8-27B</span><span>근거 글 3개(공식·벤더 문서)</span></div>
+
+    <p class="lead">요즘 개발자 커뮤니티에서는 "클라우드 API 말고 내 PC에서 쓸 만한 모델은 없나?"라는 질문이 자주 나옵니다. Qwen3.8-27B는 그 질문에 가장 가깝게 답하는 모델로 꼽히며, 허깅페이스 트렌딩에도 이 모델을 가볍게 만든 파생 버전들이 줄지어 올라와 있습니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">한눈에 보기</a></li>
+        <li><a href="#s2">어떻게 동작하나요</a></li>
+        <li><a href="#s3">왜 지금 화제인가요</a></li>
+        <li><a href="#s4">관련 나라·기업</a></li>
+        <li><a href="#s5">기존 방식과 무엇이 다른가</a></li>
+        <li><a href="#s6">직접 해 보기</a></li>
+        <li><a href="#s7">주의할 점과 한계</a></li>
+        <li><a href="#s8">정리</a></li>
+        <li><a href="#s9">참고한 글</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>한눈에 보기</h2>
+    <p>모델의 "27B"는 파라미터 270억 개라는 뜻입니다. 파라미터는 모델이 학습하며 익힌 숫자 묶음으로, 사람으로 치면 머릿속 지식의 양에 가깝습니다. 숫자가 클수록 똑똑해지는 경향이 있지만, 그만큼 저장하고 계산하는 데 메모리가 더 듭니다. 그래서 Qwen3.8-27B를 집에서 돌리려면 원본 그대로가 아니라 "압축본"을 씁니다. 사진을 JPG로 줄이는 것과 비슷하게, 숫자의 정밀도를 낮춰 파일을 작게 만드는 방식입니다. 이 과정을 양자화라고 부릅니다.</p>
+    <figure class="fig">
+      <img src="img/2026-10-29-qwen3-8-27b-1.svg" alt="양자화 수준별로 Qwen3.8-27B를 돌리는 데 필요한 메모리를 비교한 막대 그래프. 2비트는 9~11GB, 4비트는 16~19GB, 6비트는 23~26GB, 8비트는 31GB, 원본은 56GB" />
+      <figcaption>그림 1. 압축 수준별로 필요한 메모리(대략). 4비트가 성능과 크기의 균형점으로 많이 쓰입니다.<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+    <div class="callout"><b>용어 풀이</b>
+      · <strong>오픈 웨이트</strong>: 모델의 학습 결과(가중치) 파일을 누구나 내려받을 수 있게 공개한 것입니다.<br />
+      · <strong>양자화(Quantization)</strong>: 숫자를 더 적은 비트로 표현해 메모리를 줄이는 기술입니다.<br />
+      · <strong>GGUF</strong>: 양자화된 모델을 PC에서 돌리기 쉽게 묶어 둔 파일 형식입니다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>어떻게 동작하나요</h2>
+    <p>입력은 글뿐 아니라 이미지와 영상도 받을 수 있습니다. 공식 모델 카드는 이를 "이미지와 영상을 이해하는 네이티브 비전-언어 모델"이라고 소개합니다. 내부는 긴 문장을 한 번에 훑는 어텐션 층과 가볍게 기억을 이어 가는 층을 섞은 하이브리드 구조입니다. 덕분에 한 번에 처리할 수 있는 문맥이 262,144 토큰이고, 설정을 바꾸면 최대 100만 토큰까지 늘릴 수 있다고 밝혔습니다. 긴 코드 한 덩어리나 문서 여러 개를 통째로 넣고 질문하는 용도에 유리합니다.</p>
+    <figure class="fig">
+      <img src="img/2026-10-29-qwen3-8-27b-2.svg" alt="내 컴퓨터에서 Qwen3.8-27B를 돌리는 세 단계: 모델 파일 받기, llama.cpp나 LM Studio로 실행하기, 터미널이나 로컬 API로 질문하기" />
+      <figcaption>그림 2. 로컬 실행은 모델 파일을 받고, 실행 도구에 올린 뒤, 질문을 던지는 세 단계입니다.<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+
+    <h2 id="s3"><span class="no">03</span>왜 지금 화제인가요</h2>
+    <p>솔직히 말하면, 오늘 수집 구간(어제 16:30~오늘 16:00 KST) 안에서 이 모델의 새 발표를 찾지는 못했습니다. 공개는 8월 중순입니다. 그럼에도 이 모델을 고른 이유는 두 가지입니다. 첫째, 공식 모델 카드는 8월 13일에 갱신됐고, AMD는 8월 14일 블로그에서 첫날(Day 0) 로컬 실행 지원을 발표했습니다. 둘째, 허깅페이스 트렌딩 목록을 정리한 10월 28일자 모음에는 Qwen3.8 계열의 GGUF 압축판과 파생 모델이 여러 개 올라 있어, 지금도 실험하는 사람이 많다는 신호로 볼 수 있습니다.</p>
+    <div class="buzz">
+      <div>AMD는 Ryzen AI Max+ 395에서 초당 약 24.5토큰, Radeon AI PRO R9700에서 약 51.8토큰이라는 "예비 측정치"를 공개했습니다. 개선 여지가 있다고 덧붙였습니다.<span class="who"><a href="https://amd.com/en/blogs/2026/run-qwen-3-8-27b-on-amd-ryzen-ai-max-and-radeon-graphics-cards-day-0.html">AMD 블로그</a> · 08.14</span></div>
+      <div>Unsloth는 4비트 압축본이 16~19GB의 VRAM 또는 통합 메모리 환경에서 돌아간다고 안내하며, 권장 샘플링 설정을 함께 공개했습니다.<span class="who"><a href="https://unsloth.ai/docs/models/qwen3.8-27b">Unsloth 문서</a> · 08.19 업데이트</span></div>
+      <div>허깅페이스 트렌딩 정리에서 Qwen3.8-27B 기반 GGUF 파생본이 여러 개 확인됐습니다. 제3자가 정리한 목록이라 인기 순위의 정확한 근거로 쓰기엔 한계가 있습니다.<span class="who"><a href="https://github.com/datnguyenquy94/news-radar/issues/908">news-radar 트렌딩 모음 (10.28 발행)</a></span></div>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>관련 나라·기업</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>이름</th><th>어떤 관련이 있나</th></tr></thead>
+      <tbody>
+        <tr><td>나라</td><td>중국</td><td>모델을 만든 알리바바의 본사가 있는 나라입니다.</td></tr>
+        <tr><td>기업</td><td>Alibaba</td><td>Qwen 시리즈를 개발해 공식 모델 카드와 가중치를 공개했습니다.</td></tr>
+        <tr><td>기업</td><td>AMD</td><td>자사 GPU와 AI PC 칩에서 로컬 실행을 공식 지원했습니다.</td></tr>
+        <tr><td>기업</td><td>Hugging Face</td><td>모델 파일과 공식 카드를 배포하는 플랫폼입니다.</td></tr>
+        <tr><td>도구</td><td>Unsloth, llama.cpp</td><td>압축본(GGUF)을 만들고, 그 파일을 PC에서 실행하는 도구를 제공합니다.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s5"><span class="no">05</span>기존 방식과 무엇이 다른가</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>비교 항목</th><th>클라우드 API 사용</th><th>Qwen3.8-27B 로컬 실행</th></tr></thead>
+      <tbody>
+        <tr><td>비용</td><td>호출한 만큼 요금 청구</td><td>모델 다운로드 후 추가 API 요금 없음(전기료와 장비 비용은 별도)</td></tr>
+        <tr><td>데이터 위치</td><td>외부 서버로 전송</td><td>내 컴퓨터 안에서만 처리</td></tr>
+        <tr><td>필요한 장비</td><td>인터넷 연결</td><td>메모리 16GB 안팎 이상(4비트 기준)</td></tr>
+        <tr><td>최고 성능</td><td>최상위 상용 모델 수준</td><td>압축과 장비에 따라 품질과 속도가 달라짐</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s6"><span class="no">06</span>직접 해 보기</h2>
+    <p>가장 쉬운 길은 LM Studio 같은 GUI 앱에서 모델을 검색해 내려받고 대화창에 질문하는 것입니다. 터미널을 쓰고 싶다면 아래 순서를 따라가면 됩니다. 명령은 Unsloth 공식 문서에 적힌 것을 그대로 옮겼습니다. 먼저 llama.cpp를 빌드합니다. 그래픽카드(NVIDIA)가 있으면 아래 명령을, 맥이나 CPU만 쓴다면 <code>-DGGML_CUDA=OFF</code>로 바꿉니다.</p>
+    <pre><code># llama.cpp 빌드 (NVIDIA GPU 기준)
+cmake llama.cpp -B llama.cpp/build -DBUILD_SHARED_LIBS=OFF -DGGML_CUDA=ON
+cmake --build llama.cpp/build --config Release -j --clean-first --target llama-cli llama-mtmd-cli llama-server llama-gguf-split
+
+# 4비트 압축 모델 내려받기
+hf download unsloth/Qwen3.8-27B-GGUF --local-dir unsloth/Qwen3.8-27B-GGUF --include "*UD-Q4_K_XL*"
+
+# 대화 시작 (권장 샘플링 설정 포함)
+./llama.cpp/llama-cli --model unsloth/Qwen3.8-27B-GGUF/Qwen3.8-27B-UD-Q4_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 20 --min-p 0.0</code></pre>
+    <p>처음에는 질문을 짧게 던져 응답 속도를 확인해 보세요. 답이 너무 느리면 더 작은 압축 파일(2~3비트)을 고르면 되지만, 품질이 떨어질 수 있다는 점은 감안해야 합니다.</p>
+
+    <h2 id="s7"><span class="no">07</span>주의할 점과 한계</h2>
+    <ul>
+      <li>벤치마크 점수(예: SWE-bench Pro 61.7, GPQA Diamond 89.2)는 모두 알리바바가 발표한 수치입니다. 제3자가 같은 조건으로 재현한 결과는 아직 확인하지 못했습니다.</li>
+      <li>공식 모델 카드 본문은 270억(27B)이라고 쓰고, 상단 표기는 280억(28B)으로 보입니다. 실제 사용 전에 모델 카드를 한 번 더 확인하세요.</li>
+      <li>4비트 기준으로도 메모리 16~19GB가 필요합니다. 8GB 노트북에서는 2비트 등 더 강하게 압축한 버전만 시도할 수 있고, 품질 저하가 눈에 띌 수 있습니다.</li>
+      <li>AMD의 초당 토큰 수는 "예비 측정치"입니다. 장비, 드라이버, 실행 도구 설정에 따라 크게 달라집니다.</li>
+      <li>라이선스는 Apache 2.0이라 상업적 이용이 가능하지만, 파생 모델을 배포할 때는 고지 조건을 확인해야 합니다.</li>
+    </ul>
+
+    <h2 id="s8"><span class="no">08</span>정리</h2>
+    <div class="conclusion">
+      <p>Qwen3.8-27B는 "내 PC에서 쓸 수 있는 똑똑한 모델"이 어디까지 왔는지 보여 주는 사례입니다. 이미지와 긴 문맥을 다루면서도 압축하면 일반 고사양 PC에서 돌아갑니다. 입문 개발자에게는 API 요금 걱정 없이 프롬프트를 바꿔 보고, 모델이 어떤 조건에서 잘 답하는지 직접 실험해 볼 수 있다는 점이 가장 큰 장점입니다.</p>
+      <p>다만 벤치마크 숫자를 그대로 믿기보다, 내가 만들 기능에서 실제로 쓸 만한지 작은 예제로 확인하는 습관이 중요합니다. 먼저 LM Studio로 모델을 띄우고, 같은 질문을 클라우드 모델과 비교해 보는 것부터 시작해 보세요.</p>
+    </div>
+
+    <h2 id="s9"><span class="no">09</span>참고한 글</h2>
+    <ol class="refs">
+      <li><a href="https://huggingface.co/Qwen/Qwen3.8-27B">Qwen3.8-27B 공식 모델 카드 (Hugging Face)</a> <span class="src">Hugging Face · 2026.08.13 갱신</span></li>
+      <li><a href="https://unsloth.ai/docs/models/qwen3.8-27b">Qwen3.8-27B 로컬 실행 가이드 (Unsloth 문서)</a> <span class="src">Unsloth · 08.19 업데이트 노트</span></li>
+      <li><a href="https://amd.com/en/blogs/2026/run-qwen-3-8-27b-on-amd-ryzen-ai-max-and-radeon-graphics-cards-day-0.html">Run Qwen 3.8 27B on AMD Ryzen AI Max and Radeon (Day 0)</a> <span class="src">AMD 블로그 · 2026.08.14</span></li>
+      <li><a href="https://github.com/datnguyenquy94/news-radar/issues/908">Hugging Face Trending Models 2026-10-28 (news-radar)</a> <span class="src">GitHub 이슈 · 생성 10.28 05:15 UTC</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#insights">← 전체 인사이트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

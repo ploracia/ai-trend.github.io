@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="API 호출 흐름도: 입력에서 출력까지">
+  <style>
+    .t { font: 700 18px sans-serif; fill: #1b1b1f; }
+    .s { font: 400 13px sans-serif; fill: #62626b; }
+    .b { font: 600 14px sans-serif; fill: #1b1b1f; }
+    .box { fill: #ffffff; stroke: #2f5bea; stroke-width: 2; }
+    .arrow { stroke: #2f5bea; stroke-width: 2; fill: none; marker-end: url(#ah); }
+    @media (prefers-color-scheme: dark) {
+      .t { fill: #ececf0; } .s { fill: #9a9aa5; } .b { fill: #ececf0; }
+      .box { fill: #1a1b1f; stroke: #7c9cff; } .arrow { stroke: #7c9cff; }
+    }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2f5bea"/>
+    </marker>
+  </defs>
+  <text x="24" y="34" class="t">개발자가 Qwen4-Max를 쓰는 흐름</text>
+  <text x="24" y="56" class="s">OpenAI 호환 API라서 기존 호출 코드의 모델 이름만 바꾸는 식으로 시작할 수 있습니다</text>
+
+  <rect x="24" y="90" width="150" height="90" rx="12" class="box"/>
+  <text x="99" y="126" text-anchor="middle" class="b">입력</text>
+  <text x="99" y="148" text-anchor="middle" class="s">텍스트·이미지·영상</text>
+  <text x="99" y="166" text-anchor="middle" class="s">최대 1M 토큰</text>
+
+  <path d="M178 135 L212 135" class="arrow"/>
+
+  <rect x="216" y="90" width="150" height="90" rx="12" class="box"/>
+  <text x="291" y="126" text-anchor="middle" class="b">라우팅</text>
+  <text x="291" y="148" text-anchor="middle" class="s">필요한 전문가만</text>
+  <text x="291" y="166" text-anchor="middle" class="s">선택해 호출</text>
+
+  <path d="M370 135 L404 135" class="arrow"/>
+
+  <rect x="408" y="90" width="150" height="90" rx="12" class="box"/>
+  <text x="483" y="126" text-anchor="middle" class="b">생성</text>
+  <text x="483" y="148" text-anchor="middle" class="s">추론·도구 호출</text>
+  <text x="483" y="166" text-anchor="middle" class="s">구조화 출력 지원</text>
+
+  <path d="M562 135 L596 135" class="arrow"/>
+
+  <rect x="600" y="90" width="100" height="90" rx="12" class="box"/>
+  <text x="650" y="126" text-anchor="middle" class="b">출력</text>
+  <text x="650" y="148" text-anchor="middle" class="s">텍스트</text>
+  <text x="650" y="166" text-anchor="middle" class="s">최대 131K</text>
+
+  <text x="24" y="230" class="b">확인한 공식 정보: 모델 ID qwen4-max, 입력 1,000,000 토큰 컨텍스트</text>
+  <text x="24" y="252" class="s">출력 상한 131,072 토큰(추론 비활성), 262,144 토큰(추론 활성) · 출처: Alibaba Cloud Model Studio 문서</text>
+</svg>

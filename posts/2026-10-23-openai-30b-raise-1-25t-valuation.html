@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenAI, 기업가치 1조 2,500억 달러에 최대 300억 달러 투자 유치 막바지: UAE·Coatue 주도 | AI 비밀 레시피</title>
+  <meta name="description" content="OpenAI의 1조 2,500억 달러 가치·최대 300억 달러 투자 라운드 보도와 시장 반응, 개발자에게 주는 의미를 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>OpenAI, 기업가치 1조 2,500억 달러에 최대 300억 달러 투자 유치 막바지: UAE·Coatue 주도</h1>
+    <div class="byline"><span><time datetime="2026-10-23T08:19:08+09:00">2026.10.23 08:19 KST</time></span><span>읽는 시간 약 8분</span><span>#OpenAI #투자 #IPO</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>CNBC는 OpenAI가 투자 전 기업가치 1조 2,500억 달러로 최대 300억 달러를 받는 투자 라운드를 마무리 중이며, UAE 투자자와 Coatue가 주도하고 UAE 연산 용량 계약도 함께 협상 중이라고 보도했습니다.</li><li>성사되면 역대 가장 비싼 비상장 기업이 되지만, 며칠 전 거론된 1조 4,000억 달러보다 낮아졌고 같은 날 AI 투자 회의론으로 나스닥이 2.6% 떨어져 'AI 거품' 논쟁에 다시 불이 붙었습니다.</li><li>개발자에게는 OpenAI가 당분간 막대한 연산 투자를 이어 가며 API·Codex 확장을 계속할 것이라는 신호이자, 특정 모델 한 곳에 묶이지 않는 설계가 필요하다는 신호입니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">CNBC "OpenAI, 1조 2,500억 달러 가치로 최대 300억 달러 조달 임박…UAE 연산 계약도 협상"</span><span>보도 2026.10.23 05:21 KST 무렵(미국 10.22 오후) · TechCrunch 후속 보도 2026.10.23 07:08 KST</span><span><a href="https://techcrunch.com/2026/10/22/openai-working-on-new-30b-raise-at-1-25t-valuation-ahead-of-ipo/">TechCrunch</a> · <a href="https://www.newsquawk.com/headlines/openai-closes-in-on-new-funding-round-at-a-usd-125tln-valuation-led-by-uae-investors-according-to-cnbc-citing-sources">Newsquawk(CNBC 인용)</a></span></div>
+
+    <p class="lead">ChatGPT를 만든 OpenAI가 상장을 앞두고 또 한 번 대규모 자금을 모으고 있습니다. 액수보다 눈여겨볼 점은 기업가치가 며칠 전 보도보다 낮아졌다는 것, 그리고 투자와 데이터센터 계약이 한 묶음으로 움직인다는 것입니다. 같은 날 미국 기술주는 AI 투자 회의론으로 크게 흔들렸습니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">이 이슈는 무엇인가?</a></li>
+        <li><a href="#s2">누가 움직이나?</a></li>
+        <li><a href="#s3">무슨 일이 있었나?</a></li>
+        <li><a href="#s4">실무자가 해볼 것</a></li>
+        <li><a href="#s5">긍정적인 방향으로 간다면?</a></li>
+        <li><a href="#s6">부정적인 방향으로 간다면?</a></li>
+        <li><a href="#s7">입문 개발자에게 남는 것은?</a></li>
+        <li><a href="#s8">참고 자료</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>OpenAI의 상장 전 '브리지' 투자 라운드: 1조 2,500억 달러 가치, 최대 300억 달러</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>투자 전 기업가치(pre-money)</strong>는 새 돈이 들어오기 전 회사의 가치이고, 여기에 투자금을 더하면 <strong>투자 후 기업가치(post-money)</strong>가 됩니다. <strong>투자 라운드</strong>는 회사가 새 주식을 발행해 투자자에게 돈을 받는 한 번의 자금 조달입니다. <strong>IPO(기업공개)</strong>는 주식을 증권거래소에 상장해 누구나 사고팔 수 있게 하는 것입니다. <strong>연산 용량(compute)</strong>은 AI 모델을 학습·실행하는 데 필요한 GPU와 데이터센터 자원을 말합니다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl">
+    <table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>자금 조달</td><td><strong>OpenAI(미국)</strong></td><td>최대 300억 달러 조달 추진. 보도에 대해 논평 거부(TechCrunch)</td></tr>
+        <tr><td>주도 투자자</td><td><strong>UAE 투자자 · Coatue</strong></td><td>라운드를 이끄는 것으로 보도. Bloomberg는 앞서 MGX 등 UAE 자금이 최대 100억 달러를 논의했다고 전함</td></tr>
+        <tr><td>연산 파트너(협상 중)</td><td><strong>아랍에미리트(UAE)</strong></td><td>투자와 별도로 OpenAI에 연산 용량을 더 제공하는 상업 계약을 협상 중(CNBC)</td></tr>
+        <tr><td>경쟁사</td><td><strong>Anthropic(미국)</strong></td><td>5월 9,650억 달러 가치로 650억 달러 유치, 상장 준비 중</td></tr>
+        <tr><td>시장</td><td><strong>미국 증시 투자자</strong></td><td>10월 22일 AI 지출 회의론으로 기술주를 대거 매도</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+
+    <h3>오늘 발표된 내용</h3>
+    <p>CNBC는 미국 시간 10월 22일 오후, 소식통을 인용해 OpenAI가 투자 전 기업가치 1조 2,500억 달러로 최대 300억 달러를 조달하는 라운드에 가까워졌다고 보도했습니다. UAE 투자자들과 헤지펀드 Coatue가 주도하며, OpenAI가 UAE에서 연산 용량을 더 확보하는 별도 상업 계약도 함께 협상하고 있다고 합니다. 조건은 아직 협상 중이라 바뀔 수 있습니다.</p>
+    <p>TechStartups가 전한 CNBC 보도 내용에 따르면 OpenAI는 투자자들에게 다음 주 말까지 투자 약정을 받고 싶다는 뜻을 전했습니다. 300억 달러를 모두 받으면 투자 후 가치는 약 1조 2,800억 달러가 됩니다. TechCrunch는 1조 달러를 넘는 가치로 라운드가 성사되면 OpenAI가 <strong>역대 가장 비싼 비상장 기업</strong>이 된다고 짚었습니다.</p>
+    <p>눈에 띄는 것은 가치가 낮아졌다는 점입니다. 로이터는 10월 19일 OpenAI가 1조 4,000억 달러가 넘는 가치로 약 300억 달러를 찾고 있다고 보도했고, Bloomberg도 약 한 달 전 1조 4,000억 달러를 언급했습니다. 이번 숫자는 그보다 1,500억 달러가량 낮습니다. 같은 날 미국 증시에서는 Meta 실적 이후 AI 지출에 대한 의구심이 커지며 나스닥이 2.60%, 필라델피아 반도체 지수가 6.7% 떨어졌습니다.</p>
+
+    <h3>배경: 짧은 타임라인</h3>
+    <ul class="timeline">
+      <li><time>2026.03</time>OpenAI, 투자 후 가치 8,520억 달러로 대규모 투자 유치(TechStartups는 1,220억 달러 규모로 보도).</li>
+      <li><time>2026.05</time>Anthropic, 9,650억 달러 가치로 650억 달러 유치하며 OpenAI의 가치를 넘어섭니다.</li>
+      <li><time>2026.06</time>OpenAI·Anthropic 모두 비공개로 상장 서류를 제출합니다(TechCrunch).</li>
+      <li><time>2026.10.19</time>로이터, OpenAI가 1조 4,000억 달러 이상 가치로 약 300억 달러 조달 추진 보도.</li>
+      <li><time>2026.10.23 05:21 KST 무렵</time>CNBC, 1조 2,500억 달러 가치·UAE·Coatue 주도 라운드 임박 보도.</li>
+    </ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>OpenAI는 상장 전까지 '돈 + 데이터센터'를 한 번에 확보하려 하고, 시장은 그 가격이 맞는지 따지기 시작했습니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>실무자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. 모델 호출부를 한 겹 감싸 두기</h4><p>OpenAI SDK를 코드 곳곳에서 직접 부르지 말고, <code>llm_client.chat()</code> 같은 내 함수 하나를 거치게 하세요. 가격이나 정책이 바뀌어도 한 곳만 고치면 됩니다.</p></div>
+      <div class="action"><h4>2. 최소 두 회사 모델로 같은 작업 테스트하기</h4><p>OpenAI 모델과 다른 회사 모델로 같은 프롬프트를 돌려 품질·비용·속도를 비교한 표를 하나 만들어 두세요. 협상력과 장애 대비가 동시에 생깁니다.</p></div>
+      <div class="action"><h4>3. 토큰 비용을 기능별로 기록하기</h4><p>막대한 연산 투자는 결국 가격 정책으로 돌아옵니다. 지금부터 기능별 토큰 사용량과 비용을 로그로 남기면 가격 변화에 빠르게 대응할 수 있습니다.</p></div>
+      <div class="action"><h4>4. 클라우드 마켓플레이스 경로 확인하기</h4><p>OpenAI 모델은 여러 클라우드에서도 쓸 수 있게 넓어지고 있습니다. 회사가 쓰는 클라우드 약정으로 결제할 수 있는지 확인하면 도입 결재가 쉬워질 수 있습니다.</p></div>
+      <div class="action"><h4>5. 뉴스의 숫자를 '보도'와 '확정'으로 나눠 읽기</h4><p>이번 숫자는 소식통 보도이고 OpenAI는 확인하지 않았습니다. 투자·가치 뉴스는 확정 발표 전까지 바뀔 수 있다는 점을 기억하세요.</p></div>
+      <div class="action"><h4>6. 데이터 위치 요구사항 정리해 두기</h4><p>연산이 UAE 등 여러 지역으로 분산될수록 "내 데이터가 어디서 처리되는가"가 중요해집니다. 서비스의 데이터 처리 지역 요구사항을 문서로 정리해 두세요.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos">
+      <ul>
+        <li><strong>연산 부족이 풀린다.</strong> 자금과 UAE 연산 계약이 함께 성사되면 API 속도 제한이나 대기 문제가 줄어들 수 있습니다.</li>
+        <li><strong>개발자 도구가 더 빨리 나온다.</strong> 넉넉한 자금으로 Codex 같은 개발 도구와 API 기능 확장이 이어질 수 있습니다.</li>
+        <li><strong>가치 조정이 건전한 신호가 된다.</strong> 무리한 숫자 대신 현실적인 가치로 상장하면 이후 주가 충격이 덜할 수 있습니다.</li>
+        <li><strong>경쟁이 가격을 끌어내린다.</strong> OpenAI와 Anthropic이 상장 경쟁을 벌이면서 성능 대비 가격 경쟁이 치열해질 수 있습니다.</li>
+      </ul>
+    </div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg">
+      <ul>
+        <li><strong>순환 구조에 대한 의심이 커진다.</strong> 투자자가 동시에 연산 공급자가 되는 구조는 지속 가능성에 대한 의문을 낳습니다(Newsquawk 분석).</li>
+        <li><strong>AI 거품 논쟁이 시장을 흔든다.</strong> 같은 날 반도체 지수가 6.7% 떨어진 것처럼 기대가 꺾이면 AI 기업 전반의 자금 조달이 어려워질 수 있습니다.</li>
+        <li><strong>수익 압박이 가격 인상으로 이어진다.</strong> 상장 기업이 되면 수익성 요구가 커져 API 가격이나 무료 혜택이 바뀔 수 있습니다.</li>
+        <li><strong>지정학 변수에 노출된다.</strong> 해외 국부 자금과 해외 데이터센터 의존이 커지면 규제·외교 문제의 영향을 받을 수 있습니다.</li>
+      </ul>
+    </div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion">
+      <p>이번 뉴스는 AI 산업이 얼마나 큰 돈과 연산 위에 서 있는지 보여 줍니다. 한 회사가 300억 달러를 모으면서 데이터센터 계약을 함께 묶는 것은, 모델 경쟁이 곧 연산 확보 경쟁이라는 뜻입니다. 동시에 같은 날 시장이 AI 지출에 의문을 던진 것은 그 기대가 영원히 이어지지 않을 수도 있다는 경고입니다.</p>
+      <p>입문 개발자에게 중요한 것은 특정 회사의 운명에 내 서비스를 걸지 않는 것입니다. <strong>모델 호출을 한 곳으로 모으고, 두 개 이상의 모델로 테스트하고, 비용을 기록하세요.</strong> 큰 회사의 가치가 오르내려도 흔들리지 않는 서비스를 만드는 가장 현실적인 방법입니다.</p>
+    </div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://techcrunch.com/2026/10/22/openai-working-on-new-30b-raise-at-1-25t-valuation-ahead-of-ipo/">OpenAI working on new $30B raise at $1.25T valuation ahead of IPO</a> <span class="src">— TechCrunch, 2026.10.22</span></li>
+      <li><a href="https://www.newsquawk.com/headlines/openai-closes-in-on-new-funding-round-at-a-usd-125tln-valuation-led-by-uae-investors-according-to-cnbc-citing-sources">OpenAI closes in on new funding round at a USD 1.25tln valuation, led by UAE investors (CNBC 인용)</a> <span class="src">— Newsquawk, 2026.10.22</span></li>
+      <li><a href="https://techstartups.com/2026/10/22/openai-nears-30-billion-funding-round-at-1-25-trillion-valuation-ahead-of-ipo/">OpenAI nears $30 billion funding round at $1.25 trillion valuation ahead of IPO</a> <span class="src">— Tech Startups, 2026.10.22</span></li>
+      <li><a href="https://finance.yahoo.com/markets/stocks/articles/nasdaq-futures-drop-over-1-093849296.html">S&amp;P 500, Nasdaq end sharply lower as revived AI doubts ignite tech selloff</a> <span class="src">— Reuters(Yahoo Finance), 2026.10.22</span></li>
+    </ol>
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list">
+      <a href="2026-10-23-storm-0940-artex-ai-agent-connectwise.html"><span class="r">오늘의 뉴스 1위</span><span class="t">Microsoft "중국 연계 해커, AI 에이전트로 2,250여 조직 공격": ConnectWise 공급망 침해의 전말</span></a>
+      <a href="2026-10-23-deepseek-15b-funding-round.html"><span class="r">오늘의 뉴스 3위</span><span class="t">DeepSeek, 약 150억 달러(1,000억 위안) 투자 유치: 美 퇴출 명령 이틀 만에</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

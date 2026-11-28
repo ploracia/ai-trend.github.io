@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>구글, 미네소타 허맨타운 500MW 데이터센터 승인… 세금 감면 요청 철회 | AI 비밀 레시피</title>
+  <meta name="description" content="미네소타 허맨타운 시의회가 구글 데이터센터를 만장일치로 가결했습니다. 재산세 감면 요청 철회와 철거 보증, 남은 소송과 전력 계약 절차를 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>구글, 미네소타 허맨타운 500MW 데이터센터 승인… 세금 감면 요청 철회</h1>
+    <div class="byline"><span><time datetime="2026-11-02T05:08:46+09:00">2026.11.02 05:08 KST</time></span><span>읽는 시간 약 6분</span><span>#Google #데이터센터</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>미네소타 허맨타운 시의회가 10월 30일(금) 밤 만장일치로 구글의 대형 데이터센터 승인 조치를 가결했습니다. 부지는 170만 평방피트(약 15만 8천 제곱미터) 규모입니다.</li><li>구글은 최대 8,000만 달러의 재산세 감면 요청을 철회했고, 시는 연간 약 300만 달러의 재산세 수입을 예상합니다. 시설이 중단되면 철거를 보장하는 2억 1,000만 달러 규모 협약도 있습니다.</li><li>개발자에게는 클라우드 AI 용량이 어디서, 어떤 전력 규모로 늘어나는지 보여 주는 사례입니다. 이 공사가 끝나야 실제 용량이 생기므로, 리전 확장 계획을 볼 때 참고할 만합니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">허맨타운 시의회, 구글 데이터센터 승인 (약 500MW, 재산세 감면 철회)</span><span>표결 2026.10.30 · 보도 2026.10.31</span><span><a href="https://www.mprnews.org/story/2026/10/31/hermantown-approves-controversial-google-data-center-during-late-night-meeting">MPR News 보도</a></span></div>
+
+    <p class="lead">데이터센터는 AI 모델을 학습하고 서비스하는 실제 건물입니다. 그 건물 하나가 소도시 수준의 전기를 쓰기 때문에, 승인 과정은 지역 사회와 기업 사이의 협상으로 이어집니다. 이번 허맨타운 사례는 그 협상이 어떤 조건으로 끝났는지 보여 줍니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">개발자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>구글이 미네소타 허맨타운에 짓는 대형 데이터센터가 시의 승인을 받아, 공사와 전력 계약 절차로 넘어가게 되었습니다.</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>메가와트(MW)</strong>는 전력 크기를 나타내는 단위로, 500MW는 대략 수십만 가구가 쓰는 전력에 해당하는 규모입니다. <strong>재산세 감면</strong>은 지방정부가 기업의 세금 부담을 줄여 주는 제도입니다. <strong>철거 보증</strong>은 사업이 중단되었을 때 건물을 허물고 부지를 원상복구할 비용을 미리 쌓아 두는 장치입니다.
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>항목</th><th>내용 (보도 기준)</th></tr></thead>
+      <tbody>
+        <tr><td>위치</td><td>미네소타 허맨타운, 덜루스 인근의 주거 지역 근처 농촌형 부지 (200에이커 이상)</td></tr>
+        <tr><td>규모</td><td>170만 평방피트, 건물 4동에서 3동으로 축소, 높이 33피트(약 10m)로 제한</td></tr>
+        <tr><td>전력 수요</td><td>약 500MW (시민단체 CUB 비교 기준으로 미니애폴리스, 세인트폴, 덜루스, 로체스터 가구의 합산 수요와 비슷한 규모)</td></tr>
+        <tr><td>세금</td><td>구글이 최대 8,000만 달러 재산세 감면 요청을 철회, 시는 연간 약 300만 달러 재산세 수입 예상</td></tr>
+        <tr><td>안전장치</td><td>2억 1,000만 달러 규모 철거 협약, 구글의 인근 개인 우물 모니터링</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>사업자</td><td><strong>구글</strong></td><td>부지 규모와 높이를 줄이고 세금 감면 요청을 철회하는 등 조건을 조정</td></tr>
+        <tr><td>의결 기관</td><td><strong>허맨타운 시의회</strong></td><td>개발 협약, 특별사용허가, 철거 계획을 만장일치로 가결</td></tr>
+        <tr><td>반대 측</td><td><strong>지역 주민</strong></td><td>시위와 공청회를 통해 반대했고, 협약 조건이 충분하지 않다고 비판</td></tr>
+        <tr><td>남은 심사</td><td><strong>미네소타 공공설비위원회와 미네소타 파워</strong></td><td>구글과 미네소타 파워 사이의 전력 공급 계약을 승인해야 함</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+    <h3>발표된 내용</h3>
+    <p>MPR News 보도에 따르면 시의회는 10월 30일(금) 밤, 약 4시간의 공개 발언과 1시간의 토론 끝에 구글 프로젝트의 개발 협약, 특별사용허가, 철거 계획을 만장일치로 통과시켰습니다. 표결은 시위 등을 이유로 월요일에서 화요일로, 다시 금요일로 두 차례 미뤄진 뒤 열렸습니다.</p>
+    <p>의원 존 게이슬러는 "오늘 밤 우리가 한 일은 AI에 관한 것도, 빅테크에 관한 것도 아닙니다"라고 말했습니다. 반대 측 리처드 힐턴은 주민 의견을 반영하는 척만 했다고 비판했습니다. 기사는 이 프로젝트에 남은 소송 3건이 있다는 점도 함께 전했습니다. 환경 검토, 용도지역 변경 절차, 토지 소유권 문제가 쟁점입니다.</p>
+    <h3>진행 순서</h3>
+    <ul class="timeline">
+      <li><time>월요일 예정</time>시위 등으로 표결 연기</li>
+      <li><time>10월 30일 (금) 밤</time>시의회 만장일치 가결 (약 4시간 공개 발언 후)</li>
+      <li><time>10월 31일</time>MPR News 보도, 남은 소송 3건과 전력 계약 승인 대기 상태 전달</li>
+    </ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>데이터센터 한 곳이 소도시 수준의 전기를 쓰는 만큼, AI 서비스의 용량은 건물 공사와 전력 계약이 끝나야 실제로 늘어납니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>개발자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. MW를 가구 수로 바꿔 보기</h4><p>500MW가 어느 정도인지 감을 잡기 위해 주변 도시의 가구 수와 비교해 보세요. 전력 규모를 읽는 감이 생기면 인프라 뉴스가 더 잘 읽힙니다.</p></div>
+      <div class="action"><h4>2. 리전 확장 계획을 일정에 넣기</h4><p>클라우드 리전이 새로 생기는 시점은 공사와 허가에 달려 있으니, 리전 이전 계획을 세울 때 승인 절차가 남아 있는지 확인하세요.</p></div>
+      <div class="action"><h4>3. 공개 회의록과 협약서 찾아보기</h4><p>지방정부 회의록에는 협약 조건과 반대 의견이 남습니다. 기술 뉴스와 함께 읽으면 프로젝트의 실제 리스크를 파악하기 쉽습니다.</p></div>
+      <div class="action"><h4>4. 비용 구조를 공개 자료로 확인하기</h4><p>전기 요금과 세금 감면이 클라우드 가격에 어떻게 반영되는지 공개된 자료를 근거로 메모해 두세요. 추정과 확인된 사실을 나눠 적는 것이 중요합니다.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos"><ul>
+      <li><strong>지역 재정에 도움이 된다.</strong> 기사에 따르면 시는 연간 약 300만 달러의 재산세 수입을 기대하고 있습니다.</li>
+      <li><strong>협약 조건이 구체화된다.</strong> 철거 보증, 우물 모니터링, 건물 축소 같은 조건이 붙어, 다른 지역의 협상에서도 참고가 될 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg"><ul>
+      <li><strong>소송 때문에 완공이 늦어질 수 있다.</strong> 환경 검토, 용도지역 변경, 토지 소유권 문제가 남아 있어 일정이 바뀔 가능성이 있습니다.</li>
+      <li><strong>전력망 부담이 우려된다.</strong> 500MW급 수요가 지역 전력 공급과 요금에 어떤 영향을 줄지는 전력 계약 심사에서 확인해야 할 부분입니다.</li>
+      <li><strong>주민 신뢰가 약하다.</strong> 반대 측은 조건을 법적으로만 바꾼 것이라고 비판하고 있어, 협상 과정에 대한 불신이 남을 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion"><p>이번 승인은 AI 서비스의 뒤편에 있는 데이터센터가 공사 허가, 세금, 전력 계약, 주민 협상을 모두 거쳐야 만들어진다는 사실을 보여 줍니다. 개발자 입장에서는 모델 성능만큼이나 인프라가 언제, 어디서 늘어나는지도 중요한 변수입니다.</p><p>입문 단계라면 자신이 쓰는 클라우드 리전의 위치와 용량 공지를 한 번 찾아보고, 리전 추가 계획이 실제로 확정된 것인지 공식 자료에서 확인하는 습관부터 들여 보세요.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://www.mprnews.org/story/2026/10/31/hermantown-approves-controversial-google-data-center-during-late-night-meeting">Hermantown approves controversial Google data center during late-night meeting</a> <span class="src">— MPR News, 2026.10.31 (원문 열람 확인, 표결과 협약 조건 출처)</span></li>
+    </ol>
+
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list"><a href="2026-11-02-apple-alibaba-qwen-apple-intelligence.html"><span class="r">오늘의 뉴스 1위</span><span class="t">애플, 중국판 애플 인텔리전스에 알리바바 Qwen 탑재… 개발자 베타는 11월 4일부터</span></a><a href="2026-11-02-xai-naacp-memphis-turbines.html"><span class="r">오늘의 뉴스 2위</span><span class="t">법원, xAI 멤피스 데이터센터 가스터빈 소송 계속 진행 허용</span></a></div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

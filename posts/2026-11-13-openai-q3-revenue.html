@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenAI, 3분기 매출 약 100억 달러… 매출은 50% 늘었지만 영업손실은 여전히 커 | AI 비밀 레시피</title>
+  <meta name="description" content="보도에 따르면 OpenAI의 3분기 매출은 약 100억 달러로 늘었지만, 영업손실은 약 110억 달러로 더 컸습니다. 수치의 의미를 쉽게 풀었습니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  
+<article>
+    <h1>OpenAI, 3분기 매출 약 100억 달러… 매출은 50% 늘었지만 영업손실은 여전히 커</h1>
+    <div class="byline"><span><time datetime="2026-11-13T08:23:31+09:00">2026.11.13 08:23 KST</time></span><span>읽는 시간 약 6분</span><span>#OpenAI #투자</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>The Information 보도에 따르면 OpenAI는 투자자에게 3분기 매출이 약 100억 달러로, 2분기보다 약 50% 늘었다고 전했습니다. 기업용 제품과 최근 모델이 성장을 이끌었다는 설명입니다.</li><li>같은 시기 WSJ 보도는 영업손실이 약 110억 달러로 매출 증가보다 더 컸다고 전했습니다. 매출이 빨리 늘어도 비용이 그보다 빠르게 늘고 있다는 뜻입니다.</li><li>개발자에게는 AI 서비스 가격이 왜 쉽게 내려가지 않는지, 그리고 회사들이 어디에 돈을 쓰는지 읽을 수 있는 단서입니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">OpenAI 3분기 매출과 영업손실 보도</span><span>보도 2026.11.11</span><span><a href="https://aiweekly.co/alerts/the-information-openai-tells-investors-q3-revenue-hit-roughly-10b-up-50-from-q2">AIWeekly 요약</a></span></div>
+    <p class="lead">AI 회사의 실적 뉴스는 "잘 팔린다"와 "돈을 번다"가 다를 수 있다는 점을 보여 줍니다. 이번 숫자는 그 차이를 아주 선명하게 드러냈습니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">개발자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+
+    <p><strong>매출은 회사가 물건이나 서비스를 팔아 번 돈 전체이고, 영업손실은 그 매출에서 운영비를 뺐을 때 남는 적자입니다. OpenAI는 매출이 크게 늘었지만 적자도 그보다 크다는 보도가 나왔습니다.</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>영업손실</strong>은 본업으로 번 돈에서 연구·인프라·인건비를 뺀 결과입니다. <strong>연간 환산 매출(ARR)</strong>은 최근 매출을 1년 단위로 환산한 숫자로, 구독형 서비스에서 자주 쓰입니다.
+    </div>
+    <p>가게에 손님이 두 배로 늘어도 임대료와 재료비가 더 많이 늘면 가게는 여전히 적자일 수 있습니다. AI 회사는 특히 GPU와 데이터센터 비용이 커서 이 구조가 더 뚜렷하게 나타납니다.</p>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>회사</td><td><strong>OpenAI</strong></td><td>ChatGPT와 API를 제공하는 AI 회사</td></tr>
+        <tr><td>보도 매체</td><td><strong>The Information, WSJ</strong></td><td>투자자 전달 자료를 바탕으로 매출과 손실을 보도</td></tr>
+        <tr><td>고객</td><td><strong>기업과 개발자</strong></td><td>기업용 제품과 API 사용이 성장 동력으로 언급</td></tr>
+        <tr><td>투자자</td><td><strong>주요 투자 기관</strong></td><td>실적 자료를 받아 회사 가치를 판단</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+
+    <h3>보도된 내용</h3>
+    <p>11월 11일 보도에 따르면 OpenAI는 투자자에게 3분기 매출이 약 100억 달러라고 알렸습니다. 2분기보다 약 50% 늘어난 규모입니다. 보도는 기업용 제품과 최근 출시 모델이 성장을 이끌었다고 전했습니다.</p>
+    <p>이어 WSJ은 같은 분기 영업손실이 약 110억 달러였다고 보도했습니다. 조정 영업이익률도 개선됐지만 여전히 큰 적자 상태라는 해석이 나왔습니다. 이 수치는 회사가 공식 발표한 것이 아니라 투자자 자료를 인용한 보도이므로 "~에 따르면"으로 이해하는 것이 맞습니다.</p>
+    <p>이번 정리는 두 매체의 보도 요약을 교차해 작성했으며, 원자료인 투자자 자료는 확인하지 못했습니다. 숫자의 정확한 기준(조정 여부, 기간)은 원보도에서 한 번 더 확인해 보시기 바랍니다.</p>
+    <h3>진행 순서</h3>
+    <ul class="timeline">
+      <li><time>2026년 3분기 (7~9월)</time>매출 약 100억 달러, 전 분기 대비 약 50% 증가</li>
+      <li><time>2026년 11월 11일</time>The Information과 WSJ가 투자자 자료 기반 실적을 보도</li>
+    </ul>
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>매출 성장률만 보고 AI 회사의 안정성을 판단하면 안 됩니다. 손익 구조까지 함께 봐야 서비스 가격의 방향을 가늠할 수 있습니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>개발자가 해볼 것</h2>
+
+    <div class="actions">
+      <div class="action"><h4>1. 매출과 이익을 구분해 적기</h4><p>뉴스에서 "매출"과 "영업이익"이 나오면 두 숫자를 나란히 적어 보고, 차이가 무엇인지 한 줄로 설명해 보세요.</p></div>
+      <div class="action"><h4>2. 서비스 가격 변화 기록하기</h4><p>자주 쓰는 AI 서비스의 요금을 월 단위로 적어 두면, 가격 인상이나 할인 시점을 놓치지 않을 수 있습니다.</p></div>
+      <div class="action"><h4>3. 여러 공급자와 비교하기</h4><p>한 회사에 묶이지 않도록, 같은 작업을 두 개 이상의 AI 서비스로 해 보고 비용과 결과를 비교해 보세요.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+
+    <div class="future pos"><ul>
+      <li><strong>기업 수요가 확인된다.</strong> 기업용 제품이 매출을 이끌었다면, 실제로 돈을 내고 쓰는 사용처가 있다는 뜻입니다.</li>
+      <li><strong>운영 효율이 나아질 수 있다.</strong> 조정 영업이익률이 개선됐다는 보도처럼, 규모가 커지면 단위당 비용이 줄어들 가능성이 있습니다.</li>
+      <li><strong>개발자 도구가 계속 성장한다.</strong> 수익이 늘면 API와 개발 도구에 투자할 여력도 커집니다.</li>
+    </ul></div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+
+    <div class="future neg"><ul>
+      <li><strong>적자가 계속 쌓일 수 있다.</strong> 영업손실이 매출 증가보다 크면, 자금 조달이 막힐 때 서비스 가격이 오르거나 기능이 줄 수 있습니다.</li>
+      <li><strong>투자 의존도가 높아진다.</strong> 큰 적자를 외부 자금으로 메우는 구조라면, 시장 분위기가 바뀔 때 흔들릴 수 있습니다.</li>
+      <li><strong>수치 해석이 엇갈린다.</strong> 투자자 자료 기반 보도는 기준이 다를 수 있어서, 같은 뉴스라도 해석이 달라질 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+
+    <div class="conclusion"><p>이번 뉴스가 보여 주는 핵심은 AI 회사의 매출이 빠르게 늘고 있지만, 그만큼 비용도 크다는 사실입니다. 입문 개발자에게는 특정 모델의 성능보다, 그 모델을 제공하는 회사가 오래 버틸 수 있는지 살펴보는 감각이 중요합니다.</p><p>이번 주에는 자신이 쓰는 AI 서비스의 요금과 대체 서비스를 하나씩 찾아 적어 두세요. 서비스를 바꿔야 할 때 바로 움직일 수 있도록 준비해 두는 것이 실용적인 대비입니다.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://aiweekly.co/alerts/the-information-openai-tells-investors-q3-revenue-hit-roughly-10b-up-50-from-q2">AIWeekly, The Information: OpenAI tells investors Q3 revenue hit roughly $10B (2026.11.11)</a> <span class="src">— 매출 약 100억 달러, 50% 성장 확인</span></li>
+      <li><a href="https://cryptobriefing.com/openais-q3-operating-loss-hits-11b-despite-50-revenue-rise-wsj/">Crypto Briefing, OpenAI's Q3 operating loss hits $11B (WSJ 인용)</a> <span class="src">— 영업손실 약 110억 달러 확인</span></li>
+      <li><a href="https://theinformation.com/articles/openai-revenue-jumps-10-billion-third-quarter">The Information, OpenAI revenue jumps to $10 billion in third quarter</a> <span class="src">— 원보도 제목 확인 (본문 미확인)</span></li>
+    </ol>
+
+  </article>
+
+  </article>
+
+
+    <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list">
+      <a href="2026-11-13-anthropic-ipo-schedule.html"><span class="r">오늘의 뉴스 1위</span><span class="t">Anthropic, 기업공개 일정 확정… 11월 19일 나스닥에서 'ANT'로 거래 시작</span></a>
+      <a href="2026-11-13-anthropic-regional-access-rules.html"><span class="r">오늘의 뉴스 3위</span><span class="t">Anthropic, 지원 국가 밖 사용 제한 시행… 신분 확인 절차 도입</span></a>
+    </div>
+  </section>
+
+
+
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>언어 에이전트에게 기억은 얼마나 가치 있을까 | AI 비밀 레시피</title>
+  <meta name="description" content="AI 에이전트의 기억이 실제로 쓸모 있는지 측정하는 틀을 쉽게 풀어 봅니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .paper-title { font-size: 15px; color: var(--muted); margin: 0 0 14px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 48px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 26px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .opinion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .opinion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#papers"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#papers">← 논문 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>언어 에이전트에게 기억은 얼마나 가치 있을까</h1>
+    <p class="paper-title">The Value of Memory in Language Agents</p>
+    <div class="byline"><span><time datetime="2026-10-27T12:21:06+09:00">2026.10.27 12:21 KST</time></span><span>원문 arXiv:2610.31303</span></div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol><li>AI 에이전트는 여러 단계의 일을 하며 과거 정보를 기억해 두지만, 그 기억이 정말 도움이 되는지 판단할 기준이 부족했습니다.</li><li>저자들은 기억의 가치를 "피할 수 있었던 작업 손실"로 재는 의사결정 틀을 만들고, 시뮬레이션과 작은 반례 실험으로 점검했습니다.</li><li>기억은 쌓아 두는 것만으로 끝나지 않고, 꺼내 쓰고 고치는 과정까지 설계해야 가치가 생긴다는 점이 직접 에이전트를 만드는 개발자에게 힌트가 됩니다.</li></ol>
+    </div>
+
+    <h2 id="s1"><span class="no">01</span>본문 요약</h2>
+    <h3>문제 정의</h3>
+    <p>에이전트가 긴 작업을 끝내려면 이전 대화나 작업 기록을 기억해야 합니다. 그런데 기억을 많이 저장한다고 항상 좋아지지는 않습니다. 오래된 정보가 섞이거나, 필요한 순간에 엉뚱한 기억을 꺼내거나, 틀린 기억을 고치지 못하면 오히려 실수가 늘어날 수 있습니다. 기존 연구는 주로 "얼마나 잘 기억하는가"를 측정했고, "그 기억이 어떤 손실을 막아 주는가"는 충분히 다루지 않았다고 논문은 지적합니다.</p>
+    <h3>방법</h3>
+    <p>쉽게 말해 기억이 일하는 흐름을 네 단계로 나눠 봅니다. 첫째, 원래 기록에서 무엇을 남길지 고릅니다. 둘째, 그것을 계속 유지되는 상태로 보관합니다. 셋째, 실제 작업에서 꺼내 씁니다. 넷째, 잘못되었을 때 비용을 치르고 복구하거나 수정합니다. 기억의 가치는 이런 과정에서 "피한 작업 손실"로 측정합니다. 위험과 비용의 관계를 그린 곡선으로 어디까지 복구하고 보존할 수 있는지도 설명합니다. 실험은 정보가 언제 들어오는지, 검색 접근 권한이 어떤지, 구성 요소끼리 어떻게 맞물리는지, 피드백이 있는지, 무엇이 필요한지 미리 알 수 없는지를 하나씩 바꾸는 시뮬레이션과, 다섯 개의 최소 반례로 이루어집니다.</p>
+    <h3>결과</h3>
+    <p>초록에 따르면 저자들은 장기 대화 기억 벤치마크인 LoCoMo, 두 프로젝트 사이에서 정보를 갱신하는 작업, 여러 기간에 걸친 사례를 이용해 진단을 했습니다. 그 결과 기억을 제대로 보존하지 못하는 경우, 저장된 기억을 실제로 쓰지 못하는 경우, 그리고 기억의 효과를 제대로 측정하지 못하는 경우의 실패가 드러났습니다. 초록에는 구체적인 점수 차이가 나와 있지 않아 여기서는 수치를 옮기지 않았습니다.</p>
+    <h3>한계</h3>
+    <ul><li>이 정리는 논문 초록을 바탕으로 한 것이며, 본문의 실험 조건과 재현 방법은 직접 확인하지 않았습니다.</li><li>이론 틀과 시뮬레이션이 중심이라, 실제 서비스 환경에서 얼마나 효과가 있는지는 별도 검증이 필요합니다.</li><li>LoCoMo 같은 특정 벤치마크의 결과를 다른 작업에도 그대로 적용하기는 어렵습니다.</li></ul>
+
+    <h2 id="s2"><span class="no">02</span>최종 의견</h2>
+    <div class="opinion"><p>입문 개발자가 이 논문에서 가져갈 핵심은 "기억은 많이 넣을수록 좋다"가 아니라 "필요할 때 맞는 기억을 꺼낼 수 있고, 틀리면 고칠 수 있는가"입니다. 대화 내용을 벡터 데이터베이스에 쌓는 것만으로 끝내지 말고, 기억을 언제 갱신할지, 어떤 기억에 의존하는 결정인지 기록해 두는 설계를 함께 생각해 보세요.</p><p>이 논문은 실험 결과로 큰 성능 향상을 증명한 연구라기보다, 기억의 가치를 따지는 관점과 점검 방법을 제시한 연구로 읽는 편이 맞습니다. 바로 제품에 적용하기보다는 내 에이전트의 기억이 실제로 무엇을 막아 주는지 질문하는 체크리스트로 활용하면 좋겠습니다.</p></div>
+
+    <h2 id="s3"><span class="no">03</span>참고 사이트</h2>
+    <ol class="refs">
+      <li><a href="https://arxiv.org/abs/2610.31303">The Value of Memory in Language Agents</a> <span class="src">arXiv · 2026.10.22</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#papers">← 전체 논문 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

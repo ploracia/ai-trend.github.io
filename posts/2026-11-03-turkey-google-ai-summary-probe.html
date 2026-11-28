@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>튀르키예 경쟁당국, 구글의 AI 검색 요약 조사 착수… 뉴스 게시자 보호 임시 조치 | AI 비밀 레시피</title>
+  <meta name="description" content="튀르키예 경쟁당국이 구글 검색의 AI 요약을 조사하고 뉴스 게시자 보호 임시 조치를 내렸습니다. 보도 범위와 개발자가 챙길 점을 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>튀르키예 경쟁당국, 구글의 AI 검색 요약 조사 착수… 뉴스 게시자 보호 임시 조치</h1>
+    <div class="byline"><span><time datetime="2026-11-03T08:28:00+09:00">2026.11.03 08:28 KST</time></span><span>읽는 시간 약 5분</span><span>#규제 #Google #AI검색</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>튀르키예 경쟁당국이 구글이 검색 결과를 요약하는 데 AI를 어떻게 쓰는지 조사를 시작했다고 11월 2일 발표했습니다.</li><li>당국은 뉴스 게시자를 차별적이거나 착취적인 행위로부터 보호하기 위한 임시 조치도 함께 내렸습니다. 세부 조치 내용은 확인된 보도에 나오지 않았습니다.</li><li>개발자에게는 AI 요약이 출판사의 트래픽과 수익 구조를 바꿀 수 있다는 점을 보여 줍니다. 외부 콘텐츠를 가져다 쓰는 서비스를 만들 때 출처 표시와 이용 권한을 미리 챙길 이유가 됩니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">튀르키예 경쟁당국, 구글 AI 요약 조사와 뉴스 게시자 보호 임시 조치</span><span>보도 2026.11.02</span><span><a href="https://globalcompetitionreview.com/article/ai-mode-the-briefing-2-november-2026">Global Competition Review 보도</a></span></div>
+
+    <p class="lead">검색 엔진이 링크 목록 대신 답을 직접 써 주기 시작하면서, 그 답의 재료가 된 기사를 쓴 쪽의 몫이 문제가 되고 있습니다. 이번 조치는 그 문제를 규제 당국이 본격적으로 다루기 시작했다는 신호입니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">개발자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>튀르키예 경쟁당국이 구글 검색의 AI 요약 기능이 뉴스 게시자에게 불공정한지 들여다보기 시작했습니다.</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>경쟁당국</strong>은 시장에서 독점이나 불공정 거래가 생기지 않도록 감시하는 정부 기관입니다. <strong>임시 조치(interim measures)</strong>는 조사가 끝나기 전에 피해가 커지지 않도록 먼저 내리는 제재입니다. <strong>AI 요약</strong>은 여러 웹 페이지의 내용을 모델이 합쳐서 검색 결과 위에 보여 주는 기능입니다.
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>항목</th><th>내용 (보도 기준)</th></tr></thead>
+      <tbody>
+        <tr><td>조사 주체</td><td>튀르키예 경쟁당국</td></tr>
+        <tr><td>대상</td><td>구글이 검색 결과를 요약하는 데 AI를 쓰는 방식</td></tr>
+        <tr><td>임시 조치</td><td>뉴스 게시자를 차별적·착취적 행위로부터 보호하기 위한 조치 (세부 내용 미확인)</td></tr>
+        <tr><td>다른 지역 조사</td><td>브뤼셀과 런던의 당국도 같은 주제의 조사를 진행 중</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>조사 기관</td><td><strong>튀르키예 경쟁당국</strong></td><td>AI 요약이 경쟁을 해치는지 조사하고 임시 조치를 결정</td></tr>
+        <tr><td>피조사 기업</td><td><strong>구글</strong></td><td>검색 결과 요약 기능을 운영하는 사업자</td></tr>
+        <tr><td>보호 대상</td><td><strong>뉴스 게시자</strong></td><td>기사가 요약의 재료로 쓰이는 대신 방문자를 잃을 수 있는 쪽</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+    <h3>발표된 내용</h3>
+    <p>Global Competition Review 보도에 따르면 튀르키예 경쟁당국은 11월 2일 구글이 검색 결과 요약에 AI를 어떻게 쓰는지 조사를 열고, 뉴스 게시자 보호를 위한 임시 조치를 발표했습니다. 기사는 튀르키예가 브뤼셀과 런던의 당국과 같은 흐름에 합류했다고 전했습니다.</p>
+    <p>보도에는 임시 조치의 구체적 항목이 나오지 않습니다. 그래서 이 글에서는 조치가 "차별적·착취적 행위를 막는 목적"이라는 점까지만 다룹니다.</p>
+    <h3>진행 순서</h3>
+    <ul class="timeline">
+      <li><time>11월 2일</time>튀르키예 경쟁당국, 구글 AI 요약 조사와 임시 조치 발표</li>
+    </ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>AI가 남의 글을 요약해 보여 주는 서비스는, 원문을 쓴 쪽과의 관계를 규제 당국이 살펴보는 대상이 되고 있습니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>개발자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. 출처 표시를 기본값으로 두기</h4><p>외부 글을 요약하는 기능을 만든다면, 원문 링크와 출처를 결과에 함께 보여 주는 구조로 시작하세요.</p></div>
+      <div class="action"><h4>2. 콘텐츠 이용 조건 확인하기</h4><p>크롤링이나 요약 대상 사이트의 이용 약관과 robots.txt를 먼저 읽어 보세요. 기술적으로 가능한 것과 허용된 것은 다릅니다.</p></div>
+      <div class="action"><h4>3. 요약 길이를 제한하기</h4><p>원문을 거의 그대로 옮기지 않도록 요약 길이와 인용 범위를 정해 두면 권리 문제를 줄이는 데 도움이 됩니다.</p></div>
+      <div class="action"><h4>4. 지역별 규제 흐름 메모하기</h4><p>유럽, 영국, 튀르키예처럼 조사가 이어지는 지역을 정리해 두면 서비스를 여러 나라에 내놓을 때 빠진 점검을 줄일 수 있습니다.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos"><ul>
+      <li><strong>뉴스 생태계의 공정성이 높아진다.</strong> 원문 제공자에게 정당한 몫이 돌아가면, 양질의 기사가 계속 만들어질 수 있습니다.</li>
+      <li><strong>출처가 명확한 AI 서비스가 늘어난다.</strong> 규제 기준이 생기면 요약 결과에 링크와 출처를 붙이는 설계가 표준이 될 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg"><ul>
+      <li><strong>검색 기능이 지역마다 달라질 수 있다.</strong> 나라별 규제가 달라지면 같은 서비스라도 제공 방식이 쪼개질 수 있습니다.</li>
+      <li><strong>작은 개발자의 부담이 커진다.</strong> 출처와 권리 관리 비용이 늘면, 실험 단계의 서비스는 진입하기 어려워질 수 있습니다.</li>
+      <li><strong>조사 결과가 늦게 나올 수 있다.</strong> 임시 조치의 세부 내용과 최종 결정은 아직 확인되지 않았습니다.</li>
+    </ul></div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion"><p>이번 조사는 AI가 정보를 가공해 보여 주는 방식이 기술 문제이면서 동시에 저작권과 시장 경쟁의 문제라는 사실을 보여 줍니다. 입문 단계에서 요약 기능을 만든다면 기술 구현만큼 출처와 이용 조건을 함께 설계하는 습관이 중요합니다.</p><p>당장 할 일은 간단합니다. 만들고 있는 기능에서 외부 원문을 쓰는 지점을 찾아 출처 표시가 빠져 있지 않은지 한 번 확인해 보세요.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://globalcompetitionreview.com/article/ai-mode-the-briefing-2-november-2026">AI Mode: The Briefing for 2 November 2026</a> <span class="src">— Global Competition Review, 2026.11.02 (원문 열람 확인, 조사 주체·임시 조치 취지 출처. 세부 조치 내용은 원문에 없음)</span></li>
+    </ol>
+
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list"><a href="2026-11-03-anthropic-amended-s1-q3-results.html"><span class="r">오늘의 뉴스 1위</span><span class="t">앤트로픽 IPO 서류 수정… 3분기 매출 170억 달러, 영업손실 전환</span></a><a href="2026-11-03-marvell-lumentum-115b-deal.html"><span class="r">오늘의 뉴스 2위</span><span class="t">마벨, 광학 부품 기업 루멘텀 인수 발표… 기업가치 1,150억 달러</span></a></div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

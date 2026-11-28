@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>미국과 중국의 AI 진영 경쟁: 각국이 한쪽을 고르라는 압박을 받다 | AI 비밀 레시피</title>
+  <meta name="description" content="미국 주도의 Pax Silica와 중국 주도의 WAICO 사이에서 카자흐스탄, 인도네시아 등 각국이 어떤 선택을 하고 있는지 정리하고, 개발자가 모델과 클라우드 선택에서 봐야 할 점을 짚습니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+    <h1>미국과 중국의 AI 진영 경쟁: 각국이 한쪽을 고르라는 압박을 받다</h1>
+    <div class="byline"><span><time datetime="2026-10-26T09:53:47+09:00">2026.10.26 09:53 KST</time></span><span>읽는 시간 약 6분</span><span>#미중경쟁 #AI주권 #국제정책</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>AP는 2026년 10월 25일 미국이 동맹국에 Pax Silica 참여 여부를 분명히 하라고 압박하는 가운데, 중국의 WAICO에 가입하는 나라도 늘고 있다고 보도했습니다.</li><li>카자흐스탄은 6월 미국 그룹에 가입한 뒤 3주 만에 중국 그룹의 창립국이 됐고, 인도네시아도 WAICO에 합류했습니다. 미 국무부는 두 진영에 동시에 걸친 나라를 신뢰할 수 없는 파트너라고 밝혔습니다.</li><li>개발자에게는 어느 나라의 모델과 클라우드를 쓰는지가 정책 리스크로 직결되는 시대가 왔다는 신호입니다. 모델과 데이터가 놓인 위치를 설계 단계부터 점검해야 합니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">미국과 중국이 AI 진영을 나누며 각국에 선택을 요구하는 상황</span><span>보도 2026.10.25 (AP)</span><span><a href="https://www.clickorlando.com/business/2026/10/25/as-the-us-and-china-form-ai-blocs-countries-are-increasingly-torn-between-them/">AP 기사 (ClickOrlando)</a></span></div>
+
+    <p class="lead">AI 경쟁이 기술 경쟁을 넘어 외교 줄서기가 되고 있습니다. 미국은 Pax Silica라는 공급망 그룹을, 중국은 WAICO라는 협력 기구를 내세우며 각국을 끌어들이고 있습니다. 대부분의 나라는 두 진영의 이익을 모두 얻고 싶어 하지만, 그 선택지는 점점 좁아지고 있습니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">실무자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>미국 주도와 중국 주도의 AI 협력체가 각각 세력을 넓히면서, 각국이 칩과 모델과 데이터 어디에 줄을 설지 정해야 하는 상황</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>Pax Silica</strong>는 미국이 반도체와 AI 공급망을 함께 묶으려는 협력 그룹입니다. <strong>WAICO(World AI Cooperation Organization)</strong>는 중국이 이끄는 국제 AI 협력 기구로, 기사 기준 창립국은 중국 측 28개국을 포함한 약 30개국입니다. 두 그룹의 가입 조건과 혜택이 서로 달라서 한 나라가 둘 다 택하기 어려운 구조가 생기고 있습니다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl">
+    <table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>미국 측</td><td><strong>미 국무부, 트럼프 행정부</strong></td><td>Pax Silica 참여를 요구하며, 두 진영에 걸친 국가를 신뢰하기 어렵다고 밝힘</td></tr>
+        <tr><td>중국 측</td><td><strong>중국 정부, 주미 중국대사관</strong></td><td>WAICO를 이끌며 "AI는 주요 강대국이 독점해서는 안 된다"고 주장</td></tr>
+        <tr><td>선택을 고민하는 나라</td><td><strong>카자흐스탄, 인도네시아, 싱가포르, 사우디, 일본</strong></td><td>가입, 검토, 또는 두 진영의 기술을 함께 쓰는 방식으로 대응</td></tr>
+        <tr><td>끼인 나라</td><td><strong>영국, 독일</strong></td><td>데이터센터와 반도체 협력을 위해 미국 정책에 기대는 상황</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+
+    <h3>오늘 발표된 내용</h3>
+    <p>AP는 2026년 10월 25일 기사에서 미국과 중국이 각각 AI 블록을 만들면서 많은 나라가 양쪽 사이에서 고민하고 있다고 보도했습니다. 카자흐스탄의 AI 장관 자슬란 마디예프는 6월 미국 주도의 공급망 그룹에 참여한 뒤, 약 3주 뒤 상하이에서 열린 중국 WAICO의 창립국으로 서명했습니다. 카자흐스탄은 엔비디아와 최대 100억 달러 규모의 데이터센터 단지 계약도 맺은 것으로 전해졌습니다.</p>
+    <p>인도네시아는 WAICO에 합류했고, 싱가포르는 가입을 검토 중입니다. 사우디아라비아는 중국산 오픈 모델을 플랫폼에서 쓰면서도 엔비디아와 협력을 이어 가고 있습니다. 일본은 미국과 긴밀하게 맞물려 있지만, 위험이 낮은 용도에는 값싼 중국 모델을 쓸 가능성이 있다고 봤습니다. 기사는 중국이 최소 77개 저·중소득 국가에 AI 관련 사업을 위한 보조금과 대출을 제공했다는 AidData 자료도 함께 인용했습니다.</p>
+    <p>미국 쪽 반응도 강경합니다. 미 국무부는 Pax Silica에 참여하면서 중국의 AI 비전을 함께 추진하는 나라는 신뢰할 수 있는 파트너가 될 수 없다는 입장을 밝혔습니다. 트럼프 대통령은 지난달 "AI를 이기는 쪽이 모든 것을 이긴다"고 말한 것으로 전해졌습니다. 다만 기사는 마감일이 따로 정해지지 않았고, 각국이 자유롭게 고를 수 있는 시간이 좁아지고 있다는 분석을 함께 전했습니다.</p>
+
+    <h3>흐름</h3>
+    <ul class="timeline"><li><time>2026.06</time>카자흐스탄이 미국 주도의 Pax Silica에 가입</li><li><time>2026.07</time>시진핑 주석이 카심조마르트 토카예프 대통령과 회담, 이후 카자흐스탄이 WAICO 창립국으로 서명</li><li><time>2026.10.25</time>AP가 각국이 두 진영 사이에서 흔들린다고 보도</li></ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>어떤 나라의 모델과 클라우드를 쓰느냐가 기술 선택이자 정책 리스크가 되는 시대입니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>실무자가 해볼 것</h2>
+    <div class="actions"><div class="action"><h4>1. 모델의 원산지와 라이선스 확인하기</h4><p>오픈 모델이라도 개발사 국적, 수출 규제 대상 여부, 라이선스 조건을 도입 전에 기록해 두세요.</p></div><div class="action"><h4>2. 데이터와 서버 위치 정하기</h4><p>고객 데이터가 어느 나라 리전에 저장되고 처리되는지 설계 문서에 명시하세요.</p></div><div class="action"><h4>3. 다중 모델 구조 준비하기</h4><p>특정 국가 모델에 의존하지 않도록 모델 교체가 쉬운 호출 구조를 두세요.</p></div><div class="action"><h4>4. 해외 서비스 규정 살펴보기</h4><p>서비스하려는 나라의 AI 규제와 데이터 보호법을 출시 전에 한 번 확인하세요.</p></div></div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos">
+      <ul><li><strong>선택지가 늘어난다.</strong> 두 진영이 경쟁하면 개발자가 쓸 수 있는 모델과 클라우드의 종류와 가격 경쟁력이 높아질 수 있습니다.</li><li><strong>중소 국가가 목소리를 낸다.</strong> 여러 나라가 자국 AI 역량을 키우면서 특정 강대국에 덜 기대는 구조가 생길 수 있습니다.</li></ul>
+    </div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg">
+      <ul><li><strong>서비스가 국경에서 갈린다.</strong> 나라마다 허용되는 모델과 클라우드가 달라지면, 한 번 만든 서비스를 여러 나라에 내놓기가 어려워집니다.</li><li><strong>기술 규제와 제재가 강해진다.</strong> 진영 경쟁이 심해지면 수출 통제와 제재가 늘고, 모델 공급이 갑자기 끊길 수 있습니다.</li><li><strong>공급망 비용이 오른다.</strong> 중복 투자와 인증 절차가 늘면 개발 비용과 출시 기간이 함께 늘어납니다.</li></ul>
+    </div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion"><p>이번 보도는 AI가 기술의 문제에서 외교와 정책의 문제로 옮겨 가고 있다는 점을 보여줍니다. 모델 성능과 가격만 보고 고르던 방식에서, 원산지와 데이터 위치까지 함께 보는 방식으로 바뀌고 있습니다.</p><p>입문 개발자라면 <strong>모델과 클라우드를 교체할 수 있는 구조로 만들고, 고객 데이터의 위치를 처음부터 기록해 두는 것</strong>이 가장 실용적인 준비입니다. 법률이나 규제 관련 판단은 개인 상황에 맞춰 전문가와 상의하시기 바랍니다.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs"><li><a href="https://www.clickorlando.com/business/2026/10/25/as-the-us-and-china-form-ai-blocs-countries-are-increasingly-torn-between-them/">As the US and China form AI blocs, countries are increasingly torn between them</a> <span class="src">— AP, 2026.10.25</span></li></ol>
+  </article>
+
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list"><a href="2026-10-26-spacex-40b-gpu-debt-neocloud-warning.html"><span class="r">오늘의 뉴스 1위</span><span class="t">SpaceX, GPU 구매 자금 400억 달러 조달 마감: 뉴클라우드에 던진 경고</span></a><a href="2026-10-26-grok-gpt-forced-choice-midterms-bias.html"><span class="r">오늘의 뉴스 3위</span><span class="t">Grok과 GPT에 '한쪽 고르기'를 시켰더니: 중간선거 후보 추천의 편향</span></a></div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-labelledby="t1 d1">
+  <title id="t1">Gemini 4 Neon의 모델 라인업 위치</title>
+  <desc id="d1">Carbon, Neon, Hydrogen 세 모델을 난이도와 속도 축 위에 나란히 배치한 도식</desc>
+  <rect x="0" y="0" width="720" height="300" fill="none"/>
+  <text x="360" y="34" text-anchor="middle" font-size="18" font-weight="700" fill="#1b1b1f" font-family="sans-serif">구글 Gemini 4 라인업에서 Neon의 자리</text>
+  <text x="20" y="262" font-size="13" fill="#62626b" font-family="sans-serif">← 짧고 빠른 반복 작업</text>
+  <text x="700" y="262" text-anchor="end" font-size="13" fill="#62626b" font-family="sans-serif">길고 어려운 프로젝트 →</text>
+  <line x1="40" y1="232" x2="680" y2="232" stroke="#8a8a94" stroke-width="2" marker-end="url(#ar)"/>
+  <defs>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#8a8a94"/>
+    </marker>
+  </defs>
+
+  <rect x="30" y="70" width="190" height="130" rx="12" fill="#e8eefe" stroke="#2f5bea" stroke-width="2"/>
+  <text x="125" y="100" text-anchor="middle" font-size="16" font-weight="700" fill="#1b1b1f" font-family="sans-serif">Hydrogen</text>
+  <text x="125" y="126" text-anchor="middle" font-size="13" fill="#1b1b1f" font-family="sans-serif">빠른 일상 실행</text>
+  <text x="125" y="148" text-anchor="middle" font-size="13" fill="#1b1b1f" font-family="sans-serif">가벼운 반복 작업</text>
+
+  <rect x="265" y="50" width="190" height="150" rx="12" fill="#e5f4ec" stroke="#1f8a5b" stroke-width="3"/>
+  <text x="360" y="84" text-anchor="middle" font-size="16" font-weight="700" fill="#1b1b1f" font-family="sans-serif">Neon (2026.11.18)</text>
+  <text x="360" y="112" text-anchor="middle" font-size="13" fill="#1b1b1f" font-family="sans-serif">중간 난이도 작업을</text>
+  <text x="360" y="132" text-anchor="middle" font-size="13" fill="#1b1b1f" font-family="sans-serif">빠르고 싸게 처리</text>
+  <text x="360" y="162" text-anchor="middle" font-size="13" fill="#1b1b1f" font-family="sans-serif">컨텍스트 100만 토큰</text>
+
+  <rect x="500" y="70" width="190" height="130" rx="12" fill="#fbeae6" stroke="#c2412d" stroke-width="2"/>
+  <text x="595" y="100" text-anchor="middle" font-size="16" font-weight="700" fill="#1b1b1f" font-family="sans-serif">Carbon</text>
+  <text x="595" y="126" text-anchor="middle" font-size="13" fill="#1b1b1f" font-family="sans-serif">가장 어려운 장기 프로젝트</text>
+  <text x="595" y="148" text-anchor="middle" font-size="13" fill="#1b1b1f" font-family="sans-serif">최고 수준 추론</text>
+</svg>

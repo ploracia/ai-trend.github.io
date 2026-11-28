@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-labelledby="t1 d1">
+  <title id="t1">Kimi K3.1 Pro 공개 일정</title>
+  <desc id="d1">10월 23일 API 공개에서 11월 4일 가중치 공개 예정까지의 흐름</desc>
+  <rect x="0" y="0" width="720" height="300" rx="16" fill="#f7f6f2" stroke="#e3e1da"/>
+  <text x="32" y="44" font-size="18" font-weight="700" fill="#1b1b1f">Kimi K3.1 Pro: 공개 일정</text>
+  <line x1="90" y1="150" x2="630" y2="150" stroke="#62626b" stroke-width="3"/>
+  <circle cx="150" cy="150" r="16" fill="#2f5bea"/>
+  <circle cx="570" cy="150" r="16" fill="#ffffff" stroke="#2f5bea" stroke-width="4"/>
+  <text x="150" y="122" font-size="15" font-weight="700" text-anchor="middle" fill="#1b1b1f">10월 23일</text>
+  <text x="150" y="195" font-size="14" text-anchor="middle" fill="#1b1b1f">API로 먼저 공개</text>
+  <text x="150" y="216" font-size="13" text-anchor="middle" fill="#62626b">입력 100만 토큰당 2달러</text>
+  <text x="570" y="122" font-size="15" font-weight="700" text-anchor="middle" fill="#1b1b1f">11월 4일 (예정)</text>
+  <text x="570" y="195" font-size="14" text-anchor="middle" fill="#1b1b1f">가중치(모델 파일) 공개</text>
+  <text x="570" y="216" font-size="13" text-anchor="middle" fill="#62626b">공개 여부는 별도 확인 필요</text>
+  <text x="360" y="268" font-size="13" text-anchor="middle" fill="#62626b">출처 글을 바탕으로 다시 그림</text>
+</svg>

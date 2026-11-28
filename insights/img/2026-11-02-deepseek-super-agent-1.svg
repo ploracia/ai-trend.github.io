@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" role="img" aria-labelledby="t1 d1">
+  <title id="t1">기존 코딩 도구와 Super-Agent의 동작 차이</title>
+  <desc id="d1">기존 코딩 도구는 사람이 요청해야 응답하고, Super-Agent는 대화를 지켜보다가 먼저 해결책을 제안하는 구조도</desc>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#62626b"/>
+    </marker>
+  </defs>
+  <g font-family="Pretendard, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif">
+    <text x="30" y="34" font-size="15" font-weight="700" fill="#62626b">기존 코딩 도구</text>
+    <rect x="30" y="46" width="170" height="54" rx="12" fill="#f2f1ec" stroke="#62626b" stroke-width="1.2"/>
+    <text x="115" y="70" font-size="14" font-weight="700" text-anchor="middle" fill="#1b1b1f">개발자가 질문</text>
+    <text x="115" y="88" font-size="12" text-anchor="middle" fill="#1b1b1f">먼저 불러야 움직임</text>
+    <line x1="200" y1="73" x2="250" y2="73" stroke="#62626b" stroke-width="1.5" marker-end="url(#arr)"/>
+    <rect x="250" y="46" width="170" height="54" rx="12" fill="#f2f1ec" stroke="#62626b" stroke-width="1.2"/>
+    <text x="335" y="70" font-size="14" font-weight="700" text-anchor="middle" fill="#1b1b1f">코드 답변 반환</text>
+    <text x="335" y="88" font-size="12" text-anchor="middle" fill="#1b1b1f">요청한 사람에게만</text>
+
+    <text x="30" y="170" font-size="15" font-weight="700" fill="#2f5bea">Super-Agent (연구용 프로토타입)</text>
+    <rect x="30" y="182" width="170" height="54" rx="12" fill="#e8eefe" stroke="#2f5bea" stroke-width="1.5"/>
+    <text x="115" y="206" font-size="14" font-weight="700" text-anchor="middle" fill="#1b1b1f">대화를 계속 감시</text>
+    <text x="115" y="224" font-size="12" text-anchor="middle" fill="#1b1b1f">GitHub 등 연결된 곳</text>
+    <line x1="200" y1="209" x2="250" y2="209" stroke="#2f5bea" stroke-width="1.5" marker-end="url(#arr)"/>
+    <rect x="250" y="182" width="170" height="54" rx="12" fill="#e8eefe" stroke="#2f5bea" stroke-width="1.5"/>
+    <text x="335" y="206" font-size="14" font-weight="700" text-anchor="middle" fill="#1b1b1f">문제 판단·작업 시작</text>
+    <text x="335" y="224" font-size="12" text-anchor="middle" fill="#1b1b1f">사람 요청 없이도 제안</text>
+    <line x1="420" y1="209" x2="470" y2="209" stroke="#2f5bea" stroke-width="1.5" marker-end="url(#arr)"/>
+    <rect x="470" y="182" width="260" height="54" rx="12" fill="#2f5bea"/>
+    <text x="600" y="206" font-size="14" font-weight="700" text-anchor="middle" fill="#ffffff">해결책을 대화에 답변</text>
+    <text x="600" y="224" font-size="12" text-anchor="middle" fill="#ffffff">예: 풀 리퀘스트 제안</text>
+
+    <rect x="30" y="268" width="700" height="66" rx="12" fill="none" stroke="#62626b" stroke-width="1" stroke-dasharray="4 4"/>
+    <text x="50" y="294" font-size="13" fill="#1b1b1f">핵심 차이: 기존 도구는 "시키면 한다", Super-Agent는 "지켜보다가 제안한다".</text>
+    <text x="50" y="316" font-size="12.5" fill="#62626b">위험 신호: 자동 제안이 잘못되면 팀 대화를 어지럽힐 수 있어 사람의 확인이 필요합니다.</text>
+  </g>
+</svg>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LiteLLM 1.107.0 악성 배포: 설치만 해도 API 키·클라우드 자격 증명이 빠져나갔다 | AI 비밀 레시피</title>
+  <meta name="description" content="LiteLLM 1.107.0 공급망 공격의 경위와 악성 코드 동작, 개발자가 지금 해야 할 대응을 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>LiteLLM 1.107.0 악성 배포: 설치만 해도 API 키·클라우드 자격 증명이 빠져나갔다</h1>
+    <div class="byline"><span><time datetime="2026-10-22T08:23:04+09:00">2026.10.22 08:23 KST</time></span><span>읽는 시간 약 8분</span><span>#보안 #공급망보안 #오픈소스</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>10월 21일 여러 AI 모델을 하나의 API로 묶어 주는 인기 파이썬 라이브러리 LiteLLM의 1.107.0 버전이 PyPI와 Docker 이미지로 악성 배포돼, 설치만 해도 자격 증명 탈취 코드와 원격 실행 백도어가 심어졌습니다.</li><li>공격자는 엔지니어 GitHub 계정의 탈취된 토큰으로 정상 릴리스 절차를 거쳐 배포했고, AI 코딩 도구 설정과 LLM 제공사 API 키까지 노렸다는 점에서 AI 개발 환경을 직접 겨냥한 공급망 공격입니다.</li><li>개발자는 지금 바로 lockfile에서 1.107.0을 찾아보고, 설치된 적이 있다면 그 환경에서 쓸 수 있던 모든 키를 교체하며, 버전 고정과 해시 검증을 습관으로 만들어야 합니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">LiteLLM 1.107.0 PyPI·Docker 악성 배포 발견: 자격 증명 탈취 + 매시간 원격 코드 실행</span><span>배포 2026.10.21 11:39 UTC(20:39 KST) · 보안 업체 분석 2026.10.21</span><span><a href="https://thehackernews.com/2026/10/litellm-compromised-in-supply-chain.html">The Hacker News</a> · <a href="https://www.stepsecurity.io/blog/litellm-1-107-0-compromised-pypi-backdoored-wheels-credential-stealer">StepSecurity</a></span></div>
+
+    <p class="lead">LLM 앱을 만들다 보면 OpenAI, Anthropic, Google 모델을 한 코드로 부르기 위해 LiteLLM을 쓰는 경우가 많습니다. 바로 그 라이브러리의 새 버전에 악성 코드가 들어갔습니다. <code>pip install</code> 한 번으로 내 컴퓨터의 클라우드 키, SSH 키, AI 도구 설정이 공격자 서버로 보내질 수 있었습니다. AI 개발자라면 오늘 꼭 확인해야 할 뉴스입니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">이 이슈는 무엇인가?</a></li>
+        <li><a href="#s2">누가 움직이나?</a></li>
+        <li><a href="#s3">무슨 일이 있었나?</a></li>
+        <li><a href="#s4">실무자가 해볼 것</a></li>
+        <li><a href="#s5">긍정적인 방향으로 간다면?</a></li>
+        <li><a href="#s6">부정적인 방향으로 간다면?</a></li>
+        <li><a href="#s7">입문 개발자에게 남는 것은?</a></li>
+        <li><a href="#s8">참고 자료</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>LiteLLM 1.107.0 소프트웨어 공급망 공격: AI 개발 환경의 자격 증명을 노린 악성 패키지</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>공급망 공격</strong>은 내가 직접 해킹당하는 대신, 내가 믿고 내려받는 라이브러리나 도구에 악성 코드를 심어 퍼뜨리는 공격입니다. <strong>PyPI</strong>는 <code>pip install</code>로 받는 파이썬 패키지 저장소입니다. <strong>wheel</strong>은 미리 빌드된 파이썬 설치 파일 형식입니다. <strong>.pth 파일</strong>은 파이썬이 시작될 때 자동으로 읽는 설정 파일로, 악용하면 import하지 않아도 코드가 실행됩니다. <strong>자격 증명(credential)</strong>은 API 키, 비밀번호, 토큰처럼 시스템 접근 권한을 증명하는 정보입니다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl">
+    <table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>피해 프로젝트</td><td><strong>LiteLLM(BerriAI)</strong></td><td>여러 회사의 LLM을 같은 형식으로 호출하게 해 주는 오픈소스 라이브러리·프록시. 관련 토큰을 폐기하고 조사 중</td></tr>
+        <tr><td>배포 경로</td><td><strong>PyPI · Docker Hub · GitHub Container Registry</strong></td><td>악성 1.107.0 wheel과 이미지가 올라간 곳. PyPI 패키지는 격리, 악성 이미지는 삭제</td></tr>
+        <tr><td>탐지·분석</td><td><strong>Chainguard · StepSecurity 등 보안 업체</strong></td><td>악성 파일 분석, 침해 지표(IOC) 공개, 대응 방법 안내</td></tr>
+        <tr><td>공격자</td><td><strong>미상</strong></td><td>탈취된 GitHub CLI OAuth 토큰으로 엔지니어 3명의 계정을 이용해 릴리스·승인(The Hacker News 보도)</td></tr>
+        <tr><td>피해 대상</td><td><strong>LLM 앱 개발자·기업 CI/CD</strong></td><td>배포 시간대에 1.107.0을 설치한 개발 PC, 서버, CI 러너</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+
+    <h3>오늘 발표된 내용</h3>
+    <p>Chainguard 분석에 따르면 LiteLLM 1.107.0은 10월 21일 11시 39분(UTC, 한국 시간 20시 39분) PyPI에 올라왔고, 7개 wheel 모두에 악성 코드가 들어 있었습니다. Docker Hub의 <code>latest</code> 등 여러 태그와 GitHub 컨테이너 이미지도 같은 버전으로 오염됐습니다. GitHub 소스 코드와 태그 자체는 깨끗했기 때문에, 코드를 보고는 알기 어려웠습니다. StepSecurity에 따르면 해당 버전은 같은 날 13시(UTC) 무렵 PyPI에서 내려갔습니다.</p>
+    <p>악성 wheel은 site-packages에 <code>cook.pth</code>, <code>cook.py</code>, <code>sitecustomize.py</code> 세 파일을 넣습니다. 이 파일들은 <strong>LiteLLM을 import하지 않아도 파이썬이 시작될 때마다</strong> 실행됩니다. 첫 번째 동작은 정보 탈취로, SSH·GPG·TLS 개인 키, 클라우드·쿠버네티스 자격 증명, CI/CD 비밀값, 브라우저 저장 정보, 환경 변수, 20개가 넘는 AI 코딩 도구의 설정, 그리고 LiteLLM 프록시 데이터베이스에 저장된 LLM 제공사 API 키까지 모아 암호화한 뒤 진짜와 비슷한 <code>litellm[.]dev</code> 도메인으로 보냈습니다. 두 번째는 리눅스·macOS에서 매시간 GitHub의 특정 파일을 확인해 공격자가 지정한 코드를 내려받아 실행하는 백도어입니다(분석 시점에는 아직 비어 있었다고 함).</p>
+    <p>The Hacker News에 따르면 LiteLLM 보안 책임자는 엔지니어 3명의 GitHub 계정이 탈취된 GitHub CLI 토큰으로 쓰였고, 한 계정이 릴리스를 만들고 다른 계정이 승인했다고 밝혔습니다. 회사는 관련 토큰을 모두 폐기하고 레지스트리의 '신뢰할 수 있는 게시(trusted publishing)' 연결도 임시로 끊었습니다. 안전한 최신 버전은 <strong>1.106.2</strong>이며, 1.107.0 릴리스 후보(rc1, rc2)는 깨끗한 것으로 분석됐습니다.</p>
+
+    <h3>배경: 짧은 타임라인</h3>
+    <ul class="timeline">
+      <li><time>2026.03</time>Chainguard에 따르면 TeamPCP 그룹이 탈취한 PyPI 토큰으로 LiteLLM 1.82.7·1.82.8을 악성 배포한 적이 있습니다. 이번 공격과의 연관성은 확인되지 않았습니다.</li>
+      <li><time>2026.10.13</time>StepSecurity 타임라인에 따르면 유출 도메인 <code>litellm.dev</code>가 등록됩니다.</li>
+      <li><time>2026.10.21 20:39 KST</time>악성 1.107.0이 PyPI에 게시되고, Chainguard 스캐너가 16분 만에 탐지합니다.</li>
+      <li><time>2026.10.21 22:00 KST 무렵</time>PyPI에서 1.107.0이 내려가고, 보안 업체들이 분석과 대응 방법을 공개합니다.</li>
+    </ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>"유명한 라이브러리의 최신 버전"도 믿을 수 없을 때가 있습니다.</strong> 버전을 고정하고, 새 버전은 바로 받지 말고, 사고가 나면 키부터 바꾸세요.
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>실무자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. 지금 바로 1.107.0 설치 흔적 찾기</h4><p><code>requirements.txt</code>, <code>poetry.lock</code>, <code>uv.lock</code> 등에서 <code>litellm</code> 버전을 확인하고, site-packages에 <code>cook.pth</code>나 <code>sitecustomize.py</code>가 있는지 셸 명령으로 찾아보세요. 감염 의심 환경에서는 파이썬을 실행하지 않는 것이 좋습니다.</p></div>
+      <div class="action"><h4>2. 설치됐다면 키를 전부 교체하기</h4><p>그 컴퓨터나 CI에서 접근할 수 있던 클라우드 키, SSH 키, GitHub 토큰, OpenAI·Anthropic 등 LLM API 키를 깨끗한 환경에서 새로 발급하세요. LiteLLM 프록시를 썼다면 마스터 키와 저장된 제공사 키도 바꿔야 합니다.</p></div>
+      <div class="action"><h4>3. <code>litellm==1.106.2</code>로 고정하기</h4><p><code>litellm&gt;=</code>처럼 열어 둔 버전 조건은 배포 시간대에 악성 버전을 받았을 수 있습니다. 정확한 버전으로 고정하세요.</p></div>
+      <div class="action"><h4>4. 해시 검증과 lockfile 습관 들이기</h4><p><code>pip install --require-hashes</code>나 uv·poetry의 lockfile을 쓰면 같은 버전이라도 파일이 바뀌었을 때 설치가 막힙니다.</p></div>
+      <div class="action"><h4>5. Docker 이미지는 태그 대신 digest로</h4><p><code>latest</code> 태그는 언제든 다른 이미지를 가리킬 수 있습니다. 운영 환경에서는 <code>image@sha256:...</code> 형식으로 고정하세요.</p></div>
+      <div class="action"><h4>6. 새 버전 '숙성 기간' 두기</h4><p>공개된 지 며칠 안 된 패키지는 자동 업데이트하지 않도록 의존성 봇이나 사설 저장소 설정을 바꾸세요. 이번 악성 버전은 약 1~2시간 만에 내려갔습니다.</p></div>
+      <div class="action"><h4>7. 개발 PC와 비밀 정보를 분리하기</h4><p>API 키를 셸 환경 변수나 평문 파일에 두지 말고 비밀 관리 도구를 쓰세요. AI 코딩 도구 설정 파일에 저장된 토큰도 탈취 대상이었습니다.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos">
+      <ul>
+        <li><strong>빠른 탐지 체계가 효과를 증명한다.</strong> 공개 16분 만에 스캐너가 잡아낸 사례가 알려지면서 패키지 자동 검사가 더 널리 쓰일 수 있습니다.</li>
+        <li><strong>배포 출처 증명이 표준이 된다.</strong> 이번 wheel에는 출처 증명(provenance)이 없었다는 지적이 나와, 서명·증명 없는 릴리스를 막는 관행이 퍼질 수 있습니다.</li>
+        <li><strong>AI 개발자의 보안 감각이 높아진다.</strong> 버전 고정, 해시 검증, 키 분리 같은 기본 습관이 AI 프로젝트에도 자리 잡을 계기가 됩니다.</li>
+        <li><strong>오픈소스 관리 권한이 정비된다.</strong> 릴리스 권한을 가진 계정과 토큰 관리가 엄격해지며 유사 사고가 줄어들 수 있습니다.</li>
+      </ul>
+    </div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg">
+      <ul>
+        <li><strong>AI 도구가 주요 공격 표적이 된다.</strong> LLM API 키와 AI 코딩 도구 설정이 돈이 되는 정보가 되면서 비슷한 공격이 계속될 수 있습니다.</li>
+        <li><strong>2차 피해가 뒤늦게 드러난다.</strong> 이미 빠져나간 키로 클라우드 요금 폭탄이나 추가 침입이 몇 주 뒤에 발생할 수 있습니다.</li>
+        <li><strong>오픈소스 신뢰가 흔들린다.</strong> 같은 프로젝트가 반년 사이 두 번 공격받으면서 기업이 오픈소스 도입을 꺼리게 될 수 있습니다.</li>
+        <li><strong>유지보수자 부담이 더 커진다.</strong> 보안 요구가 늘어나지만 이를 감당할 인력과 자금이 부족한 프로젝트가 많습니다.</li>
+      </ul>
+    </div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion">
+      <p>이번 사건은 AI 앱의 보안이 프롬프트나 모델만의 문제가 아니라는 점을 보여 줍니다. 공격자는 모델이 아니라 개발자가 매일 쓰는 <code>pip install</code>을 노렸고, 그 결과 LLM API 키와 클라우드 권한을 한꺼번에 가져가려 했습니다.</p>
+      <p>입문 개발자에게 가장 중요한 교훈은 세 가지입니다. <strong>버전을 고정하고, 키는 코드와 분리하고, 의심되면 바로 교체한다.</strong> 이 기본기만 지켜도 이런 사고가 일어났을 때 피해를 크게 줄일 수 있습니다.</p>
+    </div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://thehackernews.com/2026/10/litellm-compromised-in-supply-chain.html">LiteLLM Compromised in Supply Chain Attack Delivering Credential Stealer and Backdoor</a> <span class="src">— The Hacker News, 2026.10.21</span></li>
+      <li><a href="https://www.chainguard.dev/unchained/litellm-attacked-again-malicious-1-107-0-wheels-on-pypi-and-docker-hub-october-2026">LiteLLM attacked again: Malicious 1.107.0 wheels on PyPI and Docker Hub</a> <span class="src">— Chainguard, 2026.10.21</span></li>
+      <li><a href="https://www.stepsecurity.io/blog/litellm-1-107-0-compromised-pypi-backdoored-wheels-credential-stealer">litellm 1.107.0 Compromised on PyPI: Backdoored Wheels Drop a Credential Stealer and an Hourly Remote Code Loader</a> <span class="src">— StepSecurity, 2026.10.21</span></li>
+    </ol>
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list">
+      <a href="2026-10-22-meta-q3-ai-capex-class-c.html"><span class="r">오늘의 뉴스 1위</span><span class="t">Meta 3분기 실적: 매출 646억 달러, AI 설비투자에 현금흐름 적자…의결권 없는 C주식 신설</span></a>
+      <a href="2026-10-22-anthropic-claude-duet.html"><span class="r">오늘의 뉴스 2위</span><span class="t">Anthropic, 먼저 말 거는 AI 에이전트 앱 'Claude Duet' 공개</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

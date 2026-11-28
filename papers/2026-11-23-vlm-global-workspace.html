@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이미지와 글을 함께 보는 AI의 내부 개념 탐색 | AI 비밀 레시피</title>
+  <meta name="description" content="이미지와 글을 함께 처리하는 AI(VLM)가 내부에서 어떤 개념을 골라 쓰는지, 인지과학의 전역 작업공간 이론으로 들여다본 arXiv 논문 소개." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .paper-title { font-size: 15px; color: var(--muted); margin: 0 0 14px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 48px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 26px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .opinion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .opinion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#papers"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#papers">← 논문 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>이미지와 글을 함께 보는 AI는 속에서 무엇을 떠올릴까</h1>
+    <p class="paper-title">Probing the "Conscious" Mind: Selective Access and Global Workspace in Vision-Language Models</p>
+    <div class="byline"><span><time datetime="2026-11-23T12:02:24+09:00">2026.11.23 12:02 KST</time></span><span>원문 arXiv:2611.26590</span></div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol>
+        <li>사진과 글을 함께 이해하는 AI(VLM)는 답만 보여줄 뿐, 속에서 어떤 개념을 떠올렸는지 알기 어렵다.</li>
+        <li>저자들은 AI의 중간 계산을 사람이 읽을 수 있는 공통 의미 공간에 옮겨 보는 도구(MC-Lens)를 만들어 개념의 접근성을 비교했다.</li>
+        <li>초록 기준으로 모델은 필요한 개념만 골라 쓰고, 그 선택 능력은 학습 후반에 자리 잡는다고 보고했다. AI 내부를 들여다보는 연구의 좋은 입문 사례다.</li>
+      </ol>
+    </div>
+
+    <h2 id="s1"><span class="no">01</span>본문 요약</h2>
+    <p>이 글은 arXiv 초록 페이지를 기준으로 정리했다. 본문의 세부 실험 설정은 직접 확인하지 않았다.</p>
+
+    <h3>문제 정의</h3>
+    <p>요즘 AI는 사진을 보고 질문에 답하고, 글을 읽고 그림을 그린다. 이런 모델을 VLM(Vision-Language Model, 시각-언어 모델)이라고 부른다. 그런데 답이 맞았다고 해서 모델이 그 답을 어떤 근거로 만들었는지는 알 수 없다. 특히 사진 속 대상과 글의 단어를 어떻게 연결해 쓰는지는 겉으로 드러나지 않는다.</p>
+    <p>저자들은 인지과학의 <strong>전역 작업공간 이론(Global Workspace Theory)</strong>에 주목했다. 이 이론은 사람의 뇌에서 여러 처리 과정이 동시에 돌아가고, 그중 일부 정보만 골라져 공유 작업공간에 올라가 다른 처리에 쓰인다고 설명한다. 저자들은 같은 틀로 VLM 내부를 살펴볼 수 있는지 물었다.</p>
+
+    <h3>방법</h3>
+    <p>핵심 도구는 <strong>MC-Lens(다중모달 야코비안 렌즈)</strong>다. 모델 중간 단계의 정보를 디코더가 쓰는 출력 단어 목록으로 정의된 공통 의미 공간에 옮긴다. 이렇게 하면 사진 쪽 정보와 글 쪽 정보를 같은 기준으로 비교할 수 있다. 저자들은 이 렌즈로 특정 개념을 중간에서 바꾸는 개입 실험(intervention)도 수행한다.</p>
+    <p>개념을 읽어 내는 기준점도 확장했다. 기존에는 개념 하나를 대표하는 단어 하나를 보았는데, 이를 여러 토큰의 묶음으로 넓혀 반사실 실험(어떤 정보를 바꿨을 때 결과가 어떻게 달라지는지 보는 실험)을 가능하게 했다.</p>
+
+    <h3>결과</h3>
+    <p>초록은 정확도 같은 정량 수치를 제시하지 않는다. 대신 다음 네 가지를 보고한다.</p>
+    <ul>
+      <li>개념 정보는 중간 단계에서 읽을 수 있고, 과제에 따라 선택적으로 꺼내 쓰인다.</li>
+      <li>반사실 실험에서, 꺼내 쓴 개념 정보가 이후 계산과 추론에 실제로 영향을 준다.</li>
+      <li>학습 중 이미지와 글의 개념이 얼마나 잘 맞는지 재는 두 가지 지표(J-space 지표)를 제안했다. 이 지표는 단순 벡터 유사도보다 정렬 과정을 더 잘 보여준다고 한다. 선택적 접근 능력은 개념이 내부에 있는 것보다 늦게 나타난다.</li>
+      <li>여러 VLM 계열과 크기에서 비슷한 패턴이 관찰되어, 내부 구성은 달라도 기능의 흐름은 비슷할 수 있다고 한다.</li>
+    </ul>
+
+    <h3>한계</h3>
+    <ul>
+      <li>이 글은 초록을 바탕으로 정리했다. 실험에 쓴 모델 목록, 데이터, 재현 조건은 원문에서 확인해야 한다.</li>
+      <li>초록에 정량 벤치마크가 없어 어느 정도의 차이인지 판단하기 어렵다.</li>
+      <li>제목의 "Conscious(의식)"는 전역 작업공간 이론이라는 틀을 가져온 표현이다. 논문이 AI에게 의식이 있다는 것을 보였다는 뜻이 아니다.</li>
+      <li>결과는 연구에 쓰인 모델 범위에서 확인된 것이므로, 다른 모델이나 실제 서비스 환경으로 그대로 넓히기는 이르다.</li>
+    </ul>
+
+    <h2 id="s2"><span class="no">02</span>최종 의견</h2>
+    <div class="opinion">
+      <p>입문 개발자에게 이 논문의 핵심은 "답이 맞은 것"과 "모델이 그 근거를 안다는 것"은 다르다는 점이다. 중간 상태를 읽는 MC-Lens 같은 도구가 발전하면, 나중에 모델이 왜 틀렸는지 찾는 디버깅이나 신뢰성 검토에 쓰일 가능성이 있다. 지금 당장 실무에 넣을 기법이라기보다, 모델 내부를 해석하는 연구가 어떤 질문을 던지는지 이해하는 참고 자료로 보기 좋다.</p>
+      <p>다만 전역 작업공간 이론은 사람의 마음을 설명하는 이론이고, 여기서는 그 틀을 빌려 쓴 비유에 가깝다. 이 논문만으로 AI가 의식을 가졌다고 받아들이는 것은 과장이다. 수치 결과도 초록에서는 확인이 어려우니, 관심이 있다면 본문의 실험 설정을 직접 읽어 보는 것을 권한다.</p>
+    </div>
+
+    <h2 id="s3"><span class="no">03</span>참고 사이트</h2>
+    <ol class="refs">
+      <li><a href="https://arxiv.org/abs/2611.26590">Probing the "Conscious" Mind: Selective Access and Global Workspace in Vision-Language Models (arXiv:2611.26590)</a> <span class="src">arXiv · 2026.11.19</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#papers">← 전체 논문 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

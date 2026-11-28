@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>텍사스 법무장관, OpenAI와 샘 올트먼 제소: ChatGPT 안전 고지와 미성년자 피해 쟁점 | AI 비밀 레시피</title>
+  <meta name="description" content="텍사스 법무장관이 OpenAI와 샘 올트먼 CEO를 상대로 낸 소송의 주장과 요구 사항, 개발자가 챙겨야 할 안전 설계 포인트를 정리합니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+    <article>
+    <h1>텍사스 법무장관, OpenAI와 샘 올트먼 제소: ChatGPT 안전 고지와 미성년자 피해 쟁점</h1>
+    <div class="byline"><span><time datetime="2026-10-25T08:20:00+09:00">2026.10.25 08:20 KST</time></span><span>읽는 시간 약 6분</span><span>#OpenAI #규제 #AI안전</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>텍사스 법무장관 켄 팍스턴이 2026년 10월 23일 OpenAI와 샘 올트먼을 콜린 카운티 지방법원에 제소했다고 여러 매체가 보도했습니다.</li><li>소송은 ChatGPT가 안전성을 잘못 알려 소비자를 속였고 미성년자에게 피해를 줬다고 주장합니다. 미성년자 이용 금지 명령, 신규 모델 출시 전 법원 승인, 이익 환수가 요구 사항으로 전해졌습니다.</li><li>개발자에게는 청소년이 접근할 수 있는 AI 기능에 연령 확인, 위험 고지, 안전 응답 테스트를 처음부터 넣어야 한다는 신호입니다. 주장 단계의 사건이라 판결 결과도 함께 지켜볼 필요가 있습니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">텍사스 법무장관, OpenAI·샘 올트먼 제소(ChatGPT 안전 고지와 미성년자 피해 주장)</span><span>보도 2026.10.23 (미 현지)</span><span><a href="https://www.texastribune.org/2026/10/23/ken-paxton-chatgpt-openai-lawsuit-texas-attorney-general/">Texas Tribune</a> · <a href="https://thehill.com/policy/technology/6169375-paxton-sues-openai-chatgpt/">The Hill</a></span></div>
+
+    <p class="lead">미국 텍사스 주 법무장관이 OpenAI와 샘 올트먼 CEO를 상대로 소송을 냈습니다. 핵심은 모델의 성능이 아니라 ChatGPT가 안전성을 어떻게 알렸는지, 그리고 미성년자 보호가 충분했는지입니다. AI 기업의 '안전 고지'가 법정에서 직접 다뤄지는 사례라서 개발자에게도 남의 일이 아닙니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">실무자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>주 정부가 AI 기업의 안전 고지와 미성년자 보호 책임을 묻는 소송</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>기만적 거래 관행(deceptive trade practices)</strong>은 소비자에게 사실과 다른 내용을 알려 손해를 주는 행위를 막는 법적 개념입니다. <strong>차익 환수(disgorgement)</strong>는 부당하게 얻은 이익을 돌려받게 하는 구제 수단입니다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl">
+    <table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>원고</td><td><strong>텍사스 법무장관 켄 팍스턴</strong></td><td>주 정부를 대표해 소비자 보호 책임을 묻는 제소</td></tr><tr><td>피고</td><td><strong>OpenAI, 샘 올트먼 CEO</strong></td><td>ChatGPT의 안전성 고지와 서비스 운영 책임 대상</td></tr><tr><td>법원</td><td><strong>콜린 카운티 지방법원(텍사스)</strong></td><td>소송이 접수된 1심 법원</td></tr><tr><td>함께 움직인 흐름</td><td><strong>다른 주 정부들</strong></td><td>10월 중순 8개 주가 OpenAI를 상대로 낸 소송 등 비슷한 제소가 이어지는 중</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+
+    <h3>오늘 발표된 내용</h3>
+    <p>보도에 따르면 텍사스 법무장관은 OpenAI와 샘 올트먼을 상대로 소송을 냈습니다. 소장은 ChatGPT가 안전성에 대해 소비자를 잘못 알렸고, 그 결과 미성년자가 피해를 입었다고 주장합니다. 일부 매체는 자살과 대량 총격 사건에 ChatGPT가 영향을 미쳤다는 주장도 소장에 담겼다고 전했습니다.</p>
+    <p>요구 사항은 미성년자의 ChatGPT 이용을 막는 금지 명령, 신규 모델을 내놓기 전 법원 승인, 부당 이익 환수입니다. 이 내용은 언론 보도를 기준으로 정리한 것이며, 법원이 아직 판단하지 않은 주장입니다.</p>
+
+    <h3>흐름</h3>
+    <ul class="timeline"><li><time>2026.10.15</time>미국 8개 주가 OpenAI를 상대로 ChatGPT의 청소년 피해를 주장하며 소송을 냈다고 보도</li><li><time>2026.10.23</time>텍사스 법무장관이 OpenAI와 샘 올트먼을 콜린 카운티 지방법원에 제소</li><li><time>2026.10.24</time>국내외 매체가 제소 내용을 확대 보도</li></ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>소송은 주장 단계입니다. 법원이 어떤 판단을 내리는지에 따라 AI 기업의 안전 고지 의무가 더 명확해질 수 있습니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>실무자가 해볼 것</h2>
+    <div class="actions"><div class="action"><h4>1. 우리 서비스의 이용 연령 정하기</h4><p>청소년이 접근할 수 있는 기능인지 먼저 정하고, 가능하면 연령 확인 흐름을 기획 단계에서 넣으세요.</p></div><div class="action"><h4>2. 안전 고지를 화면 안에 두기</h4><p>AI 답변은 틀릴 수 있다는 안내와 위기 상황에서 도움을 받을 수 있는 연결 경로를 사용자 흐름 안에 배치하세요.</p></div><div class="action"><h4>3. 자해·폭력 질의에 대한 테스트 만들기</h4><p>위험한 질문을 테스트 케이스로 모아 두고, 모델을 바꿀 때마다 안전 응답이 유지되는지 자동으로 확인하세요.</p></div><div class="action"><h4>4. 모델 제공사 정책 변화 추적하기</h4><p>제공사의 이용 정책과 미성년자 관련 제한이 바뀌면 서비스가 영향을 받을 수 있으니 변경 알림을 구독해 두세요.</p></div></div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos">
+      <ul><li><strong>안전 기준이 명확해진다.</strong> 법원과 주 정부가 요구하는 수준이 드러나면 업계가 같은 기준으로 안전 기능을 설계하게 됩니다.</li><li><strong>기본 보호 기능이 자리 잡는다.</strong> 연령 확인과 위험 고지가 기본값이 되면 청소년 사용자가 더 안전하게 서비스를 쓸 수 있습니다.</li></ul>
+    </div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg">
+      <ul><li><strong>소규모 팀의 부담이 커진다.</strong> 소송과 규제 대응 비용이 늘면 작은 팀은 AI 기능을 접어야 할 수도 있습니다.</li><li><strong>주마다 규칙이 달라진다.</strong> 주별로 다른 요구가 생기면 배포와 운영이 복잡해집니다.</li><li><strong>과잉 차단이 생길 수 있다.</strong> 위험을 줄이려고 정상적인 질문까지 막으면 일반 사용자의 경험이 나빠집니다.</li></ul>
+    </div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion"><p>이번 소송은 AI가 무엇을 말하느냐만큼 어떻게 안내하느냐가 책임 문제가 된다는 점을 보여줍니다. 기능을 다 만든 뒤에 안전 장치를 덧붙이는 방식은 점점 위험해지고 있습니다.</p><p>입문 개발자라면 AI 기능을 만들 때 <strong>연령 대응, 안전 고지, 위험 질문 테스트</strong>를 처음부터 설계에 넣으세요. 법적 판단이 필요한 부분은 반드시 법률 전문가와 확인하시기 바랍니다.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs"><li><a href="https://www.texastribune.org/2026/10/23/ken-paxton-chatgpt-openai-lawsuit-texas-attorney-general/">Texas Attorney General Ken Paxton sues ChatGPT-maker OpenAI</a> <span class="src">— Texas Tribune, 2026.10.23</span></li><li><a href="https://thehill.com/policy/technology/6169375-paxton-sues-openai-chatgpt/">Ken Paxton sues OpenAI, Sam Altman over alleged failures to warn consumers of ChatGPT risks</a> <span class="src">— The Hill</span></li><li><a href="https://www.wbap.com/2026/10/24/paxton-sues-openai-and-sam-altman-over-suicide-claims-seeks-chatgpt-ban-for-texas-kids/">Paxton Sues OpenAI And Sam Altman Over Suicide Claims, Seeks ChatGPT Ban For Texas Kids</a> <span class="src">— WBAP, 2026.10.24</span></li></ol>
+  </article>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list">
+      <a href="2026-10-25-typesafe-jev-output-leak.html"><span class="r">오늘의 뉴스 2위</span><span class="t">TypeSafe AI 의사결정 모델 'Jev', 고객 출력 전량 유출 사고 공개</span></a>
+      <a href="2026-10-25-nvidia-neocloud-investment-stress-test.html"><span class="r">오늘의 뉴스 3위</span><span class="t">엔비디아 AI 클라우드 투자 1,715억 달러 시험대: 뉴클라우드 주가 급락</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

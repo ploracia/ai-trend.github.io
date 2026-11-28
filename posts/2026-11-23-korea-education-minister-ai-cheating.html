@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>교육부 장관 사임… AI 부정행위 사태로 대입 시험 논란 확산 | AI 비밀 레시피</title>
+  <meta name="description" content="가디언 보도에 따르면 한국 교육부 장관이 11월 22일 대학 입시 시험을 둘러싼 AI 활용 부정행위 사태 뒤 사임했습니다. 개발자가 알아 둘 교육 현장의 AI 쟁점을 정리했습니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+<article>
+    <h1>교육부 장관 사임… AI 부정행위 사태로 대입 시험 논란 확산</h1>
+    <div class="byline"><span><time datetime="2026-11-23T08:22:00+09:00">2026.11.23 08:22 KST</time></span><span>읽는 시간 약 4분</span><span>#교육 #규제</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>가디언 보도에 따르면 한국 교육부 장관이 11월 22일 사임했고, 배경은 대학 입시 시험을 둘러싼 AI 활용 부정행위 사태입니다.</li><li>정책 결정자가 AI 부정행위의 책임을 지는 사건이라, 시험과 평가에서 AI를 어떻게 막고 허용할지에 대한 논의가 빨라질 전망입니다.</li><li>개발자에게는 교육·평가 서비스를 만들 때 AI 탐지 기능의 한계와 공정성 문제를 미리 설계해야 한다는 신호로 읽힙니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">한국 교육부 장관 사임, 대학 입시 AI 부정행위 사태 책임</span><span>보도 2026.11.22 (일, 가디언 기준)</span><span><a href="https://www.theguardian.com/world/2026/nov/22/south-korea-education-minister-resigns-after-ai-cheating-scandal-engulfs-university-exams">The Guardian</a></span></div>
+    <p class="lead">AI는 학습과 평가의 방식을 바꾸고 있고, 그 변화의 한가운데에는 사람과 제도가 있습니다. 이번 사건은 기술 도구가 교육 현장에서 어떤 신뢰 문제를 만드는지 보여 줍니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">개발자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+
+    <p><strong>대학 입시 관련 시험에서 AI가 부정행위에 쓰인 것으로 드러나, 그 책임을 지고 한국 교육부 장관이 물러난 사건입니다.</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>AI 부정행위</strong>는 시험이나 과제에서 생성형 AI를 몰래 사용해 답을 얻는 행위를 말합니다. 이를 가리기 위해 쓰는 <strong>AI 탐지 도구</strong>는 실제 사람의 글과 AI의 글을 완벽히 구분하지 못해, 잘못 판정하는 경우가 자주 보고됩니다.
+    </div>
+    <p>가디언은 이 사건을 장관 사임으로 이어진 AI 부정행위 사태로 전했습니다. 교육 현장에서 AI를 어떻게 허용하고 막을지에 대한 질문이 정책 차원의 문제로 올라온 상황으로 볼 수 있습니다.</p>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>정부</td><td><strong>교육부 장관</strong></td><td>11월 22일 사임. 입시 시험 관리 책임을 졌다고 보도됨</td></tr>
+        <tr><td>교육 기관</td><td><strong>대학과 시험 운영 기관</strong></td><td>시험 공정성 확보와 부정행위 점검을 맡은 쪽</td></tr>
+        <tr><td>수험생</td><td><strong>입시 응시자</strong></td><td>제도 변화와 채점·감독 방식 변경의 직접 영향을 받는 쪽</td></tr>
+        <tr><td>개발자</td><td><strong>교육 서비스·탐지 도구 개발자</strong></td><td>AI 탐지와 부정행위 방지 기능을 만들 때 오탐과 공정성 기준을 함께 설계해야 하는 쪽</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+
+    <h3>보도된 내용</h3>
+    <p>가디언 기사(2026년 11월 22일자)에 따르면 한국 교육부 장관은 일요일에 사임했습니다. 사임의 배경은 대학 입시 시험과 관련된 AI 활용 부정행위 사태였습니다. 요약 보도에서는 사임 이유가 이 사태와 연결된 것으로 소개됐습니다.</p>
+    <p>이 글에서는 확인 가능한 범위만 다룹니다. 어떤 시험에서 어떤 도구가 쓰였는지, 수사나 감사가 어디까지 진행됐는지에 대한 세부 경위는 열람한 요약 보도에 충분히 나오지 않아 여기서는 다루지 않습니다. 이후 발표되는 공식 조사 결과를 따로 확인해 보는 것이 좋습니다.</p>
+
+    <h3>진행 순서</h3>
+    <ul class="timeline">
+      <li><time>입시 시험 시기</time>AI를 활용한 부정행위 의혹이 대학 입시 시험을 둘러싸고 제기됨</li>
+      <li><time>2026년 11월 22일 (일)</time>교육부 장관이 사임. 가디언이 이를 보도</li>
+    </ul>
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>AI 탐지 기능은 편리해 보여도 오판의 비용이 크므로, 교육 서비스에서는 판정 결과에 대한 이의 제기 경로를 반드시 함께 설계해야 합니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>개발자가 해볼 것</h2>
+
+    <div class="actions">
+      <div class="action"><h4>1. 탐지 결과를 '확정'이 아닌 '참고'로 표시하기</h4><p>AI 작성 가능성 점수는 근거가 될 수 있어도 결론이 되어서는 안 됩니다. 화면 문구와 로그에 이 점을 분명히 남기세요.</p></div>
+      <div class="action"><h4>2. 오탐 사례를 모아 평가하기</h4><p>사람이 쓴 글을 AI로 잘못 판정한 사례를 익명으로 모아, 정기적으로 정확도와 편향을 측정하는 습관을 만들어 보세요.</p></div>
+      <div class="action"><h4>3. 이의 제기와 재심사 절차 만들기</h4><p>판정에 불복할 수 있는 경로와 사람이 다시 검토하는 단계를 기능 설계 초기에 넣으면, 나중에 사고가 나도 대응이 빨라집니다.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+
+    <div class="future pos"><ul>
+      <li><strong>평가 방식이 AI 시대에 맞게 다시 설계된다.</strong> 암기 위주의 시험에서 과정 평가와 구술 평가로 무게가 옮겨 가면, AI 부정행위의 유인이 줄어듭니다.</li>
+      <li><strong>AI 활용 기준이 명확해진다.</strong> 어디까지 AI를 써도 되는지 공개된 규칙이 생기면, 학생과 교사 모두 혼란이 줄어듭니다.</li>
+      <li><strong>교육용 AI 도구의 신뢰 기준이 세워진다.</strong> 공정성과 오탐 관리를 보여 주는 제품이 시장에서 인정받을 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+
+    <div class="future neg"><ul>
+      <li><strong>탐지 도구에 대한 과신이 생긴다.</strong> 점수 하나로 학생을 판정하면, 억울한 피해가 생기고 신뢰가 더 떨어질 수 있습니다.</li>
+      <li><strong>규제가 급하게 만들어진다.</strong> 사태 직후에는 성급한 금지 조치가 나오기 쉬워, 정당한 학습 도구까지 막힐 수 있습니다.</li>
+      <li><strong>기술 격차가 입시 공정성을 흔든다.</strong> 고성능 AI를 쓸 수 있는 사람과 없는 사람 사이의 차이가 커지면, 공정성 논란이 반복될 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+
+    <div class="conclusion"><p>이번 사건은 AI 기능이 사회 제도와 만나는 순간 기술 문제가 신뢰와 책임의 문제로 바뀐다는 점을 보여 줍니다. 입문 개발자라면 기능을 만드는 것만큼, 그 기능이 틀렸을 때 어떻게 되돌릴지도 함께 생각하는 습관이 필요합니다.</p><p>이번 주에는 여러분이 만들고 있는 기능 하나를 골라, 오판이 나왔을 때 사용자가 무엇을 할 수 있는지 세 줄로 적어 보세요.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://www.theguardian.com/world/2026/nov/22/south-korea-education-minister-resigns-after-ai-cheating-scandal-engulfs-university-exams">The Guardian, South Korea education minister resigns after AI cheating scandal engulfs university exams (2026.11.22)</a> <span class="src">— 사임 사실과 배경을 요약 페이지로 확인. 본문 전체는 열람하지 못함</span></li>
+    </ol>
+
+    </article>
+
+<section class="related">
+  <h2>오늘의 다른 뉴스</h2>
+  <div class="related-list"><a href="2026-11-23-openrouter-provider-prompt-exposure.html"><span class="r">오늘의 뉴스 1위</span><span class="t">OpenRouter, 프롬프트 노출 조사 뒤 추론 공급자 3곳 제외</span></a><a href="2026-11-23-sarvam-105b-open-weight.html"><span class="r">오늘의 뉴스 3위</span><span class="t">Sarvam, 1050억 파라미터 오픈웨이트 모델 공개… 워크스테이션 GPU 실행 목표</span></a></div>
+</section>
+</article>
+
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

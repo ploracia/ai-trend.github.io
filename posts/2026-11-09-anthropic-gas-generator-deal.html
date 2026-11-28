@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anthropic, 가스발전기 1.7GW 확보에 34억 달러… AI 전력 경쟁 가속 | AI 비밀 레시피</title>
+  <meta name="description" content="FT 보도에 따르면 Anthropic이 Caterpillar 가스발전기 약 1.7GW 분량을 34억 달러에 확보했습니다. 데이터센터 전력 경쟁의 의미와 개발자가 볼 지점을 정리했습니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>Anthropic, 가스발전기 1.7GW 확보에 34억 달러… AI 전력 경쟁 가속</h1>
+    <div class="byline"><span><time datetime="2026-11-09T08:17:08+09:00">2026.11.09 08:17 KST</time></span><span>읽는 시간 약 5분</span><span>#Anthropic #데이터센터 #인프라</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>파이낸셜타임스(FT)는 2026년 11월 8일 보도에서 Anthropic이 Caterpillar 가스발전기 약 1.7GW 분량을 34억 달러에 확보했다고 전했습니다.</li><li>이 주문은 샌안토니오의 OnePWR Solutions가 2년 전 넣었다가 자금을 마련하지 못한 것을 Anthropic이 넘겨받은 형태입니다. 보도 기준 계약은 9월 말에 체결됐고, 양사는 논평을 거부했습니다.</li><li>개발자에게는 AI 경쟁이 모델 성능을 넘어 전력 확보 경쟁으로 번지고 있다는 신호입니다. 서비스 비용과 안정성이 인프라 조건에 영향을 받는다는 점을 기억해 두세요.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">Anthropic, Caterpillar 가스발전기 약 1.7GW·34억 달러 확보 (FT 보도)</span><span>보도 2026.11.08</span><span><a href="https://thenextweb.com/news/anthropic-3-4bn-gas-generators-onepwr-ft">TNW 보도</a></span></div>
+
+    <p class="lead">AI 모델을 돌리려면 칩만 있으면 되는 것이 아닙니다. 데이터센터가 멈추지 않으려면 안정적인 전기가 먼저 필요하고, 이번 보도는 그 전기를 AI 기업이 직접 확보하려 한다는 점을 보여 줍니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">개발자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+    <p><strong>AI 기업이 데이터센터를 돌리기 위해 대형 발전 설비를 직접 사들이기 시작했다는 것이 이번 뉴스의 핵심입니다.</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>가스발전기</strong>는 천연가스를 태워 전기를 만드는 발전 설비입니다. <strong>GW(기가와트)</strong>는 발전 용량을 나타내는 단위로, 1GW는 10억 와트입니다. <strong>선주문</strong>은 장비가 만들어지기 전에 미리 주문해 생산 순서를 확보하는 방식입니다.
+    </div>
+    <p>쉽게 말하면, 많은 사람이 쓰는 건물을 짓기 전에 그 건물에 쓸 발전기를 미리 예약해 두는 것과 비슷합니다. 1.7GW는 대형 원자력발전소 한두 기의 출력에 맞먹는 규모로 설명할 수 있어서, 데이터센터 한 곳의 수준을 넘는 전력 확보입니다.</p>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>구매 주체</td><td><strong>Anthropic</strong></td><td>데이터센터용 발전 설비 확보, 기존 주문과 설치 업무 인수</td></tr>
+        <tr><td>장비 공급사</td><td><strong>Caterpillar</strong></td><td>가스발전기 제조와 공급 (보도 기준)</td></tr>
+        <tr><td>원래 주문자</td><td><strong>OnePWR Solutions</strong></td><td>샌안토니오 소재 업체. 2년 전 주문했으나 자금 조달에 실패</td></tr>
+        <tr><td>최초 보도</td><td><strong>파이낸셜타임스(FT)</strong></td><td>단일 취재원 인용 보도. 두 회사는 논평 거부</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+    <h3>보도된 내용</h3>
+    <p>FT에 따르면 Anthropic은 약 34억 달러를 내고 Caterpillar 가스발전기 약 1.7GW 분량을 확보했습니다. 이 장비는 OnePWR Solutions가 이전에 주문해 둔 것인데, 그 회사가 대금을 마련하지 못하면서 Anthropic이 주문과 설치 업무를 넘겨받은 것으로 전해졌습니다. 보도는 계약이 9월 말에 체결됐다고 덧붙였습니다.</p>
+    <p>TNW는 자사가 아직 이 거래를 독자적으로 확인하지 못했다고 밝혔습니다. 보도의 근거는 FT의 취재원 한 곳이므로, 금액과 수량은 공식 발표가 나오기 전까지 보도 내용으로 읽는 것이 안전합니다.</p>
+    <h3>진행 순서</h3>
+    <ul class="timeline">
+      <li><time>2026년 9월 말 (보도 기준)</time>Anthropic이 OnePWR의 발전기 주문과 설치 업무를 넘겨받는 계약 체결</li>
+      <li><time>2026년 11월 8일</time>FT가 거래를 보도하고, TNW 등 매체가 이를 전달. 양사는 논평을 거부</li>
+    </ul>
+
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>AI 서비스의 가격과 안정성은 결국 전기와 설비 계약에 기대고 있습니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>개발자가 해볼 것</h2>
+    <div class="actions">
+      <div class="action"><h4>1. AI 서비스 비용 시나리오 세우기</h4><p>인프라 비용이 오르면 API 가격도 영향을 받을 수 있습니다. 월 사용량을 기준으로 가격이 20~30% 오르는 경우의 예산표를 한 장 만들어 두세요.</p></div>
+      <div class="action"><h4>2. 모델 공급자 대체 경로 만들기</h4><p>한 서비스가 느려지거나 멈출 때를 대비해 <code>fallback</code> 같은 대체 모델 호출 경로를 설계해 보세요. 입문 프로젝트에서도 설정 파일 한 줄로 바꿀 수 있으면 충분합니다.</p></div>
+      <div class="action"><h4>3. 인프라 뉴스를 주간 메모로 정리하기</h4><p>데이터센터, 전력, 칩 관련 뉴스를 일주일에 한 번 표로 기록하면 기술 선택의 배경을 설명하는 자료가 됩니다.</p></div>
+      <div class="action"><h4>4. 단일 취재원 보도 확인하기</h4><p>이번처럼 한 취재원에 기댄 보도는 공식 발표나 공시가 나올 때까지 수치를 확정하지 않는 습관을 들이세요.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+    <div class="future pos"><ul>
+      <li><strong>서비스 용량이 늘어난다.</strong> 전력을 안정적으로 확보하면 데이터센터 증설이 빨라지고, 사용자가 몰려도 응답이 느려지는 일이 줄어들 수 있습니다.</li>
+      <li><strong>가격 예측이 쉬워진다.</strong> 장기 설비 계약이 자리 잡으면 AI 서비스 요금의 변동 폭이 줄어들 가능성이 있습니다.</li>
+      <li><strong>인프라 기술이 함께 발전한다.</strong> 대규모 발전 수요는 효율이 높은 설비와 전력 관리 기술의 투자를 이끌 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+    <div class="future neg"><ul>
+      <li><strong>환경 부담이 커진다.</strong> 천연가스 발전은 탄소 배출 논란이 있어, AI 확장이 기후 목표와 충돌한다는 비판이 거세질 수 있습니다.</li>
+      <li><strong>지역 전력망에 부담이 간다.</strong> 대형 수요가 한 지역에 몰리면 주민 전기요금이나 전력 공급 안정성에 영향을 줄 수 있습니다.</li>
+      <li><strong>계약 위험이 남는다.</strong> 원래 주문자가 자금을 마련하지 못한 사례처럼, 대규모 설비 계약은 중간에 깨질 위험이 있습니다.</li>
+      <li><strong>보도 내용이 바뀔 수 있다.</strong> 단일 취재원 보도이므로 금액이나 시점이 공식 발표에서 달라질 가능성도 열어 두어야 합니다.</li>
+    </ul></div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+    <div class="conclusion"><p>이번 뉴스의 핵심은 AI 경쟁이 모델의 똑똑함에서 전력과 설비의 확보로 옮겨 가고 있다는 점입니다. 개발자 입장에서는 이 흐름이 API 가격, 응답 속도, 서비스 중단 가능성으로 직접 돌아온다는 뜻입니다.</p><p>입문 단계라면 자신이 쓰는 AI 서비스 하나를 골라 비용과 대체 경로를 한 페이지로 정리해 보세요. 뉴스를 읽을 때 "이 기사가 내 프로젝트 비용에 무슨 영향을 주나?"라고 묻는 습관이 가장 실용적인 공부가 됩니다.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://thenextweb.com/news/anthropic-3-4bn-gas-generators-onepwr-ft">Anthropic buys $3.4bn of gas generators for its data centres, FT reports</a> <span class="src">— TNW 보도, 2026.11.08 (FT 보도 인용, 양사 논평 거부 내용 포함)</span></li>
+      <li><a href="https://fourweekmba.com/ai-anthropic-buys-1-7gw-of-pre-ordered-gas-generators-for-3-4b/">Anthropic Buys 1.7GW of Pre-Ordered Gas Generators for $3.4B</a> <span class="src">— FourWeekMBA 요약 기사, 2026.11.08 (보조 확인용)</span></li>
+    </ol>
+
+  <section class="related">
+    <h2>오늘의 다른 뉴스</h2>
+    <div class="related-list">
+      <a href="2026-11-09-nvidia-board-independent-probe.html"><span class="r">오늘의 뉴스 2위</span><span class="t">엔비디아 이사회, 젠슨 황 겨냥 외국 정보기관 활동 보도에 독립 조사 착수</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

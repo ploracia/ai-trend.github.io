@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gemini 4 Neon: 카고 트럭과 승용차 사이, 구글의 새 중간 등급 모델 | AI 비밀 레시피</title>
+  <meta name="description" content="구글이 2026년 11월 18일 공개한 Gemini 4 Neon의 가격, 컨텍스트 길이, 사고 단계, 입문 개발자가 알아볼 점을 정리했습니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+
+    /* 인사이트 전용 */
+    .cats { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; margin: 14px 0 0; font-size: 13px; color: var(--muted); }
+    .cats .lbl { font-weight: 700; margin-right: 2px; }
+    .cats a { font-size: 12.5px; font-weight: 600; text-decoration: none; color: var(--text); border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 2px 8px; }
+    .cats a:hover { border-color: var(--accent); color: var(--accent); }
+    .cats .sep { width: 10px; }
+    figure.fig { margin: 22px 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    figure.fig img, figure.fig svg { display: block; width: 100%; height: auto; }
+    figure.fig figcaption { font-size: 13.5px; color: var(--muted); padding: 10px 16px; border-top: 1px solid var(--line); }
+    figure.fig figcaption .credit { display: block; font-size: 12px; margin-top: 2px; }
+    .srcfig { display: flex; gap: 12px; align-items: center; background: var(--bg); border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px; margin: 14px 0; font-size: 14.5px; }
+    .srcfig::before { content: "🖼"; font-size: 20px; }
+    .buzz { display: grid; gap: 10px; margin: 14px 0; }
+    .buzz div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; font-size: 15px; }
+    .buzz .who { display: block; font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+    pre { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; font-size: 13.5px; line-height: 1.6; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#insights"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#insights">← 인사이트 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>Gemini 4 Neon: 카고 트럭과 승용차 사이, 구글의 새 중간 등급 모델</h1>
+    <div class="byline"><span><time datetime="2026-11-22T16:11:46+09:00">2026.11.22 16:11 KST</time></span><span>읽는 시간 약 6분</span></div>
+    <div class="cats">
+      <span class="lbl">나라</span>
+      <a href="../#insights/country/미국">미국</a>
+      <span class="sep"></span>
+      <span class="lbl">기업</span>
+      <a href="../#insights/company/Google">Google</a>
+    </div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol><li>구글이 2026년 11월 18일 Gemini 4 Neon을 공개했고, 개발자용 API와 AI Studio에서 바로 쓸 수 있습니다.</li><li>입력 100만 토큰당 3달러, 출력 100만 토큰당 15달러이며 컨텍스트는 100만 토큰입니다. 생각 깊이를 4단계로 고를 수 있습니다.</li><li>입문 개발자에게는 "매일 쓰는 에이전트 작업을 적당한 비용으로 돌리는 기본 모델"이 생겼다는 뜻입니다. 무조건 가장 똑똑한 모델을 고를 필요가 없어졌습니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 모델</span><span class="what">Gemini 4 Neon</span><span>근거 글 2개 (작성 시각 확인)</span></div>
+
+    <p class="lead">구글 모델 이름에 Carbon, Hydrogen, Argon 같은 원소 이름이 붙기 시작했습니다. 이번에는 Neon입니다. 개발자 커뮤니티에서는 "가격과 성능의 균형이 좋은 중간 모델이 나왔다"는 반응이 많았습니다. 다만 구글이 발표한 벤치마크 수치는 대부분 구글이나 평가 기관이 직접 측정한 값이라, 실제 프로젝트에서는 직접 한 번 돌려 보는 것이 중요합니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">한눈에 보기</a></li>
+        <li><a href="#s2">어떻게 동작하나요</a></li>
+        <li><a href="#s3">왜 지금 화제인가요</a></li>
+        <li><a href="#s4">관련 나라·기업</a></li>
+        <li><a href="#s5">기존 방식과 무엇이 다른가</a></li>
+        <li><a href="#s6">직접 해 보기</a></li>
+        <li><a href="#s7">주의할 점과 한계</a></li>
+        <li><a href="#s8">정리</a></li>
+        <li><a href="#s9">참고한 글</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>한눈에 보기</h2>
+    <p>모델 라인업을 택배 회사에 비유해 봅시다. Carbon은 며칠씩 걸리는 장거리 대형 화물을 맡는 트럭입니다. Hydrogen은 시내를 빠르게 도는 소형 배송 차량이고, 구글 발표에 따르면 평소 반복되는 가벼운 실행 작업에 맞춰져 있습니다. Neon은 그 사이의 승용차입니다. 구글은 Neon을 "복잡한 소프트웨어 작업, 지식 노동, 과학 작업을 높은 수준으로, 그러나 더 빠르고 싸게 끝내는 모델"로 소개했습니다. 자주 반복되는 중간 난이도 작업을 맡기기에 적합하다는 설명입니다.</p>
+    <figure class="fig">
+      <img src="img/2026-11-22-gemini-4-neon-1.svg" alt="Gemini 4 Neon이 Carbon과 Hydrogen 사이에 위치한 모델 라인업 도식" />
+      <figcaption>그림 1. Gemini 4 Neon의 위치. 구글 발표 내용을 바탕으로 다시 그림<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+    <div class="callout"><b>용어 풀이</b>컨텍스트 윈도우: 모델이 한 번에 읽고 기억할 수 있는 글의 양입니다. 100만 토큰이면 대략 책 여러 권 분량입니다.<br />사고 단계(thinking level): 답을 내기 전에 모델이 속으로 생각하는 시간을 얼마나 쓸지 정하는 설정입니다. 시험 문제에 시간을 더 쓰는 것과 비슷합니다.<br />캐시된 입력: 같은 긴 문서를 반복해서 보낼 때 이미 읽어 둔 부분을 싸게 재사용하는 기능입니다.</div>
+
+    <h2 id="s2"><span class="no">02</span>어떻게 동작하나요</h2>
+    <p>개발자가 프롬프트와 문서를 보내면 모델은 먼저 내부에서 생각하는 단계를 거칩니다. 이때 사고 단계를 낮음부터 높음까지 골라 쓸 수 있는데, 구글 발표는 기본값이 high이고 그보다 더 깊게 생각하는 xhigh가 있다고 밝혔습니다. 생각을 많이 할수록 정확도는 올라가지만 토큰 사용량과 비용도 함께 늘어납니다. 모델이 답을 내면서 도구를 호출하거나 코드를 실행하는 에이전트 작업도 같은 API 안에서 처리됩니다.</p>
+    <figure class="fig">
+      <img src="img/2026-11-22-gemini-4-neon-2.svg" alt="요청이 들어와 사고 단계를 거쳐 도구 호출과 답으로 나가는 흐름도" />
+      <figcaption>그림 2. 요청 한 번이 처리되는 흐름. 구글 발표와 API 문서 설명을 바탕으로 다시 그림<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+
+    <h2 id="s3"><span class="no">03</span>왜 지금 화제인가요</h2>
+    <p>Neon은 2026년 11월 18일에 공개됐습니다. 발표 직후 여러 IT 매체와 요약 사이트가 가격과 벤치마크를 함께 정리했고, 개발자들은 특히 "Carbon보다 싸면서 Claude Opus 5.5, GPT-6.2 Sol과 비교되는 성능"이라는 구도에 주목했습니다. 구글은 Neon을 Antigravity(구글의 에이전트 코딩 도구)와 Gemini 앱에도 함께 붙여 내놓았습니다.</p>
+    <div class="buzz">
+      <div>AI Weekly는 벤치마크 결과를 긍정과 부정이 섞인 것으로 보았고, 표준 SWE 점수(12.8%)와 Antigravity 환경 점수(39.0%)의 차이가 평가 환경(하네스) 때문이라고 설명했습니다.<span class="who"><a href="https://aiweekly.co/alerts/google-launches-gemini-4-neon-at-315-per-million-tokens">AI Weekly</a> · 11.18</span></div>
+      <div>The Neuron은 11월 19일 일간 정리에서 Neon을 그날의 주요 발표 가운데 하나로 올렸습니다.<span class="who"><a href="https://www.theneuron.ai/digest/everything-that-happened-in-ai-today-thursday-november-19-2026/">The Neuron</a> · 11.19</span></div>
+      <div>Capital &amp; Compute는 Neon을 2026년 11월 신규 모델 목록에 넣고 Artificial Analysis 지수 61점(xhigh 기준)을 함께 적었습니다.<span class="who"><a href="https://capitalandcompute.net/md/new-ai-models-november-2026.md">Capital &amp; Compute</a> · 11.22 갱신</span></div>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>관련 나라·기업</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>이름</th><th>어떤 관련이 있나</th></tr></thead>
+      <tbody>
+        <tr><td>기업</td><td>Google (Google DeepMind)</td><td>Neon을 개발해 Gemini API, AI Studio, Antigravity, Gemini 앱으로 공급합니다.</td></tr>
+        <tr><td>기업</td><td>OpenAI, Anthropic</td><td>구글이 성능 비교 대상으로 제시한 경쟁 모델(GPT-6.2 Sol, Claude Opus 5.5) 제공사입니다.</td></tr>
+        <tr><td>나라</td><td>미국</td><td>Google은 미국 기업이며, 발표 자료와 가격 정책도 미국 기준으로 작성됐습니다.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s5"><span class="no">05</span>기존 방식과 무엇이 다른가</h2>
+    <p>아래 표는 구글이 발표 자료에서 밝힌 내용만 정리했습니다. 비교 대상은 같은 구글의 Carbon입니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>비교 항목</th><th>Gemini 4 Carbon</th><th>Gemini 4 Neon</th></tr></thead>
+      <tbody>
+        <tr><td>용도</td><td>가장 어려운 장기 프로젝트</td><td>복잡하지만 자주 반복되는 작업을 빠르게</td></tr>
+        <tr><td>작업당 비용</td><td>기준</td><td>높은 사고 단계 기준 약 32% 낮다고 구글이 밝힘</td></tr>
+        <tr><td>입력 가격</td><td>구글 발표 자료 기준 확인 필요</td><td>100만 토큰당 3달러 (캐시 입력 0.15달러)</td></tr>
+        <tr><td>출력 가격</td><td>구글 발표 자료 기준 확인 필요</td><td>100만 토큰당 15달러</td></tr>
+      </tbody>
+    </table></div>
+    <p>다만 Carbon과 Neon의 품질을 직접 비교한 자료는 구글 발표에 없었습니다. 그래서 "Neon이 Carbon을 대체한다"고 단정하기보다는, 작업의 난이도에 따라 두 모델을 나눠 쓰는 방식으로 이해하는 편이 안전합니다.</p>
+
+    <h2 id="s6"><span class="no">06</span>직접 해 보기</h2>
+    <p>입문 개발자라면 코드를 쓰기 전에 AI Studio에서 먼저 체험해 보는 것을 권합니다. 구글 발표에 따르면 Neon은 AI Studio의 유료 계층과 Gemini API에서 제공됩니다. 공식 문서에서 확인한 모델 ID와 호출 코드는 이 글에 아직 싣지 않았으니, 아래 단계로 직접 확인해 보세요.</p>
+    <div class="actions">
+      <div class="action"><h4>1. AI Studio에서 모델 목록 확인</h4><p>AI Studio에 로그인해 모델 선택 목록에서 Neon이 보이는지 확인합니다. 보이지 않으면 아직 내 계정에 열리지 않은 것입니다.</p></div>
+      <div class="action"><h4>2. 같은 질문을 두 가지 사고 단계로 비교</h4><p>하나의 코딩 문제를 high와 xhigh로 각각 돌려 보고, 답의 차이와 사용한 토큰 수를 적어 봅니다. 비용과 정확도의 관계를 직접 느끼는 가장 빠른 방법입니다.</p></div>
+      <div class="action"><h4>3. 공식 문서의 API 예제 따라 하기</h4><p>Gemini API 문서에서 모델 ID와 Python 또는 JavaScript 예제를 찾아, 그 예제를 그대로 실행해 보세요. 예제를 확인한 뒤에 내 코드로 옮기는 순서가 안전합니다.</p></div>
+    </div>
+
+    <h2 id="s7"><span class="no">07</span>주의할 점과 한계</h2>
+    <ul>
+      <li>벤치마크 수치는 대부분 구글이 보고한 값이거나 평가 기관이 측정한 값입니다. 같은 조건에서 여러분의 작업으로 직접 재 보기 전에는 단정하기 어렵습니다.</li>
+      <li>사고 단계를 xhigh로 올리면 정확도가 오를 수 있지만, 같은 작업의 토큰 사용량과 비용도 함께 늘어납니다. 여러 매체는 이 비용 차이를 강조했지만, 수치 계산 방식은 출처마다 달라 직접 확인이 필요합니다.</li>
+      <li>사이버 보안용 Neon 변형은 신뢰받는 방어 연구자를 대상으로 한 Fairwind 프로그램에서만 우선 열립니다. 일반 개발자는 접근이 제한될 수 있습니다.</li>
+      <li>구글은 안전 장치 때문에 일부 작업이 거절될 수 있다고 밝혔습니다. 예를 들어 Terminal-Bench 4.0에서는 약 2%의 작업이 거절됐다고 설명했습니다.</li>
+      <li>일부 매체는 가격 인하 시점과 캐시 가격 할인율 등을 다르게 적었습니다. 결제 전에는 반드시 구글의 가격 페이지에서 최신 값을 확인하세요.</li>
+    </ul>
+
+    <h2 id="s8"><span class="no">08</span>정리</h2>
+    <div class="conclusion">
+      <p>Gemini 4 Neon은 "가장 똑똑한 모델"보다 "자주 쓰기 좋은 모델"을 목표로 한 발표입니다. 입문 개발자에게 중요한 것은 모델 이름보다 가격, 컨텍스트 길이, 사고 단계 같은 조절 장치를 이해하는 일입니다.</p>
+      <p>오늘 해 볼 일은 간단합니다. AI Studio에서 같은 문제를 두 가지 사고 단계로 돌려 보고, 답과 비용을 기록해 보세요. 작은 실험 한 번이 벤치마크 표 열 개보다 더 많은 것을 알려 줍니다.</p>
+    </div>
+
+    <h2 id="s9"><span class="no">09</span>참고한 글</h2>
+    <ol class="refs">
+      <li><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/">Introducing Gemini 4 Neon (Google 공식 블로그)</a> <span class="src">blog.google · 2026.11.18</span></li>
+      <li><a href="https://aiweekly.co/alerts/google-launches-gemini-4-neon-at-315-per-million-tokens">Google launches Gemini 4 Neon at $3/$15 per million tokens</a> <span class="src">AI Weekly · 2026.11.18</span></li>
+      <li><a href="https://www.theneuron.ai/digest/everything-that-happened-in-ai-today-thursday-november-19-2026/">Everything That Happened in AI Today (Thursday, November 19, 2026)</a> <span class="src">The Neuron · 2026.11.19</span></li>
+      <li><a href="https://capitalandcompute.net/md/new-ai-models-november-2026.md">New AI Models Released in November 2026: Prices</a> <span class="src">Capital &amp; Compute · 2026.11.22 갱신</span></li>
+      <li><a href="https://www.nocode.mba/ai-release-tracker/2026/11">November 2026 AI Release Tracker</a> <span class="src">No Code MBA · 2026.11.21 갱신</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#insights">← 전체 인사이트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+{
+  "v": 1,
+  "lists": {
+    "posts": {
+      "count": 30,
+      "days": 10,
+      "files": [
+        {
+          "file": "archive/posts-2026.json",
+          "count": 30,
+          "days": 10,
+          "from": "2026-10-19",
+          "to": "2026-10-28"
+        }
+      ]
+    },
+    "insights": {
+      "count": 9,
+      "days": 9,
+      "files": [
+        {
+          "file": "archive/insights-2026.json",
+          "count": 9,
+          "days": 9,
+          "from": "2026-10-20",
+          "to": "2026-10-28"
+        }
+      ]
+    },
+    "papers": {
+      "count": 8,
+      "days": 8,
+      "files": [
+        {
+          "file": "archive/papers-2026.json",
+          "count": 8,
+          "days": 8,
+          "from": "2026-10-20",
+          "to": "2026-10-28"
+        }
+      ]
+    }
+  }
+}

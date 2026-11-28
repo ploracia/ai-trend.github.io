@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="공개 단계: 발표, API와 파인튜닝 제공, 가중치 공개 예고">
+  <rect width="720" height="300" fill="#f7f6f2"/>
+  <text x="360" y="34" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="700" fill="#1b1b1f">공개 단계: 쓸 수 있는 것과 아직 아닌 것</text>
+  <line x1="90" y1="130" x2="630" y2="130" stroke="#c9c7bf" stroke-width="4"/>
+  <circle cx="90" cy="130" r="14" fill="#1f8a5b"/>
+  <circle cx="330" cy="130" r="14" fill="#2f5bea"/>
+  <circle cx="570" cy="130" r="14" fill="#ffffff" stroke="#62626b" stroke-width="3"/>
+  <text x="90" y="92" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#1b1b1f">11월 5일</text>
+  <text x="90" y="170" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1b1b1f">모델 발표</text>
+  <text x="90" y="190" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#62626b">Thinking Machines</text>
+  <text x="330" y="92" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#1b1b1f">지금</text>
+  <text x="330" y="170" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1b1b1f">API·맞춤 학습 제공</text>
+  <text x="330" y="190" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#62626b">Tinker 플랫폼 경유</text>
+  <text x="570" y="92" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#1b1b1f">다음 주 예정</text>
+  <text x="570" y="170" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1b1b1f">가중치 공개 (Apache 2.0)</text>
+  <text x="570" y="190" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#62626b">보도에 따르면, 안전성 평가 후</text>
+  <rect x="60" y="222" width="600" height="50" rx="10" fill="#ffffff" stroke="#c9c7bf" stroke-width="1.5"/>
+  <text x="360" y="252" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#1b1b1f">입문자 체크: 지금은 API로 써 볼 수 있고, 내려받아 직접 돌리는 건 공개 뒤에 가능</text>
+</svg>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ripple-65B Preview: 650억 파라미터 공개 코딩 모델, 입문 개발자가 알아야 할 것 | AI 비밀 레시피</title>
+  <meta name="description" content="리커시브가 11월 4일 공개한 Ripple-65B Preview를 입문 개발자 관점에서 정리했습니다. Apache 2.0 오픈 웨이트, 밀집(dense) 구조, 확인된 것과 아직 확인하지 못한 것을 나눠 봅니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+
+    /* 인사이트 전용 */
+    .cats { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; margin: 14px 0 0; font-size: 13px; color: var(--muted); }
+    .cats .lbl { font-weight: 700; margin-right: 2px; }
+    .cats a { font-size: 12.5px; font-weight: 600; text-decoration: none; color: var(--text); border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 2px 8px; }
+    .cats a:hover { border-color: var(--accent); color: var(--accent); }
+    .cats .sep { width: 10px; }
+    figure.fig { margin: 22px 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    figure.fig img, figure.fig svg { display: block; width: 100%; height: auto; }
+    figure.fig figcaption { font-size: 13.5px; color: var(--muted); padding: 10px 16px; border-top: 1px solid var(--line); }
+    figure.fig figcaption .credit { display: block; font-size: 12px; margin-top: 2px; }
+    .srcfig { display: flex; gap: 12px; align-items: center; background: var(--bg); border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px; margin: 14px 0; font-size: 14.5px; }
+    .srcfig::before { content: "🖼"; font-size: 20px; }
+    .buzz { display: grid; gap: 10px; margin: 14px 0; }
+    .buzz div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; font-size: 15px; }
+    .buzz .who { display: block; font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+    pre { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; font-size: 13.5px; line-height: 1.6; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#insights"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#insights">← 인사이트 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>Ripple-65B Preview: 650억 파라미터를 전부 쓰는 공개 코딩 모델, 입문 개발자가 알아야 할 것</h1>
+    <div class="byline"><span><time datetime="2026-11-14T16:17:11+09:00">2026.11.14 16:17 KST</time></span><span>읽는 시간 약 5분</span></div>
+    <div class="cats">
+      <span class="lbl">나라</span>
+      <a href="../#insights/country/미국">미국</a>
+      <span class="sep"></span>
+      <span class="lbl">기업</span>
+      <a href="../#insights/company/Ricursive">Ricursive</a>
+      <a href="../#insights/company/Ollama">Ollama</a>
+      <a href="../#insights/company/Hugging%20Face">Hugging Face</a>
+    </div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol>
+        <li>미국 스타트업 리커시브(Ricursive)가 11월 4일 코딩에 맞춘 650억 파라미터 모델 Ripple-65B Preview의 가중치를 Apache 2.0 라이선스로 공개했습니다.</li>
+        <li>mixture-of-experts(MoE)가 아니라 모든 파라미터를 매번 쓰는 밀집(dense) 구조이며, 로컬 실행 도구를 통해 직접 돌려 볼 수 있습니다.</li>
+        <li>벤치마크 점수는 회사 자체 발표 수치라 그대로 믿기보다 직접 비교해 봐야 합니다. 입문자에게는 "내 PC에서 코딩 에이전트를 돌리는 실험"의 좋은 출발점입니다.</li>
+      </ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 모델</span><span class="what">Ripple-65B Preview</span><span>근거 글 4개 직접 열람 (검색 결과 기준 더 많음)</span></div>
+
+    <p class="lead">요즘 개발자 커뮤니티에서는 "이 모델 하나로 코딩 에이전트를 로컬에서 돌릴 수 있나?"라는 질문이 자주 보입니다. 11월 초 공개된 Ripple-65B Preview는 그 질문에 가장 가까운 공개 모델 중 하나로 소개되고 있습니다. 다만 이 글은 공식 모델 카드를 직접 읽지 못한 상태에서 쓰므로, 수치는 "~에 따르면"으로 표시했습니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol>
+        <li><a href="#s1">한눈에 보기</a></li>
+        <li><a href="#s2">어떻게 동작하나요</a></li>
+        <li><a href="#s3">왜 지금 화제인가요</a></li>
+        <li><a href="#s4">관련 나라·기업</a></li>
+        <li><a href="#s5">기존 방식과 무엇이 다른가</a></li>
+        <li><a href="#s6">직접 해 보기</a></li>
+        <li><a href="#s7">주의할 점과 한계</a></li>
+        <li><a href="#s8">정리</a></li>
+        <li><a href="#s9">참고한 글</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>한눈에 보기</h2>
+    <p>모델의 파라미터(parameter)는 쉽게 말해 학습으로 조정된 "기억 칸"이라고 생각하면 됩니다. 650억 개의 칸이 있다는 뜻이고, 이 칸들이 입력 한 글자 한 글자마다 얼마나 많이 계산에 끼어드는지가 모델의 구조를 가릅니다. 도서관에 비유하면, 책 한 권을 찾을 때 서가 전체를 한 번씩 훑는 방식이 dense 구조이고, 주제별로 담당 사서 몇 명만 불러 찾는 방식이 MoE 구조입니다. Ripple-65B Preview는 앞쪽 방식, 즉 모든 파라미터를 매번 사용하는 밀집 구조로 소개되어 있습니다.</p>
+    <figure class="fig">
+      <img src="img/2026-11-14-ripple-65b-preview-1.svg" alt="Dense 모델은 모든 파라미터를 쓰고, MoE 모델은 일부 전문가만 쓰는 차이를 보여 주는 그림" />
+      <figcaption>그림 1. Dense 구조와 MoE 구조의 차이. Ripple-65B Preview는 dense로 소개됩니다.<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+    <div class="callout"><b>용어 풀이</b>
+      오픈 웨이트(open weights): 학습이 끝난 모델의 파일을 누구나 내려받아 쓸 수 있게 공개한 것입니다. 소스 코드 공개와는 다릅니다.<br />
+      Apache 2.0: 상업적 사용과 수정, 재배포를 대체로 허용하는 대표적인 오픈소스 라이선스입니다.<br />
+      밀집(dense): 토큰마다 전체 파라미터를 쓰는 구조입니다.
+    </div>
+
+    <h2 id="s2"><span class="no">02</span>어떻게 동작하나요</h2>
+    <p>코딩 에이전트는 "파일을 읽고, 명령을 실행하고, 결과를 보고, 다시 고치는" 과정을 여러 번 반복합니다. 이때 모델은 대화 한 번이 아니라 긴 작업 맥락을 계속 붙잡고 있어야 합니다. 여러 출처에 따르면 이 모델은 최대 100만 토큰 안팎의 긴 맥락을 지원한다고 소개되어 있습니다. 실제 사용 가능한 길이는 실행 도구와 메모리 설정에 따라 달라지므로, 공식 문서에서 확인하는 것이 안전합니다.</p>
+    <p>흐름을 아주 단순하게 보면 다음과 같습니다. 모델 파일을 받고, 로컬 서버 도구로 띄운 뒤, 코딩 에이전트가 그 서버에 질문을 보내는 구조입니다. 그림 2는 이 흐름을 정리한 것입니다.</p>
+    <figure class="fig">
+      <img src="img/2026-11-14-ripple-65b-preview-2.svg" alt="모델 파일을 받아 로컬 서버에서 실행하고, 코딩 에이전트가 연결해 결과를 확인하는 4단계 흐름" />
+      <figcaption>그림 2. 로컬에서 코딩 모델을 쓰는 기본 흐름<span class="credit">출처 글을 바탕으로 다시 그림</span></figcaption>
+    </figure>
+
+    <h2 id="s3"><span class="no">03</span>왜 지금 화제인가요</h2>
+    <p>화제의 중심은 두 가지입니다. 하나는 "미국 쪽 오픈 웨이트 모델이 중국 대형 모델들과 경쟁할 만하다"는 평가이고, 다른 하나는 회사가 발표한 코딩 에이전트 벤치마크 점수입니다. 국내 기술 블로그들은 이 점수를 그대로 받아들이기보다 측정 조건을 따져 봐야 한다고 지적하고 있습니다.</p>
+    <div class="buzz">
+      <div>회사 자체 측정 기준으로 여러 코딩 에이전트 벤치마크에서 상위권을 주장했습니다. 측정 하네스(실행 환경)에 따라 순위가 바뀐다는 지적이 함께 나옵니다.<span class="who"><a href="https://braindetox.kr/en/posts/ripple_65b_preview_open_weights.html">braindetox</a> · 11.06</span></div>
+      <div>Apache 2.0 라이선스와 Hugging Face 공개로 누구나 가중치를 받을 수 있다는 점이 개발자 반응의 핵심으로 소개됩니다.<span class="who"><a href="https://letsdatascience.com/news/ricursive-releases-ripple-65b-preview-apache-20-open-coding-7e90be63">Let's Data Science</a> · 11.06</span></div>
+      <div>Ollama 같은 로컬 실행 도구의 목록에 이미 올라와 있어, 전문 서버 없이도 시도해 볼 수 있다는 점이 언급됩니다.<span class="who"><a href="https://ollama.com/library/ripple-preview">Ollama 라이브러리 페이지</a> · 날짜 미표시</span></div>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>관련 나라·기업</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>이름</th><th>어떤 관련이 있나</th></tr></thead>
+      <tbody>
+        <tr><td>기업</td><td>Ricursive (리커시브)</td><td>모델을 만들고 공개한 미국 측 개발사로 소개됩니다.</td></tr>
+        <tr><td>플랫폼</td><td>Hugging Face</td><td>모델 가중치와 카드가 올라가 있는 공개 저장소로 언급됩니다.</td></tr>
+        <tr><td>도구</td><td>Ollama</td><td>로컬 PC에서 모델을 내려받아 실행하는 도구입니다. 목록 페이지가 확인됩니다.</td></tr>
+        <tr><td>도구</td><td>vLLM</td><td>서버용 추론 엔진입니다. 지원 레시피 페이지가 있으나 실행 명령은 확인하지 못했습니다.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s5"><span class="no">05</span>기존 방식과 무엇이 다른가</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>비교 항목</th><th>기존 방식 (클라우드 API)</th><th>Ripple-65B Preview (로컬 실행)</th></tr></thead>
+      <tbody>
+        <tr><td>모델 위치</td><td>제공사 서버</td><td>내 PC나 사내 서버</td></tr>
+        <tr><td>비용 구조</td><td>토큰 사용량만큼 과금</td><td>하드웨어 준비가 필요하고 추가 과금은 없음</td></tr>
+        <tr><td>데이터 이동</td><td>코드가 외부 서버로 전송</td><td>코드가 내부에 머묾</td></tr>
+        <tr><td>라이선스</td><td>약관에 따른 이용</td><td>Apache 2.0 (모델 카드 기준, 원문 확인 필요)</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s6"><span class="no">06</span>직접 해 보기</h2>
+    <p>아래 단계는 흐름만 정리한 것입니다. 실제 명령어는 공식 문서에서 확인한 뒤 따라 하세요. 이 글을 쓰는 시점에는 공식 모델 카드를 읽지 못해 명령어를 검증하지 못했습니다.</p>
+    <div class="actions">
+      <div class="action"><h4>1단계: 하드웨어 확인</h4><p>Ollama 목록 페이지에는 모델 크기가 대략 39~46GB로 표시되어 있습니다. 메모리가 그보다 넉넉한지 먼저 확인하세요.</p></div>
+      <div class="action"><h4>2단계: 실행 도구 설치</h4><p>Ollama 공식 사이트의 설치 안내를 따라 도구를 설치합니다. 설치 방법은 운영체제마다 다릅니다.</p></div>
+      <div class="action"><h4>3단계: 모델 실행과 질문</h4><p>Ollama 라이브러리 페이지에 적힌 모델 이름으로 실행한 뒤, 간단한 함수 작성 요청을 보내 응답을 확인해 보세요.</p></div>
+      <div class="action"><h4>4단계: 결과 검토</h4><p>에이전트가 고친 코드는 반드시 테스트와 diff로 직접 검토하세요. 자동 수정은 실수도 자동으로 만듭니다.</p></div>
+    </div>
+
+    <h2 id="s7"><span class="no">07</span>주의할 점과 한계</h2>
+    <ul>
+      <li>벤치마크 점수는 회사가 자체 측정한 수치입니다. 측정 하네스가 바뀌면 순위가 달라진다는 지적이 있습니다.</li>
+      <li>"Preview"라는 이름처럼 아직 정식 버전이 아닙니다. 업데이트나 설정이 바뀔 수 있습니다.</li>
+      <li>650억 파라미터 모델은 개인 PC에서 쾌적하게 돌리기 어렵습니다. 메모리 부족으로 느려지거나 실행이 안 될 수 있습니다.</li>
+      <li>맥락 길이 수치는 출처마다 1M과 2M으로 다르게 적혀 있어 확정하지 못했습니다.</li>
+      <li>이 글은 공식 모델 카드와 발표문을 직접 열지 못했습니다. 라이선스 원문과 수치는 반드시 공식 페이지에서 다시 확인하세요.</li>
+    </ul>
+
+    <h2 id="s8"><span class="no">08</span>정리</h2>
+    <div class="conclusion">
+      <p>Ripple-65B Preview는 "모든 파라미터를 쓰는 650억 규모의 공개 코딩 모델"이라는 점에서 로컬 코딩 에이전트를 실험하고 싶은 개발자에게 흥미로운 선택지입니다. 라이선스와 공개 방식이 분명해서, 회사 내부에서 실험하기에도 부담이 적습니다.</p>
+      <p>하지만 벤치마크 1등이라는 말보다, 내 코드와 내 PC에서 실제로 얼마나 잘 동작하는지가 중요합니다. 입문 개발자라면 작은 모델로 같은 실험을 먼저 해 보고, 이 모델을 같은 조건에서 비교해 보는 순서를 추천합니다.</p>
+    </div>
+
+    <h2 id="s9"><span class="no">09</span>참고한 글</h2>
+    <ol class="refs">
+      <li><a href="https://braindetox.kr/en/posts/ripple_65b_preview_open_weights.html">Ripple-65B Preview Release: Open Weights, Benchmark Caveats</a> <span class="src">braindetox · 2026.11.06</span></li>
+      <li><a href="https://letsdatascience.com/news/ricursive-releases-ripple-65b-preview-apache-20-open-coding-7e90be63">Ricursive Releases Ripple-65B Preview, Apache 2.0 Open Coding Model</a> <span class="src">Let's Data Science · 2026.11.06</span></li>
+      <li><a href="https://ollama.com/library/ripple-preview">ripple-preview (Ollama 라이브러리)</a> <span class="src">Ollama · 날짜 미표시</span></li>
+      <li><a href="https://recipes.vllm.ai/ricursiveAI">vLLM Recipes: Ricursive AI</a> <span class="src">vLLM · 날짜 미표시</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#insights">← 전체 인사이트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

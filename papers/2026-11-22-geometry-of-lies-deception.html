@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI가 거짓말을 하는지 속에서 알아낼 수 있을까 | AI 비밀 레시피</title>
+  <meta name="description" content="거짓말하는 LLM을 모델 내부 신호로 찾아내는 방법을 다룬 논문. 페르소나 방향과 지식 방향을 더해 탐지하는 시도를 쉽게 정리했다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .paper-title { font-size: 15px; color: var(--muted); margin: 0 0 14px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 48px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 26px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .opinion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .opinion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../#papers"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../#papers">← 논문 목록</a>
+    </div>
+  </header>
+
+  <article>
+    <h1>AI가 거짓말을 하는지, 속을 들여다보고 알아낼 수 있을까</h1>
+    <p class="paper-title">The Geometry of Lies: Knowledge and Persona Directions for Detecting Deception in Large Language Models</p>
+    <div class="byline"><span><time datetime="2026-11-22T12:09:26+09:00">2026.11.22 12:09 KST</time></span><span>원문 arXiv 2611.26545</span></div>
+
+    <div class="summary3">
+      <b>3줄 요약</b>
+      <ol>
+        <li>LLM이 거짓말을 하는지 모델 내부 신호만으로 알아내는 간단한 방법(선형 탐침)은 한 종류의 거짓말에는 잘 맞지만 다른 종류에는 잘 옮겨 가지 않는다.</li>
+        <li>저자들은 '정직한 역할과 속이는 역할'의 차이로 만든 페르소나 방향과, 모델이 아는 것과 모르는 것을 가르는 지식 방향을 찾고, 둘을 더해 거짓말을 가려내는 방법을 시험했다.</li>
+        <li>여러 모델에서 기존 방식과 견줄 만한 결과가 나왔지만 모든 조건에서 확실히 나은 것은 아니었다. 입문자에게는 '모델 내부에서 거짓말 신호를 찾는 연구'가 어디까지 왔는지 보여 주는 좋은 예다.</li>
+      </ol>
+    </div>
+
+    <h2 id="s1"><span class="no">01</span>본문 요약</h2>
+    <p>이 글은 논문 초록(abstract)을 바탕으로 정리했다. 전문의 세부 실험 설정과 표는 원문에서 직접 확인하는 것을 권한다.</p>
+    <h3>문제 정의</h3>
+    <p>LLM이 사실과 다른 말을 자신 있게 할 때, 그것이 실수인지 의도된 거짓말인지 겉으로만 보고 구분하기는 어렵다. 그래서 연구자들은 모델 내부의 숨은 값(활성값)을 보고 거짓말을 찾는 방법을 연구해 왔다. 가장 간단한 방법은 선형 탐침(linear probe)이라는 작은 분류기를 붙여 '참/거짓'을 구분하게 하는 것이다. 문제는 한 데이터셋으로 학습한 탐침이 다른 종류의 거짓말로 옮겨 가면 성능이 크게 떨어진다는 점이다.</p>
+    <h3>방법</h3>
+    <p>첫 번째 도구는 '페르소나 방향'이다. 모델에게 정직한 역할과 속이는 역할을 맡겨 대화를 만들고, 두 경우의 내부 신호 차이를 하나의 방향으로 잡는다. 이 과정에는 정답 레이블이 필요 없다는 것이 특징이다. 저자들은 이미 공개된 페르소나 목록을 확장해, '지식이 있는데도 모른다고 부정하는' 역할과 그에 대응하는 정직한 역할을 추가했다.</p>
+    <p>두 번째 도구는 '지식 방향'이다. 모델이 답할 수 있는 질문과 아무도 답할 수 없는 질문을 나누고, 같은 식의 부정 문장을 붙여 대비시킨다. 이렇게 하면 '알면서 부정하는 것'과 '정말 모르는 것'을 구분하는 방향을 얻으려는 것이다. 마지막으로 두 방향을 더해 거짓말 순위를 매긴다. 실험에는 70B 규모의 Llama-3.3-70B-Instruct를 포함해 네 개 모델이 쓰였다.</p>
+    <h3>결과</h3>
+    <p>중간 층의 페르소나 방향은 네 모델 가운데 세 모델에서 단일 데이터셋으로 학습한 탐침보다 거짓말을 더 잘 찾아냈다. Qwen 모델에서는 효과가 없었다. 다만 Llama-3.3-70B에서는 무작위로 만든 페르소나 목록의 방향과 비교했을 때 이득이 무작위 변동 범위 안에 있었다. 지식 방향은 두 모델에서 거짓말과 정직한 부정을 구분했고, 한 모델에서는 간신히, 한 모델에서는 실패했다. 두 방향을 합친 점수는 네 모델 모두에서 같은 깊이의 지도 학습 탐침보다 거짓말 순위를 더 잘 매겼다고 보고된다. 다만 일부 모델에서는 둘 다 거의 찍기 수준이었다.</p>
+    <h3>한계</h3>
+    <ul>
+      <li>페르소나 방향은 주로 문장의 표현을 따라간다. 거짓말과 정직한 부정이 같은 단어를 쓰면 효과가 크게 줄었다.</li>
+      <li>결과가 모델과 데이터셋에 따라 크게 달라서, 한두 모델에서 잘 된 결과를 일반적인 성능으로 받아들이기 어렵다.</li>
+      <li>역할 질문을 더 다양하게 만들어도 Liars' Bench에서 성능이 좋아지지 않았다.</li>
+    </ul>
+
+    <h2 id="s2"><span class="no">02</span>최종 의견</h2>
+    <div class="opinion">
+      <p>이 논문은 실무에서 바로 붙여 쓸 거짓말 탐지기라기보다, 모델 내부에서 거짓말과 관련된 방향을 찾는 연구가 지금 어디까지 왔는지 보여 주는 자료로 읽으면 좋다. 입문 개발자라면 먼저 '선형 탐침'이 무엇인지 익힌 뒤에 읽으면 훨씬 이해가 쉽다.</p>
+      <p>과장하지 않아야 할 부분도 있다. 두 방향을 합친 방법이 지도 학습 탐침보다 낫다는 결과는 모델에 따라 편차가 커서, 다른 환경에서 똑같이 재현되는지 확인이 필요하다. 또 단어가 겹치면 성능이 떨어진다는 한계는, 이 방법이 모델이 '실제로 무엇을 믿는지'를 읽는 것이 아니라 '어떤 말투나 표현을 쓰는지'에 가깝게 반응할 수 있음을 시사한다.</p>
+    </div>
+
+    <h2 id="s3"><span class="no">03</span>참고 사이트</h2>
+    <ol class="refs">
+      <li><a href="https://arxiv.org/abs/2611.26545">The Geometry of Lies: Knowledge and Persona Directions for Detecting Deception in Large Language Models (arXiv 초록)</a> <span class="src">arXiv · 2026.11.19 제출</span></li>
+      <li><a href="https://arxiv.org/pdf/2611.26545">원문 PDF</a> <span class="src">arXiv · CC BY 4.0</span></li>
+    </ol>
+  </article>
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../#papers">← 전체 논문 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

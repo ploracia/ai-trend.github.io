@@ -1,0 +1,594 @@
+[
+  {
+    "date": "2026-11-28",
+    "publishedAt": "2026-11-28T16:15:36+09:00",
+    "windowStart": "2026-11-27T16:30:00+09:00",
+    "windowEnd": "2026-11-28T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Inkling 2 Mini",
+    "title": "Inkling 2 Mini: 같은 층을 세 번 도는 260억 매개변수 오픈 모델, 입문 개발자가 알아야 할 것",
+    "summary": "Thinking Machines Lab의 오픈 웨이트 모델 Inkling 2 Mini는 가운데 층 묶음을 세 번 반복해 계산하는 루프 구조다. 저장 공간은 적게 쓰고 계산 단계는 늘려, 32GB 메모리 맥 같은 개인 장비에서 실행할 수 있다고 기사들이 전했다. 수치는 2차 기사와 개발사 자체 보고에 기대고 있다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "Thinking Machines Lab",
+      "Hugging Face"
+    ],
+    "tags": [
+      "오픈 웨이트",
+      "로컬 LLM",
+      "1M 컨텍스트",
+      "멀티모달"
+    ],
+    "image": "insights/img/2026-11-28-inkling-2-mini-1.svg",
+    "imageAlt": "일반 트랜스포머는 층 4개를 한 번씩 지나고, 루프 트랜스포머는 가운데 묶음을 세 번 도는 구조를 비교한 그림",
+    "url": "insights/2026-11-28-inkling-2-mini.html"
+  },
+  {
+    "date": "2026-11-27",
+    "publishedAt": "2026-11-27T16:12:35+09:00",
+    "windowStart": "2026-11-26T16:30:00+09:00",
+    "windowEnd": "2026-11-27T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Hy4 flash",
+    "title": "Hy4 flash: 가중치까지 푼 텐센트의 100만 토큰 모델, 입문 개발자가 알아야 할 것",
+    "summary": "텐센트가 11월 16일 Hy4 flash를 API로 공개했고, 이틀 뒤 가중치까지 허깅페이스에 올렸습니다. 전체 약 220~224B 중 토큰마다 약 12B만 쓰는 MoE 구조에 100만 토큰 문맥을 내세우며, 성능 수치는 회사 자체 측정이라 라이선스와 함께 직접 확인이 필요합니다.",
+    "countries": [
+      "중국"
+    ],
+    "companies": [
+      "Tencent",
+      "Hugging Face"
+    ],
+    "tags": [
+      "오픈 웨이트",
+      "MoE",
+      "1M 컨텍스트",
+      "로컬 LLM"
+    ],
+    "image": "insights/img/2026-11-27-hy4-flash-1.svg",
+    "imageAlt": "전체 블록 중 일부만 켜져 토큰을 처리하는 MoE 개념도",
+    "url": "insights/2026-11-27-hy4-flash.html"
+  },
+  {
+    "date": "2026-11-23",
+    "publishedAt": "2026-11-23T16:14:06+09:00",
+    "windowStart": "2026-11-22T16:30:00+09:00",
+    "windowEnd": "2026-11-23T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "MAI Code 2",
+    "title": "MAI Code 2: 마이크로소프트의 싼 코딩 모델이 깃허브 코파일럿에 들어왔다, 입문 개발자가 알아야 할 것",
+    "summary": "마이크로소프트의 코딩 모델 MAI Code 2와 Flash가 11월 17일 깃허브 코파일럿에 들어갔다. 회사 측 측정으로는 상위 모델보다 작업 1건당 비용이 크게 낮지만, 성능 수치는 회사 주장이라 직접 확인이 필요하다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "Microsoft",
+      "GitHub",
+      "OpenAI",
+      "Anthropic"
+    ],
+    "tags": [
+      "코딩 모델",
+      "에이전트",
+      "API 가격",
+      "1M 컨텍스트"
+    ],
+    "image": "insights/img/2026-11-23-mai-code-2-1.svg",
+    "imageAlt": "개발자 요청이 깃허브 코파일럿을 거쳐 MAI Code 2 또는 Flash로 전달되는 개념도",
+    "url": "insights/2026-11-23-mai-code-2.html"
+  },
+  {
+    "date": "2026-11-22",
+    "publishedAt": "2026-11-22T16:11:46+09:00",
+    "windowStart": "2026-11-21T16:30:00+09:00",
+    "windowEnd": "2026-11-22T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Gemini 4 Neon",
+    "title": "Gemini 4 Neon: 카고 트럭과 승용차 사이, 구글의 새 중간 등급 모델",
+    "summary": "구글이 2026년 11월 18일 공개한 중간 등급 모델입니다. 입력 100만 토큰당 3달러, 출력 15달러, 컨텍스트 100만 토큰이며 사고 단계를 골라 쓸 수 있습니다. 입문 개발자는 AI Studio에서 같은 문제를 두 단계로 돌려 비용과 답을 비교해 볼 수 있습니다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "Google"
+    ],
+    "tags": [
+      "API 가격",
+      "1M 컨텍스트",
+      "에이전트",
+      "코딩 모델"
+    ],
+    "image": "insights/img/2026-11-22-gemini-4-neon-1.svg",
+    "imageAlt": "Carbon, Neon, Hydrogen 세 모델이 난이도 축 위에 놓인 라인업 도식",
+    "url": "insights/2026-11-22-gemini-4-neon.html"
+  },
+  {
+    "date": "2026-11-20",
+    "publishedAt": "2026-11-20T16:15:16+09:00",
+    "windowStart": "2026-11-19T16:30:00+09:00",
+    "windowEnd": "2026-11-20T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "GPT-6.2 Astra · Sol",
+    "title": "GPT-6.2 Astra·Sol: 어려운 일은 Astra, 매일 쓰는 일은 Sol, 입문 개발자가 알아야 할 것",
+    "summary": "OpenAI가 2026년 11월 17일 공개한 GPT-6.2 Astra(고난도 작업용)와 Sol(일상 작업용)을 정리했습니다. Astra 입력 가격은 100만 토큰당 8달러로 내려갔고 Sol은 2달러를 유지했습니다. 성능 수치는 대부분 회사 발표라 독립 평가와 함께 봐야 합니다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "OpenAI",
+      "Anthropic"
+    ],
+    "tags": [
+      "API 가격",
+      "에이전트",
+      "코딩 모델"
+    ],
+    "image": "insights/img/2026-11-20-gpt-6-2-astra-sol-1.svg",
+    "imageAlt": "GPT-6.2 Astra와 Sol의 가격을 막대로 비교한 그림",
+    "url": "insights/2026-11-20-gpt-6-2-astra-sol.html"
+  },
+  {
+    "date": "2026-11-18",
+    "publishedAt": "2026-11-18T16:13:00+09:00",
+    "windowStart": "2026-11-17T16:30:00+09:00",
+    "windowEnd": "2026-11-18T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Qwen4-Max",
+    "title": "Qwen4-Max: 100만 토큰을 읽는 알리바바의 새 모델, 입문 개발자가 알아야 할 것",
+    "summary": "알리바바 클라우드가 11월 16일 공개한 Qwen4-Max는 100만 토큰 입력과 MoE 구조가 특징입니다. 가중치 공개는 작은 모델부터 예고됐고, 가격 표기는 출처마다 달라 직접 확인이 필요합니다.",
+    "countries": [
+      "중국"
+    ],
+    "companies": [
+      "Alibaba"
+    ],
+    "tags": [
+      "1M 컨텍스트",
+      "MoE",
+      "API 가격",
+      "에이전트"
+    ],
+    "image": "insights/img/2026-11-18-qwen4-max-1.svg",
+    "imageAlt": "전체 전문가 중 일부만 켜져 있는 MoE 개념도",
+    "url": "insights/2026-11-18-qwen4-max.html"
+  },
+  {
+    "date": "2026-11-17",
+    "publishedAt": "2026-11-17T16:25:00+09:00",
+    "windowStart": "2026-11-16T16:30:00+09:00",
+    "windowEnd": "2026-11-17T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Gemini 4 Hydrogen",
+    "title": "Gemini 4 Hydrogen: 빠르고 싼 구글의 새 모델, 입문 개발자가 알아야 할 것",
+    "summary": "구글이 11월 12일 공개한 Gemini 4 Hydrogen은 이전 빠른 모델인 3.8 Flash를 대체하는 모델입니다. 개발자 API 가격은 입력 100만 토큰당 1.50달러, 출력 100만 토큰당 7.50달러이며, 구글 발표 기준 약 2.5배 빠릅니다. 입문 개발자가 API를 처음 써 볼 때 비교 대상으로 쓰기 좋습니다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "Google"
+    ],
+    "tags": [
+      "빠른 모델",
+      "긴 문맥",
+      "에이전트",
+      "API 가격"
+    ],
+    "image": "insights/img/2026-11-17-gemini-4-hydrogen-1.svg",
+    "imageAlt": "최상위 모델과 빠른 모델 사이에서 Gemini 4 Hydrogen이 차지하는 위치를 보여 주는 개념도",
+    "url": "insights/2026-11-17-gemini-4-hydrogen.html"
+  },
+  {
+    "date": "2026-11-14",
+    "publishedAt": "2026-11-14T16:17:11+09:00",
+    "windowStart": "2026-11-13T16:30:00+09:00",
+    "windowEnd": "2026-11-14T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Ripple-65B Preview",
+    "title": "Ripple-65B Preview: 650억 파라미터를 전부 쓰는 공개 코딩 모델, 입문 개발자가 알아야 할 것",
+    "summary": "미국 리커시브가 11월 4일 공개한 650억 파라미터 코딩 모델. Apache 2.0 가중치와 밀집 구조가 특징이며, 벤치마크는 회사 자체 측정치라 검증이 필요하다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "Ricursive",
+      "Ollama",
+      "Hugging Face"
+    ],
+    "tags": [
+      "오픈 웨이트",
+      "코딩 모델",
+      "로컬 LLM",
+      "에이전트"
+    ],
+    "image": "insights/img/2026-11-14-ripple-65b-preview-1.svg",
+    "imageAlt": "Dense 모델과 MoE 모델의 차이를 비교한 그림",
+    "url": "insights/2026-11-14-ripple-65b-preview.html"
+  },
+  {
+    "date": "2026-11-13",
+    "publishedAt": "2026-11-13T16:19:32+09:00",
+    "windowStart": "2026-11-12T16:30:00+09:00",
+    "windowEnd": "2026-11-13T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Nemotron 3 Nano Omni",
+    "title": "Nemotron 3 Nano Omni: 한 모델로 보고 듣고 읽는 오픈 모델을 내 PC에서 돌려 보기",
+    "summary": "NVIDIA가 2026년 4월 28일 공개한 오픈 멀티모달 모델로, 전체 약 30B 중 3B만 쓰는 MoE 구조입니다. 이번 수집 구간에 새 발표는 없었지만, 4bit GGUF와 llama.cpp로 내 PC에서 띄워 볼 수 있어 입문 개발자의 실험 대상으로 정리했습니다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "NVIDIA",
+      "Hugging Face"
+    ],
+    "tags": [
+      "로컬 LLM",
+      "멀티모달",
+      "오픈 웨이트",
+      "MoE"
+    ],
+    "image": "insights/img/2026-11-13-nemotron-3-nano-omni-1.svg",
+    "imageAlt": "여러 종류의 입력이 한 모델을 거쳐 텍스트 답변으로 나오는 개념도",
+    "url": "insights/2026-11-13-nemotron-3-nano-omni.html"
+  },
+  {
+    "date": "2026-11-11",
+    "publishedAt": "2026-11-11T16:12:46+09:00",
+    "windowStart": "2026-11-10T16:30:00+09:00",
+    "windowEnd": "2026-11-11T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Muse Ember",
+    "title": "Muse Ember: 에이전트의 자잘한 단계만 맡는 메타의 소형 모델, 입문 개발자가 알아야 할 것",
+    "summary": "메타가 2026년 11월 9일 공개한 Muse Ember는 에이전트의 도구 호출, 분류, 문서 추출 같은 작은 단계를 맡기 위한 소형 모델이다. 컨텍스트는 1M 토큰이며 입력 100만 토큰당 0.10달러로 소개된다. 공식 발표 페이지는 확인하지 못해 출시 목록과 모델 페이지 정보에 근거했다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "Meta",
+      "OpenRouter"
+    ],
+    "tags": [
+      "에이전트",
+      "1M 컨텍스트",
+      "API 가격",
+      "소형 모델"
+    ],
+    "image": "insights/img/2026-11-11-muse-ember-1.svg",
+    "imageAlt": "에이전트 작업 한 번이 사용자 요청, 작은 모델의 반복 호출, 결과 합치기로 이어지는 흐름 그림",
+    "url": "insights/2026-11-11-muse-ember.html"
+  },
+  {
+    "date": "2026-11-09",
+    "publishedAt": "2026-11-09T16:18:05+09:00",
+    "windowStart": "2026-11-08T16:30:00+09:00",
+    "windowEnd": "2026-11-09T16:00:00+09:00",
+    "rank": 1,
+    "kind": "기술",
+    "subject": "DeepSeek Harness Creator Mode",
+    "title": "DeepSeek Harness Creator Mode: 대화로 AI 플러그인을 만드는 기능, 입문 개발자가 알아야 할 것",
+    "summary": "DeepSeek가 에이전트 플랫폼 Harness에 Creator Mode를 추가했다고 11월 2일부터 4일 사이 여러 매체가 보도했다. 원하는 기능을 문장으로 설명하면 플러그인을 만들어 주며, 일부 결과는 대화를 거듭해 다듬는다. 보도에 따르면 Harness는 보안 감사를 거치지 않은 개발자 프리뷰다.",
+    "countries": [
+      "중국"
+    ],
+    "companies": [
+      "DeepSeek"
+    ],
+    "tags": [
+      "에이전트",
+      "플러그인",
+      "코딩 도구"
+    ],
+    "image": "insights/img/2026-11-09-deepseek-creator-mode-1.svg",
+    "imageAlt": "예시 프롬프트를 Harness에 붙여넣고 Creator Mode에서 설명해 플러그인을 얻는 네 단계 흐름 그림",
+    "url": "insights/2026-11-09-deepseek-creator-mode.html"
+  },
+  {
+    "date": "2026-11-08",
+    "publishedAt": "2026-11-08T16:15:39+09:00",
+    "windowStart": "2026-11-07T16:30:00+09:00",
+    "windowEnd": "2026-11-08T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Tencent Hy4",
+    "title": "Tencent Hy4 정식 발표: 770B 규모 MoE 모델, 가중치는 아직 없음",
+    "summary": "Tencent가 11월 4일 Hy4를 정식 발표했다. 프리뷰 기준 총 770B 파라미터 중 토큰당 49B만 쓰는 MoE 구조이며, 정식판은 이미지 입력을 처리하고 컨텍스트는 약 100만 토큰이다. 가중치 공개 일정과 라이선스는 아직 확인되지 않았다.",
+    "countries": [
+      "중국"
+    ],
+    "companies": [
+      "Tencent",
+      "OpenRouter"
+    ],
+    "tags": [
+      "MoE",
+      "오픈 웨이트",
+      "1M 컨텍스트",
+      "멀티모달"
+    ],
+    "image": "insights/img/2026-11-08-tencent-hy4-1.svg",
+    "imageAlt": "Hy4가 8월 28일 프리뷰로 공개되고 11월 4일 정식 발표됐으며, 가중치 공개는 일정 미정인 흐름 그림",
+    "url": "insights/2026-11-08-tencent-hy4.html"
+  },
+  {
+    "date": "2026-11-07",
+    "publishedAt": "2026-11-07T16:20:59+09:00",
+    "windowStart": "2026-11-06T16:30:00+09:00",
+    "windowEnd": "2026-11-07T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Inkling 2 Small",
+    "title": "Inkling 2 Small: 594B 공개 모델, 입문 개발자가 알아야 할 것",
+    "summary": "Thinking Machines Lab이 11월 5일 발표한 Inkling 2 Small이 화제가 됐다. 보도에 따르면 전체 594B 파라미터 중 토큰마다 17B만 쓰는 MoE 구조이며, 가중치 공개는 다음 주로 예고됐다. 공식 발표문은 확인하지 못해 수치는 보도 기준으로 적었다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "Thinking Machines Lab"
+    ],
+    "tags": [
+      "MoE",
+      "오픈 웨이트",
+      "단계적 공개",
+      "멀티모달"
+    ],
+    "image": "insights/img/2026-11-07-inkling-2-small-1.svg",
+    "imageAlt": "입력 토큰이 라우터를 거쳐 일부 전문가만 통과하는 MoE 구조 그림",
+    "url": "insights/2026-11-07-inkling-2-small.html"
+  },
+  {
+    "date": "2026-11-06",
+    "publishedAt": "2026-11-06T16:11:52+09:00",
+    "windowStart": "2026-11-05T16:30:00+09:00",
+    "windowEnd": "2026-11-06T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "GPT-6 Cyber",
+    "title": "GPT-6 Cyber: 아무에게나 열지 않고 권한부터 나눠 주는 보안 AI 모델, 입문 개발자가 알아야 할 것",
+    "summary": "OpenAI가 2026년 11월 5일 보안 취약점 탐색용 모델 GPT-6 Cyber를 공개했다고 보도됐다. 일반 사용자에게 열지 않고 승인된 Daybreak Red 고객에게만 API와 Codex로 먼저 연다. 입문 개발자는 강한 AI일수록 공개 범위와 권한 설계가 중요해진다는 점을 기억하면 좋다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "OpenAI",
+      "Mozilla"
+    ],
+    "tags": [
+      "보안 에이전트",
+      "단계적 공개",
+      "취약점 탐색",
+      "에이전트"
+    ],
+    "image": "insights/img/2026-11-06-gpt-6-cyber-1.svg",
+    "imageAlt": "승인받은 고객만 API와 Codex로 모델에 접근하는 구조를 보여 주는 그림",
+    "url": "insights/2026-11-06-gpt-6-cyber.html"
+  },
+  {
+    "date": "2026-11-05",
+    "publishedAt": "2026-11-05T16:19:54+09:00",
+    "windowStart": "2026-11-04T16:30:00+09:00",
+    "windowEnd": "2026-11-05T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Axion 1.0-35B",
+    "title": "Axion 1.0: 적은 예시로 에이전트를 가르치는 오픈 모델, 입문 개발자가 알아야 할 것",
+    "summary": "ByteDance 연구진이 공개한 오픈 에이전트 모델 Axion 1.0은 35B와 122B 두 크기로 나왔다. 약 1만 8천 개 수준의 지도 학습 예시와 강화학습만으로 도구 사용 능력을 키웠다고 논문은 설명한다. 벤치마크 수치는 논문과 재현 체크포인트 간에 차이가 있어 원문 확인이 필요하다.",
+    "countries": [
+      "중국",
+      "미국"
+    ],
+    "companies": [
+      "ByteDance",
+      "Hugging Face"
+    ],
+    "tags": [
+      "에이전트",
+      "오픈 웨이트",
+      "MoE",
+      "강화학습"
+    ],
+    "image": "insights/img/2026-11-05-axion-1-0-1.svg",
+    "imageAlt": "Axion 1.0의 학습 3단계: 추론 지도 학습, 도구 사용 지도 학습, 강화학습 흐름도",
+    "url": "insights/2026-11-05-axion-1-0.html"
+  },
+  {
+    "date": "2026-11-04",
+    "publishedAt": "2026-11-04T16:13:26+09:00",
+    "windowStart": "2026-11-03T16:30:00+09:00",
+    "windowEnd": "2026-11-04T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Kimi K3.1 Pro",
+    "title": "Kimi K3.1 Pro: 100만 토큰을 API로 먼저 열고 가중치 공개를 예고한 중국 모델, 입문 개발자가 알아야 할 것",
+    "summary": "중국 Moonshot AI의 Kimi K3.1 Pro가 10월 23일 API로 공개됐고, 가중치는 11월 4일 공개 예정이라고 보도됐습니다. 문맥 창은 100만 토큰이며, 공개 여부와 벤치마크는 추가 확인이 필요합니다.",
+    "countries": [
+      "중국"
+    ],
+    "companies": [
+      "Moonshot AI"
+    ],
+    "tags": [
+      "오픈 웨이트",
+      "1M 컨텍스트",
+      "API 가격",
+      "코딩 모델"
+    ],
+    "image": "insights/img/2026-11-04-kimi-k3-1-pro-1.svg",
+    "imageAlt": "10월 23일 API 공개에서 11월 4일 가중치 공개 예정까지의 일정 타임라인",
+    "url": "insights/2026-11-04-kimi-k3-1-pro.html"
+  },
+  {
+    "date": "2026-11-03",
+    "publishedAt": "2026-11-03T16:19:53+09:00",
+    "windowStart": "2026-11-02T16:30:00+09:00",
+    "windowEnd": "2026-11-03T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Gemini 4 Carbon",
+    "title": "Gemini 4 Carbon: 보안 방어자부터 여는 단계적 공개, 입문 개발자가 알아야 할 것",
+    "summary": "구글의 새 최상위 모델 Gemini 4 Carbon이 일반 개발자보다 사이버 보안 방어자에게 먼저 열렸다. 공개 단계, 가격 조건, 안전장치 항목을 입문자 관점에서 풀어 본다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "Google"
+    ],
+    "tags": [
+      "Gemini",
+      "단계적 공개",
+      "보안 에이전트"
+    ],
+    "image": "insights/img/2026-11-03-gemini-4-carbon-1.svg",
+    "imageAlt": "가운데 1단계 사이버 보안 방어자에서 바깥으로 갈수록 일반 개발자까지 공개 범위가 넓어지는 그림",
+    "url": "insights/2026-11-03-gemini-4-carbon.html"
+  },
+  {
+    "date": "2026-11-02",
+    "publishedAt": "2026-11-02T16:24:46+09:00",
+    "windowStart": "2026-11-01T16:30:00+09:00",
+    "windowEnd": "2026-11-02T16:00:00+09:00",
+    "rank": 1,
+    "kind": "기술",
+    "subject": "DeepSeek Super-Agent",
+    "title": "DeepSeek Super-Agent: 시키기 전에 먼저 제안하는 코딩 에이전트, 입문 개발자가 알아야 할 것",
+    "summary": "중국 DeepSeek이 2026년 11월 1일 대화를 지켜보다가 먼저 코딩 문제를 제안하는 Super-Agent 프로토타입을 MIT 라이선스 저장소로 공개했습니다. 공식 README는 연구용 코드라고 밝혀, 입문 개발자는 테스트 저장소에서 먼저 실험해 보는 것이 좋습니다.",
+    "countries": [
+      "중국"
+    ],
+    "companies": [
+      "DeepSeek",
+      "Anthropic",
+      "OpenAI"
+    ],
+    "tags": [
+      "에이전트",
+      "오픈소스",
+      "코딩 도구"
+    ],
+    "image": "insights/img/2026-11-02-deepseek-super-agent-1.svg",
+    "imageAlt": "기존 코딩 도구는 질문을 받아야 답하고, Super-Agent는 대화를 지켜보다가 먼저 제안하는 구조를 비교한 도식",
+    "url": "insights/2026-11-02-deepseek-super-agent.html"
+  },
+  {
+    "date": "2026-11-01",
+    "publishedAt": "2026-11-01T16:19:05+09:00",
+    "windowStart": "2026-10-31T16:30:00+09:00",
+    "windowEnd": "2026-11-01T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "LFM3",
+    "title": "LFM3: 폰과 노트북에서 도는 2B급 오픈 모델 가족, 입문 개발자가 알아야 할 것",
+    "summary": "미국 Liquid AI가 2026년 10월 27일 약 2B급 모델 6종으로 이뤄진 LFM3 가족을 공개했습니다. 기반 모델 LFM3-1.7B는 4비트에서 약 1GB 메모리에 올라가며 컨텍스트 256K 토큰과 한국어를 포함한 16개 언어를 지원한다고 밝혔습니다. 성능 수치는 대부분 회사 보고치라 직접 돌려 보며 확인하는 것이 좋습니다.",
+    "countries": [
+      "미국",
+      "중국"
+    ],
+    "companies": [
+      "Liquid AI",
+      "Hugging Face",
+      "Alibaba",
+      "Google"
+    ],
+    "tags": [
+      "로컬 LLM",
+      "오픈 웨이트",
+      "멀티모달",
+      "소형 모델"
+    ],
+    "image": "insights/img/2026-11-01-liquid-lfm3-1.svg",
+    "imageAlt": "LFM3-1.7B-Base 뼈대에서 텍스트, 이미지, 음성, 전체 입력 모델이 파생되고 판단 특화 모델 두 개가 붙는 구조도",
+    "url": "insights/2026-11-01-liquid-lfm3.html"
+  },
+  {
+    "date": "2026-10-31",
+    "publishedAt": "2026-10-31T16:12:49+09:00",
+    "windowStart": "2026-10-30T16:30:00+09:00",
+    "windowEnd": "2026-10-31T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Mistral Large 4",
+    "title": "Mistral Large 4: 1조 파라미터 오픈 웨이트 모델, 입문 개발자가 알아야 할 것",
+    "summary": "프랑스 Mistral AI가 전체 약 1T 파라미터의 MoE 오픈 웨이트 모델 Mistral Large 4를 공개했습니다. 토큰당 약 49B만 쓰는 구조와 API 가격, 라이선스 조건을 입문자 눈높이로 정리했습니다.",
+    "countries": [
+      "프랑스"
+    ],
+    "companies": [
+      "Mistral AI",
+      "NVIDIA",
+      "Hugging Face"
+    ],
+    "tags": [
+      "MoE",
+      "오픈 웨이트",
+      "1M 컨텍스트",
+      "API 가격"
+    ],
+    "image": "insights/img/2026-10-31-mistral-large-4-1.svg",
+    "imageAlt": "Mistral Large 4를 쓰는 두 가지 길: 가중치를 내려받아 직접 실행하는 길과 API를 호출하는 길",
+    "url": "insights/2026-10-31-mistral-large-4.html"
+  },
+  {
+    "date": "2026-10-30",
+    "publishedAt": "2026-10-30T16:21:48+09:00",
+    "windowStart": "2026-10-29T16:30:00+09:00",
+    "windowEnd": "2026-10-30T16:00:00+09:00",
+    "rank": 1,
+    "kind": "기술",
+    "subject": "MCP 2026-07-28 스펙",
+    "title": "MCP 2026-07-28 스펙: 세션 없이 도는 AI 도구 연결 규격, 입문 개발자가 알아야 할 것",
+    "summary": "MCP 2026-07-28 스펙은 연결 시작 절차와 세션을 없애고 요청마다 버전·능력 정보를 담습니다. 서버가 되묻는 방식도 재요청 흐름으로 바뀌어, 서버를 여러 대 운영하기 쉬워졌습니다.",
+    "countries": [
+      "미국"
+    ],
+    "companies": [
+      "Anthropic",
+      "Cloudflare"
+    ],
+    "tags": [
+      "MCP",
+      "에이전트",
+      "커넥터",
+      "오픈 표준"
+    ],
+    "image": "insights/img/2026-10-30-mcp-stateless-spec-1.svg",
+    "imageAlt": "요청 한 건에 버전과 능력 정보를 담아 게이트웨이를 거쳐 세션 없는 서버로 보내는 구조",
+    "url": "insights/2026-10-30-mcp-stateless-spec.html"
+  },
+  {
+    "date": "2026-10-29",
+    "publishedAt": "2026-10-29T16:15:03+09:00",
+    "windowStart": "2026-10-28T16:30:00+09:00",
+    "windowEnd": "2026-10-29T16:00:00+09:00",
+    "rank": 1,
+    "kind": "모델",
+    "subject": "Qwen3.8-27B",
+    "title": "Qwen3.8-27B: 그래픽카드 한 장으로 돌리는 오픈 모델, 입문 개발자가 알아야 할 것",
+    "summary": "알리바바의 오픈 웨이트 모델 Qwen3.8-27B는 이미지와 영상을 이해하는 270억 파라미터급 모델이다. 4비트 압축본은 메모리 16~19GB 안팎에서 돌아가며 라이선스는 Apache 2.0이다. 입문 개발자가 API 요금 없이 내 PC에서 직접 실험해 볼 수 있는 모델이다.",
+    "countries": [
+      "중국"
+    ],
+    "companies": [
+      "Alibaba",
+      "AMD"
+    ],
+    "tags": [
+      "Qwen",
+      "로컬 LLM",
+      "오픈 웨이트",
+      "Apache 2.0"
+    ],
+    "image": "insights/img/2026-10-29-qwen3-8-27b-1.svg",
+    "imageAlt": "양자화 수준별 필요 메모리를 비교한 막대 그래프",
+    "url": "insights/2026-10-29-qwen3-8-27b.html"
+  }
+]

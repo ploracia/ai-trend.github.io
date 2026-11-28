@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenRouter, 프롬프트 노출 조사 뒤 추론 공급자 3곳 제외 | AI 비밀 레시피</title>
+  <meta name="description" content="보도에 따르면 OpenRouter가 11월 22일 추론 공급자 3곳을 플랫폼에서 빼고 일부 엔드포인트의 데이터 보관 없음 조건을 해제했습니다. 개발자가 확인할 점을 정리했습니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #f7f6f2; --surface: #ffffff; --text: #1b1b1f; --muted: #62626b; --line: #e3e1da;
+      --accent: #2f5bea; --accent-soft: #e8eefe; --pos: #1f8a5b; --pos-soft: #e5f4ec; --neg: #c2412d; --neg-soft: #fbeae6;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+        --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111214; --surface: #1a1b1f; --text: #ececf0; --muted: #9a9aa5; --line: #2c2d33;
+      --accent: #7c9cff; --accent-soft: #1f2640; --pos: #4cc38a; --pos-soft: #16291f; --neg: #f0806c; --neg-soft: #2e1b17;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: var(--accent); }
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+    header.site .in { max-width: 760px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; color: var(--text); text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .logo-mark { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 12px; }
+    .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--text); }
+
+    article { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -0.03em; margin: 16px 0 12px; }
+    .byline { color: var(--muted); font-size: 14px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .lead { font-size: 18px; color: var(--muted); margin: 24px 0 8px; }
+
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 28px 0 8px; }
+    .toc b { font-size: 14px; }
+    .toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 28px; font-size: 14px; }
+    .toc a { color: var(--text); text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    @media (max-width: 560px) { .toc ol { columns: 1; } }
+
+    h2 { font-size: 23px; letter-spacing: -0.02em; margin: 52px 0 14px; padding-top: 8px; scroll-margin-top: 72px; }
+    h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 17.5px; margin: 28px 0 8px; }
+    p { margin: 0 0 14px; font-size: 16.5px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; font-size: 16px; }
+    strong { font-weight: 700; }
+
+    .callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15.5px; }
+    .callout b { display: block; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 12px 0 18px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; background: var(--bg); }
+    tr:last-child td { border-bottom: 0; }
+    .tbl { overflow-x: auto; }
+
+    .timeline { list-style: none; padding: 0; margin: 16px 0; border-left: 2px solid var(--line); }
+    .timeline li { position: relative; padding: 0 0 14px 20px; margin: 0; }
+    .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    .timeline time { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .actions { display: grid; gap: 12px; margin: 16px 0; }
+    .action { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .action h4 { margin: 0 0 4px; font-size: 16px; }
+    .action p { margin: 0; font-size: 15px; color: var(--muted); }
+    .action code { font-size: 13.5px; background: var(--bg); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+
+    .future { border-radius: 12px; padding: 18px 20px; margin: 12px 0; }
+    .future.pos { background: var(--pos-soft); border-left: 4px solid var(--pos); }
+    .future.neg { background: var(--neg-soft); border-left: 4px solid var(--neg); }
+    .future ul { margin: 6px 0 0; }
+
+    .conclusion { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+    .conclusion p:last-child { margin-bottom: 0; }
+
+    .refs { font-size: 14.5px; }
+    .refs li { word-break: break-all; }
+    .refs .src { color: var(--muted); font-size: 13px; }
+
+    footer { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); }
+    .summary3 { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 20px; margin: 24px 0 12px; }
+    .summary3 b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .summary3 ol { margin: 0; padding-left: 20px; }
+    .summary3 li { font-size: 16px; margin: 4px 0; }
+    .newsbox { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 14px; color: var(--muted); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; }
+    .newsbox .lbl { font-weight: 700; color: var(--text); }
+    .newsbox .what { color: var(--text); flex: 1 1 260px; }
+    .related { max-width: 760px; margin: 0 auto; padding: 0 20px 40px; }
+    .related h2 { font-size: 18px; margin: 0 0 12px; }
+    .related-list { display: grid; gap: 10px; }
+    .related-list a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--text); }
+    .related-list a:hover { border-color: var(--accent); }
+    .related-list .r { font-size: 12.5px; color: var(--accent); font-weight: 700; display: block; }
+    .related-list .t { font-size: 15.5px; font-weight: 600; }
+  </style>
+  <link rel="stylesheet" href="../assets/article.css?v=20261023i" />
+
+</head>
+<body>
+  <header class="site">
+    <div class="in">
+      <a class="logo" href="../"><span class="logo-mark">AI</span>AI 비밀 레시피</a>
+      <a class="back" href="../">← 목록으로</a>
+    </div>
+  </header>
+
+<article>
+    <h1>OpenRouter, 프롬프트 노출 조사 뒤 추론 공급자 3곳 제외</h1>
+    <div class="byline"><span><time datetime="2026-11-23T08:22:00+09:00">2026.11.23 08:22 KST</time></span><span>읽는 시간 약 5분</span><span>#보안 #공급망보안 #개인정보</span></div>
+
+    <div class="summary3">
+      <b>핵심 정리</b>
+      <ol><li>보도에 따르면 OpenRouter는 11월 22일 추론 공급자 3곳을 플랫폼에서 제외했고, 125개 엔드포인트가 데이터 보관 없음(ZDR) 대상에서 빠졌습니다.</li><li>배경에는 저가 추론 공급자가 고객의 요청을 엿보거나 키를 빼내는 문제를 다룬 Dragos 연구가 있습니다. 같은 주 OpenRouter는 MiniMax 경로의 일부 프롬프트가 읽혔을 수 있다고 고객에게 안내했습니다.</li><li>개발자에게 이 사건은 ZDR 표시만 믿지 말고, 실제로 어떤 공급자를 거치는지와 민감한 데이터를 얼마나 보내는지를 직접 관리해야 한다는 신호입니다.</li></ol>
+    </div>
+    <div class="newsbox"><span class="lbl">다룬 뉴스</span><span class="what">OpenRouter, 추론 공급자 3곳 제외 및 125개 엔드포인트 ZDR 자격 해제</span><span>보도 2026.11.22 (Unite AI 기준) · 고객 안내 2026.11.21</span><span><a href="https://www.unite.ai/openrouter-cuts-three-providers-after-ai-prompt-exposure-findings/">Unite AI</a> · <a href="https://the-decoder.com/security-researchers-show-how-cheap-ai-inference-providers-steal-keys-and-snoop-on-users/">The Decoder</a></span></div>
+    <p class="lead">여러 모델을 한 API 키로 바꿔 쓰는 개발자에게 게이트웨이와 그 뒤의 추론 공급자는 곧 데이터가 지나가는 길입니다. 이번 사건은 그 길 중 어디가 안전한지 따져 봐야 한다는 점을 보여 줍니다.</p>
+
+    <nav class="toc">
+      <b>목차</b>
+      <ol><li><a href="#s1">이 이슈는 무엇인가?</a></li><li><a href="#s2">누가 움직이나?</a></li><li><a href="#s3">무슨 일이 있었나?</a></li><li><a href="#s4">개발자가 해볼 것</a></li><li><a href="#s5">긍정적인 방향으로 간다면?</a></li><li><a href="#s6">부정적인 방향으로 간다면?</a></li><li><a href="#s7">입문 개발자에게 남는 것은?</a></li><li><a href="#s8">참고 자료</a></li></ol>
+    </nav>
+
+    <h2 id="s1"><span class="no">01</span>이 이슈는 무엇인가?</h2>
+
+    <p><strong>여러 AI 모델을 한곳에서 호출하게 해 주는 게이트웨이가, 그 뒤에 있는 추론 공급자의 보안 문제 때문에 공급자를 정리한 사건입니다.</strong></p>
+    <div class="callout">
+      <b>관련 용어</b>
+      <strong>추론 공급자(inference provider)</strong>는 모델을 실제로 돌려 응답을 만들어 주는 업체입니다. <strong>데이터 보관 없음(ZDR, Zero Data Retention)</strong>은 요청 내용을 저장하지 않겠다는 계약 조건으로, 표시가 붙어 있어도 실제 보관 여부는 공급자 정책과 중계 경로에 따라 달라질 수 있습니다.
+    </div>
+    <p>OpenRouter는 여러 모델 공급자를 하나의 API로 묶어 주는 서비스입니다. 개발자는 한 번의 연결로 여러 모델을 바꿔 쓸 수 있지만, 요청이 어느 공급자를 거치는지는 중간 단계에서 결정됩니다. 그래서 중계 공급자의 보안이 곧 개발자 데이터의 보안이 됩니다.</p>
+
+    <h2 id="s2"><span class="no">02</span>누가 움직이나?</h2>
+
+    <div class="tbl"><table>
+      <thead><tr><th>구분</th><th>주체</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>게이트웨이</td><td><strong>OpenRouter</strong></td><td>공급자 3곳 제외, ZDR 자격 해제, 고객 안내를 진행. 자사 시스템이 아니라 중계 공급자 쪽 문제라고 설명</td></tr>
+        <tr><td>연구자</td><td><strong>Dragos</strong></td><td>저가 추론 공급자를 조사해 가짜 요청 실험과 키 탈취 정황을 공개</td></tr>
+        <tr><td>모델 측</td><td><strong>MiniMax 경로</strong></td><td>OpenRouter 고객 안내에서 프롬프트 노출 가능성이 언급된 경로. 조사가 끝날 때까지 관련 모델의 ZDR 표시가 제거됨</td></tr>
+        <tr><td>이용자</td><td><strong>개발자와 기업</strong></td><td>키 교체, 공급자 지정, 민감 데이터 전송 범위를 다시 점검해야 하는 쪽</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="s3"><span class="no">03</span>무슨 일이 있었나?</h2>
+
+    <h3>보도된 내용</h3>
+    <p>보도에 따르면 OpenRouter는 11월 22일 추론 공급자 3곳을 제외했고, 이 과정에서 125개 엔드포인트가 데이터 보관 없음 대상 자격을 잃었습니다. 영향을 받는 고객에게는 안내가 나갔다고 전해졌습니다. Unite AI는 이 조치가 프롬프트 노출 조사 결과 뒤에 나왔다고 정리했습니다.</p>
+    <p>이 조치의 배경으로 Dragos의 연구가 함께 소개됐습니다. The Decoder에 따르면 연구진은 약 200만 건의 가짜 AI 요청을 활용해 최소 3개 저가 공급자가 침해됐음을 확인했습니다. 연구에서는 수백 개의 AWS 키가 탈취됐고, 일부 재판매업자가 고객의 요청 내용을 읽은 정황도 나왔다고 합니다. 이 수치는 해당 연구를 보도한 매체의 설명이며, 이 글에서는 원문 연구를 직접 확인하지 못했습니다.</p>
+    <p>하루 전인 11월 21일에는 OpenRouter가 MiniMax 경로를 거친 일부 프롬프트가 읽혔을 수 있다고 고객 이메일로 알린 것으로 전해졌습니다. 이 기간에 해당 모델의 ZDR 표시는 조사가 끝날 때까지 제거됐습니다. OpenRouter는 문제의 원인이 MiniMax와 중계 공급자에 있고 OpenRouter 자체 시스템의 문제는 아니라고 설명했다고 보도됐습니다.</p>
+
+    <h3>진행 순서</h3>
+    <ul class="timeline">
+      <li><time>2026년 11월 21일 (토)</time>OpenRouter가 고객에게 MiniMax 경로의 프롬프트 노출 가능성을 안내하고, 관련 모델의 ZDR 표시를 제거</li>
+      <li><time>2026년 11월 22일 (일)</time>OpenRouter가 추론 공급자 3곳을 제외하고 125개 엔드포인트의 ZDR 자격을 해제했다고 Unite AI가 보도</li>
+      <li><time>2026년 11월 22일 (일) 정오 무렵</time>The Decoder가 Dragos 연구 결과를 전하며 저가 추론 공급자의 위험을 정리</li>
+    </ul>
+    <div class="callout">
+      <b>입문 개발자를 위한 한 줄 요약</b>
+      <strong>API 게이트웨이를 쓰면 편리하지만, 요청이 거치는 공급자까지가 내 데이터가 지나가는 범위입니다.</strong>
+    </div>
+
+    <h2 id="s4"><span class="no">04</span>개발자가 해볼 것</h2>
+
+    <div class="actions">
+      <div class="action"><h4>1. 민감 데이터가 포함된 요청은 나누기</h4><p>개인정보, 고객 데이터, 사내 코드처럼 민감한 입력은 공급자 정책을 확인한 뒤에만 보내세요. 테스트용 샘플과 실제 데이터를 같은 경로로 보내지 않는 것이 기본입니다.</p></div>
+      <div class="action"><h4>2. ZDR 표시를 한 번 더 확인하기</h4><p>표시는 계약 조건의 요약일 뿐입니다. 조사 중인 경로나 제거된 표시가 있는지 공지를 보고, 필요하면 해당 모델을 임시로 빼 두세요.</p></div>
+      <div class="action"><h4>3. API 키를 주기적으로 교체하기</h4><p>키가 노출되면 피해가 커집니다. 키 권한을 최소로 두고, 사용량 알림을 켜고, 의심스러운 호출이 보이면 즉시 교체하는 절차를 만들어 두세요.</p></div>
+      <div class="action"><h4>4. 입력 전에 마스킹하기</h4><p>전화번호, 이메일, 토큰 같은 값은 모델에 보내기 전에 가리거나 대체하는 함수를 한 곳에 두면 나중에 공급자가 바뀌어도 영향이 적습니다.</p></div>
+    </div>
+
+    <h2 id="s5"><span class="no">05</span>긍정적인 방향으로 간다면?</h2>
+
+    <div class="future pos"><ul>
+      <li><strong>공급자 검증 기준이 생긴다.</strong> 게이트웨이들이 공급자 심사와 제외 기준을 공개하면, 개발자가 비교할 수 있는 객관적인 자료가 늘어납니다.</li>
+      <li><strong>데이터 보관 조건이 더 세밀해진다.</strong> 모델 단위로 ZDR 상태를 보여 주는 방식이 자리 잡으면, 민감한 작업에만 안전한 경로를 고르기 쉬워집니다.</li>
+      <li><strong>침해 사실이 빨리 공유된다.</strong> 연구자와 중계 업체가 문제를 드러내고 고객에게 알리는 흐름이 굳어지면, 피해를 줄이는 속도가 빨라질 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s6"><span class="no">06</span>부정적인 방향으로 간다면?</h2>
+
+    <div class="future neg"><ul>
+      <li><strong>저가 공급자 뒤의 위험이 가려진다.</strong> 가격만 보고 고르다 보면, 어떤 회사가 요청을 저장하거나 재판매하는지 알기 어려워집니다.</li>
+      <li><strong>키 유출이 연쇄 피해로 이어진다.</strong> 하나의 키가 여러 서비스에 쓰이면, 한 번의 탈취로 클라우드 비용과 데이터 접근이 함께 노출될 수 있습니다.</li>
+      <li><strong>책임 소재가 흐려진다.</strong> 게이트웨이, 중계 공급자, 모델 회사가 나뉘어 있으면 사고가 났을 때 누구에게 무엇을 물어야 하는지 헷갈릴 수 있습니다.</li>
+    </ul></div>
+
+    <h2 id="s7"><span class="no">07</span>입문 개발자에게 남는 것은?</h2>
+
+    <div class="conclusion"><p>이번 뉴스는 AI 도구를 고르는 기준이 성능과 가격만이 아니라는 점을 보여 줍니다. 요청이 어디를 거쳐 어디에 남는지 알아야 민감한 데이터를 안심하고 보낼 수 있습니다.</p><p>이번 주에는 지금 쓰는 API 키 목록을 만들고, 각 키가 어떤 공급자와 어떤 데이터에 연결돼 있는지 한 장짜리 표로 정리해 보세요. 이 표가 다음 공지가 왔을 때 가장 빨리 쓰이는 자료가 됩니다.</p></div>
+
+    <h2 id="s8"><span class="no">08</span>참고 자료</h2>
+    <ol class="refs">
+      <li><a href="https://www.unite.ai/openrouter-cuts-three-providers-after-ai-prompt-exposure-findings/">Unite AI, OpenRouter cuts three providers after AI prompt exposure findings (2026.11.22)</a> <span class="src">— 공급자 3곳 제외와 ZDR 자격 해제 내용을 요약 페이지로 확인. 원문 본문은 열람하지 못함</span></li>
+      <li><a href="https://the-decoder.com/security-researchers-show-how-cheap-ai-inference-providers-steal-keys-and-snoop-on-users/">The Decoder, Security researchers show how cheap AI inference providers steal keys and snoop on users (2026.11.22)</a> <span class="src">— Dragos 연구 요약. 수치는 이 매체 보도 기준</span></li>
+      <li><a href="https://explainx.ai/blog/openrouter-minimax-prompts-may-have-been-read-customer-email-november-2026">explainx, OpenRouter MiniMax 프롬프트 노출 가능성 고객 이메일 (2026.11.21)</a> <span class="src">— 고객 이메일 내용을 인용한 2차 정리 페이지</span></li>
+    </ol>
+
+    </article>
+
+<section class="related">
+  <h2>오늘의 다른 뉴스</h2>
+  <div class="related-list"><a href="2026-11-23-korea-education-minister-ai-cheating.html"><span class="r">오늘의 뉴스 2위</span><span class="t">교육부 장관 사임… AI 부정행위 사태로 대입 시험 논란 확산</span></a><a href="2026-11-23-sarvam-105b-open-weight.html"><span class="r">오늘의 뉴스 3위</span><span class="t">Sarvam, 1050억 파라미터 오픈웨이트 모델 공개… 워크스테이션 GPU 실행 목표</span></a></div>
+</section>
+</article>
+
+
+  <footer>
+    <span>© 2026 AI 비밀 레시피</span>
+    <a href="../">← 전체 리포트 보기</a>
+  </footer>
+
+  <script>
+    (function () {
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/article.js?v=20261023g"></script>
+</body>
+</html>

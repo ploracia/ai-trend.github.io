@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" role="img" aria-labelledby="t1 d1">
+  <title id="t1">Axion 1.0 학습 3단계</title>
+  <desc id="d1">적은 예시로 추론 SFT, 도구 사용 SFT, 상호작용 강화학습을 차례로 거치는 흐름</desc>
+  <rect x="0" y="0" width="720" height="320" rx="16" fill="#f7f6f2" stroke="#e3e1da"/>
+  <text x="32" y="44" font-size="18" font-weight="700" fill="#1b1b1f">Axion 1.0: 학습 3단계</text>
+  <rect x="40" y="90" width="180" height="120" rx="12" fill="#e8eefe" stroke="#2f5bea" stroke-width="2"/>
+  <text x="130" y="128" font-size="16" font-weight="700" text-anchor="middle" fill="#1b1b1f">1단계 SFT</text>
+  <text x="130" y="154" font-size="14" text-anchor="middle" fill="#1b1b1f">추론하는 법 배우기</text>
+  <text x="130" y="180" font-size="13" text-anchor="middle" fill="#62626b">모델에 맞춘 데이터</text>
+  <rect x="270" y="90" width="180" height="120" rx="12" fill="#e8eefe" stroke="#2f5bea" stroke-width="2"/>
+  <text x="360" y="128" font-size="16" font-weight="700" text-anchor="middle" fill="#1b1b1f">2단계 SFT</text>
+  <text x="360" y="154" font-size="14" text-anchor="middle" fill="#1b1b1f">도구 쓰며 조사하기</text>
+  <text x="360" y="180" font-size="13" text-anchor="middle" fill="#62626b">검증 가능한 과제</text>
+  <rect x="500" y="90" width="180" height="120" rx="12" fill="#e5f4ec" stroke="#1f8a5b" stroke-width="2"/>
+  <text x="590" y="128" font-size="16" font-weight="700" text-anchor="middle" fill="#1b1b1f">강화학습</text>
+  <text x="590" y="154" font-size="14" text-anchor="middle" fill="#1b1b1f">실제 상호작용으로 학습</text>
+  <text x="590" y="180" font-size="13" text-anchor="middle" fill="#62626b">세션 단위 보상</text>
+  <line x1="222" y1="150" x2="266" y2="150" stroke="#62626b" stroke-width="3"/>
+  <line x1="452" y1="150" x2="496" y2="150" stroke="#62626b" stroke-width="3"/>
+  <text x="360" y="262" font-size="14" text-anchor="middle" fill="#62626b">별도의 중간 학습·DPO 단계 없이 세 단계로만 구성</text>
+  <text x="360" y="288" font-size="13" text-anchor="middle" fill="#62626b">출처 논문을 바탕으로 다시 그림</text>
+</svg>

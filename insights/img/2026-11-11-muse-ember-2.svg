@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" role="img" aria-label="1M 토큰 컨텍스트 안에 요청, 문서, 도구 기록이 함께 들어가는 구조">
+  <rect x="0" y="0" width="720" height="340" rx="16" fill="#f7f6f2"/>
+  <text x="32" y="44" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="18" font-weight="700" fill="#1b1b1f">1M 토큰 컨텍스트 = 한 번에 읽을 수 있는 작업대의 크기</text>
+  <rect x="32" y="70" width="656" height="200" rx="14" fill="#ffffff" stroke="#2f5bea" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="52" y="98" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="14" font-weight="700" fill="#2f5bea">1M 토큰 작업대</text>
+  <rect x="52" y="116" width="200" height="70" rx="10" fill="#e8eefe"/>
+  <text x="152" y="146" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="14" font-weight="700" fill="#1b1b1f">긴 문서</text>
+  <text x="152" y="168" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="12" fill="#1b1b1f">PDF·텍스트 원문</text>
+  <rect x="272" y="116" width="200" height="70" rx="10" fill="#e5f4ec"/>
+  <text x="372" y="146" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="14" font-weight="700" fill="#1b1b1f">도구 호출 기록</text>
+  <text x="372" y="168" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="12" fill="#1b1b1f">이전 단계의 결과</text>
+  <rect x="492" y="116" width="168" height="70" rx="10" fill="#fbeae6"/>
+  <text x="576" y="146" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="14" font-weight="700" fill="#1b1b1f">이미지·음성</text>
+  <text x="576" y="168" text-anchor="middle" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="12" fill="#1b1b1f">여러 형식 입력</text>
+  <text x="52" y="222" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="13" fill="#1b1b1f">모델은 이 전체를 한 번에 보고, 답은 텍스트로 돌려준다.</text>
+  <text x="52" y="246" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="13" fill="#62626b">컨텍스트가 커도 요금은 토큰 수에 따라 달라진다.</text>
+  <text x="32" y="306" font-family="Pretendard, Malgun Gothic, sans-serif" font-size="12" fill="#62626b">출처 글을 바탕으로 다시 그림 (OpenRouter 모델 페이지의 입력 형식 기준)</text>
+</svg>

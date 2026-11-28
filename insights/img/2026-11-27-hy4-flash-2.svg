@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" role="img" aria-labelledby="t2 d2">
+  <title id="t2">Hy4 flash 공개 흐름과 사용 경로</title>
+  <desc id="d2">API 공개, 가중치 공개, 라이선스 확인 뒤 호스팅 API 또는 직접 배포로 나뉘는 흐름</desc>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#62626b"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="720" height="340" rx="14" fill="#ffffff" stroke="#e3e1da"/>
+  <text x="360" y="34" text-anchor="middle" font-size="18" font-weight="700" fill="#1b1b1f">Hy4 flash: 공개 순서와 쓰는 길</text>
+  <!-- step 1 -->
+  <rect x="30" y="70" width="170" height="70" rx="10" fill="#e8eefe" stroke="#2f5bea"/>
+  <text x="115" y="98" text-anchor="middle" font-size="15" font-weight="700" fill="#1b1b1f">11월 16일</text>
+  <text x="115" y="120" text-anchor="middle" font-size="13" fill="#1b1b1f">앱·클라우드 API 공개</text>
+  <!-- step 2 -->
+  <rect x="275" y="70" width="170" height="70" rx="10" fill="#e8eefe" stroke="#2f5bea"/>
+  <text x="360" y="98" text-anchor="middle" font-size="15" font-weight="700" fill="#1b1b1f">11월 17일 (UTC)</text>
+  <text x="360" y="120" text-anchor="middle" font-size="13" fill="#1b1b1f">가중치 공개 (3종)</text>
+  <!-- step 3 -->
+  <rect x="520" y="70" width="170" height="70" rx="10" fill="#fbeae6" stroke="#c2412d"/>
+  <text x="605" y="98" text-anchor="middle" font-size="15" font-weight="700" fill="#1b1b1f">라이선스 확인</text>
+  <text x="605" y="120" text-anchor="middle" font-size="13" fill="#1b1b1f">제품 규모 조건 포함</text>
+  <line x1="200" y1="105" x2="272" y2="105" stroke="#62626b" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="445" y1="105" x2="517" y2="105" stroke="#62626b" stroke-width="2" marker-end="url(#arr)"/>
+  <!-- branches -->
+  <line x1="605" y1="140" x2="605" y2="176" stroke="#62626b" stroke-width="2"/>
+  <line x1="605" y1="176" x2="200" y2="176" stroke="#62626b" stroke-width="2"/>
+  <line x1="200" y1="176" x2="200" y2="210" stroke="#62626b" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="605" y1="176" x2="605" y2="210" stroke="#62626b" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="95" y="214" width="210" height="82" rx="10" fill="#f1f2f5" stroke="#c9ccd4"/>
+  <text x="200" y="242" text-anchor="middle" font-size="14" font-weight="700" fill="#1b1b1f">직접 배포</text>
+  <text x="200" y="264" text-anchor="middle" font-size="12.5" fill="#1b1b1f">vLLM으로 GPU 서버에 실행</text>
+  <text x="200" y="282" text-anchor="middle" font-size="12.5" fill="#1b1b1f">대형 GPU 여러 장 필요</text>
+  <rect x="500" y="214" width="210" height="82" rx="10" fill="#f1f2f5" stroke="#c9ccd4"/>
+  <text x="605" y="242" text-anchor="middle" font-size="14" font-weight="700" fill="#1b1b1f">호스팅 API</text>
+  <text x="605" y="264" text-anchor="middle" font-size="12.5" fill="#1b1b1f">제3자 서비스로 바로 호출</text>
+  <text x="605" y="282" text-anchor="middle" font-size="12.5" fill="#1b1b1f">입문자가 먼저 써 보기 좋음</text>
+  <text x="360" y="322" text-anchor="middle" font-size="13" fill="#62626b">날짜는 출처 글 기준, 실제 사용 전 공식 모델 카드 확인</text>
+</svg>

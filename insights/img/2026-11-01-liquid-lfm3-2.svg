@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 230" role="img" aria-labelledby="t2 d2">
+  <title id="t2">온디바이스 실행 흐름</title>
+  <desc id="d2">모델 내려받기, 설치, 실행, 답 받기의 네 단계 흐름도</desc>
+  <defs>
+    <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#62626b"/>
+    </marker>
+  </defs>
+  <g font-family="Pretendard, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif" text-anchor="middle">
+    <text x="380" y="28" font-size="14" font-weight="700" fill="#1b1b1f">내 기기에서 LFM3 실행하기 (개념도)</text>
+
+    <g stroke="#62626b" stroke-width="1.5" fill="none" marker-end="url(#arr2)">
+      <path d="M178,110 L198,110"/>
+      <path d="M362,110 L382,110"/>
+      <path d="M546,110 L566,110"/>
+    </g>
+
+    <rect x="16" y="50" width="162" height="120" rx="12" fill="#e8eefe" stroke="#2f5bea" stroke-width="1.5"/>
+    <text x="97" y="84" font-size="15" font-weight="700" fill="#1b1b1f">① 내려받기</text>
+    <text x="97" y="110" font-size="12.5" fill="#1b1b1f">Hugging Face에서</text>
+    <text x="97" y="128" font-size="12.5" fill="#1b1b1f">모델 카드·라이선스 확인</text>
+
+    <rect x="200" y="50" width="162" height="120" rx="12" fill="#e8eefe" stroke="#2f5bea" stroke-width="1.5"/>
+    <text x="281" y="84" font-size="15" font-weight="700" fill="#1b1b1f">② 설치</text>
+    <text x="281" y="110" font-size="12.5" fill="#1b1b1f">라이브러리 설치</text>
+    <text x="281" y="128" font-size="12.5" fill="#1b1b1f">transformers 등</text>
+
+    <rect x="384" y="50" width="162" height="120" rx="12" fill="#e8eefe" stroke="#2f5bea" stroke-width="1.5"/>
+    <text x="465" y="84" font-size="15" font-weight="700" fill="#1b1b1f">③ 불러오기</text>
+    <text x="465" y="110" font-size="12.5" fill="#1b1b1f">pipeline으로 모델 로드</text>
+    <text x="465" y="128" font-size="12.5" fill="#1b1b1f">trust_remote_code=True</text>
+
+    <rect x="568" y="50" width="162" height="120" rx="12" fill="#e5f4ec" stroke="#1f8a5b" stroke-width="1.5"/>
+    <text x="649" y="84" font-size="15" font-weight="700" fill="#1b1b1f">④ 답 받기</text>
+    <text x="649" y="110" font-size="12.5" fill="#1b1b1f">질문을 넣으면 답 생성</text>
+    <text x="649" y="128" font-size="12.5" fill="#1b1b1f">4비트 약 1GB 메모리 기준</text>
+
+    <text x="380" y="200" font-size="12" fill="#62626b">메모리 수치는 회사 발표 기준이며, 실제 사용량은 기기·설정·글 길이에 따라 달라집니다.</text>
+  </g>
+</svg>

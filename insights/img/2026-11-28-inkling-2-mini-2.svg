@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Inkling 2 Mini 처리 흐름: 입력, 루프, 출력, 노트북 실행">
+  <style>
+    .t { font: 600 15px sans-serif; fill: #1b1b1f; }
+    .s { font: 13px sans-serif; fill: #62626b; }
+    .box { fill: #e8eefe; stroke: #2f5bea; stroke-width: 1.5; }
+    .hot { fill: #e5f4ec; stroke: #1f8a5b; stroke-width: 1.5; }
+    .arr { stroke: #62626b; stroke-width: 1.5; fill: none; marker-end: url(#b); }
+    @media (prefers-color-scheme: dark) {
+      .t { fill: #ececf0; } .s { fill: #9a9aa5; }
+      .box { fill: #1f2640; stroke: #7c9cff; } .hot { fill: #16291f; stroke: #4cc38a; } .arr { stroke: #9a9aa5; }
+    }
+  </style>
+  <defs>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#62626b"/>
+    </marker>
+  </defs>
+  <rect class="box" x="10" y="100" width="110" height="60" rx="10"/><text class="t" x="65" y="128" text-anchor="middle">텍스트·이미지</text><text class="s" x="65" y="147" text-anchor="middle">입력</text>
+  <rect class="hot" x="170" y="80" width="190" height="100" rx="10"/><text class="t" x="265" y="115" text-anchor="middle">앞쪽 층</text><text class="t" x="265" y="140" text-anchor="middle">루프 구간 ×3</text><text class="s" x="265" y="162" text-anchor="middle">같은 가중치 재사용</text>
+  <rect class="box" x="410" y="100" width="110" height="60" rx="10"/><text class="t" x="465" y="128" text-anchor="middle">다음 토큰</text><text class="s" x="465" y="147" text-anchor="middle">출력 (텍스트)</text>
+  <rect class="box" x="570" y="100" width="140" height="60" rx="10"/><text class="t" x="640" y="128" text-anchor="middle">내 노트북</text><text class="s" x="640" y="147" text-anchor="middle">32GB 메모리 맥 등</text>
+  <line class="arr" x1="120" y1="130" x2="168" y2="130"/>
+  <line class="arr" x1="360" y1="130" x2="408" y2="130"/>
+  <line class="arr" x1="520" y1="130" x2="568" y2="130"/>
+  <text class="s" x="20" y="240">공개 정보: 가중치 Apache 2.0, 컨텍스트 최대 1M 토큰(출처 기사 기준)</text>
+  <text class="s" x="20" y="262">그림은 출처 설명을 바탕으로 직접 다시 그림</text>
+</svg>

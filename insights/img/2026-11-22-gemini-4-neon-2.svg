@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" role="img" aria-labelledby="t2 d2">
+  <title id="t2">요청 한 번이 처리되는 흐름</title>
+  <desc id="d2">개발자 요청이 사고 단계와 도구 호출을 거쳐 답으로 나가는 흐름도</desc>
+  <defs>
+    <marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#8a8a94"/>
+    </marker>
+  </defs>
+  <text x="360" y="34" text-anchor="middle" font-size="18" font-weight="700" fill="#1b1b1f" font-family="sans-serif">Gemini 4 Neon 요청 처리 흐름</text>
+
+  <rect x="20" y="90" width="150" height="80" rx="12" fill="#ffffff" stroke="#8a8a94" stroke-width="2"/>
+  <text x="95" y="122" text-anchor="middle" font-size="15" font-weight="700" fill="#1b1b1f" font-family="sans-serif">요청 보내기</text>
+  <text x="95" y="146" text-anchor="middle" font-size="12" fill="#1b1b1f" font-family="sans-serif">프롬프트 + 문서</text>
+
+  <rect x="210" y="90" width="150" height="80" rx="12" fill="#e8eefe" stroke="#2f5bea" stroke-width="2"/>
+  <text x="285" y="122" text-anchor="middle" font-size="15" font-weight="700" fill="#1b1b1f" font-family="sans-serif">생각 단계</text>
+  <text x="285" y="146" text-anchor="middle" font-size="12" fill="#1b1b1f" font-family="sans-serif">high 또는 xhigh</text>
+
+  <rect x="400" y="90" width="150" height="80" rx="12" fill="#e8eefe" stroke="#2f5bea" stroke-width="2"/>
+  <text x="475" y="122" text-anchor="middle" font-size="15" font-weight="700" fill="#1b1b1f" font-family="sans-serif">도구 호출</text>
+  <text x="475" y="146" text-anchor="middle" font-size="12" fill="#1b1b1f" font-family="sans-serif">코드 실행 · 검색 등</text>
+
+  <rect x="560" y="90" width="140" height="80" rx="12" fill="#e5f4ec" stroke="#1f8a5b" stroke-width="2"/>
+  <text x="630" y="122" text-anchor="middle" font-size="15" font-weight="700" fill="#1b1b1f" font-family="sans-serif">답 출력</text>
+  <text x="630" y="146" text-anchor="middle" font-size="12" fill="#1b1b1f" font-family="sans-serif">토큰 단위 과금</text>
+
+  <line x1="170" y1="130" x2="208" y2="130" stroke="#8a8a94" stroke-width="2" marker-end="url(#ar2)"/>
+  <line x1="360" y1="130" x2="398" y2="130" stroke="#8a8a94" stroke-width="2" marker-end="url(#ar2)"/>
+  <line x1="550" y1="130" x2="558" y2="130" stroke="#8a8a94" stroke-width="2" marker-end="url(#ar2)"/>
+
+  <path d="M475 178 L475 212 L285 212 L285 176" fill="none" stroke="#8a8a94" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ar2)"/>
+  <text x="380" y="232" text-anchor="middle" font-size="12" fill="#62626b" font-family="sans-serif">도구 결과를 받아 다시 생각하는 반복 구간</text>
+</svg>

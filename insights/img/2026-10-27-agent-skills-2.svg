@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 260" role="img" aria-label="스킬을 단계적으로 불러오는 흐름도">
+  <defs><marker id="a2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f5bea"/></marker></defs>
+  <rect x="0" y="0" width="680" height="260" rx="14" fill="#f4f6fb"/>
+  <text x="340" y="32" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="16" font-weight="700" fill="#1b1b1f">스킬은 필요한 만큼만 불러온다</text>
+  <rect x="30" y="60" width="180" height="150" rx="12" fill="#e8eefe" stroke="#2f5bea" stroke-width="2"/>
+  <text x="120" y="88" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="14" font-weight="700" fill="#1b1b1f">1단계 · 시작할 때</text>
+  <text x="120" y="118" text-anchor="middle" font-family="Consolas, monospace" font-size="13" fill="#1b1b1f">name</text>
+  <text x="120" y="140" text-anchor="middle" font-family="Consolas, monospace" font-size="13" fill="#1b1b1f">description</text>
+  <text x="120" y="176" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="12" fill="#444">두 줄만 미리 읽음</text>
+  <path d="M216 135 L244 135" stroke="#2f5bea" stroke-width="3" marker-end="url(#a2)"/>
+  <rect x="250" y="60" width="180" height="150" rx="12" fill="#e5f4ec" stroke="#1f8a5b" stroke-width="2"/>
+  <text x="340" y="88" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="14" font-weight="700" fill="#1b1b1f">2단계 · 관련 있을 때</text>
+  <text x="340" y="118" text-anchor="middle" font-family="Consolas, monospace" font-size="13" fill="#1b1b1f">SKILL.md 본문</text>
+  <text x="340" y="176" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="12" fill="#444">작업과 맞으면 전체 읽음</text>
+  <path d="M436 135 L464 135" stroke="#2f5bea" stroke-width="3" marker-end="url(#a2)"/>
+  <rect x="470" y="60" width="180" height="150" rx="12" fill="#fbeae6" stroke="#c2412d" stroke-width="2"/>
+  <text x="560" y="88" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="14" font-weight="700" fill="#1b1b1f">3단계 · 필요할 때</text>
+  <text x="560" y="118" text-anchor="middle" font-family="Consolas, monospace" font-size="13" fill="#1b1b1f">reference.md</text>
+  <text x="560" y="140" text-anchor="middle" font-family="Consolas, monospace" font-size="13" fill="#1b1b1f">scripts/</text>
+  <text x="560" y="176" text-anchor="middle" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="12" fill="#444">그때 가서 열어 봄</text>
+</svg>
